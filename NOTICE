@@ -1,0 +1,34 @@
+Hardware Division OS (VN Business OS) — US One Person Company
+Copyright 2026 Brian H. Doan
+
+Author and maintainer: Brian H. Doan — the division specialization,
+department/agent architecture, division templates, and all adaptations
+in this repository are his work.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+
+This product includes work adapted from the following projects:
+
+1. business-builder.plugin (author: Quốc MODORO — https://bio.ybai.me/777777)
+   - 192 business templates adapted (originally authored in Vietnamese,
+     localized to US English with legal/financial content re-mapped to
+     US federal + Texas law). Per-file author bylines were removed on
+     06/09/2026 at the operator's direction; attribution is maintained here.
+
+2. TradingAgents (TauricResearch)
+   https://github.com/TauricResearch/TradingAgents
+   Licensed under Apache License 2.0
+   - Debate engine pattern adapted
+
+3. agency-agents (msitarzewski)
+   https://github.com/msitarzewski/agency-agents
+   - Role definitions referenced
+
+All adaptations and customizations beyond the above sources are
+original work by Brian H. Doan and are released under the
+Apache License 2.0.

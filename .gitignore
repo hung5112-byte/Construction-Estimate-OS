@@ -1,0 +1,69 @@
+# ─── Python ─────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ─── Secrets / config (NEVER commit) ────────────────────────────────
+.env
+.env.*
+!.env.example
+.vncoderc
+.vncoderc.*
+*.key
+*.pem
+secrets.yaml
+secrets.json
+
+# ─── Vault data (per-user, never commit) ────────────────────────────
+.cache/
+checkpoints/
+*.db
+*.sqlite
+*.sqlite3
+
+# ─── Generated outputs (binary docs) ────────────────────────────────
+*.docx
+*.xlsx
+*.pdf
+!templates-us/**/*.docx
+!templates-us/**/*.xlsx
+!templates-us/**/*.pdf
+
+# ─── Logs ───────────────────────────────────────────────────────────
+*.log
+.vn-business-os.log
+
+# ─── IDE / Editor ───────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ─── OS ─────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Claude / Session state ─────────────────────────────────────────
+.claude/session-state/
+.claude/projects/
+
+# ─── External references (read-only, not vendored) ──────────────────
+references/tradingagents/
+references/business-builder.plugin/
+
+# ─── User experiments / scratch ─────────────────────────────────────
+scratch/
+playground/
+TODO.private.md
+
+# Local Claude Code settings
+.claude/settings.local.json

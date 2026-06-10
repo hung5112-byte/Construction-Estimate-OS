@@ -1,0 +1,63 @@
+marketing:
+  CAC:
+    en: "Cost to acquire one customer"
+    formula: "Total MKT + Sales spend / number of new customers"
+    example: "Spend $10k on MKT, get 20 customers → CAC = $500/customer"
+  CTR:
+    en: "Click-through rate — % of people who see an ad and click it"
+    benchmark: "FB B2C: 1-2%, LinkedIn B2B: 0.3-0.5%"
+  ROAS:
+    en: "Revenue / ad-spend ratio"
+    example: "Spend $1k on ads, get $4k revenue → ROAS = 4x"
+  CPL:
+    en: "Cost per lead (an interested prospect)"
+  ICP:
+    en: "Ideal Customer Profile"
+  SQL:
+    en: "Sales Qualified Lead — a prospect ready for sales to engage"
+
+finance:
+  EBITDA:
+    en: "Earnings before interest, taxes, depreciation, and amortization"
+  burn_rate:
+    en: "How fast you spend cash — how much you go negative each month"
+  runway:
+    en: "How many months of cash you have left (with no new revenue)"
+  COGS:
+    en: "Cost of goods sold"
+  GMV:
+    en: "Gross merchandise value (total transaction value)"
+  AOV:
+    en: "Average order value"
+
+saas:
+  MRR:
+    en: "Monthly Recurring Revenue"
+  ARR:
+    en: "Annual Recurring Revenue"
+  churn_rate:
+    en: "Rate at which customers leave"
+  LTV:
+    en: "Customer Lifetime Value"
+  DAU:
+    en: "Daily active users"
+  MAU:
+    en: "Monthly active users"
+
+operations:
+  SOP:
+    en: "Standard Operating Procedure"
+  KPI:
+    en: "Key Performance Indicator"
+  OKR:
+    en: "Objectives & Key Results"
+
+restaurant:
+  food_cost_pct:
+    en: "Ingredient cost as a % of revenue"
+    target: "< 35% is good"
+  table_turn:
+    en: "Number of times a table turns over per day"
+  labor_cost_pct:
+    en: "Labor cost as a % of revenue"
+    target: "< 30% is good"

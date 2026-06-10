@@ -1,0 +1,53 @@
+code: 01-hardware-engineering
+name_vn: Hardware Engineering
+tier: 1
+description: Electronic product design — mechanical, electrical, firmware/embedded,
+  and system architecture. The manager speaks for the department; teams contribute
+  in the intra-department round.
+agents:
+- hw-engineering-manager
+- me-team
+- ee-team
+- fw-embedded-team
+- system-architecture
+default_speaker: hw-engineering-manager
+refs_folder: refs/
+depends_on:
+- 02-npi-program-management
+- 03-quality-reliability
+debate_role:
+  default: pro
+routing_rules:
+- keywords:
+  - mechanical
+  - enclosure
+  - thermal
+  - housing
+  - gasket
+  agent: me-team
+- keywords:
+  - schematic
+  - pcb
+  - layout
+  - electrical
+  - component selection
+  agent: ee-team
+- keywords:
+  - firmware
+  - embedded
+  - ota
+  - bootloader
+  - driver
+  agent: fw-embedded-team
+- keywords:
+  - architecture
+  - platform
+  - system design
+  - tradeoff study
+  agent: system-architecture
+aliases_vn:
+- Hardware Engineering
+- HW Eng
+- Engineering
+- Design
+author: Brian H. Doan

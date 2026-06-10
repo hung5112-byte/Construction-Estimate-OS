@@ -1,0 +1,42 @@
+SIMPLE:
+  description: "Simple task, no meeting needed, 1-2 agents"
+  keywords:
+    - "draft sop"
+    - "write sop"
+    - "eco form"
+    - "rma letter"
+    - "disposition letter"
+    - "checklist"
+    - "work instruction"
+    - "minutes"
+  max_departments: 2
+
+COMPLEX:
+  description: "Complex task, needs a 3-5 department debate"
+  keywords:
+    - "npi"
+    - "product launch"
+    - "supplier change"
+    - "shortage"
+    - "inventory plan"
+    - "capacity plan"
+    - "deployment plan"
+    - "return rate"
+    - "cost-down"
+    - "budget"
+  max_departments: 5
+
+STRATEGIC:
+  description: "Strategic task, needs the division manager's sign-off mid-way"
+  keywords:
+    - "new odm"
+    - "factory transfer"
+    - "second source strategy"
+    - "certification program"
+    - "pci"
+    - "emvco"
+    - "end of life"
+    - "eol"
+    - "product line"
+    - "restructuring"
+  min_departments: 5

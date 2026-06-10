@@ -1,0 +1,15 @@
+# Template for creating a new department definition
+code: "XX-name"
+name_vn: ""
+name_en: ""
+tier: 1
+description: |
+  ...
+agents: []
+default_speaker: ""
+routing_rules: []
+refs_folder: refs/
+depends_on: []
+debate_role:
+  default: pro
+author: Brian H. Doan

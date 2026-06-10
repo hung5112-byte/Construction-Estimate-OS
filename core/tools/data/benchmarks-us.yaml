@@ -1,0 +1,64 @@
+# US industry KPI benchmarks (illustrative).
+# ⚠️ [UNCERTAIN] All figures are rough, illustrative ranges only. Re-confirm
+# against a current, cited US source (e.g. OpenView, Census Bureau, BLS, industry
+# reports) before using them in a decision. Amounts are in USD.
+
+hardware_electronics:
+  field_return_rate_pct:
+    range: [1, 5]
+    note: "Annualized field return rate for electronic devices — varies widely by product class [UNCERTAIN, verify per category]"
+  first_pass_yield_pct:
+    range: [90, 98]
+    note: "PCBA/final-assembly first-pass yield at a mature line [UNCERTAIN, verify with the factory]"
+  on_time_delivery_pct:
+    target: 95
+    range: [90, 98]
+    note: "Supplier/factory OTD expectation [UNCERTAIN]"
+  inventory_turns_per_year:
+    range: [4, 8]
+    note: "Hardware/distribution inventory turns [UNCERTAIN]"
+  rma_turnaround_days:
+    range: [7, 15]
+    note: "Door-to-door RMA turnaround, business days [UNCERTAIN]"
+  ocean_transit_days_china_us:
+    range: [25, 40]
+    note: "Door-to-door China→US ocean, incl. customs [UNCERTAIN, lane-specific]"
+
+saas_b2b:
+  cac_usd_per_sql:
+    median: 320
+    range: [200, 600]
+    source: "Illustrative US SaaS benchmark — [UNCERTAIN, verify with a cited source]"
+  roas_long_term:
+    range: [3, 8]
+    note: "12-month LTV / CAC"
+  conversion_lead_to_sql:
+    range: [0.08, 0.15]
+
+ecommerce_d2c:
+  conversion_rate:
+    median: 0.025
+    range: [0.01, 0.05]
+  aov_usd:
+    median: 65
+  card_share:
+    median: 0.75
+    note: "Card/digital payment share (US) — [UNCERTAIN, verify]"
+  return_rate:
+    median: 0.10
+
+restaurant_casual:
+  food_cost_pct:
+    target: 30
+    range: [28, 35]
+  labor_cost_pct:
+    target: 30
+    range: [25, 35]
+  table_turn_per_day:
+    range: [2.5, 4.0]
+
+retail_offline:
+  inventory_turnover_per_year:
+    range: [4, 8]
+  shrinkage_pct:
+    target: 1.5

@@ -1,0 +1,35 @@
+name: CI
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Lint
+        run: ruff check core/ tests/
+
+      - name: Domain-neutral check (RULE 2)
+        run: bash scripts/dev/check-domain-neutral.sh
+
+      - name: Unit tests
+        run: pytest tests/unit/ -v
+
+      - name: Integration tests (mocked LLM)
+        run: pytest tests/integration/ -v
+
+      - name: E2E tests (mocked)
+        run: pytest tests/e2e/test_b_npi_pilot_launch.py tests/e2e/test_all_rules_verified.py -v

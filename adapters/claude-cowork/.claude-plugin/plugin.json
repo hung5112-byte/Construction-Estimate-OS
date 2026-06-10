@@ -1,0 +1,13 @@
+{
+  "name": "vn-business-os",
+  "version": "0.1.0",
+  "description": "AI agent OS for a US small business — departments debate and generate .docx/.xlsx documents aligned with US federal + Texas law. Powered by a Python + LangGraph backend.",
+  "author": {
+    "email": "your-email@example.com"
+  },
+  "credits": {
+    "templates_us": "adapted from business-builder.plugin",
+    "debate_engine_pattern": "TradingAgents (TauricResearch)"
+  },
+  "keywords": ["business", "usa", "texas", "agents", "debate", "langgraph"]
+}
