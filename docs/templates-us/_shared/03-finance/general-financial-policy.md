@@ -6,7 +6,7 @@ The top-level policy document for financial management. Sets principles, approva
 #### Information to collect (ask the user before generating)
 1. Annual revenue? (sets the complexity of internal controls)
 2. Current finance org? (a dedicated CFO, or a controller, or outsourced bookkeeping?)
-3. Current approval levels? (does the CEO approve everything, or is it delegated?)
+3. Current approval levels? (does the Department Head approve everything, or is it delegated?)
 4. Primary bank? Online banking / authorized signers?
 5. Accounting software? (QuickBooks, Xero, NetSuite, Excel...)
 6. Internal audit / annual external CPA review?

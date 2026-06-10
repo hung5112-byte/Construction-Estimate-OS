@@ -1,4 +1,4 @@
-"""Write clarification.md for the CEO + parse the answer when the CEO ticks a checkbox."""
+"""Write clarification.md for the Department Head + parse the answer when the Department Head ticks a checkbox."""
 from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
@@ -18,7 +18,7 @@ def write_clarification(path: Path, questions: list[Question]) -> None:
     parts = ["---", "type: clarification", "answered: false", "---", ""]
     parts.append("# 🤖 Questions from the system (Brain-first)")
     parts.append("")
-    parts.append("> Tick `[x]` for the CEO's choice, or fill in free text. Save the file.")
+    parts.append("> Tick `[x]` for the Department Head's choice, or fill in free text. Save the file.")
     parts.append("")
 
     for i, q in enumerate(questions, 1):

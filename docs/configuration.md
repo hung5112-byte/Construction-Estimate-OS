@@ -1,4 +1,4 @@
-# Configuration — US One Person Company
+# Configuration — Hardware Division OS
 
 The main config files + how to tune them.
 
@@ -33,7 +33,7 @@ packs: []
 
 version: "0.1.0"
 
-# Translator scope — RULE 4 CEO-friendly language
+# Translator scope — RULE 4 Department-Head-friendly language
 # off              → do NOT simplify
 # final_only       → only the final decision report (default)
 # all_intermediate → every output: perspectives, debate, final

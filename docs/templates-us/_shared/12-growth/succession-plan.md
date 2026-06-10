@@ -1,15 +1,15 @@
 ### PROMPT 11: Succession Plan
 
 #### Description
-A succession plan for key positions — especially CEO/Founder. Identifies potential successors, development gaps, transition timeline, and necessary governance changes. Ensures the business keeps running even if a key person leaves.
+A succession plan for key positions — especially Department Head/Founder. Identifies potential successors, development gaps, transition timeline, and necessary governance changes. Ensures the business keeps running even if a key person leaves.
 
 #### Information to collect (ask the user before generating)
-1. Which positions need a succession plan? (CEO, C-suite, key technical roles)
+1. Which positions need a succession plan? (Department Head, C-suite, key technical roles)
 2. Internal candidates? Readiness level?
 3. Succession timeline? (emergency / planned 1-3 years / planned 5+ years)
 4. Governance: what's the Board's role in succession?
 5. Is the founder willing to mentor/transition?
-6. Key-person risk: if the CEO leaves suddenly, what happens?
+6. Key-person risk: if the Department Head leaves suddenly, what happens?
 
 #### Suggested template
 Structure:

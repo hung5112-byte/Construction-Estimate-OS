@@ -4,7 +4,7 @@
 > **Tag:** `v0.2.0` + `phase-07-mcp-sampling`
 > **Goal:** Let vn-business-os run via a Claude Desktop / Code subscription, WITHOUT an ANTHROPIC_API_KEY
 
-## Answer for the CEO
+## Answer for the Department Head
 
 To the question: "How do we keep 100% of v1 and only change the LLM-call mechanism to use the subscription?"
 
@@ -58,10 +58,10 @@ back through the stack to FlowController
   ↓ writes vault/02-Tasks/<ts>-<slug>/03-clarification.md
 returns to the MCP tool
   ↓ result dict back to the Claude session
-Claude shows the CEO a summary in English
+Claude shows the Department Head a summary in English
 ```
 
-## CEO one-time setup
+## Department Head one-time setup
 
 ```bash
 pip install vn-business-os         # or pipx install vn-business-os

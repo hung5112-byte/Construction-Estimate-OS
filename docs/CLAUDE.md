@@ -8,7 +8,7 @@ AI Operating System for a hardware engineering & supply chain division of a Texa
 
 > General information only — the legal/tax content is not legal or tax advice. Confirm with a licensed Texas attorney and CPA.
 
-> Terminology: core code and prompts call the human principal the "CEO" (kept for API/prompt stability). In this deployment that person is **Brian H. Doan, VP of Hardware Development, Quality & Supply Chain** — the repo's author. "CEO" / "the manager" / "the VP" are interchangeable here.
+> Terminology: core code and prompts call the human principal the "Department Head" — the role that approves Stop 1/Stop 2. Each deployment maps it to a real person; in this one that's **Brian H. Doan, VP of Hardware Development, Quality & Supply Chain** (the repo's author), and his vault documents say "Brian". Legacy `vn_*` tool names and the `vn-one-person-company` package name are kept for API stability.
 
 ## Commands
 
@@ -45,7 +45,7 @@ vn_run → PAUSE_CLARIFICATION → vn_resume → vn_meeting
        → PAUSE_DECISION_REPORT → vn_approve → vn_execute → DONE
 ```
 
-`FlowController` (`docs/core/orchestrator/flow_controller.py`) coordinates everything. Two mandatory stops require CEO approval before continuing.
+`FlowController` (`docs/core/orchestrator/flow_controller.py`) coordinates everything. Two mandatory stops require Department Head approval before continuing.
 
 ### Core modules
 
@@ -83,7 +83,7 @@ Priority (`docs/core/mcp_server.py:_pick_llm`): env `DEEPSEEK_API_KEY` → `ANTH
 ```
 <vault>/
 ├── 00-Brain/          strategy.md, products.md, budget.md, headcount.md, state.md
-├── 00-Templates-Custom/   CEO custom templates (highest priority — BYOT)
+├── 00-Templates-Custom/   Department Head custom templates (highest priority — BYOT)
 ├── 02-Tasks/<slug>/   00-brief.md, 03-clarification.md, 07-decision-report.md, 08-execution-plan.md
 ├── 03-Outputs/        .docx, .xlsx rendered
 └── .vncoderc          vault config (packs, translator_mode, meeting rounds)
@@ -91,10 +91,10 @@ Priority (`docs/core/mcp_server.py:_pick_llm`): env `DEEPSEEK_API_KEY` → `ANTH
 
 ## 6 RULES (must not be violated)
 
-1. **Brain-first** — Read the Brain before asking the CEO. Questions must cite `file:section`. If the Brain is sufficient, don't ask.
+1. **Brain-first** — Read the Brain before asking the Department Head. Questions must cite `file:section`. If the Brain is sufficient, don't ask.
 2. **Domain-neutral** — Don't let TradingAgents jargon leak (trade/market/Bull/Bear/ticker). CI check: `docs/scripts/dev/check-domain-neutral.sh`.
 3. **Single source of truth** — The Obsidian vault is canonical. SQLite is only a crash-recovery cache.
-4. **CEO-friendly** — Output in plain English, with a TL;DR, define a term on first use, avoid heavy technical jargon.
+4. **Department-Head-friendly** — Output in plain English, with a TL;DR, define a term on first use, avoid heavy technical jargon.
 5. **Live research + citations** — Tools must return `ToolResult.sources: list[str]` + `retrieved_at`. Cache 24h.
 6. **BYOT** — Template priority: `vault/00-Templates-Custom/` > pack refs > `repo/docs/templates-us/`.
 
@@ -104,7 +104,7 @@ Priority (`docs/core/mcp_server.py:_pick_llm`): env `DEEPSEEK_API_KEY` → `ANTH
 
 **Adding a department** — Create a folder `docs/departments/XX-name/` with a `department.yaml`. Agents auto-load via `AgentLoader`.
 
-**Adding a pack** — Create a folder `docs/packs/<name>/` with a `pack.yaml` + override templates. CEO enables it via `.vncoderc`.
+**Adding a pack** — Create a folder `docs/packs/<name>/` with a `pack.yaml` + override templates. Department Head enables it via `.vncoderc`.
 
 **Template resolver** — `docs/core/obsidian/template_resolver.py` checks 3 paths in the correct BYOT order.
 

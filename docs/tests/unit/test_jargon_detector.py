@@ -11,7 +11,7 @@ def test_detects_marketing_jargon():
 
 def test_filters_out_common_acronyms():
     jd = JargonDetector()
-    found = jd.detect("Your LLC in the US, met the CEO on Mon")
+    found = jd.detect("Your LLC in the US, met the Department Head on Mon")
     terms = [t for t, _ in found]
     assert "LLC" not in terms
     assert "US" not in terms

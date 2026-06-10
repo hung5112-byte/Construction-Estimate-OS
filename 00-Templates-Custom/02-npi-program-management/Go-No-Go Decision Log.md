@@ -20,7 +20,7 @@
 ## 3. Decision
 - ☐ **GO** — proceed with second source; continue plan unchanged
 - ☐ **NO-GO** — trigger fallback option: ______________________ (e.g., Option 3: slip month-3 volumes; deploy customer notice within 48 h)
-- ☐ **CONDITIONAL** — NOT permitted at this checkpoint per CEO decision (no conditional approvals on A-risk parts)
+- ☐ **CONDITIONAL** — NOT permitted at this checkpoint per Brian's decision (no conditional approvals on A-risk parts)
 
 ## 4. Rationale (3–5 sentences, written by chair, reviewed by approver)
 ______________________________________________________________________

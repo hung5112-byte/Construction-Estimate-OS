@@ -53,19 +53,19 @@ def detect_stage(task: Path, outputs_root: Path) -> tuple[str, str, str]:
     if has("08-execution-plan.md"):
         return (
             "⏸️ STOP 2 — execution plan awaits approval",
-            "CEO",
+            "Department Head",
             f"Review [[02-Tasks/{task.name}/08-execution-plan|execution plan]] → run `vn_execute`",
         )
     if has("07-decision-report.md"):
         return (
             "⏸️ STOP 1 — decision report awaits approval",
-            "CEO",
+            "Department Head",
             f"Review [[02-Tasks/{task.name}/07-decision-report|decision report]] → run `vn_approve`",
         )
     if has("03-clarification.md") and not has("03-clarification-answered.md"):
         return (
             "⏸️ CLARIFICATION — agents have questions",
-            "CEO",
+            "Department Head",
             f"Answer [[02-Tasks/{task.name}/03-clarification|clarification]] → run `vn_resume`",
         )
     if has("03b-research-findings.md") or has("04-meeting-r1-perspectives.md"):
@@ -212,7 +212,7 @@ def main() -> None:
         est_out = gen_bytes // 4
         est_total_out += est_out
         pipeline_rows.append(f"| {link} | {stage} | ~{est_out:,} |")
-        if waiting == "CEO":
+        if waiting == "Department Head":
             pending_rows.append(f"| {link} | {stage} | {next_step} |")
         elif waiting == "system":
             pending_rows.append(f"| {link} | {stage} | {next_step} |")

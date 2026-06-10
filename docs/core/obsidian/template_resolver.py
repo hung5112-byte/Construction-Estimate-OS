@@ -1,5 +1,5 @@
 """Resolve template path per RULE 6:
-1. vault/00-Templates-Custom/<dept>/<template>* (CEO custom)
+1. vault/00-Templates-Custom/<dept>/<template>* (Department Head custom)
 2. vault/01-Departments/<dept>/refs/<template>*
 3. repo/templates-us/<dept>/<template>*
 """

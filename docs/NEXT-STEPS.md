@@ -12,7 +12,7 @@
 
 Open a new Claude Code session in this folder:
 ```
-<path>/One Person Company
+<path>/Hardware Division OS
 ```
 
 Paste the startup prompt:
@@ -57,7 +57,7 @@ git config --global user.email "your-email@example.com"
 The structure after Phase 1 is done:
 
 ```
-One Person Company/
+Hardware Division OS/
 ├── pyproject.toml
 ├── README.md (exists — overwritten in Phase 1 Task 1)
 ├── LICENSE (MIT)
@@ -116,7 +116,7 @@ Phase 1 Task 3 needs the `business-builder.plugin` file at:
 ```
 <path>/business-builder.plugin
 ```
-Or copy it into `One Person Company/` then run the script.
+Or copy it into `Hardware Division OS/` then run the script.
 
 ### 2. Keep Python files under 200 lines
 Per the global development-rules.md. Each module focused on one responsibility.
@@ -131,7 +131,7 @@ bash docs/scripts/dev/check-domain-neutral.sh
 - Agent system prompts: **plain English**
 - Code comments: English
 - Variable / function names: English (Python convention)
-- Output to the CEO: **plain English + define terms + TL;DR (RULE 4)**
+- Output to the Department Head: **plain English + define terms + TL;DR (RULE 4)**
 
 ### 5. Test with a mock LLM
 - CI uses a mock (no API cost)
@@ -156,7 +156,7 @@ After Phase 6 is done → tag `v0.1.0` → ship v1.
 
 ## 📞 Author & references
 
-**CEO / Repo owner:** `your-email@example.com`
+**Department Head / Repo owner:** `your-email@example.com`
 
 **Vendored content credit:**
 - 192 templates in `docs/templates-us/` (originally authored in Vietnamese, localized to US English) from `references/business-builder.plugin`.
@@ -165,11 +165,11 @@ After Phase 6 is done → tag `v0.1.0` → ship v1.
 
 ---
 
-## 🚦 TL;DR for the CEO
+## 🚦 TL;DR for the Department Head
 
 1. Everything is prepared; the detailed 65-task plan is in `docs/plans/`
 2. The next session just needs to paste the startup prompt in Step 1
 3. Phase 1 is ~1-2 hours of tool calls. Then review and decide next.
 4. Do NOT violate the 6 RULES in `DECISIONS.md`.
 
-Ready. Waiting for the CEO to `/compact` then paste the prompt.
+Ready. Waiting for the Department Head to `/compact` then paste the prompt.

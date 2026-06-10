@@ -13,6 +13,6 @@ class JargonDetector:
 
     def detect(self, text: str) -> list[tuple[str, str | None]]:
         terms = set(JARGON_RE.findall(text))
-        ignore = {"US", "LLC", "AM", "PM", "CEO", "CFO", "COO", "HR", "IT", "OK", "FAQ", "API"}
+        ignore = {"US", "LLC", "AM", "PM", "Department Head", "CFO", "COO", "HR", "IT", "OK", "FAQ", "API"}
         terms -= ignore
         return [(t, self.glossary.lookup(t)) for t in sorted(terms)]

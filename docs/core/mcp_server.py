@@ -9,9 +9,9 @@ Run:
 
 Tools registered (9):
     vn_run         — Stage 1: brief → router → gap → clarify (PAUSE)
-    vn_resume      — Stage 2: resume after CEO answers clarification
+    vn_resume      — Stage 2: resume after Department Head answers clarification
     vn_meeting     — Stage 3: research + meeting → 07-decision-report.md (Stop 1)
-    vn_approve     — Stage 4: CEO approves → 08-execution-plan.md (Stop 2)
+    vn_approve     — Stage 4: Department Head approves → 08-execution-plan.md (Stop 2)
     vn_execute     — Stage 5: render .docx/.xlsx into 03-Outputs/
     vn_draft       — Single LLM call for boilerplate (SOP, ECO form, RMA letter, policy...) — fast path
     vn_status      — inspect vault (Brain summary + tasks)
@@ -83,7 +83,7 @@ async def vn_run(brief: str, vault: str, ctx: Context) -> dict:
     (The Cowork tab has a 60s timeout — switch to the Code tab if it fails.)
 
     Returns task_folder path + stage. If stage == PAUSE_CLARIFICATION,
-    CEO needs to answer questions in 03-clarification.md before vn_resume.
+    Department Head needs to answer questions in 03-clarification.md before vn_resume.
     """
     fc = _make_fc(vault, ctx)
     result = await fc.arun(brief)
@@ -96,7 +96,7 @@ async def vn_run(brief: str, vault: str, ctx: Context) -> dict:
 
 @mcp.tool()
 def vn_resume(task_folder: str, ctx: Context) -> dict:
-    """Stage 2: resume after CEO answers 03-clarification.md.
+    """Stage 2: resume after Department Head answers 03-clarification.md.
 
     Validates all questions answered, writes 03-clarification-answered.md.
     """
@@ -154,7 +154,7 @@ def vn_meeting(
 
 @mcp.tool()
 def vn_approve(task_folder: str, ctx: Context) -> dict:
-    """Stage 4: CEO approves decision report → 08-execution-plan.md (Stop 2)."""
+    """Stage 4: Department Head approves decision report → 08-execution-plan.md (Stop 2)."""
     folder = Path(task_folder)
     fc = _make_fc(str(_vault_root_from_task(folder)), ctx)
     result = fc.approve_decision(folder)
@@ -231,7 +231,7 @@ def vn_status(vault: str = "") -> dict:
     (set on Windows via: setx VN_OS_DEFAULT_VAULT "F:\\vaults\\<CompanyName>").
 
     Live research tools (web/law/local/competitor) only run with a
-    TAVILY_API_KEY. vn_status reports which tools are ready vs. skipped so the CEO
+    TAVILY_API_KEY. vn_status reports which tools are ready vs. skipped so the Department Head
     knows whether the decision report rests on real research or just Brain + LLM knowledge.
     """
     # Fallback: if no vault is passed, read from env VN_OS_DEFAULT_VAULT
@@ -299,7 +299,7 @@ def vn_status(vault: str = "") -> dict:
    - vn_status, obsidian_* — instant (<1s)
    - vn_draft — 10-30s (1 LLM call, drafts boilerplate)
    - vn_run — 20-50s (router + clarification)
-   - vn_resume — <10s (resume after the CEO answers clarification)
+   - vn_resume — <10s (resume after the Department Head answers clarification)
    - vn_meeting — 60-180s (multi-department debate, 7+ LLM calls)
    - vn_approve — 10-30s
    - vn_execute — 10-30s (render docx/xlsx)
@@ -314,12 +314,12 @@ def vn_status(vault: str = "") -> dict:
    1. vn_draft(brief, vault, doc_type)  — fast path for a simple SOP/ECO form/RMA letter
    OR the full pipeline for a strategic decision:
    1. vn_run(brief, vault) → returns task_folder + may PAUSE_CLARIFICATION
-   2. (if PAUSE) the CEO answers 03-clarification.md → vn_resume(task_folder)
-   3. vn_meeting(task_folder) → 07-decision-report.md (Stop 1 — CEO approves)
-   4. vn_approve(task_folder) → 08-execution-plan.md (Stop 2 — CEO approves)
+   2. (if PAUSE) the Department Head answers 03-clarification.md → vn_resume(task_folder)
+   3. vn_meeting(task_folder) → 07-decision-report.md (Stop 1 — Department Head approves)
+   4. vn_approve(task_folder) → 08-execution-plan.md (Stop 2 — Department Head approves)
    5. vn_execute(task_folder) → .docx/.xlsx files in 03-Outputs/
 
-After each step, report the task_folder + a summary of the new files. Wait for CEO confirmation
+After each step, report the task_folder + a summary of the new files. Wait for Department Head confirmation
 at Stop 1 / Stop 2 before running the next stage.
 
 For details, see README-USER.md in the repo (Part 3 — Daily use).
@@ -391,7 +391,7 @@ def vn_upgrade(
     """Upgrade an existing vault to the new plugin version.
 
     Refreshes agent prompts, department YAML, Brain aliases. Does NOT touch
-    Brain content (filled in by the CEO), Tasks, or Outputs.
+    Brain content (filled in by the Department Head), Tasks, or Outputs.
 
     Args:
         vault: Path to the existing vault

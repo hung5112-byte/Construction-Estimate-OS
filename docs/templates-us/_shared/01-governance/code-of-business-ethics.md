@@ -12,7 +12,7 @@ A code of conduct and business ethics for all staff. Covers: conflicts of intere
 
 #### Suggested template
 Structure:
-- **Message from the CEO** — 1 page, a personal commitment
+- **Message from the Department Head** — 1 page, a personal commitment
 - **Part 1** — Purpose, scope, commitment
 - **Part 2** — Core values & conduct principles
 - **Part 3** — Conflicts of interest: definition, examples, disclosure process
@@ -38,7 +38,7 @@ CONTEXT:
 - International compliance: [FCPA / UK Bribery Act / None]
 
 FORMAT:
-- Open with a CEO message (1/2 page, personal voice, a commitment)
+- Open with a Department Head message (1/2 page, personal voice, a commitment)
 - Clear sections, each with: principle → concrete example → self-check questions
 - A "5-question test" for each situation: Is it legal? → Is it policy-compliant? → How would it look in the news? → Is it fair to all parties? → Are you proud of this decision?
 - Appendix: COI form + whistleblower form + a 10-question FAQ

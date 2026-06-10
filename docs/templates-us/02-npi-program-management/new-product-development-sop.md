@@ -42,7 +42,7 @@ FORMAT:
 - Stage-Gate flowchart: Mermaid — 5 stages + 4 gates
 - Each stage: Input | Activities | Output | Owner | Timeline
 - Each gate: criteria checklist ☐ | decision maker | Go/Kill/Pivot
-- RACI matrix: Stage × Role (PM, Dev, QC, Marketing, Sales, Finance, CEO)
+- RACI matrix: Stage × Role (PM, Dev, QC, Marketing, Sales, Finance, Department Head)
 - Timeline template: Gantt for one sample product
 - Budget template: Stage | Cost items | Estimate | Actual | Variance (USD)
 - KPI post-launch: Metric | Target | Actual | Review date

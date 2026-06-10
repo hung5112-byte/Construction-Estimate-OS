@@ -1,4 +1,4 @@
-"""Test Synthesizer — synthesize the meeting → final decision report for the CEO."""
+"""Test Synthesizer — synthesize the meeting → final decision report for the Department Head."""
 from unittest.mock import MagicMock
 
 from core.meeting.synthesizer import Synthesizer

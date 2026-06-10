@@ -1,4 +1,4 @@
-# Getting Started — US One Person Company
+# Getting Started — Hardware Division OS
 
 A guide from zero to your first task. About **15-20 minutes** if you already have Claude Desktop + Python 3.11+.
 

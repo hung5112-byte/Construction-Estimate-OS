@@ -59,12 +59,12 @@
 
 ### P1.6 — Translator scope via config
 
-**Before:** the translator only applied to the final report. Clarification questions, perspective outputs, debate transcripts still used technical jargon → hard for the CEO.
+**Before:** the translator only applied to the final report. Clarification questions, perspective outputs, debate transcripts still used technical jargon → hard for the Department Head.
 
 **After:**
 - `translator_mode` config: `"off"` | `"final_only"` (default) | `"all_intermediate"`
 - `"all_intermediate"`: wraps perspectives + pro/con outputs through the translator before appending to state
-- Default stays `"final_only"` to keep old behavior — the CEO opts in via `.vncoderc`
+- Default stays `"final_only"` to keep old behavior — the Department Head opts in via `.vncoderc`
 - Performance: `"all_intermediate"` increases LLM cost (each output → 1 translator call), so the user opts in deliberately
 
 **Tests:** 12 new tests (`test_translator_mode_config.py`)
@@ -73,12 +73,12 @@
 
 ### P1.7 — GitSync logs instead of swallowing silently
 
-**Before:** `try: GitSync.commit(...) except: pass` → the CEO doesn't know why a Git commit failed (permission, no git, conflict, ...).
+**Before:** `try: GitSync.commit(...) except: pass` → the Department Head doesn't know why a Git commit failed (permission, no git, conflict, ...).
 
 **After:**
 - `FlowController._log_warning()` writes to `<vault>/.vn-business-os.log`
 - Format: `[YYYY-MM-DD HH:MM:SS] WARN: Git commit failed (Stop 1): <error message>`
-- The CEO opens the log to see the exact reason
+- The Department Head opens the log to see the exact reason
 
 ---
 
@@ -137,7 +137,7 @@ $ python -m pytest tests/ -q
 
 ## How to use the new options
 
-### Translator mode (CEO-friendly language across the whole flow)
+### Translator mode (Department-Head-friendly language across the whole flow)
 
 Edit `<vault>/.vncoderc` (or `~/.vncoderc`):
 
@@ -145,7 +145,7 @@ Edit `<vault>/.vncoderc` (or `~/.vncoderc`):
 translator_mode: all_intermediate
 ```
 
-→ Every output (perspectives, debate, final report) is simplified to CEO-friendly language. LLM cost rises (~2-3x) but it's much easier to understand.
+→ Every output (perspectives, debate, final report) is simplified to Department-Head-friendly language. LLM cost rises (~2-3x) but it's much easier to understand.
 
 ### Checkpointer (crash recovery)
 

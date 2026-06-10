@@ -1,4 +1,4 @@
-# US One Person Company — Guide for non-coders
+# Hardware Division OS — Guide for non-coders
 
 > You're a one-person business owner (freelancer / shop owner / online store / solo startup).
 > You want **13 AI departments** (Legal, Finance, Marketing, Operations, People, ...) to meet and decide and draft documents for you.
@@ -8,7 +8,7 @@
 
 ## 🎯 What does this repo do? (Read before installing)
 
-This is an **AI Operating System** for a US one-person company. You chat naturally in Claude Desktop; the system convenes 13 AI departments to meet → generate `.docx`/`.xlsx` documents aligned with US federal + Texas law.
+This is an **AI Operating System** for a US division. You chat naturally in Claude Desktop; the system convenes 13 AI departments to meet → generate `.docx`/`.xlsx` documents aligned with US federal + Texas law.
 
 > General information only — the legal/tax content is not legal or tax advice. Confirm with a licensed Texas attorney and CPA.
 
@@ -31,7 +31,7 @@ This is an **AI Operating System** for a US one-person company. You chat natural
 | US compliance | General knowledge | Hardware-division grounding: FCC Part 15, UL/IEC safety, PCI PTS/EMVCo, customs/HTS, Magnuson-Moss warranty, Texas franchise tax |
 | Output | Text in chat | `.docx`/`.xlsx` files + stored in Obsidian + Git auto-commit |
 | Citations | Made up | A **citation validator** flags claims missing a source at the end of the report |
-| CEO approval | None | **2 Stops** (after the decision report + after the execution plan) |
+| Department Head approval | None | **2 Stops** (after the decision report + after the execution plan) |
 
 → **You stay the division manager. The departments do the staff work.** (For actual legal/tax/certification decisions, confirm with a licensed Texas attorney, CPA, customs broker, and the labs.)
 
@@ -191,7 +191,7 @@ Obsidian is a note-taking app. The system uses Obsidian as its "memory" to store
 
 ---
 
-### Step 4: Download the US One Person Company repo (5 min)
+### Step 4: Download the Hardware Division OS repo (5 min)
 
 This is the system's "engine" — it contains the code for 13 departments + 192 templates.
 
@@ -551,7 +551,7 @@ F:\vaults\<Company>\
 ├── 00-Brain/              ← 8 company info files (the AI reads these before each task)
 ├── 00-Templates-Custom/   ← Your own templates (optional)
 ├── 01-Departments/        ← 13 core departments + industry pack
-├── 02-Tasks/              ← History of every task the CEO assigned
+├── 02-Tasks/              ← History of every task the Department Head assigned
 ├── 03-Outputs/            ← The generated .docx/.xlsx files
 └── 99-Archive/            ← Archived old tasks
 ```
@@ -888,7 +888,7 @@ last_updated: 2026-05-08
 
 ## [2026-05-08] Brain initialized
 **Decision:** Set up the US Business OS with the <your industry> pack.
-**Decision-maker:** CEO
+**Decision-maker:** Department Head
 ```
 
 ---
@@ -1038,9 +1038,9 @@ Open `03-clarification.md` in Obsidian, tick the checkboxes + write free-text fo
 - 3 perspectives: Growth bold, Cautious careful (but miscalculated), Balanced most feasible
 - Week-1 blockers: 4G backup Wi-Fi + hire a barista + cash check
 - Weekly KPI gates with PAUSE conditions
-- **22 claims missing citations** flagged at the end (internal Brain figures, CEO to verify)
+- **22 claims missing citations** flagged at the end (internal Brain figures, Department Head to verify)
 
-### Stage 4 — STOP 1: CEO approves (~2 min reading)
+### Stage 4 — STOP 1: Department Head approves (~2 min reading)
 
 Open `07-decision-report.md` in Obsidian. Read the 30s TL;DR + Recommendation + Blockers.
 
@@ -1059,7 +1059,7 @@ Open `07-decision-report.md` in Obsidian. Read the 30s TL;DR + Recommendation + 
 
 **Claude auto-calls `vn_approve`** → generates `08-execution-plan.md`: action items + deadlines + owners + budget.
 
-### STOP 2: CEO approves the execution plan
+### STOP 2: Department Head approves the execution plan
 
 Read the plan, if OK:
 
@@ -1191,7 +1191,7 @@ For: big decisions (open a location, ad budget, rebrand), high-legal-risk docs, 
 
 ### 🛑 Stop 1 + Stop 2 — Why they matter
 
-The system has **2 deliberate stops** for you (the CEO) to approve:
+The system has **2 deliberate stops** for you (the Department Head) to approve:
 
 - **Stop 1 — after `vn_meeting`**: you review `07-decision-report.md` before approving. This is your chance to **reject / edit the decision** before the system renders docx.
 - **Stop 2 — after `vn_approve`**: you review `08-execution-plan.md` before executing. This is your chance to see the **detailed rollout plan** and edit it before spending render effort.
@@ -1218,7 +1218,7 @@ The system has **2 deliberate stops** for you (the CEO) to approve:
 # Decision report: <topic>
 
 ## 📌 Bottom line (30-second read)
-- 3-5 summary lines for the CEO
+- 3-5 summary lines for the Department Head
 - The main recommendation
 
 ## Recommendation
@@ -1239,7 +1239,7 @@ The system has **2 deliberate stops** for you (the CEO) to approve:
 ## KPI gates
 | Week X | KPI | Threshold | Action if fail |
 
-## Questions for the CEO to decide
+## Questions for the Department Head to decide
 A. ...  B. ...  C. ...  D. ...
 
 ## ⚠️ Warning: claims missing a source
@@ -1252,7 +1252,7 @@ A. ...  B. ...  C. ...  D. ...
 2. Read the **Recommendation** (does the system say "Go" or "Don't")
 3. Scan the **Action items** (anything too expensive or too urgent?)
 4. Read the **claims missing a source** warning — if it's an important figure → verify it yourself
-5. Answer the **Questions for the CEO** (A/B/C/D) → record in the decision log or edit the decision report directly
+5. Answer the **Questions for the Department Head** (A/B/C/D) → record in the decision log or edit the decision report directly
 
 **When NOT to approve:**
 

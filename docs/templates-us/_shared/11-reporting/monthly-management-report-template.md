@@ -4,7 +4,7 @@
 A monthly management report for the leadership team — a one-page executive summary of company-wide performance plus department detail. Includes a KPI scorecard, financial highlights, operational metrics, key wins, issues, and action items.
 
 #### Information to collect (ask the user before generating)
-1. Who reads the monthly report? (CEO / leadership team / department heads)
+1. Who reads the monthly report? (Department Head / leadership team / department heads)
 2. Submission deadline? (which day each month)
 3. Top KPIs for page 1? (revenue, profit, cash flow, NPS...)
 4. Compare vs. Budget / vs. prior month / vs. prior year?
@@ -28,7 +28,7 @@ Confirm the structure before generating.
 Create a Monthly Management Report Template.
 
 CONTEXT:
-- Company: [Name] — Audience: [CEO / leadership team / department heads]
+- Company: [Name] — Audience: [Department Head / leadership team / department heads]
 - Deadline: [day X each month]
 - Top KPIs: [list 8-12 page-1 KPIs]
 - Comparison: [vs Budget / vs Prior month / vs YoY]
@@ -39,7 +39,7 @@ FORMAT:
 - Page 1 — Executive Dashboard:
   - Company scorecard: 8-12 KPIs — KPI | Actual | Target | Variance | Trend (↑↓→) | Status (🟢🟡🔴)
   - Headlines: 3 key wins + 3 key concerns — 1 sentence each
-  - CEO commentary: 3-5 sentences summarizing the month
+  - Department Head commentary: 3-5 sentences summarizing the month
 - Page 2 — Financial:
   - P&L summary: Revenue | COGS | Gross Profit | OPEX | EBITDA | Net Profit — Actual vs. Budget vs. Prior (USD)
   - Revenue waterfall: Prior month → New sales + Upsell − Churn = Current month

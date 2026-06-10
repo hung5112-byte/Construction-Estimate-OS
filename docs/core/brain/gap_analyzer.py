@@ -1,4 +1,4 @@
-"""Compare the brief with the Brain → list gaps the CEO must clarify.
+"""Compare the brief with the Brain → list gaps the Department Head must clarify.
 
 🔒 RULE 1 enforced: every gap MUST cite a Brain file/section.
 """
@@ -45,8 +45,8 @@ GAP_PROMPT = """You are the Gap Analyzer. Compare the brief with the Brain conte
 ## Principles
 - 🔒 RULE 1: Every gap MUST cite the Brain
 - CRITICAL: brief contradicts strategy/budget/laws
-- WARN: brief may be OK but needs CEO confirmation
-- INFO: nice-to-know, do NOT ask the CEO
+- WARN: brief may be OK but needs Department Head confirmation
+- INFO: nice-to-know, do NOT ask the Department Head
 - If the brief fully matches the Brain → return []
 - Return a JSON array, with NO markdown
 """

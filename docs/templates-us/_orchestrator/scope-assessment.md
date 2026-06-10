@@ -6,7 +6,7 @@ An SOP for analyzing the Intake Questionnaire results to determine: what maturit
 #### Information to collect (ask the user before generating)
 1. Do you have your own maturity model, or use the standard?
 2. Which criteria decide priority order? (urgency / impact / effort / cost)
-3. Any case where a sub-skill should be skipped entirely? (e.g. a one-person company doesn't need HR)
+3. Any case where a sub-skill should be skipped entirely? (e.g. a division doesn't need HR)
 4. Who assesses the scope? (AI automatically / coach review / both)
 
 #### Suggested template

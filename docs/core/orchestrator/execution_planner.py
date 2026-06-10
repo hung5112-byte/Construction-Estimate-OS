@@ -17,7 +17,7 @@ from pathlib import Path
 log = logging.getLogger(__name__)
 
 # ──────────────────────────────────────────────────────────────────────────────
-# System prompt for execution plan generation (English, CEO-friendly)
+# System prompt for execution plan generation (English, Department-Head-friendly)
 # ──────────────────────────────────────────────────────────────────────────────
 _SYSTEM_PROMPT = """You are the strategist who coordinates the execution plan for the company.
 Task: read the Decision Report and produce a complete EXECUTION PLAN.
@@ -115,7 +115,7 @@ def generate_execution_plan(
         log.error("LLM call failed during execution plan generation: %s", exc)
         raise
 
-    # Apply translator pipeline (RULE 4 — CEO-friendly language)
+    # Apply translator pipeline (RULE 4 — Department-Head-friendly language)
     try:
         translated_plan = translator.apply(raw_plan)
     except Exception as exc:

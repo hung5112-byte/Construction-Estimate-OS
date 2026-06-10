@@ -117,7 +117,7 @@ class CitationValidator:
     WARNING_HEADER = "\n\n---\n\n## ⚠️ Warning: claims missing a source\n\n"
     WARNING_INTRO = (
         "The following sentences contain figures or legal references but no clear "
-        "citation was found. The CEO should verify them before proceeding:\n\n"
+        "citation was found. The Department Head should verify them before proceeding:\n\n"
     )
 
     def validate(self, report_path: Path) -> list[CitationFlag]:

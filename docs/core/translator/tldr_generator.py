@@ -2,12 +2,12 @@
 from __future__ import annotations
 
 
-TLDR_PROMPT = """Summarize the report below into 3-5 plain-language lines a CEO can read in 30 seconds.
+TLDR_PROMPT = """Summarize the report below into 3-5 plain-language lines a Department Head can read in 30 seconds.
 
 ## Requirements
 - 3-5 lines (NO more)
 - Bullet points (- ...)
-- Each line: one key fact the CEO needs to know
+- Each line: one key fact the Department Head needs to know
 - Plain English, NO jargon
 - Format:
 ```

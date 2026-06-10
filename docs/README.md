@@ -1,4 +1,4 @@
-# Hardware Division OS — US One Person Company
+# Hardware Division OS — Hardware Division OS
 
 > **An AI operating system for a hardware development, quality & supply chain division run by one VP.**
 > You are the VP — 5 manager-led departments of AI agents (29 agents: 5 managers + 24 teams) debate like your real org: teams brief their manager, managers debate across departments, you approve. Output: decisions + `.docx/.xlsx` documents aligned with US federal + Texas law.

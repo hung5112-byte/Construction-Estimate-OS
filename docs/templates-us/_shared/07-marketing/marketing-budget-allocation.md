@@ -8,7 +8,7 @@ A marketing-budget allocation document — split by channel, by campaign, by qua
 2. Current allocation? (% to online vs. offline vs. tools?)
 3. Which channel gives the best ROI? Which is worst?
 4. Any seasonal peaks? (Black Friday, Cyber Monday, holidays, back-to-school, industry peak season?)
-5. Spend-approval process? (< $X: Marketing Manager | > $X: CMO | > $Y: CEO?)
+5. Spend-approval process? (< $X: Marketing Manager | > $X: CMO | > $Y: Department Head?)
 6. A contingency fund? (% reserve?)
 
 #### Suggested template
@@ -32,7 +32,7 @@ CONTEXT:
 - Current allocation: Online [%] | Offline [%] | Tools [%]
 - Best-ROI channel: [channel] — Worst-ROI channel: [channel]
 - Seasonal peaks: [list months/events — e.g. Black Friday, holidays]
-- Approval: < $[X] (Marketing Manager) | > $[X] (CMO) | > $[Y] (CEO)
+- Approval: < $[X] (Marketing Manager) | > $[X] (CMO) | > $[Y] (Department Head)
 - Contingency: [%]
 
 FORMAT:

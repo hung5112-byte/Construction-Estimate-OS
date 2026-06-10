@@ -9,7 +9,7 @@ A guide to set up a CRM for the sales team — custom fields, pipeline stages, a
 3. Pipeline stages defined?
 4. Custom fields needed beyond the defaults? (industry, source, deal type...)
 5. What automation? (auto-assign lead, follow-up reminder, stage notification)
-6. Dashboards needed: for rep, for manager, for CEO?
+6. Dashboards needed: for rep, for manager, for Department Head?
 7. Integrations needed: email, phone, website, chat, marketing tools?
 
 #### Suggested template
@@ -45,7 +45,7 @@ FORMAT:
 - Dashboard specs per role:
   - Rep: My pipeline | My activities | My quota
   - Manager: Team pipeline | Forecast | Rep performance
-  - CEO: Revenue trend | Win rate | Pipeline health
+  - Department Head: Revenue trend | Win rate | Pipeline health
 - Data hygiene: table Rule | Check frequency | Responsible | Action if violation
 - Integration map: Mermaid diagram — CRM ↔ Email ↔ Phone ↔ Website ↔ Marketing
 - Training plan: table Week | Topic | Duration | Audience | Format

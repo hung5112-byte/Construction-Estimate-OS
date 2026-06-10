@@ -11,7 +11,7 @@ def test_upgrade_refreshes_agents_keeps_brain_content(tmp_path):
     onboard_vault(vault_path=vault, packs=[], init_git=False)
 
     strategy_file = vault / "00-Brain" / "strategy.md"
-    user_strategy = strategy_file.read_text(encoding="utf-8") + "\n\n## CEO Notes\nMy data\n"
+    user_strategy = strategy_file.read_text(encoding="utf-8") + "\n\n## Department Head Notes\nMy data\n"
     strategy_file.write_text(user_strategy, encoding="utf-8")
 
     agent_file = vault / "01-Departments" / "05-service-operations" / "agents" / "service-ops-manager.md"

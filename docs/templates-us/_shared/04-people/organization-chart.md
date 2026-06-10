@@ -34,7 +34,7 @@ CONTEXT:
 - Planned changes: [describe]
 
 FORMAT:
-- Mermaid org chart: Owner/Board → CEO → leads → department heads → teams
+- Mermaid org chart: Owner/Board → Department Head → leads → department heads → teams
 - Detail table: Dept | Head | HC | Function | Reports to | Dotted line
 - Span of control: Manager | Direct reports | Ratio → highlight if >7
 - Color coding: Filled 🟢 | Vacant 🔴 | Planned 🟡

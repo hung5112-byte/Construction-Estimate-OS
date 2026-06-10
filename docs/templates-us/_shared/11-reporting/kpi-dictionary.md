@@ -8,7 +8,7 @@ A master document defining all KPIs in the company — by the Balanced Scorecard
 2. Classify by: BSC 4 perspectives / department / process?
 3. An OKR system? How do KPIs link to OKRs?
 4. Data sources: manual / ERP / CRM / BI tool?
-5. Top 5-10 most important KPIs (CEO dashboard)?
+5. Top 5-10 most important KPIs (Department Head dashboard)?
 6. Cascading KPIs (company → department → individual)?
 
 #### Suggested template
@@ -18,7 +18,7 @@ Structure:
 - **Part 3** — Customer KPIs: NPS, CSAT, Retention, CAC, CLV, Market share
 - **Part 4** — Internal Process KPIs: productivity, quality, cycle time, SLA compliance
 - **Part 5** — Learning & Growth KPIs: training hours, employee engagement, innovation rate
-- **Part 6** — CEO Scorecard: top 10-15 company-level KPIs
+- **Part 6** — Department Head Scorecard: top 10-15 company-level KPIs
 - **Part 7** — Cascading guide: company → department → individual
 - **Part 8** — Review & update process: add/edit/retire a KPI
 - **Appendix**: KPI card template, glossary of metrics terms
@@ -34,7 +34,7 @@ CONTEXT:
 - KPI framework: [BSC / OKR / department / hybrid]
 - Estimated # KPIs: [number]
 - Data sources: [manual / ERP / CRM / BI / spreadsheet]
-- CEO top KPIs: [list top 5-10]
+- Department Head top KPIs: [list top 5-10]
 - Cascading: [Yes/No]
 
 FORMAT:
@@ -50,7 +50,7 @@ FORMAT:
   - Owner: who is responsible
   - Dashboard: link or location on the dashboard
   - Related KPIs: related leading/lagging indicators
-- CEO Scorecard: 10-15 KPIs on one page — Perspective | KPI | Current | Target | Trend | Status
+- Department Head Scorecard: 10-15 KPIs on one page — Perspective | KPI | Current | Target | Trend | Status
 - Cascading example: 1 company KPI → 3 dept KPIs → 5 individual KPIs
 - KPI lifecycle: Propose → Define → Validate → Implement → Review → Retire
 - Glossary: 20-30 common metrics terms — Revenue vs. Billings vs. Collections, Gross vs. Net, Leading vs. Lagging

@@ -45,7 +45,7 @@ FORMAT:
 - Continuously numbered articles, clear language
 - Training classification matrix: Type | Mandatory/Voluntary | Audience | Frequency | Budget | Example
 - Budget allocation: Category | % Budget | Approval level | Cap per person (USD)
-- Approval flowchart: Mermaid — Proposal → Line Manager → HR → Finance → CEO (by amount)
+- Approval flowchart: Mermaid — Proposal → Line Manager → HR → Finance → Department Head (by amount)
 - Service commitment: table Training cost | Commitment period | Repayment if leaving early (note enforceability)
 - Training-hours target: table Level | Min hours/year | Mandatory | Optional
 - Record retention: table Record type | Retention period | Format | Storage

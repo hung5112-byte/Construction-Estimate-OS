@@ -10,7 +10,7 @@
 
 ---
 
-## ⚡ Quick bootstrap (CEO: copy-paste this prompt into a new session)
+## ⚡ Quick bootstrap (Department Head: copy-paste this prompt into a new session)
 
 Copy the block below and paste it into Claude Code:
 
@@ -42,7 +42,7 @@ When I confirm, use the skill `superpowers:subagent-driven-development` to run P
 Create the root repo RIGHT HERE in the current folder (do NOT create a vn-business-os subfolder).
 
 NOTE:
-- I am the CEO/owner (your-email@example.com)
+- I am the Department Head/owner (your-email@example.com)
 - All code must follow the 6 RULES in DECISIONS.md
 - All output to me must be in plain English + define terms + include a TL;DR (RULE 4)
 ```
@@ -52,7 +52,7 @@ NOTE:
 ## 📂 Folder map
 
 ```
-One Person Company/
+Hardware Division OS/
 ├── START-HERE.md         ← THIS FILE (read first)
 ├── README.md             ← project overview + status
 ├── DECISIONS.md          ← 8 decisions + 6 RULES (VERY IMPORTANT)
@@ -69,21 +69,21 @@ One Person Company/
 ## 🔑 4 most important facts (if a new Claude session reads only one section → read this one)
 
 ### 1. Who am I?
-- **CEO/Owner of the repo:** `your-email@example.com` (that's me, the person chatting)
+- **Department Head/Owner of the repo:** `your-email@example.com` (that's me, the person chatting)
 - **`references/business-builder.plugin`:** the source zip — contains 192 templates (originally authored in Vietnamese, now localized to US English) vendored into `docs/templates-us/`
 
 ### 2. What is the project?
-**US One Person Company** — an open-source AI agent OS for a US solo founder:
-- CEO chats a brief → AI agents (departments) debate → produce a report + `.docx/.xlsx` documents
+**Hardware Division OS** — an open-source AI agent OS for a US department head:
+- Department Head chats a brief → AI agents (departments) debate → produce a report + `.docx/.xlsx` documents
 - Aligned with US GAAP + the Texas Business Organizations Code (TBOC) + FLSA + IRS rules (general information, not legal/tax advice)
 - Task classification: SIMPLE / COMPLEX / STRATEGIC
 - Stack: Python + LangGraph + Obsidian + multi-tool entry (Claude Code/Cowork)
 
 ### 3. The 6 immutable RULES
-1. **Brain-first clarification** — read the Brain (`vault/00-Brain/*.md`) BEFORE asking the CEO; every question MUST cite the Brain
+1. **Brain-first clarification** — read the Brain (`vault/00-Brain/*.md`) BEFORE asking the Department Head; every question MUST cite the Brain
 2. **Domain-neutral engine** — code lifted from TradingAgents MUST rename all Bull/Bear/trade/finance/ticker
 3. **Single source of truth** — the Obsidian vault is the truth, SQLite is only a cache
-4. **CEO-friendly language** — plain English, define terms, TL;DR at the top of reports
+4. **Department-Head-friendly language** — plain English, define terms, TL;DR at the top of reports
 5. **Live research with citations** — search law/competitors/benchmarks, cite URL + date
 6. **BYOT** — custom company templates > pack > default (192 templates from the bb-plugin)
 
@@ -100,7 +100,7 @@ One Person Company/
 | ❌ DON'T | ✅ DO |
 |---|---|
 | Skip reading DECISIONS.md because "I think I know" | Read the 6 RULES carefully, be able to cite them |
-| Create a `vn-business-os/` subfolder | Create directly in the CWD (`One Person Company/`) |
+| Create a `vn-business-os/` subfolder | Create directly in the CWD (`Hardware Division OS/`) |
 | Make up numbers / US law | Search live via tools (RULE 5) |
 | Output in another language or full jargon | Plain English + definitions + TL;DR (RULE 4) |
 | Skip the 6-RULES check on each commit | Run `docs/scripts/dev/check-domain-neutral.sh` |
@@ -112,7 +112,7 @@ One Person Company/
 
 ## 🆘 If the new session seems confused
 
-The CEO can paste this again:
+The Department Head can paste this again:
 
 ```
 Hold on. Re-read START-HERE.md + DECISIONS.md from the top, especially the 6 RULES.
@@ -129,10 +129,10 @@ You seem to have lost the context. /clear, then paste the bootstrap prompt from 
 
 ## 🎯 After Phase 1 is done
 
-Verify checklist (CEO runs):
+Verify checklist (Department Head runs):
 
 ```bash
-cd "<path>/One Person Company"
+cd "<path>/Hardware Division OS"
 
 # 1. pip install
 pip install -e .
@@ -168,4 +168,4 @@ Required credits in README/LICENSE/NOTICE:
 
 ---
 
-**Ready. CEO: `/compact`, then paste the bootstrap prompt at the top of this file.**
+**Ready. Department Head: `/compact`, then paste the bootstrap prompt at the top of this file.**

@@ -1,6 +1,6 @@
 # Claude Code / Desktop Skill Adapter
 
-Skill for Claude Code (CLI / desktop). After installing, the CEO types naturally about a business task and the skill activates and calls the MCP tools.
+Skill for Claude Code (CLI / desktop). After installing, the Department Head types naturally about a business task and the skill activates and calls the MCP tools.
 
 ## Prerequisites
 
@@ -25,7 +25,7 @@ Claude will:
 1. Detect the `vn-business-os` skill is active
 2. Call `vn_status(vault)` to verify the Brain
 3. Call `vn_run(brief, vault)` → PAUSE for clarification
-4. Read `03-clarification.md`, ask the CEO to answer
+4. Read `03-clarification.md`, ask the Department Head to answer
 5. Continue through the stages
 
 ## Notes

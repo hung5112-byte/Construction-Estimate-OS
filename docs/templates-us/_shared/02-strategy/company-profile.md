@@ -15,7 +15,7 @@ An overview document introducing the business — for partners, customers, inves
 Structure (10-15 pages):
 - **Cover page** — logo, name, tagline, contact info
 - **Table of contents**
-- **A letter from the CEO** — half a page, personal, inspiring
+- **A letter from the Department Head** — half a page, personal, inspiring
 - **Overview** — founding, legal entity, headquarters, industry
 - **Vision / Mission / Core Values** — a 1-page summary
 - **Products & Services** — main catalog, USP

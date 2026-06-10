@@ -1,4 +1,4 @@
-# Contributing to US One Person Company
+# Contributing to Hardware Division OS
 
 Thanks for your interest! Here's a short guide to getting involved.
 
@@ -33,10 +33,10 @@ All 261+ tests must pass before submitting a PR.
 
 ## The 6 RULES (immutable)
 
-1. **Brain-first** — don't ask the CEO before reading the Brain
+1. **Brain-first** — don't ask the Department Head before reading the Brain
 2. **Domain-neutral** — do NOT leak finance/trading jargon
 3. **Single source of truth** — the Obsidian vault is canonical
-4. **CEO-friendly language** — translator pipeline for output
+4. **Department-Head-friendly language** — translator pipeline for output
 5. **Live research with citations** — searches must cite + validator
 6. **BYOT** — company custom > pack > default
 
@@ -60,7 +60,7 @@ docs/core/                 # Python engine
 ├── meeting/          # LangGraph debate engine
 ├── orchestrator/     # FlowController + Router + tools
 ├── tools/            # 6 research tools
-├── translator/       # CEO-friendly language pipeline
+├── translator/       # Department-Head-friendly language pipeline
 ├── obsidian/         # Vault I/O + DocWriter + Git
 └── llm/              # LLM provider abstraction (MCP sampling, Anthropic)
 docs/departments/          # 12 core departments (YAML + agent .md)

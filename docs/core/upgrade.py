@@ -2,7 +2,7 @@
 
 Use case: a user onboarded a vault from an older version. When the plugin upgrades
 (enriched prompts, aliases, ...), push the new files into the existing vault
-WITHOUT touching the data the CEO filled in (Brain content, Tasks, Outputs).
+WITHOUT touching the data the Department Head filled in (Brain content, Tasks, Outputs).
 """
 from __future__ import annotations
 import shutil
@@ -14,7 +14,7 @@ import yaml
 REPO_ROOT = Path(__file__).parent.parent
 
 
-# Brain files are NEVER overwritten (the CEO filled them in)
+# Brain files are NEVER overwritten (the Department Head filled them in)
 PRESERVE_BRAIN = True
 
 

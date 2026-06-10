@@ -14,7 +14,7 @@ A consolidated annual report — for shareholders, partners, banks, and media. S
 #### Suggested template
 Structure:
 - **Cover** — company name, year, tagline, visual
-- **Letter from the Chairman/CEO** — 1-2 pages: vision, highlights, thanks
+- **Letter from the Chairman/Department Head** — 1-2 pages: vision, highlights, thanks
 - **Company intro** — mission, vision, values, history, milestones
 - **Market overview** — economic context, industry, opportunities, challenges
 - **Business results** — revenue, profit, market share, customers, products
@@ -42,7 +42,7 @@ CONTEXT:
 FORMAT:
 - Cover page: Company name | "Annual Report [Year]" | Visual/Image | Tagline
 - Table of Contents: hyperlinked sections
-- Chairman/CEO letter (1-2 pages):
+- Chairman/Department Head letter (1-2 pages):
   - Opening: context of the past year
   - Highlights: 5-7 standout achievements
   - Challenges: difficulties and how they were overcome

@@ -9,10 +9,10 @@
 
 ## Bootstrap
 
-The CEO ran a new session with the prompt from `START-HERE.md`. Claude:
+The Department Head ran a new session with the prompt from `START-HERE.md`. Claude:
 1. Read `DECISIONS.md` + `README.md` + `SPEC.md` + `plans/plan.md` + `plans/phase-01-foundation.md`
 2. Verified understanding — answered 4 questions (what the project is, the 6 RULES, Phase 1 first task, the stack)
-3. CEO confirmed "ok" → started implementing
+3. Department Head confirmed "ok" → started implementing
 
 ---
 
@@ -180,11 +180,11 @@ Branch: master (NOT pushed — local only)
 
 ## Resume for the next session (v1.1 or v2)
 
-### Step 1: CEO uses v1 in the real world ≥ 2-4 weeks
+### Step 1: Department Head uses v1 in the real world ≥ 2-4 weeks
 
 Verify checklist (run locally):
 ```bash
-cd "<path>/One Person Company"
+cd "<path>/Hardware Division OS"
 pip install -e .
 python -m core.cli --version       # 0.1.0
 python -m pytest tests/ -q          # 103 passed, 1 skipped
@@ -211,7 +211,7 @@ python -m core.cli run --brief "Create a marketing campaign..." --vault ~/test-v
 While using it, note in `~/test-vault/00-Brain/decisions-log.md`:
 ```markdown
 ### 2026-XX-XX — Pain: <description>
-- Owner: CEO
+- Owner: Department Head
 - Impact: [low/medium/high]
 - Suggested fix: <v1.1 or v2 feature>
 ```
@@ -231,7 +231,7 @@ The project is at v0.1.0 (shipped). Read:
 4. SPEC.md — original design spec
 5. README.md — overview
 
-Pain points noted while using v1: <CEO pastes here>
+Pain points noted while using v1: <Department Head pastes here>
 
 Proposal: which feature to prioritize first in v1.1/v2?
 ```
@@ -298,5 +298,5 @@ From the phase reviews + open questions in the plan:
 
 ---
 
-**Status:** v0.1.0 SHIPPED. Ready for CEO testing.
+**Status:** v0.1.0 SHIPPED. Ready for Department Head testing.
 **Next session:** read the roadmap, measure pain points, prioritize a feature → start v1.1 or v2.

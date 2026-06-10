@@ -14,7 +14,7 @@ A report template for the Board of Directors / Advisory Board — a strategic-le
 #### Suggested template
 Structure:
 - **Cover Page** — meeting details, agenda, attendance
-- **CEO Report** — 1-2 pages: strategic highlights, key achievements, challenges
+- **Department Head Report** — 1-2 pages: strategic highlights, key achievements, challenges
 - **Financial Summary** — 1 page: P&L, balance-sheet highlights, cash position, forecast
 - **Strategic Initiatives Update** — progress vs. plan, milestones, pivots
 - **Risk Dashboard** — top 5 risks, status changes, new risks, mitigation progress
@@ -38,7 +38,7 @@ CONTEXT:
 FORMAT:
 - Cover page: Company name | Board Meeting # | Date | Location | Time | Quorum status
 - Agenda: # | Item | Presenter | Time | Type (Information/Discussion/Decision)
-- CEO Report (1-2 pages):
+- Department Head Report (1-2 pages):
   - Period highlights: 3-5 bullets — standout results
   - Strategic scorecard: Initiative | Status (🟢🟡🔴) | Commentary | Next milestone
   - Market & competitive update: key trends, competitive moves, market position

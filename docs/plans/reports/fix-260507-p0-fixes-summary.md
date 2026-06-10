@@ -25,7 +25,7 @@
 - The 4 Tavily tools now have an `is_available()` check
 - When the key is missing: return `ToolResult(data={"skipped": True}, notes="Missing TAVILY_API_KEY...")` instead of crashing
 - ToolRouter only plans tools that have credentials (no wasted LLM tokens)
-- `vn_status` reports `tools_live` + `tools_skipped` so the CEO knows up front
+- `vn_status` reports `tools_live` + `tools_skipped` so the Department Head knows up front
 
 ---
 
@@ -129,7 +129,7 @@ $ python -m pytest tests/ -q
 | 1. Brain-first | ✓ | ✓ |
 | 2. Domain-neutral | ✓ | ✓ |
 | 3. Single source of truth | Partial | ✓ (departments from the vault) |
-| 4. CEO-friendly language | Partial | Partial (P1.6) |
+| 4. Department-Head-friendly language | Partial | Partial (P1.6) |
 | 5. Live research with citations | **DEGRADED** | ✓ (graceful skip + status report) |
 | 6. BYOT | **BROKEN** | ✓ (meeting + execute both respect the vault) |
 

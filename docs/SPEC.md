@@ -1,9 +1,9 @@
 # VN Business OS — Design Spec
 
 **Date:** 2026-05-06
-**Author:** Brainstorming session with the CEO
+**Author:** Brainstorming session with the Department Head
 **Status:** HISTORICAL — this is the original v1 design spec (generic 12-department
-one-person-company OS). On 06/09/2026 the repo was specialized into a **5-department
+division OS). On 06/09/2026 the repo was specialized into a **5-department
 hardware engineering & supply chain division OS** (Hardware Product Dev, Operations,
 RMA, Supply Chain, Quality) — see `README.md` and `CLAUDE.md` for the current
 architecture. Department/pack specifics below describe the v1 design, not the
@@ -15,9 +15,9 @@ shipped system.
 
 ## 1. Goal
 
-Build an open-source repo that helps **any US small business / solo operator** run on a "one-person company + AI agent team" model.
+Build an open-source repo that helps **any US small business / solo operator** run on a "division + AI agent team" model.
 
-The CEO assigns work via chat/CLI → the system reads the company's data → the departments (AI agents) debate → produce a consolidated report → the CEO approves → it auto-generates a plan + documents (.docx/.xlsx).
+The Department Head assigns work via chat/CLI → the system reads the company's data → the departments (AI agents) debate → produce a consolidated report → the Department Head approves → it auto-generates a plan + documents (.docx/.xlsx).
 
 Works for any industry (F&B, retail, tech, edu, healthcare...). Not a trading system.
 
@@ -25,7 +25,7 @@ Works for any industry (F&B, retail, tech, edu, healthcare...). Not a trading sy
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│ LAYER 1 — ENTRY (CEO chat)                          │
+│ LAYER 1 — ENTRY (Department Head chat)                          │
 │ Adapters: Claude Code · Cowork · (v2: Codex/Antigrav)│
 └────────────────────┬────────────────────────────────┘
                      ↓
@@ -65,10 +65,10 @@ Works for any industry (F&B, retail, tech, edu, healthcare...). Not a trading sy
 
 | # | Rule | Description |
 |---|---|---|
-| 1 | Brain-first clarification | Don't ask the CEO before reading the Brain. Every question must cite a Brain source. |
+| 1 | Brain-first clarification | Don't ask the Department Head before reading the Brain. Every question must cite a Brain source. |
 | 2 | Domain-neutral engine | Code copied from TradingAgents must be fully renamed — no trade/finance leak. |
 | 3 | Single source of truth | The Obsidian vault is the truth. SQLite is only a recovery cache. |
-| 4 | CEO-friendly language | Plain English, define terms, include a TL;DR. |
+| 4 | Department-Head-friendly language | Plain English, define terms, include a TL;DR. |
 | 5 | Live research with citations | Search law/competitors/benchmarks as needed. MUST cite the source. |
 | 6 | BYOT (Bring Your Own Templates) | The company can bring its own templates → prefer custom > default. |
 
@@ -114,7 +114,7 @@ LoC est.: ~4800 lines of Python core + ~150-200 YAML/MD config files + ~1000 lin
 │   └── glossary.md                    # auto-grown from outputs
 ├── 00-Templates-Custom/               # 🆕 RULE 6: company brings its own templates
 ├── 01-Departments/                    # cloned from /departments + pack
-├── 02-Tasks/                          # the CEO drops a brief here
+├── 02-Tasks/                          # the Department Head drops a brief here
 │   └── YYYY-MM-DD-<slug>/
 │       ├── 00-brief.md
 │       ├── 01-routing.md
@@ -124,8 +124,8 @@ LoC est.: ~4800 lines of Python core + ~150-200 YAML/MD config files + ~1000 lin
 │       ├── 04-meeting-r1-perspectives.md
 │       ├── 05-meeting-r2-debate.md
 │       ├── 06-meeting-r3-perspectives.md
-│       ├── 07-decision-report.md      # CEO approves here (Stop 1)
-│       └── 08-execution-plan.md       # CEO approves execute (Stop 2)
+│       ├── 07-decision-report.md      # Department Head approves here (Stop 1)
+│       └── 08-execution-plan.md       # Department Head approves execute (Stop 2)
 ├── 03-Outputs/                        # official docx/xlsx (10 standard bb-plugin folders)
 └── 99-Archive/
 ```
@@ -133,7 +133,7 @@ LoC est.: ~4800 lines of Python core + ~150-200 YAML/MD config files + ~1000 lin
 ## 7. Data flow (Test case B)
 
 ```
-CEO brief
+Department Head brief
    ↓
 Brain reader   → load 7 files in 00-Brain/
    ↓
@@ -141,7 +141,7 @@ Router         → SIMPLE/COMPLEX/STRATEGIC + dept list
    ↓
 Gap analyzer   → compare brief vs Brain
    ↓
-Clarifier      → ask the CEO (Brain-first, with citations) — only if something's missing
+Clarifier      → ask the Department Head (Brain-first, with citations) — only if something's missing
    ↓
 🆕 Research    → tools run in parallel (law + competitors + benchmark)
    ↓
@@ -153,18 +153,18 @@ Meeting R3     → Perspective Debators (Growth/Cautious/Balanced)
    ↓
 Synthesizer    → 07-decision-report.md
    ↓
-=== STOP 1: CEO approves the report ===
+=== STOP 1: Department Head approves the report ===
    ↓
 Execution Dispatcher → 08-execution-plan.md
    ↓
-=== STOP 2: CEO approves execute ===
+=== STOP 2: Department Head approves execute ===
    ↓
 Doc Writer     → generate .docx/.xlsx into 03-Outputs/
 Memory         → append to decisions-log.md
 Git sync       → auto-commit
 ```
 
-Timing: 15-25 min per COMPLEX task. CEO at the keyboard ~10 min.
+Timing: 15-25 min per COMPLEX task. Department Head at the keyboard ~10 min.
 Cost: ~$0.5-1.5/task (Claude Sonnet 4.6).
 
 ## 8. Department + Agent definition
@@ -209,7 +209,7 @@ compliance_refs: ["FDA Food Code + Texas DSHS food permit", "OSHA / local fire c
 ```
 
 ### On-demand agent creation
-When the gap_analyzer detects missing expertise → propose to the CEO → if approved → `creator.py` generates the agent definition file + commits to Git → persists permanently.
+When the gap_analyzer detects missing expertise → propose to the Department Head → if approved → `creator.py` generates the agent definition file + commits to Git → persists permanently.
 
 ## 9. Industry Packs v1
 
@@ -232,7 +232,7 @@ When the gap_analyzer detects missing expertise → propose to the CEO → if ap
 
 Total v1: ~73 ready-to-use agents.
 
-## 10. CEO-friendly language (RULE 4)
+## 10. Department-Head-friendly language (RULE 4)
 
 ### Module `docs/core/translator/`
 - `glossary.py` — load/save vault/00-Brain/glossary.md
@@ -254,7 +254,7 @@ Total v1: ~73 ready-to-use agents.
 
 ### Pipeline
 ```
-Agent raw output → JargonDetector → Simplifier → TLDRGenerator → CEO
+Agent raw output → JargonDetector → Simplifier → TLDRGenerator → Department Head
 ```
 
 ## 11. Live research (RULE 5)
@@ -306,7 +306,7 @@ Pattern: 1 core Python + many thin adapters calling the CLI via the Bash tool.
 | A | LLM (timeout/rate/filter) | Retry x3 → failover provider → reframe |
 | B | Tool (API down) | Cache fallback → mark UNVERIFIED |
 | C | State recovery | LangGraph checkpoint → `vn-os resume <task>` |
-| D | Validation | Pause + ask the CEO to add info |
+| D | Validation | Pause + ask the Department Head to add info |
 | E | User input | Spell check + intent confirm |
 
 ## 15. Testing strategy
@@ -368,7 +368,7 @@ v2: auto-loop cron, web UI, multi-company, new packs (Real Estate, Healthcare, E
 - [ ] BYOT demo works
 - [ ] 6 RULES enforced in code
 - [ ] Claude Code + Cowork adapter E2E
-- [ ] `getting-started.md` for a non-tech CEO
+- [ ] `getting-started.md` for a non-tech Department Head
 
 ## 19. Open questions
 

@@ -4,7 +4,7 @@ from core.translator.jargon_detector import JargonDetector
 from core.translator.glossary import Glossary
 
 
-SIMPLIFIER_PROMPT = """You are a business editor. Rewrite the text below so a non-technical CEO can easily understand it.
+SIMPLIFIER_PROMPT = """You are a business editor. Rewrite the text below so a non-technical Department Head can easily understand it.
 
 ## Requirements
 - Define EVERY domain term the first time it appears, format:

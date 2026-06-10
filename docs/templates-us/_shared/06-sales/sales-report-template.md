@@ -8,7 +8,7 @@ A sales report template at 3 cadences (daily/weekly/monthly) — tracking perfor
 2. KPIs to track? (revenue, deals, conversion, activities, pipeline...)
 3. Break down by what? (per rep / per product / per channel / per region)
 4. Compare against what? (vs. target / vs. prior period / vs. prior year)
-5. Who receives it? (Sales Manager / Director / CEO)
+5. Who receives it? (Sales Manager / Director / Department Head)
 6. Format? (Excel / Dashboard / Email / Markdown)
 
 #### Suggested template
@@ -33,7 +33,7 @@ CONTEXT:
 - KPIs: [list]
 - Breakdown: [rep / product / channel / region]
 - Comparison: [target / prior / prior year]
-- Audience: [Sales Manager / Director / CEO]
+- Audience: [Sales Manager / Director / Department Head]
 
 FORMAT:
 - Daily flash: 1 compact table — Revenue | Deals | Pipeline | Activities — 5-min read

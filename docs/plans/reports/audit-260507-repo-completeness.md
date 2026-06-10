@@ -38,7 +38,7 @@ Tests pass (146/147), MCP server boots, end-to-end mocked test of debate works. 
 
 ### Phase 3 Orchestrator + Brain-first: **PARTIAL**
 - Implemented: Router, GapAnalyzer integration, QuestionGenerator, ClarificationIO, FlowController (run/resume_after_clarification/run_meeting).
-- Missing: `resume_after_clarification` returns `PAUSE_DECISION_REPORT` with message "Phase 4+5 will wire research + meeting" — meaning the **resume does not auto-trigger meeting**. CEO/AI must explicitly call `vn_meeting`. Skill.md docs this correctly so functionally OK, but contradicts plan's "2-stop flow" idea (a 3rd manual step exists).
+- Missing: `resume_after_clarification` returns `PAUSE_DECISION_REPORT` with message "Phase 4+5 will wire research + meeting" — meaning the **resume does not auto-trigger meeting**. Department Head/AI must explicitly call `vn_meeting`. Skill.md docs this correctly so functionally OK, but contradicts plan's "2-stop flow" idea (a 3rd manual step exists).
 - Bug: `flow_controller.run` calls `Router(rules_path=classifier_rules.yaml)` — no error handling if YAML malformed.
 
 ### Phase 4 Tools + Translator: **PARTIAL — DEGRADED**
@@ -89,12 +89,12 @@ Tests pass (146/147), MCP server boots, end-to-end mocked test of debate works. 
 - README.md tells user to `export TAVILY_API_KEY=...` but this is shell-scoped — Claude Desktop GUI launch ignores shell rc on macOS/Windows.
 
 ### Actually called in flow? — Trace
-1. CEO calls `vn_run(brief, vault)` → `FlowController.run()`. **Does NOT call ResearchPhase**. Only Router + GapAnalyzer + QuestionGenerator. Returns `PAUSE_CLARIFICATION` or `PAUSE_DECISION_REPORT`.
-2. CEO answers → `vn_resume(task_folder)` → `resume_after_clarification()`. **Does NOT call ResearchPhase either**. Just normalizes answers and returns `PAUSE_DECISION_REPORT`.
-3. CEO/AI calls `vn_meeting(task_folder)` → `run_meeting()` — THIS calls `ResearchPhase.run()` (line 159-164) BEFORE building meeting graph.
+1. Department Head calls `vn_run(brief, vault)` → `FlowController.run()`. **Does NOT call ResearchPhase**. Only Router + GapAnalyzer + QuestionGenerator. Returns `PAUSE_CLARIFICATION` or `PAUSE_DECISION_REPORT`.
+2. Department Head answers → `vn_resume(task_folder)` → `resume_after_clarification()`. **Does NOT call ResearchPhase either**. Just normalizes answers and returns `PAUSE_DECISION_REPORT`.
+3. Department Head/AI calls `vn_meeting(task_folder)` → `run_meeting()` — THIS calls `ResearchPhase.run()` (line 159-164) BEFORE building meeting graph.
 4. Inside ResearchPhase: `tool_router.plan(brief, brain_summary)` asks LLM which tools to run → `TOOL_REGISTRY[name]()` instantiates → `tool.run(query)`.
 5. Each Tavily tool: `from tavily import TavilyClient` + `TavilyClient(api_key="")` → on `client.search(...)` → 401 / network error → caught by ResearchPhase try/except → recorded as `{"query": q, "error": str(e)}` in findings.
-6. Synthesizer reads `state["research_findings"]` and stringifies first 3000 chars — but if every entry is `{"error": ...}`, the report has no real research, RULE 5 silently violated. CEO sees decision report citing only Brain + LLM "common knowledge".
+6. Synthesizer reads `state["research_findings"]` and stringifies first 3000 chars — but if every entry is `{"error": ...}`, the report has no real research, RULE 5 silently violated. Department Head sees decision report citing only Brain + LLM "common knowledge".
 
 **Conclusion:** Search IS in the flow, but only when `vn_meeting` runs, AND only succeeds for `industry_benchmark`/`tax_calculator` without API key.
 
@@ -109,15 +109,15 @@ User's observation #2 (flow goes straight into meeting without research) — **p
 ### Issues
 - No graceful degradation: tools should detect missing key and return `ToolResult(data={"skipped": "no API key"}, sources=[], notes="Set TAVILY_API_KEY")` instead of crashing into Tavily client.
 - ToolRouter prompt does not know which tools are credentialed; will plan tools that will fail.
-- No way for CEO to provide key without editing shell rc / claude_desktop_config.json by hand.
-- `vn_status` doesn't report tool availability — can't tell CEO upfront "live research disabled, only benchmark+tax work".
+- No way for Department Head to provide key without editing shell rc / claude_desktop_config.json by hand.
+- `vn_status` doesn't report tool availability — can't tell Department Head upfront "live research disabled, only benchmark+tax work".
 
 ### Recommendations
 1. **Add API key step to onboard** — both CLI wizard and MCP `vn_onboard` should accept optional `tavily_api_key` arg, save to `<vault>/.env` (gitignored) or `~/.vn-business-os/keys.yaml`.
 2. **Tools must check key + skip gracefully** — `if not self.api_key: return ToolResult(data={"skipped": True}, sources=[], notes="Missing TAVILY_API_KEY")`. ToolRouter should also be made aware via a method like `available_tools()` that filters by credential presence.
 3. **`install_mcp.py` should support env injection** — read keys from `~/.vn-business-os/keys.yaml` and write `env: {TAVILY_API_KEY: ...}` into mcpServers entry so Claude Desktop launches MCP with proper env.
 4. **`vn_status` should report tool availability** — return `{"tools_live": [...], "tools_skipped": [{"name":..., "reason":...}], ...}`.
-5. **Skill.md should include preflight** — instruct AI to call `vn_status` before `vn_meeting`, warn CEO if `tools_skipped` includes critical ones for the task domain (e.g. legal advice without `vn_law_search`).
+5. **Skill.md should include preflight** — instruct AI to call `vn_status` before `vn_meeting`, warn Department Head if `tools_skipped` includes critical ones for the task domain (e.g. legal advice without `vn_law_search`).
 
 ---
 
@@ -133,16 +133,16 @@ User's observation #2 (flow goes straight into meeting without research) — **p
 7. Save `.vncoderc` with `{vault_path, packs, version: "0.1.0"}`
 
 ### What it does NOT do
-- Not prompt for company name, industry (used only as pack code), CEO name, fiscal year start, etc.
+- Not prompt for company name, industry (used only as pack code), Department Head name, fiscal year start, etc.
 - Not prompt for or save **any API key** (Anthropic, Tavily, Google, OpenAI).
 - Not validate vault writability before copying.
 - Not check `vault-template/` integrity (e.g. all expected `00-Brain/*.md` present).
 - Not set up `.gitignore` rules for sensitive files (the template has `.gitignore` but never patched with company-specific exclusions).
-- Not initialize the Brain content from CEO answers — Brain `.md` files left as placeholder template, CEO must edit manually after.
+- Not initialize the Brain content from Department Head answers — Brain `.md` files left as placeholder template, Department Head must edit manually after.
 
 ### MCP `vn_onboard` issues
 - Synchronous file ops in MCP request thread — `shutil.copytree` of 191 templates can take seconds. Comment in code says "fixes Claude Desktop timeout issue" via no-subprocess approach, but actual file IO blocking is unaddressed.
-- No `elicitation` support for follow-up CEO questions during onboard (e.g. "Which industry?", "Already have templates?"). MCP elicitation protocol ignored — `vn_onboard` is one-shot.
+- No `elicitation` support for follow-up Department Head questions during onboard (e.g. "Which industry?", "Already have templates?"). MCP elicitation protocol ignored — `vn_onboard` is one-shot.
 - Returns `next_steps` text but no structured "needs_action" so AI can't drive multi-turn onboard.
 
 ### Recommendations
@@ -217,7 +217,7 @@ User's observation #2 (flow goes straight into meeting without research) — **p
 | 1. Brain-first | ENFORCED | `flow_controller.run` reads Brain → GapAnalyzer → only THEN clarification | None |
 | 2. Domain-neutral | ENFORCED | `test_domain_neutral.py` checks no Bull/Bear/trade/portfolio in outputs; debate state uses `pro_history`/`con_history`/`growth_history` etc. | None |
 | 3. Single source of truth | PARTIAL | Obsidian vault is canonical, all writes go through ObsidianVault. BUT meeting reads dept defs from REPO not VAULT — divergence possible after upgrade. | Fix departments_root to vault path |
-| 4. CEO-friendly language | PARTIAL | TranslatorPipeline applied to final report. BUT clarification questions, perspectives, debate transcripts — none simplified, all surface to CEO if AI shows them | Apply translator to clarification UI text + perspective summaries |
+| 4. Department-Head-friendly language | PARTIAL | TranslatorPipeline applied to final report. BUT clarification questions, perspectives, debate transcripts — none simplified, all surface to Department Head if AI shows them | Apply translator to clarification UI text + perspective summaries |
 | 5. Live research with citations | **DEGRADED** | ResearchPhase + ToolRouter wired, sources field on every ToolResult — but Tavily tools silently fail without API key. Synthesizer relies on LLM to cite, no validation | API key plumbing + skip-gracefully + cite validator |
 | 6. BYOT | **BROKEN at meeting layer** | onboard imports BYOT files into `00-Templates-Custom/`, but template_resolver never loaded by execute() (which is stubbed). Meeting also bypasses vault depts. | Fix departments_root + wire template_resolver into execute |
 
@@ -229,12 +229,12 @@ User's observation #2 (flow goes straight into meeting without research) — **p
 2. **`core/orchestrator/flow_controller.py:241-252`** — `approve_decision()` writes "(TODO Phase 6)" stub. Plan promises real execution-plan generation.
 3. **`core/orchestrator/flow_controller.py:254-267`** — `execute()` writes README placeholder. DocWriter never invoked.
 4. **`core/tools/web_search.py:14` (and 3 sibling tools)** — `os.getenv("TAVILY_API_KEY", "")` defaults to empty string. `TavilyClient(api_key="")` constructor or first `client.search` call raises auth error. Caught by ResearchPhase try/except and silently turned into `{"error": ...}` per query. RULE 5 violated invisibly.
-5. **`core/onboard.py:onboard_vault`** — accepts no API key parameters. `.vncoderc` schema has no key fields. CEO has no in-flow way to provide credentials.
+5. **`core/onboard.py:onboard_vault`** — accepts no API key parameters. `.vncoderc` schema has no key fields. Department Head has no in-flow way to provide credentials.
 6. **`core/install_mcp.py:install`** — does not write `env: {...}` into mcpServers entry. MCP server launched by Claude Desktop inherits empty env on Windows/macOS GUI launch.
 7. **`core/orchestrator/perspectives_collector.py:54`** — uses generic `PERSPECTIVE_PROMPT`, ignores per-agent enriched prompts loaded by `AgentLoader`. Phase 5 enrichment effort not effective at runtime.
 8. **`core/agents/pack_loader.py:29`** — `PackLoader` class defined, never imported elsewhere. Dead code or missing wiring.
 9. **`core/meeting/meeting_graph.py:173` (referenced from flow_controller)** — `checkpointer=False` hardcoded with comment "to avoid SQLite issues". Crash mid-meeting unrecoverable.
-10. **`core/orchestrator/flow_controller.py:202-207`** — `GitSync.commit` called with `try/except: pass`. Silently swallows all errors including config errors, permission errors, no-git-installed errors. CEO never told commit failed.
+10. **`core/orchestrator/flow_controller.py:202-207`** — `GitSync.commit` called with `try/except: pass`. Silently swallows all errors including config errors, permission errors, no-git-installed errors. Department Head never told commit failed.
 11. **`departments/`** — only 12 directories. Plan + router prompt say "13 core". Missing one or naming off-by-one.
 12. **`core/orchestrator/flow_controller.py:63`** — `Router(self.llm, rules_path=rules_path)` if `classifier_rules.yaml` malformed, will crash before user-friendly error. No defensive load.
 13. **`core/orchestrator/research_phase.py:39`** — `tool_cls()` instantiated with no args. Tools that need province (vn_local_regulation) cannot receive it from ToolRouter plan because ToolCall TypedDict only has `tool` + `queries`. Province must be encoded inside query string.
@@ -260,12 +260,12 @@ User's observation #2 (flow goes straight into meeting without research) — **p
 - **P1.3** Add retry-with-backoff + timeout to `MCPSamplingProvider.complete` — handle 429/timeout gracefully.
 - **P1.4** Re-enable LangGraph checkpointer (root cause the SQLite issue, fix it). Resume mid-meeting after crash.
 - **P1.5** `vn_status` should report `tools_live` / `tools_skipped` based on credential presence.
-- **P1.6** Apply translator to perspectives + debate transcripts before showing to CEO (currently only synthesizer output simplified — round summaries shown raw).
-- **P1.7** Drop swallowing `GitSync` exceptions silently — log to a `<vault>/.vn-business-os.log` so CEO can see why commits aren't happening.
+- **P1.6** Apply translator to perspectives + debate transcripts before showing to Department Head (currently only synthesizer output simplified — round summaries shown raw).
+- **P1.7** Drop swallowing `GitSync` exceptions silently — log to a `<vault>/.vn-business-os.log` so Department Head can see why commits aren't happening.
 - **P1.8** Add citation validator post-Synthesizer — flag claims without `[source: ...]` markers.
 
 ### P2 (nice to fix)
-- **P2.1** Multi-turn `vn_onboard` via MCP elicitation for industry/CEO/keys/BYOT.
+- **P2.1** Multi-turn `vn_onboard` via MCP elicitation for industry/Department Head/keys/BYOT.
 - **P2.2** `Router` JSON-mode where supported — eliminate brittle regex.
 - **P2.3** `tool_cache.db` per-vault not per-user (currently `~/.vn-business-os/`); else cache poisoning between companies.
 - **P2.4** Real-LLM E2E test in CI (gated by env, but actually runs).

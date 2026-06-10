@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build an open-source AI agent OS for a US small business — the CEO assigns work via chat, agents (departments) debate, and generate reports + .docx/.xlsx documents aligned with US federal + Texas law.
+**Goal:** Build an open-source AI agent OS for a US small business — the Department Head assigns work via chat, agents (departments) debate, and generate reports + .docx/.xlsx documents aligned with US federal + Texas law.
 
-**Architecture:** Python + LangGraph (lift the debate engine from TradingAgents, rename neutral) + Obsidian vault (Markdown + Git private) + multi-tool adapters (Claude Code, Cowork). 4 layers: Entry / Core / State / Output. 6 immutable RULES (Brain-first, Domain-neutral, Single source of truth, CEO-friendly language, Live research, BYOT).
+**Architecture:** Python + LangGraph (lift the debate engine from TradingAgents, rename neutral) + Obsidian vault (Markdown + Git private) + multi-tool adapters (Claude Code, Cowork). 4 layers: Entry / Core / State / Output. 6 immutable RULES (Brain-first, Domain-neutral, Single source of truth, Department-Head-friendly language, Live research, BYOT).
 
 **Tech Stack:** Python 3.13, LangGraph 0.2+, LangChain core, Pydantic v2, SQLite, python-docx, openpyxl, PyYAML, Tavily/Serper API, Anthropic SDK (default), google-genai, openai SDK, pytest, ruff, mypy.
 
@@ -29,10 +29,10 @@
 
 ## Six RULES (enforced in code)
 
-1. 🔒 **Brain-first clarification** — don't ask the CEO before reading the Brain
+1. 🔒 **Brain-first clarification** — don't ask the Department Head before reading the Brain
 2. 🔒 **Domain-neutral engine** — no trade/finance leak
 3. 🔒 **Single source of truth** — the Obsidian vault is the truth
-4. 🔒 **CEO-friendly language** — plain English + define terms + TL;DR
+4. 🔒 **Department-Head-friendly language** — plain English + define terms + TL;DR
 5. 🔒 **Live research with citations** — search law/competitors/benchmarks, cite the source
 6. 🔒 **BYOT (Bring Your Own Templates)** — company custom > pack > default
 
@@ -67,4 +67,4 @@ See each phase for details. In short:
 - [ ] BYOT demo works
 - [ ] 6 RULES enforced + tested
 - [ ] Claude Code + Cowork adapter E2E
-- [ ] `docs/getting-started.md` for a non-tech CEO
+- [ ] `docs/getting-started.md` for a non-tech Department Head

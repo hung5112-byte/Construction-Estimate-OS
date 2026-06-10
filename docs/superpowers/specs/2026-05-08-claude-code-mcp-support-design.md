@@ -5,7 +5,7 @@
 
 ## Problem
 
-`vn-os install-mcp` only writes to the Claude Desktop config (`claude_desktop_config.json`). Claude Code uses a separate config (`~/.claude.json`). The CEO wants to type a brief in the Claude Code terminal — the `vn_run`, `vn_meeting`... tools must be available via MCP.
+`vn-os install-mcp` only writes to the Claude Desktop config (`claude_desktop_config.json`). Claude Code uses a separate config (`~/.claude.json`). The Department Head wants to type a brief in the Claude Code terminal — the `vn_run`, `vn_meeting`... tools must be available via MCP.
 
 ## Solution
 

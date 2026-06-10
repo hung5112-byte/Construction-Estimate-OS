@@ -6,14 +6,14 @@ A RACI matrix (Responsible-Accountable-Consulted-Informed) for all important com
 #### Information to collect (ask the user before generating)
 1. Current org chart? (management levels)
 2. List of common important decisions? (e.g. hiring, spending, signing contracts, new product launch...)
-3. Any current authority problems? (e.g. CEO bottleneck, unclear who decides)
+3. Any current authority problems? (e.g. Department Head bottleneck, unclear who decides)
 4. Group by area or by decision level?
 
 #### Suggested template
 Structure:
 - **How to read**: what R/A/C/I mean, the rule "each row has exactly one A"
 - **Matrix by area**: a table per area (Finance, People, Sales, Operations, Marketing...)
-- **Each table**: Decision | Board | CEO | CFO | HR Lead | Sales Lead | Ops Lead | Manager | Staff
+- **Each table**: Decision | Board | Department Head | CFO | HR Lead | Sales Lead | Ops Lead | Manager | Staff
 - **Escalation rules**: when a decision must escalate
 - **Conflict resolution**: when two people both claim "A" for one decision
 
@@ -26,7 +26,7 @@ Create a Decision Authority Matrix (RACI).
 CONTEXT:
 - Org structure: [describe or link the org chart]
 - Management levels: [number] — Titles: [list]
-- Current pain points: [e.g. the CEO must approve everything]
+- Current pain points: [e.g. the Department Head must approve everything]
 - Grouping: [by area / by level / both]
 
 FORMAT:

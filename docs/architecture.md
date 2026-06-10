@@ -1,11 +1,11 @@
 # Architecture
 
-> Technical architecture + 6 RULES + extensibility points. Audience: developers + tech-aware CEOs.
+> Technical architecture + 6 RULES + extensibility points. Audience: developers + tech-aware Department Heads.
 
 ## 4 layers
 
 ```
-Layer 1 — ENTRY (CEO chat)
+Layer 1 — ENTRY (Department Head chat)
   Adapters: Claude Code, Cowork, Codex (v2), Antigravity (v2)
 
 Layer 2 — CORE (Python + LangGraph)
@@ -31,19 +31,19 @@ Layer 4 — OUTPUT
 ## Standard data flow
 
 ```
-CEO brief
+Department Head brief
   → Brain reader (load 00-Brain/*.md)
   → Router (classify SIMPLE/COMPLEX/STRATEGIC + select departments)
   → Gap analyzer (compare brief vs Brain, RULE 1)
-  → Clarifier (ask the CEO, with Brain citations) — STOP if needed
+  → Clarifier (ask the Department Head, with Brain citations) — STOP if needed
   → Research phase (tools in parallel, RULE 5)
   → Meeting R1 (perspectives — each department in parallel)
   → Meeting R2 (Pro vs Con, 2-3 rounds)
   → Meeting R3 (Growth/Cautious/Balanced)
   → Synthesizer (decision report, RULE 4)
-  → CEO approves (Stop 1)
+  → Department Head approves (Stop 1)
   → Execution dispatcher (plan)
-  → CEO approves (Stop 2)
+  → Department Head approves (Stop 2)
   → DocWriter (.docx/.xlsx into 03-Outputs/)
   → Memory append + Git auto-commit
 ```
@@ -55,7 +55,7 @@ CEO brief
 | 1 — Brain-first | docs/core/clarifier/question_generator.py | `if not gaps: return []` |
 | 2 — Domain-neutral | docs/scripts/dev/check-domain-neutral.sh | CI fails if it finds bull/bear/trader/ticker |
 | 3 — Single source of truth | docs/core/obsidian/vault.py | All I/O through ObsidianVault |
-| 4 — CEO-friendly language | docs/core/translator/pipeline.py | jargon detector + simplifier + TL;DR |
+| 4 — Department-Head-friendly language | docs/core/translator/pipeline.py | jargon detector + simplifier + TL;DR |
 | 5 — Live research with citations | docs/core/tools/base_tool.py | ToolResult.sources + retrieved_at required |
 | 6 — BYOT | docs/core/obsidian/template_resolver.py | Custom > pack > default order |
 
@@ -76,7 +76,7 @@ CEO brief
 
 ```
 ┌─ Claude Desktop GUI ───────────────────────────┐
-│  CEO chats with Claude Sonnet                  │
+│  Department Head chats with Claude Sonnet                  │
 │       ↓                                         │
 │  Claude calls the MCP tool vn_meeting           │
 │       ↓                                         │

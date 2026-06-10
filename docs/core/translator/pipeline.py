@@ -1,4 +1,4 @@
-"""Compose: detect → simplify → TL;DR. Applied to the final output for the CEO."""
+"""Compose: detect → simplify → TL;DR. Applied to the final output for the Department Head."""
 from __future__ import annotations
 from pathlib import Path
 from core.translator.glossary import Glossary

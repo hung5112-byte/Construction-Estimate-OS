@@ -115,7 +115,7 @@ Authorize open-market buying **only for the month 2 gap** (1,200 chips × $2.10 
 
 **D) Request additional information or analysis before deciding.**
 
-## ✅ CEO DECISION (06/10/2026)
+## ✅ Brian DECISION (06/10/2026)
 **Option A approved — Balanced Staggered Execution plan**, by Brian H. Doan (VP):
 - Open-market buy for month 2 ONLY (1,200 chips, ~$2,520 premium); prefer the negotiated Kioxia bridge allocation if secured first
 - Full SanDisk qualification on the standard schedule — no compression, no skipped tests
@@ -131,7 +131,7 @@ The execution plan must implement Option A only.
 
 ## ⚠️ Warning: claims missing a source
 
-The following sentences contain figures or legal references but no clear citation was found. The CEO should verify them before proceeding:
+The following sentences contain figures or legal references but no clear citation was found. Brian should verify them before proceeding:
 
 - **[Line 6] Figure:** - Our memory chip supplier cut Q4 shipments by 40%, creating a 1,200-chip shortage that threatens January customer deliveries.
 - **[Line 7] Figure:** - We recommend buying just those 1,200 chips now on the open market (~$2,520 extra) as a bridge while qualifying a backup supplier on the normal schedule.

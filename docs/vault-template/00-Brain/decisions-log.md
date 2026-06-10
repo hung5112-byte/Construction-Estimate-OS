@@ -11,7 +11,7 @@ last_updated: MM/DD/YYYY
 ## Format
 ```
 ### MM/DD/YYYY — [Decision slug]
-- Owner: CEO / Dept X
+- Owner: Department Head / Dept X
 - Decision: ...
 - Reason: ...
 - Reference: task `02-Tasks/.../`

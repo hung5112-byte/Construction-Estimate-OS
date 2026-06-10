@@ -24,7 +24,7 @@
 | Backups | Full-tree snapshot of the Vietnamese originals (kept outside the working tree) |
 | Code identifiers | Kept the MCP/package contract (`vn_run`…, `vn-business-os`, `vn-os`); anglicized internals (`vn_law_search`→`us_law_search`, `vn_local_regulation`→`us_local_regulation`, `*_vnd`→`*_usd`, `benchmarks-vn.yaml`→`benchmarks-us.yaml`) |
 | TX locale | State-level only (texas.gov / Comptroller / SOS / TWC / DSHS / TDLR; "City, TX") |
-| Display name | "US One Person Company" |
+| Display name | "Hardware Division OS" |
 | MODORO footer | Keep credit + link, translate the label (applied to all 192 templates) |
 | Routing keywords | VN→EN (so English briefs route) |
 | Templates pass | **Full careful pass on all 192** |

@@ -4,7 +4,7 @@
 An "all-in-one" handbook for new and current employees. Summarizes everything they need to know: company intro, culture, policies, processes, benefits, contacts. References the source files instead of copying full content. General information only — not legal advice; have an employment attorney review (especially the at-will and EEO sections).
 
 #### Information to collect (ask the user before generating)
-1. A welcome letter from the CEO? (personal touch)
+1. A welcome letter from the Department Head? (personal touch)
 2. Company intro: history, mission, vision, values already in 02-Strategy?
 3. Desired tone: formal / friendly / startup-vibe?
 4. Need a polished digital (PDF) version, or is Markdown enough?
@@ -12,7 +12,7 @@ An "all-in-one" handbook for new and current employees. Summarizes everything th
 
 #### Suggested template
 Structure:
-- **CEO welcome**: 1 page — a personalized welcome letter
+- **Department Head welcome**: 1 page — a personalized welcome letter
 - **About the company**: history, VMV, core values, products, team (summary)
 - **Culture**: culture code summary, rituals, norms
 - **At-will & acknowledgment**: a clear at-will statement and that the handbook is NOT an employment contract (Texas at-will default)
@@ -30,7 +30,7 @@ Confirm the structure before generating.
 Create an Employee Handbook.
 
 CONTEXT:
-- Company: [Name] — CEO letter: [Yes/No]
+- Company: [Name] — Department Head letter: [Yes/No]
 - Tone: [Formal / Friendly / Startup-vibe]
 - VMV + Core Values: [summary or link to 02-Strategy]
 - Format: [Markdown / PDF]
@@ -38,7 +38,7 @@ CONTEXT:
 
 FORMAT:
 - Table of contents: clear, clickable (if digital)
-- CEO letter: 1 page — personal, inspiring
+- Department Head letter: 1 page — personal, inspiring
 - About the company: 2-3 pages — history timeline, VMV, team-photo placeholder
 - At-will + EEO: a clear statement near the front
 - Culture: 2 pages — values in behaviors, dos/don'ts

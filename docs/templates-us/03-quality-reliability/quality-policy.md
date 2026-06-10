@@ -14,7 +14,7 @@ An overall quality policy — commitment, objectives, quality KPIs, PDCA, contin
 
 #### Suggested template
 Structure:
-- **Quality commitment**: a quality statement from the CEO — one paragraph, poster-printed
+- **Quality commitment**: a quality statement from the Department Head — one paragraph, poster-printed
 - **Scope**: which products/services, departments, processes
 - **Quality objectives**: SMART × 5-8 objectives per year
 - **Quality KPIs**: table KPI | Target | How measured | Frequency | Owner

@@ -337,13 +337,13 @@ class FlowController:
         return FlowResult(
             stage=FlowStage.PAUSE_DECISION_REPORT,
             task_folder=task_folder,
-            message=f"Decision report ready at {decision_path.name}. CEO to review + approve.{flag_msg}",
+            message=f"Decision report ready at {decision_path.name}. Department Head to review + approve.{flag_msg}",
         )
 
     def _log_warning(self, message: str) -> None:
         """Log a warning to <vault>/.vn-business-os.log instead of swallowing it.
 
-        The CEO can read this file to see why a git commit failed, etc.
+        The Department Head can read this file to see why a git commit failed, etc.
         """
         from datetime import datetime
         log_path = self.vault.root / ".vn-business-os.log"
@@ -392,7 +392,7 @@ class FlowController:
         )
 
     def approve_decision(self, task_folder: Path, decision: str = "approve") -> FlowResult:
-        """Stage 4: CEO approves the decision report → generate a structured execution plan (P0.2)."""
+        """Stage 4: Department Head approves the decision report → generate a structured execution plan (P0.2)."""
         from core.translator.pipeline import TranslatorPipeline
         from core.orchestrator.execution_planner import generate_execution_plan
 
@@ -480,7 +480,7 @@ def _make_translating_collector(collect_fn, translator) -> Callable:
     """Wrap the collector to translate each perspective output (P1.6 all_intermediate mode).
 
     Only used when translator_mode = 'all_intermediate'.
-    The translator calls the LLM, so it adds cost — the CEO must opt in via .vncoderc:
+    The translator calls the LLM, so it adds cost — the Department Head must opt in via .vncoderc:
         translator_mode: all_intermediate
     Avoid double-translation: the final report is still translated later by flow_controller,
     but perspective inputs into the Synthesizer will already be simplified → cleaner synthesis.

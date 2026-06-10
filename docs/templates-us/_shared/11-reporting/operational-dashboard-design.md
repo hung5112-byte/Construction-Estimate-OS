@@ -4,7 +4,7 @@
 A guide to design and build operational dashboards — from selecting metrics, layout design, and data sources, to refresh frequency and user access. Applies data-visualization best practices (Stephen Few, Edward Tufte). The dashboard is the real-time "control panel" for management.
 
 #### Information to collect (ask the user before generating)
-1. Dashboard for whom? (CEO / COO / department head / team)
+1. Dashboard for whom? (Department Head / COO / department head / team)
 2. Tool: Excel / Google Sheets / Power BI / Tableau / Looker / Metabase?
 3. Key metrics to track real-time?
 4. Data sources: ERP / CRM / spreadsheet / manual / API?
@@ -29,16 +29,16 @@ Confirm the structure before generating.
 Create an Operational Dashboard Design Guide.
 
 CONTEXT:
-- Company: [Name] — Dashboard audience: [CEO / COO / department head / team]
+- Company: [Name] — Dashboard audience: [Department Head / COO / department head / team]
 - Tool: [Power BI / Tableau / Looker / Google Sheets / Excel]
 - Data sources: [ERP / CRM / spreadsheet / API]
 - Refresh: [real-time / daily / weekly]
 - Mobile: [Yes/No]
 
 FORMAT:
-- Dashboard tiers: Strategic (CEO, monthly) → Tactical (Manager, weekly) → Operational (Team, daily)
+- Dashboard tiers: Strategic (Department Head, monthly) → Tactical (Manager, weekly) → Operational (Team, daily)
 - Metrics-selection framework: table Business question | Metric | Type (Leading/Lagging) | Source | Refresh | Actionability
-- CEO dashboard wireframe: layout mockup — 4-6 KPI cards top + 2-3 trend charts + 1 table
+- Department Head dashboard wireframe: layout mockup — 4-6 KPI cards top + 2-3 trend charts + 1 table
 - Department dashboard wireframe: 6-8 KPI cards + 4-6 charts + filters (date, segment, region)
 - Chart-selection guide:
   - Comparison: bar chart | column chart

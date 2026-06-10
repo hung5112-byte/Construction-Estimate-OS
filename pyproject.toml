@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "vn-one-person-company"
 version = "0.2.0"
-description = "AI Operating System for a US one-person company — solo founder + AI departments debate to decide and produce docs aligned with US federal + Texas law"
+description = "AI Operating System for a hardware division — a Department Head + AI departments debate to decide and produce docs aligned with US federal + Texas law"
 authors = [{ name = "Brian H. Doan" }]
 license = "Apache-2.0"
 readme = "docs/README.md"

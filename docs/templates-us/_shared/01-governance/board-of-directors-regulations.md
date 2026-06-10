@@ -8,7 +8,7 @@ Internal regulations governing how the board of directors (or LLC managers/membe
 2. How many directors/managers? Any independent members?
 3. Meeting frequency: monthly / quarterly?
 4. Any standing committees? (Audit, Compensation, Strategy)
-5. Financial decision limit: how much can the CEO decide before the board must approve?
+5. Financial decision limit: how much can the Department Head decide before the board must approve?
 
 #### Suggested template
 Structure:
@@ -31,12 +31,12 @@ CONTEXT:
 - Entity type: [type] — Number of directors: [number] — Independent members: [Yes/No]
 - Meeting frequency: [monthly/quarterly]
 - Committees: [list if any]
-- CEO financial limit: [amount]
+- Department Head financial limit: [amount]
 - Basis: Texas Business Organizations Code (TBOC) + the company's formation documents
 
 FORMAT:
 - Articles with numbered sections
-- Financial-authority table: decision type | CEO | CFO | Board | Members/Shareholders + dollar amount
+- Financial-authority table: decision type | Department Head | CFO | Board | Members/Shareholders + dollar amount
 - Reserved-matters list: decisions that MUST go to the board
 - Decision workflow: Mermaid flowchart
 

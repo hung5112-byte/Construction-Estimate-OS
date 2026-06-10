@@ -1,7 +1,7 @@
 # PROMPT 04: Elevator Pitch
 
 #### Description
-A set of elevator pitches for multiple contexts: 30 seconds (networking), 60 seconds (investor), 90 seconds (partner). Each version is customized for a different audience. The CEO and sales team should know them by heart.
+A set of elevator pitches for multiple contexts: 30 seconds (networking), 60 seconds (investor), 90 seconds (partner). Each version is customized for a different audience. The Department Head and sales team should know them by heart.
 
 #### Information to collect (ask the user before generating)
 1. The clearest one-sentence description of the company? ("We help [who] [do what] with [how]")

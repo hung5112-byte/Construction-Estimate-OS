@@ -10,14 +10,14 @@ def test_append_creates_entry(tmp_path):
     log = DecisionLog(log_path)
     entry = DecisionEntry(
         date=date(2026, 5, 6), slug="test-decision",
-        owner="CEO", decision="Approve pilot",
+        owner="Department Head", decision="Approve pilot",
         reason="Brain showed budget OK"
     )
     log.append(entry)
 
     content = log_path.read_text(encoding="utf-8")
     assert "test-decision" in content
-    assert "CEO" in content
+    assert "Department Head" in content
 
 
 def test_search_finds_matches(tmp_path):

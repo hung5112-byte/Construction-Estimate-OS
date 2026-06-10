@@ -78,7 +78,7 @@ GO with revisions
 - Week 1: DOA < 1%
 - Week 4: 100% site acceptance sign-offs
 
-## Decisions the CEO must make
+## Decisions the Department Head must make
 A. Approve this plan
 B. Approve but skip the blockers
 C. Reject
@@ -212,7 +212,7 @@ def test_e2e_b_pilot_full_flow(tmp_path, llm_mock):
     assert "00-Brain/laws.md" in clarif
     assert "00-Brain/headcount.md" in clarif
 
-    # Auto-tick CEO answers
+    # Auto-tick Department Head answers
     _answer_clarification(task_folder)
 
     # Stage 2: resume after clarification
@@ -233,7 +233,7 @@ def test_e2e_b_pilot_full_flow(tmp_path, llm_mock):
     # ACCEPTANCE
     decision = (task_folder / "07-decision-report.md").read_text(encoding="utf-8")
     assert "📌 Bottom line" in decision
-    assert "Recommendation" in decision or "Decisions the CEO must make" in decision
+    assert "Recommendation" in decision or "Decisions the Department Head must make" in decision
 
 
 def test_acceptance_no_trade_leakage_in_outputs(tmp_path, llm_mock):

@@ -6,7 +6,7 @@ last_updated: MM/DD/YYYY
 ---
 # Glossary (auto-grown)
 
-> The system adds terms automatically when it encounters new ones. The CEO can edit by hand.
+> The system adds terms automatically when it encounters new ones. The Department Head can edit by hand.
 
 ## Hardware & NPI
 - **NPI** — New Product Introduction: the process from design freeze to mass production

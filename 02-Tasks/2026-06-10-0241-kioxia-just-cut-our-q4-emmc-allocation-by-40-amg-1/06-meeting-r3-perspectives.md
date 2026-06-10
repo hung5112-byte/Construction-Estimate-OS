@@ -53,7 +53,7 @@ Option 3—slipping the ramp—isn't a tactical adjustment. It cascades:
 
 1. **Miss Tet pre-build**: The Brain's ramp-plan references Tet pre-build requirements. Those units need to exist before January to stage inventory at customer sites. Slip month 2, and Tet pre-build inventory doesn't materialize.
 
-2. **Break January 2027 deployment commitments**: Wave-1 customers have go-live dates. Our ICP at a 500-location chain has already scheduled training, installation crews, and marketing around our delivery. A "4-6 week adjustment" isn't a polite note—it's a breach that their VP of Operations has to explain to their CEO.
+2. **Break January 2027 deployment commitments**: Wave-1 customers have go-live dates. Our ICP at a 500-location chain has already scheduled training, installation crews, and marketing around our delivery. A "4-6 week adjustment" isn't a polite note—it's a breach that their VP of Operations has to explain to their Brian.
 
 3. **Signal market weakness**: We're a growth-stage company aiming to be "#1 hardware platform" by 2030. Our competitors would love nothing more than for us to telegraph that we can't manage a component allocation cut. The market remembers who ships and who slips.
 

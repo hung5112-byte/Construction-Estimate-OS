@@ -1,4 +1,4 @@
-# Troubleshooting — US One Person Company
+# Troubleshooting — Hardware Division OS
 
 Common errors + how to fix them.
 
@@ -171,9 +171,9 @@ Remove-Item "F:/work/xyz-vault/.cache/tool_cache.db"
 - Fix: fill in `00-Brain/strategy.md`, `products.md`, `state.md` completely
 
 ### Decision report has a "claims missing a source" warning
-This is a **feature** (P1.8), not a bug. The CEO reviews those claims:
+This is a **feature** (P1.8), not a bug. The Department Head reviews those claims:
 - If the claim is correct → add a citation manually to the report
-- If the claim is uncertain → the CEO doesn't approve, re-run the task with more clarification
+- If the claim is uncertain → the Department Head doesn't approve, re-run the task with more clarification
 
 ### `07-decision-report.md` saved but the `.docx` isn't rendered
 - Check `08-execution-plan.md` has a `## Templates to create` table
@@ -200,7 +200,7 @@ Get-Content "F:/work/xyz-vault/.vn-business-os.log" -Tail 20
 
 Common causes:
 - Git not initialized: `cd <vault>; git init`
-- Merge conflict from CEO edit + plugin edit on the same file → resolve manually
+- Merge conflict from Department Head edit + plugin edit on the same file → resolve manually
 - Permission denied: vault folder is read-only → fix permissions
 
 ### `<vault>/.env` got committed to git
@@ -214,8 +214,8 @@ git commit -m "fix: gitignore .env"
 # Rotate keys immediately (Tavily, Anthropic, ...) since they were exposed
 ```
 
-### Push to GitHub fails (CEO's private repo)
-The plugin only commits locally. The CEO does the push:
+### Push to GitHub fails (Department Head's private repo)
+The plugin only commits locally. The Department Head does the push:
 ```powershell
 cd <vault>
 git remote add origin <your-private-repo-url>
@@ -256,7 +256,7 @@ pip install -e .
 - Brain frontmatter (inject aliases)
 
 Does NOT touch:
-- Brain content (CEO data)
+- Brain content (Department Head data)
 - Tasks/Outputs
 
 ### After upgrade, re-test

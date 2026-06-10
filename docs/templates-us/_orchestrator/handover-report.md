@@ -4,7 +4,7 @@
 A wrap-up report template for after the whole packaging project is complete. Summarizes what was created, how to use it, and next steps for the business.
 
 #### Information to collect (ask the user before generating)
-1. Hand over to whom? (Owner / CEO / COO / management team)
+1. Hand over to whom? (Owner / Department Head / COO / management team)
 2. Desired format? (PDF report / presentation / Markdown)
 3. Need a training session as well?
 4. Any follow-up commitment after handover? (30/60/90 days)

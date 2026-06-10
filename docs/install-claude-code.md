@@ -1,4 +1,4 @@
-# Installing US One Person Company on Claude Code
+# Installing Hardware Division OS on Claude Code
 
 > Detailed guide — install the plugin on **Claude Code** (CLI / terminal), not Claude Desktop.
 

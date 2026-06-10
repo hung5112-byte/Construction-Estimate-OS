@@ -1,4 +1,4 @@
-"""Synthesizer — synthesize the whole meeting → a decision report for the CEO.
+"""Synthesizer — synthesize the whole meeting → a decision report for the Department Head.
 
 Adapted from TradingAgents/agents/managers/portfolio_manager.py with:
 - Domain-neutral output (no portfolio/trade leakage)
@@ -10,7 +10,7 @@ from __future__ import annotations
 from core.agents.base_agent import BaseAgent
 from core.meeting.debate_state import MeetingState
 
-SYNTHESIZER_PROMPT = """You synthesize the company meeting and write the decision report for the CEO.
+SYNTHESIZER_PROMPT = """You synthesize the company meeting and write the decision report for the Department Head.
 
 ## REQUIRED output format:
 
@@ -44,14 +44,14 @@ SYNTHESIZER_PROMPT = """You synthesize the company meeting and write the decisio
 ## KPI gates
 [Specific: in week X, if Y < Z then pause]
 
-## Decisions the CEO must make
+## Decisions the Department Head must make
 [A/B/C/D]
 ```
 
 ## Principles (REQUIRED)
 - 🔒 RULE 4: Define EVERY domain term the first time it appears
 - 🔒 RULE 5: Cite every claim (Brain file:line, or research source URL)
-- Plain English; after reading, the CEO understands without needing to Google
+- Plain English; after reading, the Department Head understands without needing to Google
 - The bottom-line TL;DR must come first and be understandable in 30 seconds
 """
 

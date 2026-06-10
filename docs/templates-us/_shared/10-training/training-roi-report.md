@@ -1,7 +1,7 @@
 ### PROMPT 10: Training ROI Report
 
 #### Description
-A report measuring the effectiveness of training investment — consolidating costs, benefits (tangible & intangible), calculating ROI, and recommending improvements. Uses the Phillips ROI Methodology (extending Kirkpatrick to Level 5). Helps the CEO/CFO see training as an investment, not a cost.
+A report measuring the effectiveness of training investment — consolidating costs, benefits (tangible & intangible), calculating ROI, and recommending improvements. Uses the Phillips ROI Methodology (extending Kirkpatrick to Level 5). Helps the Department Head/CFO see training as an investment, not a cost.
 
 #### Information to collect (ask the user before generating)
 1. Report for a specific program or the whole year?
@@ -9,7 +9,7 @@ A report measuring the effectiveness of training investment — consolidating co
 3. Measurable benefits: revenue increase / cost reduction / lower turnover / higher productivity?
 4. Any baseline data (before training)?
 5. Isolation method: control group / trend analysis / expert estimation?
-6. Report audience: CEO/CFO / HR Director / Board?
+6. Report audience: Department Head/CFO / HR Director / Board?
 
 #### Suggested template
 Structure:
@@ -35,7 +35,7 @@ CONTEXT:
 - Measurable benefits: [revenue / cost / turnover / productivity]
 - Baseline data: [Yes/No]
 - Isolation method: [control group / trend / expert estimate]
-- Audience: [CEO / CFO / HR Director / Board]
+- Audience: [Department Head / CFO / HR Director / Board]
 
 FORMAT:
 - Executive summary: 1 page — ROI %, BCR, key findings, top 3 recommendations

@@ -1,4 +1,4 @@
-"""Auto-commit vault changes (NEVER push - CEO control)."""
+"""Auto-commit vault changes (NEVER push - Department Head control)."""
 from __future__ import annotations
 from pathlib import Path
 from typing import Optional

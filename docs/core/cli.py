@@ -85,7 +85,7 @@ def run(brief_arg, brief_opt, vault):
 @main.command()
 @click.argument("task_folder", type=click.Path(exists=True))
 def resume(task_folder):
-    """Resume the flow after the CEO answers clarification."""
+    """Resume the flow after the Department Head answers clarification."""
     from pathlib import Path
     from core.orchestrator.flow_controller import FlowController, FlowStage
     from core.llm.providers import get_default_provider
@@ -107,7 +107,7 @@ def resume(task_folder):
 @main.command()
 @click.argument("task_folder", type=click.Path(exists=True))
 def meeting(task_folder):
-    """After the CEO answers clarification → run the meeting (Stop 1)."""
+    """After the Department Head answers clarification → run the meeting (Stop 1)."""
     from pathlib import Path
     import re
     from core.orchestrator.flow_controller import FlowController
@@ -132,7 +132,7 @@ def meeting(task_folder):
 @main.command()
 @click.argument("task_folder", type=click.Path(exists=True))
 def approve(task_folder):
-    """CEO approves the decision report → generate the execution plan."""
+    """Department Head approves the decision report → generate the execution plan."""
     from pathlib import Path
     from core.orchestrator.flow_controller import FlowController
     from core.llm.providers import get_default_provider
@@ -148,7 +148,7 @@ def approve(task_folder):
 @main.command(name="execute")
 @click.argument("task_folder", type=click.Path(exists=True))
 def execute_cmd(task_folder):
-    """CEO approves execute → generate .docx/.xlsx into 03-Outputs/."""
+    """Department Head approves execute → generate .docx/.xlsx into 03-Outputs/."""
     from pathlib import Path
     from core.orchestrator.flow_controller import FlowController
     from core.llm.providers import get_default_provider

@@ -1,7 +1,7 @@
 ### PROMPT 09: Benchmarking Report
 
 #### Description
-A report comparing the company's performance against industry benchmarks and competitors — helping the CEO understand relative position and identify improvement opportunities. Covers financial benchmarks, operational metrics, HR metrics, and customer metrics.
+A report comparing the company's performance against industry benchmarks and competitors — helping the Department Head understand relative position and identify improvement opportunities. Covers financial benchmarks, operational metrics, HR metrics, and customer metrics.
 
 #### Information to collect (ask the user before generating)
 1. Specific industry? (to find the right benchmark)

@@ -5,7 +5,7 @@ A policy governing the whole reporting system — report types, frequency, stand
 
 #### Information to collect (ask the user before generating)
 1. How many report types today? (daily / weekly / monthly / quarterly / annual)
-2. Who receives reports? (CEO / leadership / Board / shareholders / regulators)
+2. Who receives reports? (Department Head / leadership / Board / shareholders / regulators)
 3. Current format: free-form or templated? What tool? (Excel / Google Sheets / BI tool / ERP)
 4. Main problem: numbers don't match / late reports / inconsistent format / too many reports?
 5. Audit requirements? (internal / external CPA / regulatory)
@@ -34,7 +34,7 @@ Create a Reporting Policy & Standards.
 CONTEXT:
 - Company: [Name] — Headcount: [number] — # departments: [number]
 - Report types: [daily / weekly / monthly / quarterly / annual]
-- Audience: [CEO / leadership / Board / shareholders / regulators]
+- Audience: [Department Head / leadership / Board / shareholders / regulators]
 - Tool: [Excel / Google Sheets / BI tool / ERP]
 - Main problem: [wrong numbers / late / messy format / too many]
 - Audit: [internal / external CPA / regulatory]

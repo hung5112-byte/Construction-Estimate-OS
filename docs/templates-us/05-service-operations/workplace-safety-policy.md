@@ -13,7 +13,7 @@ A workplace health & safety policy — safety rules, personal protective equipme
 
 #### Suggested template
 Structure:
-- **Leadership commitment**: a safety statement from the CEO
+- **Leadership commitment**: a safety statement from the Department Head
 - **General safety rules**: 10-15 key rules — poster format
 - **PPE matrix**: position/task × required PPE × recommended PPE
 - **First aid**: kit locations, trained personnel, process
@@ -37,7 +37,7 @@ CONTEXT:
 - Authority: OSH Act (29 U.S.C. §651); OSHA general industry standards (29 CFR 1910); OSHA recordkeeping (29 CFR 1904); emergency action plan (29 CFR 1910.38). Texas: federal OSHA applies (no state plan).
 
 FORMAT:
-- Leadership commitment: one paragraph from the CEO
+- Leadership commitment: one paragraph from the Department Head
 - Safety rules: 10-15 key rules + poster-friendly
 - PPE matrix: Position/Task | Required PPE | Recommended PPE
 - First aid: kit location, trained person, process

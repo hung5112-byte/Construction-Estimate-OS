@@ -1,4 +1,4 @@
-# User Guide — US One Person Company
+# User Guide — Hardware Division OS
 
 Day-to-day usage after onboarding. See [Getting Started](getting-started.md) first if you haven't installed.
 
@@ -8,7 +8,7 @@ Day-to-day usage after onboarding. See [Getting Started](getting-started.md) fir
 
 ```
                     ┌─ Stage 1 ─┐         ┌─ Stage 2 ─┐
-CEO chat brief ────→│  vn_run   │────────→│ vn_resume │
+Department Head chat brief ────→│  vn_run   │────────→│ vn_resume │
                     └───────────┘         └───────────┘
                           │                     │
                           ↓                     ↓
@@ -26,14 +26,14 @@ CEO chat brief ────→│  vn_run   │────────→│ vn
                     validator
                           │
                        STOP 1                  STOP 2
-                  (CEO approves report)  (CEO approves execute)
+                  (Department Head approves report)  (Department Head approves execute)
 ```
 
-**2 stops requiring CEO intervention:**
+**2 stops requiring Department Head intervention:**
 - **STOP 1:** after `vn_meeting` — read `07-decision-report.md`, OK → call `vn_approve`
 - **STOP 2:** after `vn_approve` — read `08-execution-plan.md`, OK → call `vn_execute`
 
-The CEO can edit both files before moving to the next stage.
+The Department Head can edit both files before moving to the next stage.
 
 ---
 
@@ -41,17 +41,17 @@ The CEO can edit both files before moving to the next stage.
 
 ```
 <vault>/02-Tasks/<task-slug>/
-├── 00-brief.md                  # The CEO's original brief
+├── 00-brief.md                  # The Department Head's original brief
 ├── 01-routing.md                # Classification + participating departments
 ├── 02-context.md                # Brain dump used
-├── 03-clarification.md          # CEO questions (Stage 1)
+├── 03-clarification.md          # Department Head questions (Stage 1)
 ├── 03-clarification-answered.md # Normalized answers (Stage 2)
 ├── 03b-research-findings.md     # Live research output (Stage 3)
 ├── 04-meeting-r1-perspectives.md
 ├── 05-meeting-debate.md         # Pro/Con transcript
 ├── 06-meeting-synthesis.md
-├── 07-decision-report.md        # ★ STOP 1 — CEO reads + approves
-├── 08-execution-plan.md         # ★ STOP 2 — CEO reads + approves
+├── 07-decision-report.md        # ★ STOP 1 — Department Head reads + approves
+├── 08-execution-plan.md         # ★ STOP 2 — Department Head reads + approves
 └── 09-execution-summary.md      # After Stage 5
 
 <vault>/03-Outputs/<task-slug>/
@@ -138,7 +138,7 @@ Upgrade vault F:\work\xyz-vault
 ```
 - Refreshes agent .md prompts
 - Injects new Brain aliases
-- Does NOT touch Brain content / Tasks / Outputs (CEO data)
+- Does NOT touch Brain content / Tasks / Outputs (Department Head data)
 
 ### `vn_onboard`
 Create a new vault (see [Getting Started](getting-started.md)).
@@ -151,8 +151,8 @@ Create a new vault (see [Getting Started](getting-started.md)).
 The plugin is Brain-first → an empty Brain = very long clarification. Spend 30 minutes filling in the Brain up front, then maintain it weekly.
 
 ### 2. Translate mode
-- `final_only` (default): fast, low cost, the CEO sees an easy-to-read decision report
-- `all_intermediate`: 2-3x slower but every output (perspectives, debate) is CEO-friendly. Enable if the CEO has no CTO/CMO to help read.
+- `final_only` (default): fast, low cost, the Department Head sees an easy-to-read decision report
+- `all_intermediate`: 2-3x slower but every output (perspectives, debate) is Department-Head-friendly. Enable if the Department Head has no CTO/CMO to help read.
 
 Edit `<vault>/.vncoderc`:
 ```yaml
@@ -163,7 +163,7 @@ translator_mode: all_intermediate
 The plugin is idempotent: if a task fails midway, call the corresponding MCP tool again — the old task folder is resumed.
 
 ### 4. Edit the decision report before approving
-The CEO opens `07-decision-report.md`, edits, saves → `vn_approve` reads the edited version.
+The Department Head opens `07-decision-report.md`, edits, saves → `vn_approve` reads the edited version.
 
 ### 5. Citation warnings
 If `07-decision-report.md` has a `## ⚠️ Warning: claims missing a source` section → review those claims before approving. They may be LLM hallucinations.

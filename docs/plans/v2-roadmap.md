@@ -17,13 +17,13 @@ v1 (shipped `phase-06-complete` + tag `v0.1.0`) breaks 4 core limitations:
 | 1 install = 1 company | Multi-company context switching |
 | 3 industries (F&B, Retail, Tech-SaaS) | 6 new industry packs |
 
-**Principle:** don't build v2 right away. Use v1 ≥ 2-4 weeks → measure pain points → prioritize features by what the CEO misses most.
+**Principle:** don't build v2 right away. Use v1 ≥ 2-4 weeks → measure pain points → prioritize features by what the Department Head misses most.
 
 ---
 
 ## Feature 1 — Auto-loop Cron
 
-**Problem:** the CEO has to remember to type `vn-os run --brief ...` every time a periodic report is due.
+**Problem:** the Department Head has to remember to type `vn-os run --brief ...` every time a periodic report is due.
 
 **Solution:** a cron schedule in `vault/cron.yaml`, a daemon reads + runs tasks automatically.
 
@@ -33,12 +33,12 @@ v1 (shipped `phase-06-complete` + tag `v0.1.0`) breaks 4 core limitations:
 # vault/cron.yaml
 - schedule: "0 9 * * MON"      # Every Monday morning
   brief: "Weekly report — revenue, churn, gap vs KPI"
-  auto_approve: true            # SIMPLE → no CEO approval needed
+  auto_approve: true            # SIMPLE → no Department Head approval needed
   notify: ["email:ceo@company.com"]   # if there's a CRITICAL gap
 
 - schedule: "0 9 1 * *"        # 1st of each month
   brief: "Assess runway + propose next month's budget"
-  auto_approve: false           # STRATEGIC → CEO must approve
+  auto_approve: false           # STRATEGIC → Department Head must approve
 
 - schedule: "0 8 * * *"        # Every morning at 8
   brief: "Check for newly enacted laws affecting the business"
@@ -47,7 +47,7 @@ v1 (shipped `phase-06-complete` + tag `v0.1.0`) breaks 4 core limitations:
 
 ### New modules
 - `core/scheduler/cron_runner.py` — Read cron.yaml, dispatch tasks via FlowController
-- `core/scheduler/notifier.py` — Email/Slack notification when a task finishes or needs CEO approval
+- `core/scheduler/notifier.py` — Email/Slack notification when a task finishes or needs Department Head approval
 - CLI: `vn-os daemon start|stop|status`
 
 ### Effort
@@ -57,7 +57,7 @@ v1 (shipped `phase-06-complete` + tag `v0.1.0`) breaks 4 core limitations:
 
 ## Feature 2 — Web UI Dashboard
 
-**Problem:** a non-tech CEO has to learn CLI commands. Editing markdown in Obsidian isn't for everyone.
+**Problem:** a non-tech Department Head has to learn CLI commands. Editing markdown in Obsidian isn't for everyone.
 
 **Solution:** a web app running locally (`vn-os ui`) that shows a UI instead of the CLI.
 
@@ -85,7 +85,7 @@ v1 (shipped `phase-06-complete` + tag `v0.1.0`) breaks 4 core limitations:
 
 ## Feature 3 — Multi-company Support
 
-**Problem:** 1 vault = 1 company. A CEO holding 3 companies (eatery + online shop + SaaS) installs it 3 times.
+**Problem:** 1 vault = 1 company. A Department Head holding 3 companies (eatery + online shop + SaaS) installs it 3 times.
 
 **Solution:** one install manages multiple vaults, with context switching.
 
@@ -115,7 +115,7 @@ vn-os run --brief "Analyze Q2 churn"
 - Modify `core/cli.py` — wrap every command with context auto-resolution
 
 ### Use cases
-- A CEO holding multiple companies
+- A Department Head holding multiple companies
 - An agency consulting for multiple clients
 - A mentor advising multiple startups
 - A family office managing multiple businesses
@@ -171,7 +171,7 @@ Each pack ~5-10 files, copying templates from the existing F&B/Retail/Tech-SaaS:
 
 **Listed in v1.1 but not yet done:**
 
-- **Test case A**: full onboarding flow (new CEO → a ready-to-use vault)
+- **Test case A**: full onboarding flow (new Department Head → a ready-to-use vault)
 - **Test case C**: SIMPLE task — draft a JD in < 2 minutes, no meeting
 
 ### Effort
@@ -183,7 +183,7 @@ Each pack ~5-10 files, copying templates from the existing F&B/Retail/Tech-SaaS:
 
 **Listed in the open questions:**
 
-Integrate a grammar/style checker for outputs, so the CEO doesn't receive reports with typos.
+Integrate a grammar/style checker for outputs, so the Department Head doesn't receive reports with typos.
 
 ### Effort
 ~1 day
@@ -195,7 +195,7 @@ Integrate a grammar/style checker for outputs, so the CEO doesn't receive report
 | Phase | Feature | Effort | Priority reason |
 |---|---|---|---|
 | **v1.1** | Test case A + C, Codex adapter, grammar check | ~5-7 days | Finish the scope committed in v1 |
-| **v2.0** | Web UI Dashboard | ~10-15 days | Biggest pain point for a non-tech CEO |
+| **v2.0** | Web UI Dashboard | ~10-15 days | Biggest pain point for a non-tech Department Head |
 | **v2.1** | Auto-loop cron | ~3-5 days | High value, easy to build |
 | **v2.2** | Multi-company | ~5-7 days | Expands the customer segment (agency, holding) |
 | **v2.3** | 6 new packs | ~10 days | Expands the industries served |
@@ -223,7 +223,7 @@ After ≥ 2-4 weeks of real v1 use, note in `vault/00-Brain/decisions-log.md`:
 
 ❌ **DON'T build v2 before using v1 in the real world ≥ 2 weeks.** Predicted pain points usually differ from real ones.
 
-❌ **DON'T over-engineer the Web UI.** The goal is a non-tech CEO being able to use it, not replicating Notion.
+❌ **DON'T over-engineer the Web UI.** The goal is a non-tech Department Head being able to use it, not replicating Notion.
 
 ❌ **DON'T add packs before a real demo company uses them.** Each pack needs a real user to test the compliance refs.
 
@@ -233,13 +233,13 @@ After ≥ 2-4 weeks of real v1 use, note in `vault/00-Brain/decisions-log.md`:
 
 ---
 
-## Open questions for v2 (for the CEO to answer at start)
+## Open questions for v2 (for the Department Head to answer at start)
 
 1. **Web UI auth**: local-only or support internal multi-user?
 2. **Cron daemon**: run as a Windows service / systemd, or a simple cron script?
 3. **Multi-company config**: store per-company API keys or share global?
 4. **Pack contribution**: open it to source contributors or build all in-house?
-5. **Web UI tech stack**: HTMX (simple) or React (rich)? Depends on whether the CEO has a frontend dev.
+5. **Web UI tech stack**: HTMX (simple) or React (rich)? Depends on whether the Department Head has a frontend dev.
 6. **Notification channels**: email only, or add Slack?
 7. **Grammar check**: actually needed, or does the LLM already handle spelling well?
 

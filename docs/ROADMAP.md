@@ -1,4 +1,4 @@
-# Roadmap — US One Person Company
+# Roadmap — Hardware Division OS
 
 > ⚠️ HISTORICAL (06/09/2026): this roadmap describes the original generic-business
 > product. The repo has since been specialized into a 5-department hardware

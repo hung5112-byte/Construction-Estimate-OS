@@ -30,7 +30,7 @@
 
 ## 1. Repo orientation (what the system is)
 
-A Python + LangGraph "AI Operating System" for a solo founder. The CEO chats in Claude Desktop/Code → an MCP server (`vn-business-os`) exposes tools (`vn_run`, `vn_resume`, `vn_meeting`, `vn_approve`, `vn_execute`, `vn_draft`, `vn_status`, `vn_onboard`, `vn_upgrade`) → 12 "departments" of AI agents debate → produce reports and render `.docx/.xlsx` into an Obsidian vault. Heavy Vietnamese localization is baked into: agent prompts, ~192 document templates, the Brain (vault knowledge base), tax/law tools, routing keywords, and all docs.
+A Python + LangGraph "AI Operating System" for a department head. The Department Head chats in Claude Desktop/Code → an MCP server (`vn-business-os`) exposes tools (`vn_run`, `vn_resume`, `vn_meeting`, `vn_approve`, `vn_execute`, `vn_draft`, `vn_status`, `vn_onboard`, `vn_upgrade`) → 12 "departments" of AI agents debate → produce reports and render `.docx/.xlsx` into an Obsidian vault. Heavy Vietnamese localization is baked into: agent prompts, ~192 document templates, the Brain (vault knowledge base), tax/law tools, routing keywords, and all docs.
 
 **Code identifiers / API contracts that MUST be preserved unchanged** (per your constraints): the MCP tool names (`vn_*`), the package/CLI names (`vn-os`, `vn-os-mcp`, slug `vn-business-os`), Python module/class/field names (incl. the dataclass field `name_vn`), and the 5-stage flow. These are addressed under "Decisions" rather than translated blindly.
 
@@ -47,7 +47,7 @@ No legal change; just language. Largest bucket by volume.
 | Agent prompts | `departments/**/agents/*.md` (33), `departments/**/department.yaml` (12), `packs/**` agents | Prose + frontmatter `name_vn`, `expertise`, `deliverables`. **Many also carry legal content → see (b).** |
 | Templates | `templates-vn/**` (~201) | Meta-prompts. **Most also carry legal/finance/format content → see (b)/(d).** |
 | Vault Brain templates | `vault-template/00-Brain/*.md` (strategy, products, budget, headcount, state, glossary, decisions-log), `vault-template/00-Templates-Custom/README.md` | **`laws.md`, `budget.md` → see (b)/(d).** |
-| Translator data | `core/translator/terms_dictionary.yaml` (EN acronym → VN explanation; flip to EN explanation), `glossary.py`, `jargon_detector.py`, `simplifier.py`, `tldr_generator.py`, `pipeline.py` | RULE 4 ("CEO-friendly **Vietnamese**") becomes "plain **English**". |
+| Translator data | `core/translator/terms_dictionary.yaml` (EN acronym → VN explanation; flip to EN explanation), `glossary.py`, `jargon_detector.py`, `simplifier.py`, `tldr_generator.py`, `pipeline.py` | RULE 4 ("Department-Head-friendly **Vietnamese**") becomes "plain **English**". |
 | Core code comments/docstrings/user-strings | ~30 `core/**/*.py` incl. `mcp_server.py` (72 VN lines — tool descriptions shown in Claude Desktop), `flow_controller.py`, `cli.py`, `onboard.py`, `upgrade.py`, providers, brain, agents, orchestrator | Translate comments/docstrings/**user-visible strings**; do not touch identifiers. |
 | MCP adapters | `adapters/claude-code/skill.md`, `adapters/claude-cowork/skills/vn-business-os/SKILL.md`, plugin READMEs, `plugin.json` description | The skill `description:` is the trigger text shown to Claude — translate. |
 | Test fixtures & assertions | `tests/fixtures/**` (demo-vault, techco-vault Brain files), plus ~50 test files. **Tests that assert on VN strings/keywords must be updated in lockstep** (e.g., `test_router.py`, `test_citation_validator.py`, `test_b_campaign_high_income.py`). | Changing prose without updating asserts = red tests. |
@@ -155,7 +155,7 @@ Non-jurisdiction links to **keep as-is**: `python.org`, `nodejs.org`, `obsidian.
 ### Product/structure decisions I need from you before Phase 2:
 
 - **D0 — Backup strategy (blocking).** Not a git repo, so "git history" isn't available. Options: (A) one full-tree snapshot copy `…\vn-one-person-company-master.vi-backup\` before any edit; (B) per-file `.vi` sibling for each of the ~411 edited files; (C) `git init` + initial commit, then edit on a branch. *(Recommend A or C.)*
-- **D1 — Brand/product name.** Code contracts (`vn_*` MCP tools, `vn-os` CLI, slug `vn-business-os`, package name) **must stay** to avoid breaking the MCP/skill. But the human-readable title "VN One Person Company / VN Business OS" can be rebranded (e.g., "One Person Company" / "TX Business OS"). What do you want the displayed name to be? *(Recommend: keep code slugs; rename only display title.)*
+- **D1 — Brand/product name.** Code contracts (`vn_*` MCP tools, `vn-os` CLI, slug `vn-business-os`, package name) **must stay** to avoid breaking the MCP/skill. But the human-readable title "VN Hardware Division OS / VN Business OS" can be rebranded (e.g., "Hardware Division OS" / "TX Business OS"). What do you want the displayed name to be? *(Recommend: keep code slugs; rename only display title.)*
 - **D2 — `templates-vn/` directory name.** Referenced by `core/orchestrator/document_executor.py`, `core/obsidian/template_resolver.py`, and ~6 tests. Keep the path (zero code churn) vs rename to `templates/`/`templates-us/` (update all refs). *(Recommend: keep path, translate contents — lowest risk.)*
 - **D3 — Template/agent filenames (Vietnamese slugs, e.g. `hop-dong-lao-dong-mau.md`).** Keep slugs (referenced by resolver + tests) vs anglicize (e.g., `employment-agreement-template.md`, requires updating tests + any references). *(Recommend: phase it — translate contents first; anglicize filenames as an optional follow-up.)*
 - **D4 — Identifier-embedded jurisdiction tokens** (`name_vn` field, `*_vnd` dict keys, `benchmarks-vn.yaml` filename, `vn_law_search`/`vn_local_regulation` tool names). These are code identifiers. *(Recommend: keep identifiers unchanged to honor API contracts; translate only their string values. Note: `agent_loader.py`/`department.py` already support an optional `name_en` field we can populate.)*
@@ -167,7 +167,7 @@ Non-jurisdiction links to **keep as-is**: `python.org`, `nodejs.org`, `obsidian.
 ### Explicitly OUT OF SCOPE / DO NOT TOUCH (per your constraints):
 - `references/business-builder.plugin` (372 KB **vendored** blob — the upstream source of the templates; "do not touch vendored dependencies").
 - `LICENSE` (Apache text), lockfiles, `.env`/secrets, `.git/`, build artifacts.
-- `C:\One Person Company\Vault\USA-TX Company\` — **your live Obsidian vault** (REST-API + terminal plugins), not part of this repo.
+- `C:\Hardware Division OS\Vault\USA-TX Company\` — **your live Obsidian vault** (REST-API + terminal plugins), not part of this repo.
 - Code identifiers, module/class/function names, the 5-stage flow, MCP tool names (translate descriptions only).
 
 ---

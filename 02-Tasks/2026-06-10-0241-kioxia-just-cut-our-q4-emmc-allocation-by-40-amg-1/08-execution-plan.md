@@ -11,7 +11,7 @@ stop: 2
 
 ---
 
-Here is the plan, rewritten in plain English for a CEO.
+Here is the plan, rewritten in plain English for Brian.
 
 ---
 
@@ -40,7 +40,7 @@ Here’s the step-by-step plan to ensure we have enough reliable memory chips fo
 
 #### Resources
 
-- **Estimated budget:** $2,520 for the higher cost of the emergency chips. A hard cap of $25,000 has been set on all emergency chip spending, per the CEO's decision.
+- **Estimated budget:** $2,520 for the higher cost of the emergency chips. A hard cap of $25,000 has been set on all emergency chip spending, per Brian's decision.
 - **Additional headcount:** None. This work will be absorbed by the existing teams.
 
 #### Risks and Mitigations

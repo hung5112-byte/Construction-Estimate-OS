@@ -19,7 +19,7 @@ class Question:
     free_text: bool = False
 
 
-QG_PROMPT = """You generate clarification questions for the CEO.
+QG_PROMPT = """You generate clarification questions for the Department Head.
 
 ## HARD principles (violation = reject output)
 - 🔒 Every question MUST cite the Brain (file:section)
@@ -41,7 +41,7 @@ QG_PROMPT = """You generate clarification questions for the CEO.
 ```
 
 CRITICAL gap → the question MUST be asked.
-WARN gap → the question SHOULD be asked (CEO may skip).
+WARN gap → the question SHOULD be asked (Department Head may skip).
 INFO gap → do NOT ask.
 """
 
