@@ -162,7 +162,7 @@ If all 5 checks are ✅ → Phase 1 done, can continue to Phase 2.
 ## 📌 Credits note (when the repo is public)
 
 Required credits in README/LICENSE/NOTICE:
-- **192 templates** in `templates-us/` (originally authored in Vietnamese, localized to US English) adapted from `references/business-builder.plugin`
+- **192 templates** in `templates-us/` adapted from `references/business-builder.plugin`
 - **Engine debate pattern** adapted from [TradingAgents](https://github.com/TauricResearch/TradingAgents)
 - **Role definitions reference** from [agency-agents](https://github.com/msitarzewski/agency-agents)
 

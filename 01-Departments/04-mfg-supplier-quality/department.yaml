@@ -1,0 +1,51 @@
+code: 04-mfg-supplier-quality
+name_vn: Manufacturing & Supplier Quality
+tier: 2
+description: Quality at the factories — ODM quality, supplier quality, manufacturing
+  engineering, and factory test/yield across the China/Vietnam/Mexico sites.
+agents:
+- msq-manager
+- odm-quality
+- supplier-quality
+- manufacturing-engineering
+- factory-test-yield
+default_speaker: msq-manager
+refs_folder: refs/
+depends_on:
+- 02-npi-program-management
+- 03-quality-reliability
+debate_role:
+  default: pro
+routing_rules:
+- keywords:
+  - odm quality
+  - factory quality
+  - line audit
+  agent: odm-quality
+- keywords:
+  - supplier
+  - scar
+  - component quality
+  - avl
+  - counterfeit
+  agent: supplier-quality
+- keywords:
+  - process
+  - fixture
+  - work instruction
+  - dfm
+  - line balance
+  agent: manufacturing-engineering
+- keywords:
+  - yield
+  - test station
+  - fpy
+  - ict
+  - fct
+  agent: factory-test-yield
+aliases_vn:
+- MSQ
+- Manufacturing Quality
+- Supplier Quality
+- Factory Quality
+author: Brian H. Doan

@@ -62,13 +62,13 @@ A **division manager** at a Texas electronics company who owns hardware product 
 
 ### The org (5 managers, 24 teams)
 
-| Code | Department (Manager speaks) | Teams |
-|---|---|---|
-| `01-hardware-engineering` | Hardware Engineering | ME, EE, FW/Embedded, System Architecture |
-| `02-npi-program-management` | NPI & Program Management | Hardware PM, Certification, BOM/ECO/PLM, Launch Readiness, Sourcing & Buying, ODM Program Mgmt |
-| `03-quality-reliability` | Quality & Reliability *(debate skeptic)* | QA System, QC Inspection, Validation/Reliability, Firmware QA, Field Quality/RMA FA |
-| `04-mfg-supplier-quality` | Manufacturing & Supplier Quality | ODM Quality, Supplier Quality, Manufacturing Engineering, Factory Test/Yield |
-| `05-service-operations` | Service Operations | Repair, Fulfillment, Inventory, Deployment Support, Logistics |
+| Code                        | Department (Manager speaks)              | Teams                                                                                          |
+| --------------------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `01-hardware-engineering`   | Hardware Engineering                     | ME, EE, FW/Embedded, System Architecture                                                       |
+| `02-npi-program-management` | NPI & Program Management                 | Hardware PM, Certification, BOM/ECO/PLM, Launch Readiness, Sourcing & Buying, ODM Program Mgmt |
+| `03-quality-reliability`    | Quality & Reliability *(debate skeptic)* | QA System, QC Inspection, Validation/Reliability, Firmware QA, Field Quality/RMA FA            |
+| `04-mfg-supplier-quality`   | Manufacturing & Supplier Quality         | ODM Quality, Supplier Quality, Manufacturing Engineering, Factory Test/Yield                   |
+| `05-service-operations`     | Service Operations                       | Repair, Fulfillment, Inventory, Deployment Support, Logistics                                  |
 
 **How a meeting works (V2):** in round 1 every relevant team gives its manager a ≤150-word take; each manager synthesizes a department position (crediting teams, naming disagreements); the five managers then debate (Pro/Con + Growth/Cautious/Balanced) and the synthesizer writes the decision report for the VP. Team takes are preserved in `04-meeting-r1-perspectives.md` with `[[wikilinks]]`, so every position is traceable in Obsidian. Toggle with `meeting.intra_department_round` in `.vncoderc` (on by default; off = managers only, ~5× cheaper).
 

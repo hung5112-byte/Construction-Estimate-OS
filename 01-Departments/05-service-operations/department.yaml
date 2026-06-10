@@ -1,0 +1,56 @@
+code: 05-service-operations
+name_vn: Service Operations
+tier: 2
+description: Repair, fulfillment, inventory, deployment support, and logistics —
+  the post-factory life of every device.
+agents:
+- service-ops-manager
+- repair
+- fulfillment
+- inventory
+- deployment-support
+- logistics
+default_speaker: service-ops-manager
+refs_folder: refs/
+depends_on:
+- 04-mfg-supplier-quality
+debate_role:
+  default: pro
+routing_rules:
+- keywords:
+  - repair
+  - refurb
+  - rework
+  - rma intake
+  agent: repair
+- keywords:
+  - fulfillment
+  - kitting
+  - order
+  - ship
+  agent: fulfillment
+- keywords:
+  - inventory
+  - cycle count
+  - stock
+  - e&o
+  agent: inventory
+- keywords:
+  - deployment
+  - install
+  - site
+  - field support
+  agent: deployment-support
+- keywords:
+  - freight
+  - customs
+  - tariff
+  - import
+  - carrier
+  agent: logistics
+aliases_vn:
+- Service Ops
+- Operations
+- Service
+- Field Ops
+author: Brian H. Doan

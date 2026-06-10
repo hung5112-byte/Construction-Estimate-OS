@@ -1,0 +1,58 @@
+code: 03-quality-reliability
+name_vn: Quality & Reliability
+tier: 1
+description: QMS, inspection, validation/reliability, firmware QA, and field quality
+  with RMA failure analysis. The skeptic voice in debates.
+agents:
+- quality-manager
+- qa-system
+- qc-inspection
+- validation-reliability
+- firmware-qa
+- field-quality-rma-fa
+default_speaker: quality-manager
+refs_folder: refs/
+depends_on: []
+debate_role:
+  default: con
+routing_rules:
+- keywords:
+  - qms
+  - audit
+  - capa
+  - document control
+  - iso
+  agent: qa-system
+- keywords:
+  - inspection
+  - iqc
+  - oqc
+  - aql
+  - sampling
+  agent: qc-inspection
+- keywords:
+  - validation
+  - reliability
+  - dvt test
+  - halt
+  - environmental test
+  agent: validation-reliability
+- keywords:
+  - firmware test
+  - fw qa
+  - regression
+  - test automation
+  agent: firmware-qa
+- keywords:
+  - field failure
+  - rma
+  - 8d
+  - return rate
+  - failure analysis
+  agent: field-quality-rma-fa
+aliases_vn:
+- Quality
+- QA
+- Reliability
+- Q&R
+author: Brian H. Doan

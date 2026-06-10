@@ -1,0 +1,70 @@
+code: 02-npi-program-management
+name_vn: NPI & Program Management
+tier: 1
+description: New-product introduction and program management — schedules, certification,
+  BOM/ECO/PLM, launch readiness, sourcing, and ODM program management.
+agents:
+- npi-pm-manager
+- hardware-pm
+- certification
+- bom-eco-plm
+- launch-readiness
+- sourcing-buyer
+- odm-program-mgmt
+default_speaker: npi-pm-manager
+refs_folder: refs/
+depends_on:
+- 01-hardware-engineering
+debate_role:
+  default: pro
+routing_rules:
+- keywords:
+  - certification
+  - pci
+  - emvco
+  - fcc
+  - ul
+  - regulatory
+  agent: certification
+- keywords:
+  - bom
+  - eco
+  - plm
+  - change order
+  - revision
+  agent: bom-eco-plm
+- keywords:
+  - launch
+  - ramp
+  - readiness
+  - pilot build
+  agent: launch-readiness
+- keywords:
+  - sourcing
+  - purchase
+  - po
+  - shortage
+  - quote
+  - buy
+  agent: sourcing-buyer
+- keywords:
+  - odm schedule
+  - factory schedule
+  - capacity
+  - tooling
+  - build plan
+  agent: odm-program-mgmt
+- keywords:
+  - program
+  - milestone
+  - schedule
+  - evt
+  - dvt
+  - pvt
+  agent: hardware-pm
+aliases_vn:
+- NPI
+- Program Management
+- PM Office
+- NPI & PM
+author: Brian H. Doan
