@@ -36,7 +36,7 @@ last_updated: 05/15/2026
 | Year 2 | 1.9% | Battery wear begins, connector wear | ~40 |
 | Year 3 | 2.6% | Battery + display aging | ~54 |
 
-→ Feeds depot sizing: [[rma-process-dashboard]] (Carlos Mendez) — +1 depot tech by Q1 FY27 per [[../../00-Brain/headcount|headcount]]
+→ Feeds depot sizing: [[rma-process-dashboard]] (Carlos Mendez) — +1 depot tech by Q1 FY27 per [[00-Brain/headcount|headcount]]
 
 ## TS-90 Field Baseline (Gen 2 reality check)
 | TS-90 failure mode (41,300 fleet) | Share | AMG-100 design answer |

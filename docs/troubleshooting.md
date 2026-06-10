@@ -178,7 +178,7 @@ This is a **feature** (P1.8), not a bug. The CEO reviews those claims:
 ### `07-decision-report.md` saved but the `.docx` isn't rendered
 - Check `08-execution-plan.md` has a `## Templates to create` table
 - If not → the execution plan is incomplete, the plugin LLM falls back to extracting template names
-- Verify the TemplateResolver finds the template: the name in the table must match `templates-us/<dept>/<name>.docx` or `<vault>/00-Templates-Custom/<dept>/<name>.docx`
+- Verify the TemplateResolver finds the template: the name in the table must match `docs/templates-us/<dept>/<name>.docx` or `<vault>/00-Templates-Custom/<dept>/<name>.docx`
 
 ### Research tools always return "skipped" despite a key
 - Verify the env injection:
@@ -261,7 +261,7 @@ Does NOT touch:
 
 ### After upgrade, re-test
 ```powershell
-python -m pytest tests/ -q
+python -m pytest docs/tests/ -q
 # Should pass 261+
 ```
 

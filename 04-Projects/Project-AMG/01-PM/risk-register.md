@@ -25,5 +25,5 @@ last_updated: 06/10/2026
 ## Retired risks
 | ID | Risk | Outcome |
 |---|---|---|
-| R-00a | ODM EMV line capability unproven | Closed 03/10 — BrightPath line audit passed, 2 findings minor → [[../../01-Departments/04-mfg-supplier-quality/index\|MSQ]] |
+| R-00a | ODM EMV line capability unproven | Closed 03/10 — BrightPath line audit passed, 2 findings minor → [[01-Departments/04-mfg-supplier-quality/index\|MSQ]] |
 | R-00b | Display GFF lamination yield at 13.3" | Closed 05/02 — supplier yield 96.5% at EVT, OK |

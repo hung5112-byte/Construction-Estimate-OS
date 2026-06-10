@@ -7,7 +7,7 @@ last_updated: 06/10/2026
 ---
 # AMG-100 — Certification & Compliance Plan
 
-> ⚠️ SYNTHETIC DEMO DATA · Hub: [[Project-AMG-Hub]] · Owner: Rachel Adeyemi · Dept: [[../../01-Departments/02-npi-program-management/index|NPI & PM]] (certification team) + [[../../01-Departments/03-quality-reliability/index|Q&R]]
+> ⚠️ SYNTHETIC DEMO DATA · Hub: [[Project-AMG-Hub]] · Owner: Rachel Adeyemi · Dept: [[01-Departments/02-npi-program-management/index|NPI & PM]] (certification team) + [[01-Departments/03-quality-reliability/index|Q&R]]
 > Labs (fictional): Pinnacle Compliance (Plano, TX) — FCC/ISED/UL · Atlas Security Labs — PCI/EMV
 
 ## Certification Matrix

@@ -7,10 +7,10 @@ No packs ship by default.
 ## 1. Folder structure
 
 ```
-packs/<pack-code>/
+docs/packs/<pack-code>/
 ├── pack.yaml            # metadata
 ├── README.md
-├── departments/
+├── docs/departments/
 │   └── XX-new-dept/
 │       ├── department.yaml
 │       └── agents/
@@ -41,7 +41,7 @@ compliance_refs:
 
 ## 3. Department definition
 
-`packs/<pack>/departments/06-XX/department.yaml`:
+`docs/packs/<pack>/departments/06-XX/department.yaml`:
 ```yaml
 code: "06-XX"
 name_vn: "Department name"
@@ -59,7 +59,7 @@ debate_role:
 
 ## 4. Agent definition
 
-`packs/<pack>/departments/06-XX/agents/agent-id.md`:
+`docs/packs/<pack>/departments/06-XX/agents/agent-id.md`:
 ```markdown
 ---
 id: agent-id

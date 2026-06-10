@@ -7,7 +7,7 @@ last_updated: 06/10/2026
 ---
 # AMG-100 — Logistics & Fulfillment Plan
 
-> ⚠️ SYNTHETIC DEMO DATA · Hub: [[Project-AMG-Hub]] · Owner: Dana Schultz · Dept: [[../../01-Departments/05-service-operations/index|Service Operations]] · 3PL: Alliance Fulfillment Partners, Fort Worth DC
+> ⚠️ SYNTHETIC DEMO DATA · Hub: [[Project-AMG-Hub]] · Owner: Dana Schultz · Dept: [[01-Departments/05-service-operations/index|Service Operations]] · 3PL: Alliance Fulfillment Partners, Fort Worth DC
 > General information only — customs/trade items to be confirmed with a licensed customs broker/attorney.
 
 ## Trade & Customs

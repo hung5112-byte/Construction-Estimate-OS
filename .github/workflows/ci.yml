@@ -20,16 +20,16 @@ jobs:
         run: pip install -e ".[dev]"
 
       - name: Lint
-        run: ruff check core/ tests/
+        run: ruff check docs/core/ docs/tests/
 
       - name: Domain-neutral check (RULE 2)
-        run: bash scripts/dev/check-domain-neutral.sh
+        run: bash docs/scripts/dev/check-domain-neutral.sh
 
       - name: Unit tests
-        run: pytest tests/unit/ -v
+        run: pytest docs/tests/unit/ -v
 
       - name: Integration tests (mocked LLM)
-        run: pytest tests/integration/ -v
+        run: pytest docs/tests/integration/ -v
 
       - name: E2E tests (mocked)
-        run: pytest tests/e2e/test_b_npi_pilot_launch.py tests/e2e/test_all_rules_verified.py -v
+        run: pytest docs/tests/e2e/test_b_npi_pilot_launch.py docs/tests/e2e/test_all_rules_verified.py -v

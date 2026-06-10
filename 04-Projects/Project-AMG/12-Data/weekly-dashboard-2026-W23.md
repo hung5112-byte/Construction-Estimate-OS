@@ -16,7 +16,7 @@ last_updated: 06/08/2026
 | Schedule | 🟢 | DVT 06/22 holds; antenna kits = only watch item (ETA 06/16, buffer 3 days) |
 | Budget | 🟢 | $872.4k / $2,000k (43.6%); forecast-at-complete $1,978k → [[budget-tracker]] |
 | Quality / issues | 🟡 | 10 open (0 Sev-1, 5 Sev-2) — all Sev-2 have DVT closure paths → [[open-issues]] |
-| Risk | 🟡 | R-01 PCI pre-assessment 07/06 = biggest single exposure → [[risk-register]] |
+| Risk | 🟡 | R-01 PCI pre-assessment 07/06 = biggest single exposure → [[04-Projects/Project-AMG/01-PM/risk-register]] |
 | Supply | 🟡 | eMMC Q4 coverage gap (ISS-030); battery 8D at D6 → [[capa-8d-AMG-26-004]] |
 
 ## KPI Snapshot

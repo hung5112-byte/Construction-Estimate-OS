@@ -40,4 +40,4 @@ last_updated: 06/10/2026
 
 ## Open EE risks
 - Rev B fab on critical path: arrives 06/13 for 06/22 build — single fab lot, no split ⚠️
-- If pre-scan #2 (07/14) still fails ISS-025 → rev B2 spin localized to shield region; 3-wk impact, eats PVT buffer → [[risk-register]] R-05
+- If pre-scan #2 (07/14) still fails ISS-025 → rev B2 spin localized to shield region; 3-wk impact, eats PVT buffer → [[04-Projects/Project-AMG/01-PM/risk-register]] R-05

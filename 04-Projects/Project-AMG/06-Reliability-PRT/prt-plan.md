@@ -7,7 +7,7 @@ last_updated: 06/10/2026
 ---
 # AMG-100 — Product Reliability Test (PRT) Plan
 
-> ⚠️ SYNTHETIC DEMO DATA · Hub: [[Project-AMG-Hub]] · Owner: Dr. Henry Wu · Dept: [[../../01-Departments/03-quality-reliability/index|Quality & Reliability]] · Ref: validation-reliability team
+> ⚠️ SYNTHETIC DEMO DATA · Hub: [[Project-AMG-Hub]] · Owner: Dr. Henry Wu · Dept: [[01-Departments/03-quality-reliability/index|Quality & Reliability]] · Ref: validation-reliability team
 
 ## Philosophy
 Restaurant duty cycle is brutal: 14 h/day powered, daily chemical wipe-down, spills, drops by guests, 24/7 dock cycling. PRT mirrors **3 years of field life** compressed. Gate rule: DVT exit needs full PRT pass or approved waiver; PVT repeats the full suite on MP-representative units + starts ORT.
@@ -47,7 +47,7 @@ Restaurant duty cycle is brutal: 14 h/day powered, daily chemical wipe-down, spi
 - Battery: DynaCell source added to T12 (R-03) — 24+24 cells
 
 ## ORT (PVT→MP)
-Monthly: 10 units × (T1 reduced 50 cyc, T4 6-drop, T8, functional soak 72 h). Trigger: any ORT fail → containment + lot trace within 24 h with [[../../01-Departments/04-mfg-supplier-quality/index|MSQ]].
+Monthly: 10 units × (T1 reduced 50 cyc, T4 6-drop, T8, functional soak 72 h). Trigger: any ORT fail → containment + lot trace within 24 h with [[01-Departments/04-mfg-supplier-quality/index|MSQ]].
 
 ## Reliability targets
 MTBF ≥ 50,000 h → prediction 62,000 h ([[mtbf-prediction]]) · AFR yr-1 ≤ 2.0% · 3-yr survival ≥ 93% · Depot TAT contribution: FRU design < 12 min → [[mechanical-design]]

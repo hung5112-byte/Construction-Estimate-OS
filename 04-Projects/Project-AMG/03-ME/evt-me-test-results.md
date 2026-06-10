@@ -36,7 +36,7 @@ last_updated: 05/05/2026
 |---|---|---|
 | Spill: 60 ml soda poured on face, powered | No ingress to electronics, full function after wipe | ✅ IP54 front gasket held; liquid channel drains clear of USB-C |
 | Spill: 60 ml water into dock pocket | Dock survives, no tablet damage | ✅ |
-| **Sanitizer wipe (quat + 70% IPA alternating, 10,000 cycles)** | No cracking; ΔGloss ≤ 5 | **ΔGloss = 6.8 on rear housing** → no cracking/embrittlement; **waiver W-02**: spec relaxed to ≤ 8 (cosmetic only, matte texture masks it) → [[../../00-Brain/decisions-log\|log]] |
+| **Sanitizer wipe (quat + 70% IPA alternating, 10,000 cycles)** | No cracking; ΔGloss ≤ 5 | **ΔGloss = 6.8 on rear housing** → no cracking/embrittlement; **waiver W-02**: spec relaxed to ≤ 8 (cosmetic only, matte texture masks it) → [[00-Brain/decisions-log\|log]] |
 | Humidity 85 °C/85 %RH, 168 h, powered | Full function | ✅ minor label adhesive lift — label spec changed (3M 7872) |
 | UV (indoor window, 500 h equiv) | ΔE ≤ 3 | ΔE 1.9 ✅ |
 

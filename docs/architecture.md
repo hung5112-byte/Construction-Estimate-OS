@@ -9,14 +9,14 @@ Layer 1 — ENTRY (CEO chat)
   Adapters: Claude Code, Cowork, Codex (v2), Antigravity (v2)
 
 Layer 2 — CORE (Python + LangGraph)
-  Orchestrator (Router, FlowController) - core/orchestrator/
-  Brain (Reader, Schema, GapAnalyzer, Memory) - core/brain/
-  Clarifier (QuestionGenerator, ClarificationIO) - core/clarifier/
-  Translator (Glossary, Jargon, Simplifier, TLDR) - core/translator/
-  Meeting (debate_state, conditional_logic, synthesizer, meeting_graph) - core/meeting/
-  Agents (BaseAgent, Pro/Con, Perspective, Department, Registry) - core/agents/
-  Tools (web_search, us_law, competitor, benchmark, tax) - core/tools/
-  LLM (multi-provider abstraction) - core/llm/
+  Orchestrator (Router, FlowController) - docs/core/orchestrator/
+  Brain (Reader, Schema, GapAnalyzer, Memory) - docs/core/brain/
+  Clarifier (QuestionGenerator, ClarificationIO) - docs/core/clarifier/
+  Translator (Glossary, Jargon, Simplifier, TLDR) - docs/core/translator/
+  Meeting (debate_state, conditional_logic, synthesizer, meeting_graph) - docs/core/meeting/
+  Agents (BaseAgent, Pro/Con, Perspective, Department, Registry) - docs/core/agents/
+  Tools (web_search, us_law, competitor, benchmark, tax) - docs/core/tools/
+  LLM (multi-provider abstraction) - docs/core/llm/
 
 Layer 3 — STATE
   SQLite (LangGraph checkpoint) — crash recovery only
@@ -52,12 +52,12 @@ CEO brief
 
 | Rule | Module | Enforce point |
 |---|---|---|
-| 1 — Brain-first | core/clarifier/question_generator.py | `if not gaps: return []` |
-| 2 — Domain-neutral | scripts/dev/check-domain-neutral.sh | CI fails if it finds bull/bear/trader/ticker |
-| 3 — Single source of truth | core/obsidian/vault.py | All I/O through ObsidianVault |
-| 4 — CEO-friendly language | core/translator/pipeline.py | jargon detector + simplifier + TL;DR |
-| 5 — Live research with citations | core/tools/base_tool.py | ToolResult.sources + retrieved_at required |
-| 6 — BYOT | core/obsidian/template_resolver.py | Custom > pack > default order |
+| 1 — Brain-first | docs/core/clarifier/question_generator.py | `if not gaps: return []` |
+| 2 — Domain-neutral | docs/scripts/dev/check-domain-neutral.sh | CI fails if it finds bull/bear/trader/ticker |
+| 3 — Single source of truth | docs/core/obsidian/vault.py | All I/O through ObsidianVault |
+| 4 — CEO-friendly language | docs/core/translator/pipeline.py | jargon detector + simplifier + TL;DR |
+| 5 — Live research with citations | docs/core/tools/base_tool.py | ToolResult.sources + retrieved_at required |
+| 6 — BYOT | docs/core/obsidian/template_resolver.py | Custom > pack > default order |
 
 ## Stack
 

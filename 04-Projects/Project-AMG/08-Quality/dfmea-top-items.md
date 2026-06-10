@@ -25,4 +25,4 @@ last_updated: 06/10/2026
 ## Process notes
 - DFMEA reviewed at each gate; O/D re-scored from phase test data (item 6 O was raised 3→5 after EVT OTA results — honest scoring, no grade inflation)
 - Top-10 RPN items get named owners + verification hooks in [[prt-plan]] — traceability: DFMEA ↔ ISS ↔ PRT test ↔ gate
-- PFMEA (process side) owned by BrightPath + [[../../01-Departments/04-mfg-supplier-quality/index|MSQ]], reviewed at line audit 03/10; next audit pre-PVT 09/15
+- PFMEA (process side) owned by BrightPath + [[01-Departments/04-mfg-supplier-quality/index|MSQ]], reviewed at line audit 03/10; next audit pre-PVT 09/15

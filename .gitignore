@@ -67,3 +67,5 @@ TODO.private.md
 
 # Local Claude Code settings
 .claude/settings.local.json
+.vn-usage.jsonl
+00-Dashboard.md

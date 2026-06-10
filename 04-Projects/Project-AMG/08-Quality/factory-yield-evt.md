@@ -7,7 +7,7 @@ last_updated: 05/10/2026
 ---
 # AMG-100 — EVT Build Yield & Defect Pareto
 
-> ⚠️ SYNTHETIC DEMO DATA · Hub: [[Project-AMG-Hub]] · EVT build 03/23–03/27, 50 units, BrightPath line 2 · Owner: Omar Haddad (MfgE) + factory-test-yield team [[../../01-Departments/04-mfg-supplier-quality/index|MSQ]]
+> ⚠️ SYNTHETIC DEMO DATA · Hub: [[Project-AMG-Hub]] · EVT build 03/23–03/27, 50 units, BrightPath line 2 · Owner: Omar Haddad (MfgE) + factory-test-yield team [[01-Departments/04-mfg-supplier-quality/index|MSQ]]
 
 ## Headline
 - **FPY (all stations): 78.0%** (39/50 first-pass) — normal for EVT; DVT target ≥ 88%, PVT ≥ 92%, MP ≥ 95%

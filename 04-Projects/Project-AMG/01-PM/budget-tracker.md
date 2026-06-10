@@ -7,7 +7,7 @@ last_updated: 06/10/2026
 ---
 # Project AMG — Budget Tracker ($2.0M NRE)
 
-> ⚠️ SYNTHETIC DEMO DATA · Hub: [[Project-AMG-Hub]] · Brain: [[../../00-Brain/budget|division budget]]
+> ⚠️ SYNTHETIC DEMO DATA · Hub: [[Project-AMG-Hub]] · Brain: [[00-Brain/budget|division budget]]
 
 ## Summary (as of 06/10/2026)
 - **Budget: $2,000.0k · Committed: $1,247.3k · Spent: $872.4k (43.6%) · Remaining: $1,127.6k**
@@ -52,5 +52,5 @@ last_updated: 06/10/2026
 | Jun (MTD) | $96k | $872k | DVT material, antenna rework parts |
 
 ## Decisions affecting budget
-- 02/06 buy-not-build payment module: −$220k NRE avoided, +$11.80/unit BOM → [[../../00-Brain/decisions-log|log]]
+- 02/06 buy-not-build payment module: −$220k NRE avoided, +$11.80/unit BOM → [[00-Brain/decisions-log|log]]
 - 04/24 battery dual-source: +$28k qual cost (workstream 6/7), contingency-neutral

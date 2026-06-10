@@ -22,15 +22,15 @@ last_updated: 06/10/2026
 
 ## Department Allocation (current quarter, Q2 FY26)
 
-| Department | Allocated | Spent | Remaining |
-|---|---|---|---|
-| Hardware Engineering | $410k | $198k | $212k |
-| NPI & Program Management | $290k | $131k | $159k |
-| Quality & Reliability | $245k | $96k | $149k |
-| Manufacturing & Supplier Quality | $220k | $88k | $132k |
-| Service Operations | $335k | $158k | $177k |
+| Department                       | Allocated | Spent | Remaining |
+| -------------------------------- | --------- | ----- | --------- |
+| Hardware Engineering             | $410k     | $198k | $212k     |
+| NPI & Program Management         | $290k     | $131k | $159k     |
+| Quality & Reliability            | $245k     | $96k  | $149k     |
+| Manufacturing & Supplier Quality | $220k     | $88k  | $132k     |
+| Service Operations               | $335k     | $158k | $177k     |
 
 ## Guardrails
 - Any single PO > $50k → VP approval
-- Program contingency draw > $25k → change control board (CCB) + log in [[decisions-log]]
+- Program contingency draw > $25k → change control board (CCB) + log in [[00-Brain/decisions-log]]
 - Tooling mods after T1 → charge to program contingency, not ME budget

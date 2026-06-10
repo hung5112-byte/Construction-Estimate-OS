@@ -43,7 +43,7 @@ vn-os --help
 ### Option A — Auto script (Linux/macOS/Git Bash)
 
 ```bash
-bash adapters/claude-code/install.sh
+bash docs/adapters/claude-code/install.sh
 ```
 
 The script does 2 things:
@@ -341,8 +341,8 @@ Before class, verify each student has:
 
 ## See also
 
-- [`adapters/claude-code/README.md`](../adapters/claude-code/README.md) — adapter overview
-- [`adapters/claude-code/skill.md`](../adapters/claude-code/skill.md) — skill definition
+- [`docs/adapters/claude-code/README.md`](adapters/claude-code/README.md) — adapter overview
+- [`docs/adapters/claude-code/skill.md`](adapters/claude-code/skill.md) — skill definition
 - [`docs/user-guide.md`](user-guide.md) — the 5-stage flow in detail
 - [`docs/troubleshooting.md`](troubleshooting.md) — common errors in general
 - [`docs/architecture.md`](architecture.md) — architecture + RULES

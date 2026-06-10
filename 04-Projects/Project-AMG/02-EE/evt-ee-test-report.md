@@ -38,4 +38,4 @@ last_updated: 05/06/2026
 Touch cal drift (4) · Wi-Fi cal variance (3) · cosmetic (2) · boot (2, fixed) · audio buzz (1) — feeds factory test plan → [[factory-yield-evt]]
 
 ## Sign-off
-- EE lead: David Chen ✅ 05/06 · Quality: Rachel Adeyemi ✅ 05/07 (conditions logged) · Gate: EVT exit 05/08 with waivers → [[../../00-Brain/decisions-log|decisions log]]
+- EE lead: David Chen ✅ 05/06 · Quality: Rachel Adeyemi ✅ 05/07 (conditions logged) · Gate: EVT exit 05/08 with waivers → [[00-Brain/decisions-log|decisions log]]

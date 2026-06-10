@@ -21,7 +21,7 @@ last_updated: 05/07/2026
 | T6 | Vibration packaged | ✅ | First-article pack OK → [[packaging-spec]] |
 | T7 | ESD ±8/±15 kV | 🟡→✅ | 1 soft reset 4 kV USB-C shell (auto-recovered, allowed); TVS upgraded rev B anyway |
 | T8 | Spill suite | ✅ | Soda/water/coffee — IP54 front held; drain channel works |
-| **T9** | **Sanitizer 10k wipes** | **❌→waiver** | ΔGloss 6.8 vs spec 5 (no cracking) → **W-02** spec relaxed to ≤8, matte texture masks. VP approved 05/08 → [[../../00-Brain/decisions-log\|log]] |
+| **T9** | **Sanitizer 10k wipes** | **❌→waiver** | ΔGloss 6.8 vs spec 5 (no cracking) → **W-02** spec relaxed to ≤8, matte texture masks. VP approved 05/08 → [[00-Brain/decisions-log\|log]] |
 | T10 | Connector durability | ✅ tablet / 🟡 dock | Dock pogo wear at 5k → ISS-031 (dock-side pin hardness) |
 | T11 | Button 200k | ✅ | Force −8% |
 | **T12** | **Battery 500cyc dual-temp** | **🟡 contained** | Veltron lot VE2605A: 3/280 cells swell 1.8 mm @ ~200 cyc (45 °C leg) → ISS-021, [[capa-8d-AMG-26-004]]. Other lots: 0 swell, capacity 84% @ 500 cyc ✅ |

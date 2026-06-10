@@ -7,7 +7,7 @@ last_updated: 06/10/2026
 ---
 # AMG-100 — Firmware / Software Plan
 
-> ⚠️ SYNTHETIC DEMO DATA · Hub: [[Project-AMG-Hub]] · Owner: Anna Volkov (FW lead) · QA: Tom Becker · Dept: [[../../01-Departments/01-hardware-engineering/index|Hardware Engineering]]
+> ⚠️ SYNTHETIC DEMO DATA · Hub: [[Project-AMG-Hub]] · Owner: Anna Volkov (FW lead) · QA: Tom Becker · Dept: [[01-Departments/01-hardware-engineering/index|Hardware Engineering]]
 
 ## Stack
 - **OS:** Android 14 (AOSP, no GMS) on MediaTek Genio 700 BSP (via ODM, quarterly security patch contract through 2031)
@@ -24,7 +24,7 @@ last_updated: 06/10/2026
 | 1.0.0-RC | PVT | 09/21 | Feature freeze; cert-final build (FCC/EMV configs locked) | planned |
 | 1.0.0 | MP | 10/30 | Golden image for factory pre-program | planned |
 
-## DVT FW Test Plan (Tom Becker) — with [[../../01-Departments/03-quality-reliability/index|Quality & Reliability]]
+## DVT FW Test Plan (Tom Becker) — with [[01-Departments/03-quality-reliability/index|Quality & Reliability]]
 | Area | Cases | Automation |
 |---|---|---|
 | Stability: 72 h monkey + 14-day soak (10 units) | crash rate < 0.1/24 h | ✅ lab rack, auto-triage |

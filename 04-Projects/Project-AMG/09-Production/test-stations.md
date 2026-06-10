@@ -33,7 +33,7 @@ last_updated: 06/10/2026
 - SPC rules: Western Electric on RF TX power + touch cal offsets; OOC = auto station hold + SMS to MfgE
 - Weekly yield review (Thu): Omar + James + Rachel + Kevin → feeds [[weekly-dashboard-2026-W23|weekly dashboard]]
 
-## OQC / AQL (with [[../../01-Departments/03-quality-reliability/index|Q&R]] qc-inspection team)
+## OQC / AQL (with [[01-Departments/03-quality-reliability/index|Q&R]] qc-inspection team)
 - OQC sampling: ANSI/ASQ Z1.4, GB level II — AQL 0.65 major / 1.5 minor (cosmetic per grade-A spec at PVT+)
 - IQC: displays (lot sample luminance), batteries (100% X-ray until PVT per [[capa-8d-AMG-26-004]]), SP-30 (cert seal check 100%)
 - Customer-sim audit: monthly 20-unit out-of-box audit at Fort Worth DC by Service Ops → [[rma-process-dashboard]]

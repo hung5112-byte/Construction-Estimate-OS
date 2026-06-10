@@ -7,7 +7,7 @@ last_updated: 06/10/2026
 ---
 # AMG-100 — Mechanical Design & ID
 
-> ⚠️ SYNTHETIC DEMO DATA · Hub: [[Project-AMG-Hub]] · Owner: Miguel Torres (ME lead) · Dept: [[../../01-Departments/01-hardware-engineering/index|Hardware Engineering]]
+> ⚠️ SYNTHETIC DEMO DATA · Hub: [[Project-AMG-Hub]] · Owner: Miguel Torres (ME lead) · Dept: [[01-Departments/01-hardware-engineering/index|Hardware Engineering]]
 
 ## Industrial Design Intent
 Restaurant tabletop: wedge stand profile (28° screen angle), grab-handle top edge, payment module front-right at natural card reach. Survives nightly sanitizer wipe-downs and the occasional soda bath.
@@ -37,7 +37,7 @@ Restaurant tabletop: wedge stand profile (28° screen angle), grab-handle top ed
 | Mid-frame | AZ91D Mg or ADC12 Al | — | Cost trade open: Mg −38 g / Al −$1.85 — decide at DVT exit |
 | Gaskets | Si foam, IP54 front face | — | Spill protection (60 ml pour test) |
 
-## Serviceability (FRU design) — with [[../../01-Departments/05-service-operations/index|Service Ops]]
+## Serviceability (FRU design) — with [[01-Departments/05-service-operations/index|Service Ops]]
 | FRU | Fasteners | Target time | EVT teardown |
 |---|---|---|---|
 | Display module (glass+touch+panel) | 6× T6 + 2 clips | < 4 min | 3:40 ✅ |

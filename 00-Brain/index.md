@@ -8,14 +8,14 @@ Navigation hub for all Brain files and the division departments.
 
 ## Brain Files
 
-- [[budget]]
-- [[decisions-log]]
-- [[glossary]]
-- [[headcount]]
-- [[laws]]
-- [[products]]
-- [[state]]
-- [[strategy]]
+- [[00-Brain/budget]]
+- [[00-Brain/decisions-log]]
+- [[00-Brain/glossary]]
+- [[00-Brain/headcount]]
+- [[00-Brain/laws]]
+- [[00-Brain/products]]
+- [[00-Brain/state]]
+- [[00-Brain/strategy]]
 
 ## Projects
 

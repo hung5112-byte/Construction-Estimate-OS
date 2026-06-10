@@ -6,8 +6,8 @@ Each agent is one `.md` file with YAML frontmatter + a system-prompt body.
 
 ## Path
 
-- Core dept: `departments/<dept-code>/agents/<agent-id>.md`
-- Pack dept: `packs/<pack>/departments/<dept-code>/agents/<agent-id>.md`
+- Core dept: `docs/departments/<dept-code>/agents/<agent-id>.md`
+- Pack dept: `docs/packs/<pack>/departments/<dept-code>/agents/<agent-id>.md`
 
 ## Frontmatter fields
 
@@ -33,7 +33,7 @@ The system prompt, in English — defines the role, the way of working, and the 
 
 ## Example
 
-`departments/05-service-operations/agents/spares-planner.md`:
+`docs/departments/05-service-operations/agents/spares-planner.md`:
 ```markdown
 ---
 id: spares-planner

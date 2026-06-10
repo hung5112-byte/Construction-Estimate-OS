@@ -30,21 +30,21 @@ Develop and ramp the **AMG-100** 13.3" restaurant tabletop tablet (+ AMG-D10 doc
 | Role | Who | Department |
 |---|---|---|
 | Sponsor / gate chair | Brian H. Doan (VP) | Division |
-| Program manager | Sarah Whitfield | [[../../01-Departments/02-npi-program-management/index\|NPI & PM]] |
-| EE lead | David Chen | [[../../01-Departments/01-hardware-engineering/index\|Hardware Eng]] |
-| ME lead | Miguel Torres | [[../../01-Departments/01-hardware-engineering/index\|Hardware Eng]] |
-| FW lead | Anna Volkov | [[../../01-Departments/01-hardware-engineering/index\|Hardware Eng]] |
-| Quality lead | Rachel Adeyemi | [[../../01-Departments/03-quality-reliability/index\|Quality & Reliability]] |
-| SQE | James Park | [[../../01-Departments/04-mfg-supplier-quality/index\|Mfg & Supplier Quality]] |
+| Program manager | Sarah Whitfield | [[01-Departments/02-npi-program-management/index\|NPI & PM]] |
+| EE lead | David Chen | [[01-Departments/01-hardware-engineering/index\|Hardware Eng]] |
+| ME lead | Miguel Torres | [[01-Departments/01-hardware-engineering/index\|Hardware Eng]] |
+| FW lead | Anna Volkov | [[01-Departments/01-hardware-engineering/index\|Hardware Eng]] |
+| Quality lead | Rachel Adeyemi | [[01-Departments/03-quality-reliability/index\|Quality & Reliability]] |
+| SQE | James Park | [[01-Departments/04-mfg-supplier-quality/index\|Mfg & Supplier Quality]] |
 | ODM PM (resident) | Kevin Tran | BrightPath Bac Ninh |
-| Service readiness | Carlos Mendez | [[../../01-Departments/05-service-operations/index\|Service Operations]] |
+| Service readiness | Carlos Mendez | [[01-Departments/05-service-operations/index\|Service Operations]] |
 
 ## Success Criteria (MP gate)
 1. PVT FPY ≥ 92%, MP target 95% by ramp month 3
 2. All certs granted or scheduled with zero hardware-change risk: FCC, ISED, UL/cUL 62368-1, EMV L1/L2, PCI PTS v6.2 → [[cert-plan]]
 3. BOM at $142.00 ± $3 @ 25k/yr → [[cost-walk]]
 4. PRT complete, zero open Sev-1 reliability issues → [[prt-plan]]
-5. Two qualified sources for battery, eMMC, display → [[../../00-Brain/decisions-log|decisions log]]
+5. Two qualified sources for battery, eMMC, display → [[00-Brain/decisions-log|decisions log]]
 6. Depot FRU stock + repair SOPs live at Fort Worth → [[rma-process-dashboard]]
 
 ## Constraints & Assumptions

@@ -48,5 +48,5 @@ last_updated: 06/10/2026
 - 🟢 Bridge IC deletion already banked in rev B (−$3.20, in DVT estimate)
 
 ## BOM data hygiene (PLM)
-- BOM rev 2.1 in PLM, ECO-controlled; ECOs to date: 14 (EVT→DVT cut-in list under ECO-0142) — owner [[../../01-Departments/02-npi-program-management/index|NPI & PM]] (bom-eco-plm)
-- AVL: 2 sources minimum on A-risk lines (battery, eMMC, display) per 04/24 decision → [[../../00-Brain/decisions-log|log]]
+- BOM rev 2.1 in PLM, ECO-controlled; ECOs to date: 14 (EVT→DVT cut-in list under ECO-0142) — owner [[01-Departments/02-npi-program-management/index|NPI & PM]] (bom-eco-plm)
+- AVL: 2 sources minimum on A-risk lines (battery, eMMC, display) per 04/24 decision → [[00-Brain/decisions-log|log]]

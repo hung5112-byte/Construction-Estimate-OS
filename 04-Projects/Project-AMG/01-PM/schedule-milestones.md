@@ -16,7 +16,7 @@ last_updated: 06/10/2026
 | C0 | Concept approval | 11/14/2025 | 11/14/2025 | ✅ Done | Business case, $2.0M budget approved |
 | C1 | Architecture / planning | 01/16/2026 | 01/16/2026 | ✅ Done | EE/ME architecture locked, ODM signed, BOM v0.5 |
 | **EVT build** | Engineering validation | 03/23/2026 | 03/23/2026 (50 units) | ✅ Done | Proto verification, [[evt-ee-test-report\|EE report]] |
-| **EVT exit** | | 05/01/2026 | 05/08/2026 (+1 wk) | ✅ w/ 2 waivers | W-01 drop crack, W-02 sanitizer gloss → [[../../00-Brain/decisions-log\|log]] |
+| **EVT exit** | | 05/01/2026 | 05/08/2026 (+1 wk) | ✅ w/ 2 waivers | W-01 drop crack, W-02 sanitizer gloss → [[00-Brain/decisions-log\|log]] |
 | **DVT build** | Design validation | 06/22/2026 | 06/22/2026 (200 units) | 🟢 On track | All EVT fixes cut in: ISS-014/023/025 |
 | **DVT exit** | | 08/14/2026 | 08/14/2026 | 🟢 | Full PRT pass, cert samples shipped |
 | **PVT build** | Production validation | 09/28/2026 | 09/28/2026 (500 units) | 🟢 | MP tooling, MP fixtures, FPY ≥ 92% |
@@ -40,6 +40,6 @@ last_updated: 06/10/2026
 | MP ramp | 2,000/mo → 5,000/mo | Revenue units |
 
 ## Schedule Risks
-- 🔴 R-01 PCI PTS pre-assessment finding → see [[risk-register]]
+- 🔴 R-01 PCI PTS pre-assessment finding → see [[04-Projects/Project-AMG/01-PM/risk-register]]
 - 🟡 R-04 eMMC allocation Q4 (ISS-030) — PO coverage through ramp month 2 only
 - 🟡 Tet holiday (02/2027) — BrightPath shutdown 2 wks, pre-build buffer planned in ramp month 3

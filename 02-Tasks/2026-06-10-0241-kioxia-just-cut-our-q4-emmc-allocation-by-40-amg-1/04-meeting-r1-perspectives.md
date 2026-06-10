@@ -30,19 +30,19 @@ The hardware engineering department supports qualifying SanDisk iNAND as a produ
 **Program position:** Allocate the $30k premium cap now for broker Kioxia parts covering ramp months 2–3, and simultaneously accelerate SanDisk iNAND qualification to meet PVT gate criteria (two qualified sources on the eMMC A-risk part). This is a buy-time, don’t-slip-the-ramp decision.
 
 **Team signals:**
-- **[[sourcing-buyer]]** flags that broker buy is executable within the $30k premium cap (~$2.10/unit adder) and can secure volume through ramp month 3 (per ISS-030). They need a PO released this week.
-- **[[hardware-pm]]** confirms SanDisk qual straps are already in PCB rev B and the DVT build (06/22) will produce units for qualification. Full qual data by late September — tight but feasible for PVT gate (requires two qualified sources on A-risk parts per the gate checklist). PVT line trial currently targeted mid-October.
-- **[[certification]]** has no new certification dependency from an eMMC source swap (same interface, same controller); no schedule impact.
-- **[[bom-eco-plm]]** confirms the cost walk has ~$3.00 headroom vs. the $142.00 MP BOM target. The $2.10 premium fits, provided we have a path back to standard pricing when SanDisk qualifies.
-- **[[launch-readiness]]** is firm on wave-1 deployment commitments (Jan 2027) and Tet pre-build. Slipping ramp month 2 volumes erodes buffer stock ahead of Tet and risks missing customer pilot go-live dates.
+- **[[docs/departments/02-npi-program-management/agents/sourcing-buyer]]** flags that broker buy is executable within the $30k premium cap (~$2.10/unit adder) and can secure volume through ramp month 3 (per ISS-030). They need a PO released this week.
+- **[[docs/departments/02-npi-program-management/agents/hardware-pm]]** confirms SanDisk qual straps are already in PCB rev B and the DVT build (06/22) will produce units for qualification. Full qual data by late September — tight but feasible for PVT gate (requires two qualified sources on A-risk parts per the gate checklist). PVT line trial currently targeted mid-October.
+- **[[docs/departments/02-npi-program-management/agents/certification]]** has no new certification dependency from an eMMC source swap (same interface, same controller); no schedule impact.
+- **[[docs/departments/02-npi-program-management/agents/bom-eco-plm]]** confirms the cost walk has ~$3.00 headroom vs. the $142.00 MP BOM target. The $2.10 premium fits, provided we have a path back to standard pricing when SanDisk qualifies.
+- **[[docs/departments/02-npi-program-management/agents/launch-readiness]]** is firm on wave-1 deployment commitments (Jan 2027) and Tet pre-build. Slipping ramp month 2 volumes erodes buffer stock ahead of Tet and risks missing customer pilot go-live dates.
 
 **Critical path:** eMMC supply for ramp months 2–3 (Kioxia PO coverage exhausted after month 1). Broker buy resolves this through month 3. The secondary bind is SanDisk qualification completion vs. PVT gate — if qualification data isn’t complete, PVT gate cannot close with only one qualified source on an A-risk part. Recovery: qualify SanDisk on DVT units, close qual by PVT gate, and cut over to standard-cost SanDisk parts for volume production post-ramp month 3.
 
 **Recommendation:**
-1. **Approve broker buy** — Release PO for Kioxia premium parts covering months 2–3, within the $30k pre-approved cap. Owner: [[sourcing-buyer]].
-2. **Accelerate SanDisk qualification** — Dedicate DVT units to eMMC qualification; target qualification report complete by 09/30. Owner: [[hardware-pm]] with [[certification]] sign-off.
-3. **Gate condition** — PVT gate closes only with two qualified eMMC sources. No waiver. Owner: [[odm-program-mgmt]] and [[quality-manager]].
-4. **Cost walk tracking** — Load the premium adder into the cost walk and flag the SanDisk standard-cost reversion trigger. Owner: [[bom-eco-plm]].
+1. **Approve broker buy** — Release PO for Kioxia premium parts covering months 2–3, within the $30k pre-approved cap. Owner: [[docs/departments/02-npi-program-management/agents/sourcing-buyer]].
+2. **Accelerate SanDisk qualification** — Dedicate DVT units to eMMC qualification; target qualification report complete by 09/30. Owner: [[docs/departments/02-npi-program-management/agents/hardware-pm]] with [[docs/departments/02-npi-program-management/agents/certification]] sign-off.
+3. **Gate condition** — PVT gate closes only with two qualified eMMC sources. No waiver. Owner: [[docs/departments/02-npi-program-management/agents/odm-program-mgmt]] and [[docs/departments/03-quality-reliability/agents/quality-manager]].
+4. **Cost walk tracking** — Load the premium adder into the cost walk and flag the SanDisk standard-cost reversion trigger. Owner: [[docs/departments/02-npi-program-management/agents/bom-eco-plm]].
 
 **Brain references:** products.md (AMG100 DVT status), budget.md (NRE/tooling headroom for the $30k premium), strategy.md (wave-1 commitments Jan 2027, Tet pre-build).
 

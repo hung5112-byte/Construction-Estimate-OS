@@ -7,7 +7,7 @@ last_updated: 06/10/2026
 ---
 # AMG-100 — Electrical Architecture
 
-> ⚠️ SYNTHETIC DEMO DATA · Hub: [[Project-AMG-Hub]] · Owner: David Chen (EE lead) · Dept: [[../../01-Departments/01-hardware-engineering/index|Hardware Engineering]]
+> ⚠️ SYNTHETIC DEMO DATA · Hub: [[Project-AMG-Hub]] · Owner: David Chen (EE lead) · Dept: [[01-Departments/01-hardware-engineering/index|Hardware Engineering]]
 
 ## System Block Diagram (text)
 ```

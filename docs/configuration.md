@@ -111,8 +111,8 @@ mechanism remains available for overlays you build yourself.
 
 ### Create a new pack
 See [how-to-create-pack.md](how-to-create-pack.md). In short:
-1. Create `packs/<your-pack>/pack.yaml`
-2. Add new departments under `packs/<your-pack>/departments/`
+1. Create `docs/packs/<your-pack>/pack.yaml`
+2. Add new departments under `docs/packs/<your-pack>/departments/`
 3. (Optional) `brain-template/` to override the default Brain
 
 ### Install your pack
@@ -145,7 +145,7 @@ Copy the file into `<vault>/00-Templates-Custom/<dept-code>/<file-name>.docx`.
 When `vn_execute` needs to render the `rma-process-sop` template:
 1. **Division custom**: `<vault>/00-Templates-Custom/05-service-operations/rma-process-sop.docx` ← wins
 2. **Pack refs**: `<vault>/01-Departments/05-service-operations/refs/rma-process-sop.docx`
-3. **Default**: `templates-us/05-service-operations/rma-process-sop.md`
+3. **Default**: `docs/templates-us/05-service-operations/rma-process-sop.md`
 
 ---
 

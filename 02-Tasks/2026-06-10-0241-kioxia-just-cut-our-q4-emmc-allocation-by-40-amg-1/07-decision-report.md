@@ -115,6 +115,14 @@ Authorize open-market buying **only for the month 2 gap** (1,200 chips × $2.10 
 
 **D) Request additional information or analysis before deciding.**
 
+## ✅ CEO DECISION (06/10/2026)
+**Option A approved — Balanced Staggered Execution plan**, by Brian H. Doan (VP):
+- Open-market buy for month 2 ONLY (1,200 chips, ~$2,520 premium); prefer the negotiated Kioxia bridge allocation if secured first
+- Full SanDisk qualification on the standard schedule — no compression, no skipped tests
+- Hard go/no-go checkpoint at PVT midpoint before any month-3 open-market exposure; spend cap tightened to $25k
+- Customer communication drafted now as insurance
+The execution plan must implement Option A only.
+
 ---
 
 *Report based on input from Hardware Engineering, Program Management, Quality & Reliability, Manufacturing & Supplier Quality, and Service Operations teams. Market research confirms our current supplier's 2026 memory chip production is fully sold out, with supply-demand imbalance persisting until at least 2027.*
