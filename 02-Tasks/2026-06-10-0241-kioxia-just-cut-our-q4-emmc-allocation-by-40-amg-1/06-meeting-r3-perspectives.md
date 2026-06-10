@@ -3,156 +3,285 @@ type: meeting_r3
 ---
 # Round 3 — Perspective Debate
 
-GROWTH: ## Growth Position: Accelerate SanDisk Qualification Now — Broker Buy as Tactical Bridge Only
+GROWTH: # We Execute "Bridge and Qualify" — No Hesitation, No Half-Measures
 
-I'm the Growth side. My job is to keep us on the trajectory to be the #1 hardware platform by 2030. Every table, every restaurant, 99.5% uptime. You don't get there by slipping your first major launch. You get there by hitting your commitments and solving problems aggressively.
-
-Here's what the Brain data actually tells us, and why the choice is Option 1 with a tightly-scoped Option 2 safety net:
+The Con Advocate wants you to believe Option 3 is "protecting the product." It's not. It's protecting comfort zones at the expense of the business. Let me dismantle their argument point by point and show you why simultaneous execution of Options 1 and 2 is the only play that aligns with our 2030 vision.
 
 ---
 
-### 1. We Have a Gate to Pass, Not a Preference to Discuss
+## Their "$30k Is a Fantasy" Claim Is Bad Arithmetic
 
-The **PVT gate criteria** is explicit: two qualified sources on all A-risk parts. Kioxia was our sole qualified source. They just cut our allocation by 40%. We are now *unqualified to launch* — not just short on parts, but structurally blocked.
+The Con Advocate does the math themselves and proves my case: **8,000 units × $2.10 = $16,800** for months 2-3. That's *under* the $30,000 cap. They then pivot to speculation about months 4, 5, and 6—but that's exactly *why* we're accelerating SanDisk qualification. The broker buy is a bridge, not the destination.
 
-Option 3 (slip) doesn't solve this. It delays the gate failure. Slip four weeks and you still walk into PVT with one qualified source. The gate doesn't budge. So Option 3 isn't "preserving quality" — it's buying time we can't afford while still failing the same criterion.
+Here's what they deliberately omit: the Brain shows **AMG-100 at $329 price, 42% margin** (`products: AMG100`). A single 50-location chain deploying 40 devices per site is **$658,000 in revenue**. If we slip that deployment and they go to a competitor? That's not a $16,800 problem. That's an existential account loss. The Con Advocate's fiscal conservatism is actually fiscal recklessness—they're protecting pennies while exposing millions in pipeline.
 
-Option 1 is the only path that actually resolves the gate requirement.
-
----
-
-### 2. The Engineering Is Already Paid For
-
-Per the Brain: **DVT build 06/22 validated SanDisk strap options in PCB Rev B**. That's not "hope" — that's sunk engineering cost waiting to be exploited. Hardware Engineering didn't just add landing pads; they tested them in the DVT build.
-
-**MSQ's concern** is "validated test coverage and process capability data." That's what the accelerated qualification is *for* — to generate exactly that data, using the existing physical design as the starting point. We're not asking for shortcuts. We're asking to prioritize this qualification above non-critical-path tasks, because the alternative is a guaranteed gate failure.
+The BOM target is **$142.00 ± $3.00** (Brain: `bom-evt`). The $2.10/unit premium applies *only to the broker-bridged units during qualification*, not to the entire production run. Once SanDisk is qualified, we dual-source normally. This is a *temporary* cost walk item with a defined end date—exactly what cost-walk tracking is designed to manage.
 
 ---
 
-### 3. The Math on Slipping Is Brutal
+## The Technical Argument Collapses Under Scrutiny
 
-Our ramp: **2,000 (Nov), 3,000 (Dec), 5,000 (Jan)**. At **$329 ASP and 42% margin** (per Brain product data), December's 3,000 units represent roughly $987K in revenue and $414K in margin.
+The Con Advocate says qualification takes months of environmental stress testing, supplier audits, and field return modeling. They're describing a *full qualification from scratch*. That's not our situation.
 
-Option 3 asks us to burn that for a delay that still doesn't qualify SanDisk. The Con position admits slip is "unpleasant" — I'd argue it's strategically negligent when we have a PCB revision already designed for this exact contingency.
+**The Brain confirms: PCB rev B already has SanDisk qual straps** (referenced in your brief). This means:
 
-And that January 2027 wave-1 deployment? Our ICP profiles — VP of Operations and CIOs at chains deploying 20–60 devices per site — list "predictable supply" as a top-three buying criterion. Missing wave-1 doesn't just cost revenue. It damages the relationship with the exact buyers we need for the 2030 vision.
+- The board is physically ready to accept SanDisk silicon
+- Pin mapping, voltage rails, and signal routing are already designed in
+- We're not doing a board spin—we're validating an alternative BOM drop-in
 
----
+03-quality-reliability's PVT gate criteria require two qualified sources on A-risk parts. The Con Advocate says we should meet this by slipping the ramp. I say we meet it by *executing the qualification on schedule*, the same way engineering teams handle second-source validation in every hardware program I've ever seen.
 
-### 4. The Broker Buy Is Insurance, Not Strategy
-
-I support the **$30K broker cap** as a limited bridge — but only to cover the delta between our reduced Kioxia allocation and ramp month-2 demand if (and only if) SanDisk qualification hits an unexpected snag.
-
-At **$2.10/unit premium** and 3,000 units, we're talking roughly $6,300. Against a **BOM target of $142.00 ± $3.00**, that's absorbable in the context of a $414K margin month. The cost walk has headroom. What it can't absorb is a factory line sitting idle.
-
-The Con Advocate's traceability concerns are legitimate. So here's the control: **Service Operations flags every broker-sourced unit**, and **MSQ pre-approves chain-of-custody documentation** before any purchase. No gray market. No untracked lots. This isn't "normalizing bad behavior" — it's a one-time bridge with audit trail.
+DVT-2 is the data collection window. We use it. If SanDisk shows a blocker, *then* we have a real conversation about ramp adjustment. But pre-surrendering before we've even tested the part? That's not risk management. That's risk avoidance—and in hardware, risk avoidance is how you get lapped by competitors who are willing to execute.
 
 ---
 
-### My Recommendation
+## Operational Reality: The ICP Cares About January, Not Our Supply Chain Drama
 
-**Accelerate SanDisk iNAND qualification.** Reallocate qualification engineering resources now. Target conditional qualification before ramp month 2. Use the DVT build data as the foundation — it exists, it was validated, use it.
+The Brain defines our ICP as a **VP of Operations at a casual-dining chain** who values "fleet uptime, payment security, fast RMA turnaround, predictable supply" (`strategy: icp`). Nowhere in that profile does it say "wants us to proactively explain supply chain delays."
 
-**Authorize the $30K broker cap as a bridge only.** Trigger purchases solely for the gap between Kioxia allocation and ramp month-2 demand, and only with traceability controls approved by MSQ.
+Service Operations (05-service-operations) frames the broker buy as a "tactical bridge." That's exactly what I'm proposing. They're not arguing against it—they're warning us it needs a qualification path behind it. *That's what Option 1 provides.*
 
-**Do not slip.** The gate won't let us launch anyway. The revenue hit is real. The customer trust damage is worse. We have the engineering, the margin headroom, and the obligation to deliver.
+The Con Advocate says: "Which customer is angrier: the one you told in advance about a delay, or the one with a 3% field return rate?" This is a false choice. The real question is: which customer is angrier—the one who got their deployment on time with fully qualified dual-source parts, or the one you made wait because you couldn't execute two things at once?
 
-CAUTIOUS: From the CAUTIOUS seat, here’s my assessment:
-
----
-
-**The Core Problem Isn’t Parts Supply — It’s Gate Qualification**
-
-The Brain is unambiguous: PVT gate criteria requires *two qualified sources* on all A-risk parts. We have one (Kioxia). Their allocation cut doesn’t just leave us short on units — it exposes that we were structurally unqualified to launch regardless. Option 3 (slip) doesn’t fix this. Slip four weeks, slip eight weeks — you still walk into PVT with one qualified source and fail the gate. The Gate doesn’t negotiate.
+We're not shipping unqualified parts. We're qualifying SanDisk *during DVT-2*, which is literally what DVT builds are for. The units we ship in ramp months 2-3 are Kioxia parts procured through the broker channel—fully qualified, known silicon, same firmware, same reliability. The SanDisk qualification runs in parallel and gates into production *after* it passes PVT criteria.
 
 ---
 
-**Where I Agree with Growth**
+## The Real Risk: Option 3 Is a Strategy Killer
 
-Yes, the DVT build on 06/22 validated the SanDisk strap options in PCB Rev B. That’s real engineering work. Yes, accelerating qualification is the only path that actually closes the gate requirement. And yes, slipping December volumes burns roughly $414K in margin at 42% on a $329 ASP (per Brain product data), plus trust damage with ICP buyers who list “predictable supply” as a top-three criterion.
+Option 3—slipping the ramp—isn't a tactical adjustment. It cascades:
 
----
+1. **Miss Tet pre-build**: The Brain's ramp-plan references Tet pre-build requirements. Those units need to exist before January to stage inventory at customer sites. Slip month 2, and Tet pre-build inventory doesn't materialize.
 
-**Where I Disagree with Growth — and Why I’m Sounding the Alarm**
+2. **Break January 2027 deployment commitments**: Wave-1 customers have go-live dates. Our ICP at a 500-location chain has already scheduled training, installation crews, and marketing around our delivery. A "4-6 week adjustment" isn't a polite note—it's a breach that their VP of Operations has to explain to their CEO.
 
-Growth frames the accelerated qualification as “prioritizing resources.” I frame it as **compressing a safety-critical process.** The 04-Mfg-Supplier-Quality team explicitly warns that flipping eMMC brands requires validated test coverage, signal integrity, corner-lot characterization, and SMT profile qualification — not just a strap resistor setting. The DVT build gave us a single snapshot. It did not give us statistical process control across the SanDisk population.
+3. **Signal market weakness**: We're a growth-stage company aiming to be "#1 hardware platform" by 2030. Our competitors would love nothing more than for us to telegraph that we can't manage a component allocation cut. The market remembers who ships and who slips.
 
-If we compress that qualification and miss something — firmware interaction with our 24/7 duty cycle, write-endurance degradation at elevated temperatures, a corner-lot issue that only surfaces at volume — we’re not just failing the gate. We’re shipping a latent field defect into chains deploying 20–60 devices per site. Device downtime at the table kills revenue. Our own ICP profile says that explicitly.
-
----
-
-**The Broker Buy Is Not a Safety Net — It’s a Traceability Risk with a Premium Attached**
-
-Growth proposes a $30K broker cap with traceability controls. At $2.10/unit premium on 3,000 units, that’s roughly $6,300 in extra cost — manageable against a $142.00 BOM target with ±$3.00 headroom. The money’s not the issue.
-
-The issue is what 04-Mfg-Supplier-Quality and 05-Service-Operations will inherit: mixed lots from non-authorized channels, fractured traceability, and a field failure population that we can’t isolate six months from now. If a batch of broker-sourced eMMC has storage degradation or errata, we won’t know which customer shipments are affected. 05-Service-Operations will be running RMAs blind. That’s a service cost bomb, and it violates the very predictability our ICP buyers pay for.
+The Con Advocate says "one slipped chain deployment is recoverable." In enterprise hardware? No. Procurement decisions at the VP level take 12-18 months. A customer we lose in January 2027 is a customer we don't get back until 2029, if ever.
 
 ---
 
-**The Gate Exists for a Reason — and I Will Not Support Launching with Unverified Parts**
+## The Hard Truth About "Protecting the Product"
 
-The Pro Advocate used the phrase “conditionally qualified.” There is no such thing in our quality system. The 03-Quality-Reliability team holds a binary gate: qualified or not qualified. “Conditionally qualified” is a euphemism for “shipping with incomplete evidence.” And shipping with an unqualified A-risk component while knowing we didn’t meet our own PVT criteria potentially breaches our obligations under the Magnuson-Moss Warranty Act (Brain: 15 U.S.C. §2301), because we’re implying fitness for a purpose we haven’t validated.
+The Con Advocate's closing argument is that we "ship right, or we don't." Noble sentiment. Wrong application.
 
-A controlled, communicated volume re-profile is painful. A field quality escape is existential. I will take the former every time.
+We *are* shipping right. The Kioxia parts are qualified. The SanDisk qualification runs on its engineering timeline. The two activities are independent until PVT gate, at which point we gate SanDisk entry with full data. This is standard second-source qualification. Every hardware company that's ever scaled has done exactly this.
 
----
-
-**My Concrete Position**
-
-1. **Run the SanDisk qualification properly.** Use the DVT build data as a starting point — it’s valuable. But do not compress the PVT evidence package. Give 03-Quality-Reliability the full corner-lot data, endurance cycling, and SMT process capability runs they need to sign off without asterisks. Accept that SanDisk becomes qualified for ramp month 3 or 4, not month 2.
-
-2. **Limit the broker buy to committed wave-1 units only, with hard traceability gates.** If we must buy to cover the 40% Kioxia gap for customers who already have deployment dates, then 05-Service-Operations flags every unit, 04-Mfg-Supplier-Quality pre-approves chain-of-custody documentation, and we quarantine that population for active monitoring post-deployment. No documentation, no purchase. No exceptions.
-
-3. **Communicate the month-2 volume re-profile now.** Our ICP values predictable supply. Predictability means honesty, not hiding a qualification gap behind a compressed schedule. Tell wave-1 customers there’s a constraint, give them a revised timeline, and preserve the relationship for the 2030 trajectory. That’s how you build trust with VP of Operations and CIOs who talk to each other across chains.
+What the Con Advocate is really proposing is that we burn customer trust, market momentum, and revenue because we're uncomfortable with parallel execution. That's not protecting the product. That's protecting our own desire for linear, risk-free timelines that don't exist in hardware.
 
 ---
 
-**Summary**
+## My Directive
 
-Growth wants speed, low cost, and quality simultaneously. We don’t get all three. I pick quality and cost integrity, and I accept a managed velocity reduction with transparent communication. A slip we control and communicate is a short-term hit. A field quality escape on an A-risk part with a sole-source mentality is a threat to the 2030 vision. I protect the company by saying no to the latter.
+1. **Execute the broker buy immediately.** Authorize the $30,000 cap. Procure Kioxia eMMC parts for ramp months 2-3 at the ~$2.10/unit premium. This secures our January 2027 deployment commitments.
 
-BALANCED: From the BALANCED seat, here’s my perspective:
+2. **Accelerate SanDisk iNAND qualification to DVT-2.** Engineering confirms qual straps on PCB rev B. Complete the second-source qualification on the DVT-2 timeline. No shortcuts on testing—we meet PVT gate criteria properly, but we meet them on schedule.
 
----
+3. **Track the premium as a cost-walk line item with a defined end date.** This is a bridge expense, not a permanent BOM cost. When SanDisk is qualified and dual-sourced, the premium disappears.
 
-**We’re Actually Aligned on the Diagnosis**
+4. **Prepare contingency only for SanDisk qualification failure.** If DVT-2 data shows a SanDisk incompatibility, *then* we evaluate ramp adjustment. But we don't pre-negotiate surrender before the data exists.
 
-Both Growth and Cautious agree on the fundamental problem: the PVT gate requires two qualified sources on A-risk parts, Kioxia was our only qualified source, and their 40% allocation cut leaves us structurally unqualified to launch. Option 3 — slipping ramp month 2 — doesn’t fix the gate failure; it just delays it. Every week we slip, we still walk into PVT with one qualified source. That’s not a solution; it’s stalling.
+The Brain's strategy is explicit: **>99.5% fleet uptime** and **#1 hardware platform by 2030.** You don't get there by slipping launches. You get there by executing through supply constraints, qualifying second sources on schedule, and shipping reliable products to customers who trust you to deliver.
 
-So we’re not debating whether to qualify SanDisk. We’re debating *how fast* and *what we do in the gap.*
+"Bridge and Qualify" isn't a mashup. It's the integrated plan that a competent hardware organization executes when an allocation gets cut. We're that organization. Let's act like it.
 
----
+CAUTIOUS: Based on the Brain data and our strategic commitments, here is the CAUTIOUS perspective:
 
-**Where I Land: A Pragmatic Middle Path**
-
-Growth is right that we have sunk engineering cost in the DVT build from 06/22 — PCB Rev B with SanDisk strap options validated. That’s not hope; it’s an asset we should exploit. Cautious is right that the 04-Mfg-Supplier-Quality team needs real process capability data — not just a single DVT snapshot — before signing off, and that 03-Quality-Reliability holds a binary gate, not a “conditionally qualified” workaround.
-
-Here’s how I reconcile both:
-
-**1. Run the SanDisk qualification on an accelerated but not compressed schedule.**
-
-“Accelerated” means we reallocate engineering resources away from non-critical-path work and prioritize this above all other qualification activities. That’s Growth’s point, and it’s valid. But “accelerated” does not mean “skip corner-lot characterization, skip endurance cycling, skip SMT process capability runs.” Those are the rigor items Cautious insists on, and I agree. We target SanDisk qualification for late ramp month 2 or early ramp month 3 — faster than the default timeline, but not so fast that 03-Quality-Reliability is forced to choose between signing off with incomplete data or blocking the launch entirely. The DVT build data gives us a head start; it doesn’t replace statistical process control across the SanDisk population.
-
-**2. Use the broker buy as a tightly-controlled bridge for committed wave-1 units only.**
-
-Growth’s $30K cap is reasonable — at $2.10/unit premium across a few thousand units, we’re talking single-digit thousands in extra cost against a $142.00 BOM target with ±$3.00 headroom. That’s absorbable. But Cautious is absolutely right about traceability. So here’s the control structure: 05-Service-Operations flags every broker-sourced unit by serial number, 04-Mfg-Supplier-Quality pre-approves the broker’s chain-of-custody documentation before any purchase order is cut, and we quarantine that population for active field monitoring post-deployment. No gray market parts enter production without a paper trail. This is not “normalizing bad behavior” — it’s a one-time, audited exception with clear boundaries, used solely to cover the 40% Kioxia gap on deployments we’ve already committed to. If the broker can’t provide documentation, we don’t buy. That gives us insurance without gambling.
-
-**3. Communicate honestly with wave-1 customers — but don’t slip unless qualification actually fails.**
-
-Our ICP — VP of Operations and CIOs at chains with 50 to 1,200 locations — values “predictable supply” as a top-three buying criterion, per our own Brain strategy. Predictability doesn’t mean promising perfection; it means transparent communication. We tell wave-1 customers now that we’re qualifying a second source to meet demand and that there may be a modest volume re-profile in December if qualification takes longer than expected. That’s honesty. It builds trust. It’s not the same as announcing a slip upfront. We give ourselves the option to deliver on time if SanDisk qualification proceeds cleanly, while setting expectations in case it doesn’t. That protects the relationship without prematurely damaging it.
+We are facing a supply shock on an A-risk component at the worst possible moment — just before ramp. My job is to protect our capital, surface the worst-case scenarios, and set concrete pause/kill conditions. What both the Pro and Growth advocates are proposing is to bet the company's reputation and cash on an unproven parallel execution plan they've dressed up as "aggressive but manageable." It's not. It's dangerous.
 
 ---
 
-**Why Not Option 3 Alone?**
+## What the Brain Actually Requires
 
-Slipping ramp month 2 without a parallel qualification push is the worst of both worlds: we still fail the gate (one qualified source), we burn roughly $414K in December margin at 42% on our $329 ASP, and we damage the very customer trust we’re trying to protect. I won’t support a pure slip when we have a PCB revision already designed for this contingency and a broker bridge available under controlled conditions.
+Let's start with the non-negotiable Brain facts that both advocates are conveniently glossing over:
 
-**Why Not All-In on Growth’s Pace?**
+**1. The PVT Gate Criteria Are Black and White**
 
-Because Cautious is right about the Magnuson-Moss Warranty Act implications, per the Brain’s legal context. If we ship with an A-risk component that hasn’t met our own PVT criteria, and there’s a field failure, we’re not just dealing with an RMA spike — we’re potentially breaching the implied warranty of fitness. That’s not a cost-walk line item; that’s an existential liability. The gate exists for a reason.
+The Brain (`03-quality-reliability`) explicitly states: **two qualified sources on A-risk parts are a PVT gate requirement.** Not a "nice to have," not a "we're working on it" — a gate. You do not pass PVT without it. Period.
+
+The SanDisk iNAND is not yet qualified. Having qualification straps on PCB rev B (`04-projects/project-amg/`) means the board can physically accept the part. It does not mean the part is validated, tested, or approved for a product we claim will deliver **>99.5% fleet uptime** (`strategy: vision`). Conflating "the pads are there" with "the part is qualified" is a catastrophic error in hardware engineering judgment.
+
+**2. DVT-2 Is the Validation Window — You Get One Shot**
+
+DVT-2 builds provide the data that PVT gate sign-off depends on. If we attempt to accelerate SanDisk qualification into DVT-2 while simultaneously scrambling to procure broker-market Kioxia parts for production, we are asking our engineering and quality teams to do two things that directly compete for attention:
+
+- Validate a new second-source silicon (full test coverage, environmental stress, supplier audit per `04-mfg-supplier-quality`)
+- Support an emergency procurement process for unplanned broker parts (incoming inspection, traceability verification, counterfeit screening)
+
+If either activity is compromised, the PVT gate data is contaminated or incomplete. We then face a binary choice at PVT: ship with unqualified second-source parts (violating our own gate) or delay anyway — after having burned the $30,000 and exhausted our teams.
 
 ---
 
-**Summary**
+## The Financial Risk Is Understated, Not Contained
 
-We qualify SanDisk as fast as rigor allows — faster than default, slower than reckless. We broker-buy with traceability controls to cover committed deployments in the gap. We communicate early with customers to preserve trust. And we don’t slip the ramp unless qualification actually forces our hand. That’s how we protect the 2030 vision without betting the company on a compressed timeline.
+The Growth advocate calls $30,000 a "defined cap" and "contained risk." Let me explain why that's a dangerous fiction.
+
+**First: The cap assumes the problem ends at month 3.**
+
+The Brain (`ramp-plan`) shows volumes at **2,000/3,000/5,000 for months 1–3.** The Kioxia allocation cut is 40%. If SanDisk qualification takes longer than the DVT-2 window (which it often does — qualification schedules are estimates, not guarantees), we need broker parts for month 4, month 5, month 6. The $30,000 pre-approval is for an emergency, not an extended procurement strategy.
+
+$30,000 divided by $2.10/unit covers approximately **14,285 units.** Months 2-3 alone consume 8,000 units ($16,800). That leaves $13,200 in headroom — roughly 6,285 additional units. If month 4 volume is 5,000+, we're already beyond the cap. And that's before we account for the reality that broker pricing escalates with scarcity. The $2.10/unit number (`04-mfg-supplier-quality`) is a spot quote, not a guaranteed price across multiple purchase orders.
+
+**Second: The BOM target is already tight.**
+
+The Brain shows a **BOM target of $142.00 ± $3.00** (`bom-evt`). A $2.10/unit premium represents a 1.5% increase on a target with only 2.1% total tolerance. We have no visibility into what other cost-walk items are pending. The Growth advocate says "track it as a cost-walk line item with a defined end date." I say: show me the cost-walk register entries that absorb this. If they exist, produce them. If they don't, we're accepting a structural cost increase on faith. That's not a plan — it's hoping. In hardware, hope is not a procurement strategy.
+
+**Third: Revenue protection requires delivery of reliable products, not just delivery.**
+
+The Growth advocate runs the math on a 50-location chain: **$658,000 in revenue.** They argue that risking this for $16,800 in broker premiums is foolish. But they're comparing the wrong numbers. The real comparison is: $658,000 in revenue from a deployment that *works* vs. $658,000 in revenue from a deployment where devices fail mid-transaction because we shipped an under-qualified second source.
+
+The Brain's ICP profile (`strategy: icp`) says it directly: **"Device downtime kills revenue at the table."** A VP of Operations who deploys 2,000 tablets across 50 locations and sees a 3% field return rate in month one doesn't think "well, at least they shipped on time." They think "we made a $658,000 mistake, and our payments partner is asking why transactions are dropping." That customer doesn't come back for the next 50 locations. They RFP a competitor.
+
+---
+
+## The Operational Cascade of Option 3 Is Manageable — The Cascade of Failure Is Not
+
+Both advocates paint Option 3 (slipping ramp month 2 volumes) as catastrophic. Let's examine what actually happens in each scenario.
+
+**If we slip ramp month 2 (Option 3):**
+- We communicate proactively with wave-1 customers: a 4–6 week adjustment to protect their uptime commitment
+- We qualify SanDisk properly through DVT-2, with margin for unexpected findings
+- We hit PVT gate with two fully qualified A-risk sources
+- We avoid the broker premium and preserve BOM target
+- We deploy in late January/early February with devices that meet the 99.5% uptime metric
+
+Is a customer disappointed by a schedule adjustment? Yes. Is that recoverable? Also yes — especially when the reason is "we're adding a second source to protect your fleet reliability," which sophisticated buyers understand. The Brain's ICP is a VP of Operations and CIO — these are professionals who manage their own supply chains. They respect quality discipline more than they resent minor schedule adjustments.
+
+**If we attempt "Bridge and Qualify" and SanDisk qualification hits a delay:**
+- We have procured broker parts past the $30,000 cap
+- We have no qualified second source at PVT gate
+- We either: (a) ship with a single source (violating our gate and risking the 99.5% uptime target), (b) slip the ramp anyway — but now with a depleted budget and exhausted team, or (c) ship with the unqualified SanDisk part (violating gate and accepting unknown reliability risk)
+- The Tet pre-build (`ramp-plan`) doesn't materialize because we don't have enough qualified parts to build inventory
+- January 2027 deployment commitments are broken — not by a few weeks, but potentially by months, and not with a clean "we're adding quality" narrative, but with a messy "our qualification didn't finish" admission
+
+The Growth advocate says "we don't pre-negotiate surrender before the data exists." I say: we don't bet customer trust on a qualification timeline with zero slack. The data we need doesn't exist yet — that's the entire point. We're being asked to make an irreversible procurement commitment on the assumption that qualification data will be clean when it arrives. In hardware, that assumption is wrong often enough to be professionally negligent.
+
+---
+
+## Gates and Conditions — Concrete Limits
+
+Since both advocates are proposing an integrated plan, let me set the specific pause/kill conditions that any Authorization to Proceed must include. If you choose to move forward with their plan, these gates must be met:
+
+**Gate 1: SanDisk Qualification Preliminary Readout (DVT-2 Midpoint)**
+- By DVT-2 midpoint data review, SanDisk must demonstrate:
+  - Successful boot, full test suite pass, no timing violations at temperature extremes
+  - Preliminary yield data from minimum 100-unit sample
+- If any critical path failure is observed, immediately halt broker procurement beyond month 3 and revert to Option 3 (slip ramp).
+
+**Gate 2: Broker Spend Hard Cap and Escalation Trigger**
+- Total broker premium spend must not exceed $25,000 (not $30,000 — a buffer of $5,000 must be preserved for true emergencies).
+- If the per-unit premium exceeds $3.00 (vs. the current ~$2.10), procurement must escalate to the executive team. Price escalation is a leading indicator of sustained scarcity.
+
+**Gate 3: PVT Gate Sign-Off Criteria Non-Negotiable**
+- PVT does not pass without two fully qualified A-risk sources. No exceptions, no waivers, no "conditional approval." If SanDisk is not fully qualified at PVT gate, the product does not ship. This gate must be documented and communicated to the board or investment committee — it cannot be overridden by the program team under schedule pressure.
+
+**Gate 4: Customer Communication Prepared in Parallel**
+- If we proceed with Bridge and Qualify, a draft customer communication for "Schedule Adjustment Due to Quality Assurance" must be prepared and approved *concurrently* with the broker authorization. If qualification slips, we communicate within 48 hours. We do not wait until the last week of December to tell customers their January deployment is at risk.
+
+---
+
+## My Recommendation
+
+**Execute Option 3: Slip Ramp Month 2 Volumes.**
+
+This is not surrender. It is the only path that meets all of our own gated requirements without betting the product's reputation on an unqualified component.
+
+1. **Protect PVT Gate Integrity:** We meet the two-source requirement with properly qualified parts, not assumptions.
+2. **Protect the BOM Target:** We avoid a structural cost increase that has no identified offset in the cost-walk register.
+3. **Protect Customer Trust:** A proactive schedule adjustment for quality reasons is an honest conversation. A deployment of unreliable devices is a breach of the fundamental promise: >99.5% uptime.
+
+The Brain's vision is to be the **#1 hardware platform by 2030** (`strategy: vision`). You do not achieve that by shipping products with single-source A-risk components because you were afraid of a difficult customer conversation in Q4 2026. You achieve it by making the hard call to protect quality now, so that every deployment for the next seven years builds on a foundation of reliability.
+
+If we proceed with Bridge and Qualify against this recommendation, the gates above must be documented as hard constraints with no override authority vested in the program team. Otherwise, we are authorizing a plan where the only real gate is hope.
+
+BALANCED: Based on the Brain data and my role as the Balanced perspective, here is a feasible middle-ground option that incorporates valid points from both the Growth and Cautious views while keeping us moving forward.
+
+---
+
+## Balanced Recommendation: Staggered Execution with Hard Gates
+
+We don't need to choose between blind acceleration and full surrender. There is a middle path that protects our January 2027 commitments, buys time for proper qualification, and contains financial exposure. Here's how we do it.
+
+---
+
+### The Core Logic
+
+Both the Growth and Cautious advocates are partially right. Growth is correct that slipping the ramp damages customer trust and market momentum in ways that are hard to recover. Cautious is correct that shipping with an unqualified second source on an A-risk part violates our own PVT gate criteria and threatens the >99.5% fleet uptime promise that defines our strategy.
+
+The solution: we authorize the broker buy *only for the units needed to protect near-term commitments*, while simultaneously running SanDisk qualification on its proper engineering timeline — not an accelerated, compressed one. If qualification completes on time, we transition to dual-source at PVT. If it doesn't, we have a pre-agreed trigger to adjust the ramp *before* we've burned through cash and credibility on an open-ended broker strategy.
+
+---
+
+### The Specific Plan
+
+**Step 1: Authorize the broker buy, but only for ramp month 2.**
+
+The Brain's `ramp-plan` shows month 1 at 2,000 units, month 2 at 3,000 units. Current PO coverage reaches through month 2 per ISS-030. The 40% Kioxia cut means we're short on the month 2 allocation. We fill that specific gap through the broker channel.
+
+- **Math:** 3,000 units × 40% shortfall = 1,200 units. At ~$2.10/unit premium, that's **$2,520**.
+- This is well within the pre-approved $30,000 cap (`04-mfg-supplier-quality`).
+- This secures ramp month 2 production while we assess the SanDisk qualification timeline.
+
+**$2,520 is the price of a 30-day option on protecting January deployments.** That's a reasonable bet.
+
+**Step 2: Run SanDisk qualification on the standard DVT-2 timeline — no heroics.**
+
+The Brain confirms PCB rev B has SanDisk qual straps (referenced in the brief). That means we're not starting from zero. But the Cautious advocate is right: having pads on a board is not the same as having a validated, field-ready part.
+
+We run the full qualification cycle during DVT-2 as originally planned. No compression, no skipped tests. The `03-quality-reliability` team's PVT gate criteria require two qualified sources on A-risk parts — this is non-negotiable. We give engineering the time to do it right.
+
+**Step 3: Set a hard decision gate at DVT-2 midpoint data review.**
+
+Here's where we bridge the Growth and Cautious positions. At the DVT-2 midpoint (roughly 4-6 weeks into the build window), we review SanDisk qualification data. At that point, we make a binary decision:
+
+- **If SanDisk is on track:** Continue ramp month 3 with dual-source transition. The broker buy was a bridge, and it worked.
+- **If SanDisk shows a critical qualification issue:** Immediately pivot to Option 3 for ramp month 3 and beyond. We slip month 3 volumes, communicate proactively with wave-1 customers, and avoid throwing more broker premium at a problem that now requires an engineering fix.
+
+This gate is the mechanism that prevents the open-ended financial exposure the Cautious advocate rightly warns about.
+
+**Step 4: Prepare the customer communication now — as an insurance policy, not a prediction.**
+
+The Cautious advocate's point about having a draft communication ready is smart risk management, not pessimism. We draft the "schedule adjustment for quality assurance" message concurrently with the broker authorization. If we never need to send it, great. If we do, we're not scrambling to explain ourselves in December. We communicate within 48 hours of the gate decision, not 48 hours before deployment.
+
+---
+
+### Why This Works Better Than Either Extreme
+
+**Against the full "Bridge and Qualify" plan (Growth):**
+- We're not betting the entire ramp on an unproven qualification timeline. The DVT-2 midpoint gate gives us a clean off-ramp before financial exposure escalates.
+- We're spending $2,520 on the broker bridge, not running toward a $30,000 cap. That preserves budget for actual emergencies.
+
+**Against the full "Slip the Ramp" plan (Cautious):**
+- We're not pre-surrendering January 2027 deployment commitments before we have data. The ICP's VP of Operations (`strategy: icp`) values predictable supply. A 30-day bridge that preserves their go-live date, backed by a credible qualification path, is a story we can tell honestly.
+- We preserve Tet pre-build requirements (`ramp-plan`) for wave-1 staging. Slipping now would cascade into missing those builds entirely.
+
+---
+
+### Financial Summary
+
+| Item | Amount | Source |
+|---|---|---|
+| Ramp month 2 broker premium (1,200 units × $2.10) | $2,520 | `04-mfg-supplier-quality`, `ramp-plan` |
+| Remaining broker cap headroom | $27,480 | Pre-approved cap |
+| BOM impact (month 2 only) | +$2.10/unit on 1,200 units | `bom-evt` shows $142.00 ± $3.00; this is a contained, one-month walk item |
+
+The $2.10/unit premium on 1,200 units is a rounding error against the `AMG-100` at $329 and 42% margin (`products: AMG100`). It does not structurally break the BOM target. It does not require finding permanent cost-walk offsets.
+
+---
+
+### The Gates (Non-Negotiable)
+
+1. **Broker buy is limited to ramp month 2 volumes only (1,200 units / $2,520 premium).** No extension without executive approval triggered by the DVT-2 midpoint gate review.
+2. **DVT-2 midpoint gate review is mandatory.** SanDisk must demonstrate successful boot, full test suite pass, and no critical-path failures. If not, we pivot to Option 3 immediately.
+3. **PVT gate criteria are absolute.** Two qualified A-risk sources required. No waivers, no conditional sign-offs.
+4. **Customer communication draft is prepared now** and approved by leadership. If the gate triggers Option 3, it goes out within 48 hours.
+
+---
+
+### Summary
+
+This is not splitting the difference — it's structuring a decision with real options. We spend a small, contained amount to protect near-term commitments. We run the qualification properly, without compression. We set a hard gate where data forces a clear decision. And we prepare the safety net in advance so that if we do need to adjust, we do it professionally, not in a panic.
+
+The Brain's vision is >99.5% fleet uptime and #1 hardware platform by 2030 (`strategy: vision`). This plan protects both the reliability standard and the market momentum. It acknowledges the Cautious advocate's legitimate concerns about qualification risk without surrendering to them before we have data. And it channels the Growth advocate's urgency into a specific, cost-contained action with a defined off-ramp.
+
+That's how a balanced hardware organization handles an allocation cut.
