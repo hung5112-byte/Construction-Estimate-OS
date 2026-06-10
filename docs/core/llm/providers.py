@@ -31,11 +31,18 @@ class ClaudeProvider:
 
         from core.llm.usage_log import log_usage
         client = Anthropic(api_key=self.api_key)
-        resp = client.messages.create(
-            model=model or self.default_model,
-            max_tokens=4096,
-            messages=messages,
-        )
+        # Anthropic Messages API rejects role="system" inside messages — it must be
+        # the top-level `system` parameter (OpenAI-compatible providers accept both).
+        system_parts = [str(m.get("content", "")) for m in messages if m.get("role") == "system"]
+        conv = [m for m in messages if m.get("role") != "system"]
+        kwargs: dict = {
+            "model": model or self.default_model,
+            "max_tokens": 4096,
+            "messages": conv,
+        }
+        if system_parts:
+            kwargs["system"] = "\n\n".join(system_parts)
+        resp = client.messages.create(**kwargs)
         usage = getattr(resp, "usage", None)
         if usage is not None:
             log_usage(

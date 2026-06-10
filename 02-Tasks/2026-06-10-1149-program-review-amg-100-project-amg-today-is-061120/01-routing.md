@@ -1,0 +1,8 @@
+---
+type: routing
+---
+# Task classification
+
+- **Class:** STRATEGIC
+- **Departments:** 01-hardware-engineering, 02-npi-program-management, 03-quality-reliability, 04-mfg-supplier-quality, 05-service-operations
+- **Reasoning:** This brief demands all five departments and division-manager sign-off mid-way. The triggers are unambiguous: (1) an active PCI/EMVCo certification program with zero slack on the critical path post-08/18 — an explicit STRATEGIC keyword; (2) a full NPI program review spanning DVT build readiness, yield improvement (EVT 78 % → DVT 88 % → MP 95 %), and a ramp plan — crossing 02-npi-program-management and 04-mfg-supplier-quality; (3) hard reliability/quality-gate commitments (MTBF, AFR, alpha uptime, battery 8D) that require 03-quality-reliability and 01-hardware-engineering together; (4) supply-chain structural risks — dual-source eMMC in flight, BrightPath single-site, Tet pre-build — pulling in 04-mfg-supplier-quality and 02-npi-program-management; (5) depot/beta-trial/ramp readiness requiring 05-service-operations; and (6) budget authority decisions (spend-vs-schedule trade-offs against a 111.6 k contingency) that need division-manager sign-off before commitments are made. No department can be excluded: hardware owns antenna rework and RF bus-factor risk (ISS-014, R-09); NPI-PM owns the cert critical path and schedule; Quality-Reliability owns PRT coverage and all quality gates; Mfg-Supplier-Quality owns yield path and ODM/supplier risk; Service-Operations owns depot readiness and beta/field-trial execution. The combination of a live PCI/EMVCo cert program, a factory-transfer-equivalent dual-source action, and a cross-functional prioritized improvement plan with cost-delta authority firmly places this in STRATEGIC.
