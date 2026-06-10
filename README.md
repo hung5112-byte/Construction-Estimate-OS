@@ -75,7 +75,7 @@ A **division manager** at a Texas electronics company who owns hardware product 
 ### Stack
 
 - **Debate engine**: Python 3.11+ + LangGraph (adapted from TradingAgents, renamed neutral) + intra-department team round
-- **Knowledge base**: 207 templates (43 division + 9 orchestrator + 155 generic in `_shared/`) + 5 manager-led departments (29 agents)
+- **Knowledge base**: 245 templates (81 division + 9 orchestrator + 155 generic in `_shared/`) + 5 manager-led departments (29 agents)
 - **Storage**: Obsidian Markdown + private Git (one vault per division)
 - **LLM**: MCP sampling via Claude Desktop / Claude Code (subscription) — NO Anthropic API key needed
 - **Search**: Tavily (free tier 1000 req/month) for law/benchmarks/web
@@ -265,6 +265,6 @@ See [LICENSE](LICENSE) for the full text and [NOTICE](NOTICE) for detailed attri
 Apache 2.0 allows commercial use + modification + redistribution, while **protecting the "VN Business OS" name/logo from being used by forks to advertise other products** (Section 6) and ensuring forks must **clearly state the changes** they made.
 
 **Credits (detailed in [NOTICE](NOTICE)):**
-- 192 US business templates in `templates-us/` adapted from `business-builder.plugin` (28 division-mapped + 9 orchestrator + 155 in `_shared/`); the 15 hardware-division templates are original
+- 192 US business templates in `templates-us/` adapted from `business-builder.plugin` (28 division-mapped + 9 orchestrator + 155 in `_shared/`); the 53 hardware-division templates are original work by Brian H. Doan
 - Debate engine pattern adapted from [TradingAgents](https://github.com/TauricResearch/TradingAgents) (Apache 2.0)
 - Role definitions reference from [agency-agents](https://github.com/msitarzewski/agency-agents)

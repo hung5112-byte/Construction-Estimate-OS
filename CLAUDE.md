@@ -76,7 +76,7 @@ Priority (`core/mcp_server.py:_pick_llm`): env `DEEPSEEK_API_KEY` → `ANTHROPIC
 - **Intra-department round** (`meeting.intra_department_round`, default **true**): each team speaks ≤150 words → the manager synthesizes the department perspective → managers debate. Cost: ~1 LLM call per team per participating department (5-dept meeting ≈ 29 round-1 calls). Turn off in `.vncoderc` for quick/cheap meetings.
 - Agent prompts cross-reference each other with `[[wikilinks]]` ("Works with" sections); dept hubs render the org chart (manager ⭐ + teams) and "Works with" links from `depends_on` — Obsidian's graph shows the org and its handoffs.
 - `packs/` — optional overlay mechanism (kept); no packs ship by default
-- `templates-us/` — 207 default templates: 43 in the 5 dept folders + 9 `_orchestrator` + 155 generic business templates parked in `_shared/` (BYOT source material; not resolved by dept code). MODORO bylines removed (attribution maintained in `NOTICE`).
+- `templates-us/` — 245 default templates: 81 division templates in the 5 dept folders (HW Eng 9, NPI&PM 19, Q&R 16, MSQ 14, SvcOps 23) + 9 `_orchestrator` + 155 generic business templates parked in `_shared/` (BYOT source material; not resolved by dept code). All authored/adapted by Brian H. Doan; upstream attribution in `NOTICE`.
 
 ### Vault structure (runtime)
 

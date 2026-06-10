@@ -34,7 +34,7 @@ def test_dept_loader_loads_5_depts():
     assert len(depts) == 5
 
 
-def test_templates_us_has_207_files():
+def test_templates_us_has_245_files():
     repo = Path(__file__).parent.parent.parent
     md_files = list((repo / "templates-us").rglob("*.md"))
-    assert len(md_files) == 207
+    assert len(md_files) == 245
