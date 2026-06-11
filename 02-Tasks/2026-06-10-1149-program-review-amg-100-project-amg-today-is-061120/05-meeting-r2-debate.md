@@ -20,12 +20,12 @@ Here is my prioritized improvement plan.
 
 **Concrete actions:**
 
-| Action | Owner | Date | Cost Delta |
-|---|---|---|---|
-| Pre-kit all non-antenna BOM at contract manufacturer — 100% staged by 06/15 | NPI Program Mgmt (Dept 02) | 06/15 | +$8K expedite labor |
+| Action                                                                                                  | Owner                          | Date  | Cost Delta                |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------ | ----- | ------------------------- |
+| Pre-kit all non-antenna BOM at contract manufacturer — 100% staged by 06/15                             | NPI Program Mgmt (Dept 02)     | 06/15 | +$8K expedite labor       |
 | Confirm antenna parts ETA with supplier in writing; arrange air freight upgrade if ETA slips past 06/17 | MFG/Supplier Quality (Dept 04) | 06/13 | +$12K freight contingency |
-| Assign dedicated CM build team on standby 06/16–06/22 — no line reassignment | NPI Program Mgmt (Dept 02) | 06/16 | +$15K labor hold fee |
-| Complete rework qualification documentation for antenna assembly before 06/19 | Hardware Engineering (Dept 01) | 06/19 | $0 (internal) |
+| Assign dedicated CM build team on standby 06/16–06/22 — no line reassignment                            | NPI Program Mgmt (Dept 02)     | 06/16 | +$15K labor hold fee      |
+| Complete rework qualification documentation for antenna assembly before 06/19                           | Hardware Engineering (Dept 01) | 06/19 | $0 (internal)             |
 
 **Total incremental spend: ~$35K.** Against a $2.0M DVT budget with $111.6K contingency remaining, this is a 31% draw on contingency that buys the single most valuable thing we have: an uncompromised 06/22 start.
 
