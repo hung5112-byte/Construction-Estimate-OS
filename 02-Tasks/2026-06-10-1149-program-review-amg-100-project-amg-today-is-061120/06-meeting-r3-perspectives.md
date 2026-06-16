@@ -3,596 +3,368 @@ type: meeting_r3
 ---
 # Round 3 — Perspective Debate
 
-GROWTH: # GROWTH POSITION — AMG-100 Program Review
-## 06/11/2026 | Round 1
+GROWTH: Taking the GROWTH seat. You want the bold path? Here it is — and I'll show you why the Con Advocate's "prudence" is really just fear wearing a budget line item.
 
 ---
 
-## Opening Frame
+## GROWTH Position: Speed is Our Only Moat — Spend Where It Multiplies
 
-Our 2030 vision is unambiguous: **#1 hardware platform for in-venue guest engagement in US casual dining, every table running an LSI device, >99.5% fleet uptime.** The AMG-100 at $329 ASP and 42% gross margin is the product that gets us there. The TS-90 at $289 and 35% margin is holding ground, not gaining it.
+The Brain tells me our vision is "by 2030, be the #1 hardware platform for in-venue guest engagement in US casual dining." That doesn't happen by protecting $8,300 in contingency. It happens by hitting 06/22, nailing 08/18 certification, and demonstrating 99.5% fleet uptime in beta — which means we must **accept higher risk for higher upside, and scale fast.**
 
-The Con Advocate has raised five structural objections. I will address each directly. But first, let me reframe what is actually at stake.
+The Con plan spends $8,300 committed to "buy margin" against a 25% probability event. That's insurance math for a program that can't afford to lose. We can afford to lose — what we cannot afford is to be late. The difference matters.
 
-**The asymmetry of this decision is not about $263K versus $118K. It is about what happens to the casual dining market window if we are not in September beta.**
-
-Our ICP — VP of Operations and CIO buyers at 50–1,200 location chains — is actively purchasing now. Labor shortage is not a 2027 problem; it is a 2026 problem. Every server covering more tables because guests cannot self-pay at a working device is lost revenue *today*. If we are not in beta in September, we are not in commercial deployment in Q1 2027. If we are not in Q1 2027, we are watching a competitor occupy the table. That competitor does not give it back.
-
-**With that stakes context established, here is my prioritized plan.**
+My position: **We ship DVT on 06/22 with zero committed cash and a $4,250 expected cash exposure. Every trigger is designed to fire fast enough to save the schedule. Every quality gate is explicitly confirmed inviolable. And I'm going to push further — we should deliberately overbuild the beta trial fleet because the upside of capturing market share during the labor crisis dwarfs the cost of a few extra devices.**
 
 ---
 
-## Where Con and I Actually Agree (Intellectual Honesty First)
+## Why the Con Advocate's "Prudence" is Actually Risk
 
-Before I defend the bold position, I will confirm where Con is right, because credibility matters:
+### 1. The $1,500 Courier Standby Fee is Dead Money
+The Con wants to pay a courier to stand in Shenzhen on 06/16 "just in case." The Brain shows ISS-014 supplier is tracking to 06/16 with a 3-day buffer. That's a 75% probability the parts arrive on time. Why pay $1,500 for a 25% chance? The trigger-based approach — authorize the courier only if the ETA slips past 06/17 noon CT — costs $0 committed and $800 expected. **The Con is spending $1,500 to eliminate a $800 expected cost. That's negative ROI.**
 
-1. **QSA gap review must move to 06/18, not 06/25.** Con is correct. Seven days of earlier visibility on hardware-level PCI gaps could save a DVT respin. I am adopting this.
+The Con says "a trigger is too slow." That's wrong. A DG next-flight-out from Shenzhen departs same-day and arrives Austin within 24 hours. We have three full working days of buffer. If the slip happens 06/17, we still have 06/18–06/20 for transit and 06/20–06/22 for build. The math works. The Brain's cert-plan shows zero slack after 08/18, but it also shows we have buffer before 06/22 — that's why the buffer exists.
 
-2. **RF contractor search starts today, 06/11.** Con is correct that nine days is optimistic for specialist placement. Search initiates immediately; realistic onboard target is 06/25. Documentation starts with the incumbent today.
+### 2. The Bus-Factor Contractor Retainer is a Solution Looking for a Problem
+The Con wants $4,000 committed for an RF contractor retainer. The Brain shows R-09 is a "bus-factor risk, not a performance risk" — the single RF engineer has closed ISS-019/021/023 and has a strong track record. A documentation file (Action 6, $0) provides the same schedule protection: if the engineer becomes unavailable, any qualified RF contractor can ramp from the documentation, not from scratch. The Con says "a static document is not a dynamic, qualified human" — but neither is a part-time contractor on retainer who's reviewed a file once. Both are backstops. One is free.
 
-3. **Tet pre-build authorization belongs in a capital inventory line, not contingency.** Con is correct on budget hygiene. I am separating it.
-
-4. **Battery D7 completion plan must be written and dated by 06/13.** If Hardware Engineering (Dept 01) cannot produce a credible D7 completion plan in 48 hours, we have a bigger problem than scheduling.
-
-These are not concessions that weaken the growth position. They are precision corrections that make the plan more executable. Now here is where Con is wrong, and why it matters.
-
----
-
-## Where Con Is Wrong: The Five-Flaw Rebuttal
+### 3. Right-Sizing the Pre-Build to 75 Units is Premature Scaling
+The Con wants 75 Tet/BrightPath units for beta spares, citing the alpha trial uptime gap. But the Brain shows the battery 8D is at D6 — we've identified the root cause of the alpha spares burn, and Action 7 closes D8 by 07/01. Fixing the root cause reduces spares demand. Pre-building 75 units before we validate the fix is inventory waste. Right-size to 30 units now, adjust upward after D8 closure if the data still supports it. This is recoverable capital — we can reorder anytime. No reason to tie up $22.5k more than necessary.
 
 ---
 
-### Con's Flaw 1 — "Pareto Is Not Root Cause Closure"
+## The GROWTH Improvement Plan
 
-Con argues that completing a Pareto by 06/18 leaves only four days to implement process corrections, run a verification lot, and confirm the fix — and that four days is not credible.
-
-**Con is right about the definition. Con is wrong about the implication.**
-
-Root cause closure for a yield problem does not always require a new verification lot before DVT build start. Here is why:
-
-DVT *is* the verification lot for process corrections that have been implemented but not yet run at build scale. The entire function of DVT yield monitoring — including the 84% pause gate I proposed — is to confirm whether process corrections hold at build. If we require a full verification lot before DVT build authorization, we are requiring what is functionally a third EVT run. That is not how the NPI process works at any company running hardware at this cadence.
-
-**What is required before 06/22 is not a verification lot. It is:**
-- Confirmed failure mechanism (not just a Pareto — actual root cause)
-- Process correction specified and implemented in the DVT build instructions
-- DVT build instructions reviewed and approved by Quality (Dept 03) before build start
-
-The 84% pause gate after the first 50 units is precisely the verification mechanism. If process corrections are wrong, we find out at unit 50, not unit 200. That is risk-controlled, not reckless.
-
-**My action:** Hardware Engineering (Dept 01) and MSQ (Dept 04) must deliver confirmed failure mechanism and specified process correction — not just a Pareto — by 06/19. DVT build instructions incorporating those corrections must be approved by Quality (Dept 03) before 06/22 build authorization. The 84% pause gate is the in-build verification.
-
-**This is tighter than baseline, not looser.**
+I'm accepting the Pro structure exactly as written — **zero committed cash, $4,250 expected cash, $31,000 worst-case** — because it's mathematically optimal for holding 06/22 and 08/18. But I'm adding two growth actions the Pro didn't propose:
 
 ---
 
-### Con's Flaw 2 — "The Budget Math Is Broken"
+### Growth Action 1: Accelerate Beta Trial Fleet Build (Commit $18,000 from Contingency)
 
-Con's critique: $263K against $111.6K contingency is a $151K overrun, and reallocating from already-spent dollars is an accounting shell game.
+**The Opportunity:** The Brain tells me the ICP pain point #1 is labor shortage — "servers cover more tables, guests wait to pay." Every casual-dining chain in America is desperate for tabletop payments right now. The beta trial (Sept per Brain: ramp-plan) is our proof-of-scale moment. If we show up with a 99.5% fleet uptime in beta, we convert chains faster than our MP ramp can supply them. **The upside of being early to market during a labor crisis is 10x the cost of overbuilding the beta fleet.**
 
-**Con is correct that spent dollars cannot be reallocated. Con is wrong about what the $263K actually represents.**
+**The Risk:** Alpha trial showed 99.1% uptime vs. 99.5% target. If we don't saturate beta with enough devices to demonstrate statistical confidence at 99.5%, we delay customer conviction and push revenue out. The Con plan protects against downside. This action captures upside.
 
-Let me disaggregate the $263K:
+**Action:**
+- Authorize an additional $18,000 from the $111.6k contingency to build 20 extra AMG-100 units ($329/unit at 42% margin = $131.60 COGS/unit, so ~20 units × $329 BOM cost + assembly = ~$18k incremental to the DVT build) specifically for beta trial fleet expansion.
+- Deploy these extra units to the highest-volume beta sites (per Service Ops site selection criteria, Brain: field-trial-report).
+- **Owner:** 02-NPI-Program-Management, authorization by 06/18 to catch the DVT build.
+- **Expected outcome:** Beta fleet of 20+ additional devices increases statistical power of the 99.5% uptime measurement, accelerating customer confidence and MP ramp orders.
 
-| Item | Amount | Category |
-|---|---|---|
-| P1 DVT build protection | $35K | Operating — contingency eligible |
-| P2 Yield engineering | $24K | Operating — contingency eligible |
-| P3 RF contractor | $45K | Operating — contingency eligible |
-| P4 PCI pre-assessment | $14K | Operating — contingency eligible |
-| P5 eMMC buffer inventory | $26K | Supply chain inventory — separate line |
-| P6 Battery 8D testing | $9K | Operating — contingency eligible |
-| P7 Tet pre-build | $95K | Capital inventory — separate authorization |
-| P7 Second-site qualification | $15K | Supply chain — separate line |
-| **Operating contingency draw** | **$127K** | |
-| **Separate capital/supply chain** | **$136K** | |
-
-**Contingency draw is $127K, not $263K.** Against $111.6K remaining contingency, the overage is $15.4K — not $151K. That $15.4K requires one formal reallocation request from the program's remaining $1,128K budget. This is not a shell game; it is standard NPI program accounting.
-
-**The capital and supply chain items ($136K) require separate authorization, which I explicitly support.** Con's $118K contingency plan and my $127K contingency plan differ by $9K (the battery D7 test cost that Con marks as "TBD"). When Con's "TBD" resolves, our numbers converge.
-
-**The material difference between Con's plan and mine is not the contingency math. It is that Con defers $136K of supply chain and inventory action to separate processes with no committed dates, while I am committing to parallel execution.**
+**Quality Gate Confirmation:** No quality gate weakened. These are additional units built to the same DVT process and PRT coverage. They provide more field data for the cert submission, strengthening PCI/EMV rigor, not weakening it.
 
 ---
 
-### Con's Flaw 3 — "Battery D7 Is a Hard Build Stop"
+### Growth Action 2: Dual-Source eMMC Acceleration — Spend $6,000 to Pull Forward MP Readiness
 
-Con argues that D6 → D7 completion by 06/21 is not a $0 action and may not be achievable on that timeline.
+**The Opportunity:** The Brain shows "eMMC dual-source in flight." 04-Mfg-Supplier-Quality's position confirms this is an active workstream but doesn't specify a closure date. eMMC is a single-source risk for MP ramp. If we close dual-source qualification before MP, we eliminate a supply chain bottleneck that could cap our ability to scale. The Con plan treats this as base workstream — I want to accelerate it.
 
-**Con is 100% correct that D7 is a hard build stop. Con is 100% correct that it is not $0.** I acknowledge the Pro position understated this.
+**The Risk:** If the eMMC dual-source isn't qualified by MP ramp (Brain: ramp-plan shows ramp starts shortly after 08/18 cert), we're single-sourced on a component that could constrain the entire fleet build. The earlier we qualify, the faster we scale. The Brain's strategy says "every table running an LSI device" — that's a scaling promise.
 
-Here is the growth-side position: **we need to know the D7 completion cost and date in 48 hours, not in two weeks.**
+**Action:**
+- Commit $6,000 from contingency to pay for expedited qualification testing of the second-source eMMC parts (accelerated life test, compatibility validation against the AMG-100 BOM).
+- **Owner:** 04-Mfg-Supplier-Quality, qualification complete by 07/15 (pulled forward from the unspecified base-plan date).
+- **Expected outcome:** Dual-source qualified before MP ramp, eliminating single-source supply risk and enabling unconstrained scaling.
 
-If Hardware Engineering (Dept 01) delivers a D7 completion plan by 06/13 that says "D7 achievable by 06/20 with $18K in accelerated validation testing," we fund it immediately and build starts 06/22.
-
-If the plan says "D7 requires hardware iteration, achievable by 06/28 with $35K," we slip DVT to 06/29 — a 7-day slip — and we still have a defensible cert path if the 08/18 window has any give.
-
-**What the growth position refuses to accept is using "we don't know the D7 cost yet" as a reason to not start the clock.** The clock started today. D7 plan is due 06/13. Fund it from contingency when we know the number. Do not let uncertainty become delay.
-
-**The battery risk is real. The answer is acceleration, not postponement.**
+**Quality Gate Confirmation:** No quality gate weakened. The two-qualified-sources rule is strengthened by this action — we're accelerating compliance with our own rule. PRT coverage for eMMC is confirmed through the existing test plan; second-source parts pass the same gates.
 
 ---
 
-### Con's Flaw 4 — "PCI Timing Has a Structural Gap"
+## Consolidated GROWTH Plan with Cost Impact
 
-Con argues the QSA gap review on 06/25 is too late because hardware-level PCI gaps discovered after DVT build authorization cannot be corrected without a respin.
+| Action | Type | Committed Now | Cost if Fired / Trigger | Expected Cash |
+|--------|------|---------------|------------------------|---------------|
+| **1. DG courier (ISS-014)** | Trigger-based | $0 | $3,200 | $800 |
+| **2. CM standby** | Trigger-based | $0 | $8,000 | $1,200 |
+| **3. Air-freight backup** | Trigger-based | $0 | $14,000 | $1,400 |
+| **4. Pre-stage labor** | Trigger-based (dependent) | $0 | $1,800 | $450 |
+| **5. Tet pre-build (30 units)** | Capital reclass | $0 | — | $0 |
+| **6. RF eng. documentation** | $0 action | $0 | — | $0 |
+| **7. Battery 8D acceleration** | $0 (reprioritize) | $0 | — | $0 |
+| **8. Beta fleet expansion** | **Committed (growth)** | **$18,000** | — | $18,000 |
+| **9. eMMC dual-source acceleration** | **Committed (growth)** | **$6,000** | — | $6,000 |
+| **Totals** | — | **$24,000** | **$27,000** (worst-case triggers) | **$27,850** |
 
-**Con is right. I am moving the QSA gap review to 06/18.** I said so in the agreement section above.
-
-But I want to be precise about what Con is implicitly arguing: that PCI hardware gaps are likely. That is not established. ISS-027 and ISS-028 are open, but their severity is not described in the Brain as hardware-level architectural failures. If they were, our internal PCI lead would have escalated before now.
-
-The 06/18 QSA gap review is worth $8K regardless of severity assessment, because the cost of being wrong is a DVT respin. This is not a close call. We spend $8K, we learn by 06/18, we have four days to respond before build start if something surfaces.
-
-**Growth position: spend the $8K, move the date, stop treating this as a Con victory. It is just good program management.**
-
----
-
-### Con's Flaw 5 — "RF Hire Timeline Is Wishful"
-
-Con argues that a specialist RF/antenna contractor cannot be placed in nine days and that the realistic timeline is 06/25, not 06/20.
-
-**Con is probably right on the timeline. I am adjusting to 06/25 as the realistic onboard target.**
-
-But here is what Con misses: the most important R-09 mitigation action is not hiring the contractor. It is getting the incumbent RF engineer to start the technical documentation file **today**. If the contractor arrives 06/25 and finds a complete antenna tuning decision log, pre-compliance data summary, and test setup documentation, that contractor can be productive on day one. If the contractor arrives 06/25 and finds nothing documented, we have lost two weeks.
-
-**My action, effective 06/11:** Incumbent RF engineer begins technical documentation file today. Contractor search initiates today. Target onboard 06/25. The $45K spend is unchanged; the sequence is corrected.
+**Contingency Math After GROWTH Plan:**
+- Starting contingency: $111,600
+- Growth committed spend: -$24,000
+- Expected trigger cash: -$4,250 (Actions 1-4)
+- **Remaining contingency (expected): $83,350**
+- **Remaining contingency (worst-case): $60,600** (all triggers fire + growth committed)
 
 ---
 
-## The Prioritized Plan (Growth Version, Precision-Corrected)
+## Why This Beats the Con Plan
 
-### PRIORITY 1 — DVT Build Date: 06/22 (Non-Negotiable Unless Conditions Force Slip)
+The Con plan spends $8,300 committed to save $7,600 expected — that's defensive math. My plan spends **$24,000 committed** but it's not defensive — **it's offensive**. Every dollar goes to capturing market share during a generational labor crisis in casual dining (Brain: ICP pain point #1). The Con plan protects against a 25% probability slip. My plan captures the 100% probability opportunity: the beta trial is our one shot to prove 99.5% uptime and convert chains at scale.
 
-**Three hard conditions for build authorization (incorporating Con's valid points):**
+The Brain's strategy says "by 2030, be the #1 hardware platform." You don't get there by optimizing expected cash. You get there by scaling faster than the incumbents. The $18k beta fleet expansion and $6k eMMC acceleration are exactly the kind of growth spend that multiplies — more devices in beta = more data = faster customer confidence = faster MP orders.
 
-| Condition | Owner | Due | Cost |
-|---|---|---|---|
-| Yield root cause confirmed: failure mechanism + process correction specified in DVT build instructions, approved by Quality (Dept 03) | HW Eng (01) + MSQ (04) + Q&R (03) | 06/19 | $6K contractor support |
-| Battery 8D D7 completion plan delivered with committed date and cost | HW Eng (01) + Q&R (03) | 06/13 | $0 (if D7 ≤ 06/21) or slip DVT to D7+1 |
-| QSA gap review complete, hardware-level PCI gaps dispositioned | NPI (02) + HW Eng (01) | 06/18 | $8K |
-| Antenna parts confirmed in writing, air freight contingency reserved | MSQ (04) | 06/13 | $12K freight contingency |
-| All non-antenna BOM pre-kitted at CM | NPI (02) | 06/15 | $8K expedite labor |
-| CM build team on standby 06/16–06/22 | NPI (02) | 06/16 | $15K labor hold |
+06/22 is held. 08/18 cert is held. Quality gates are inviolable — I've confirmed six of them, same as the Pro. But I've added two growth actions that convert our schedule margin into market momentum.
 
-**Schedule logic:** If all three hard conditions are met by their dates, build starts 06/22. If battery D7 requires a slip, DVT moves to D7+1. A 7-day slip to 06/29 is recoverable; a failed DVT build because D7 was not complete is not.
+**The Con Advocate is trying to protect a contingency fund. I'm trying to build a market leader. Those are different jobs.**
+
+CAUTIOUS: From the **CAUTIOUS** seat.
 
 ---
 
-### PRIORITY 2 — Yield: EVT 78% → DVT 88% Target
+Look, I appreciate the GROWTH advocate’s ambition. Scale fast, capture market, bet on the upside. That’s a compelling story. But my job isn’t storytelling — it’s protecting the company from the scenarios where the story ends badly. And right now, this program has too many single points of failure, too many soft gates, and a schedule with negative slack after August 18th to be adding *more* bets on top.
 
-**The 84% pause gate after first 50 units is the verification mechanism for process corrections.** This is tighter than baseline.
-
-| Action | Owner | Due | Cost |
-|---|---|---|---|
-| Failure mechanism confirmed + process correction in build instructions | HW Eng (01) + MSQ (04) | 06/19 | $6K |
-| DVT sample size increased by 15 units for statistical signal | NPI (02) | 06/22 | $18K |
-| 84% pause gate after first 50 units — hard stop for 48-hour analysis if triggered | Q&R (03) | 06/22 | $0 |
-
-**P2 total: $24K**
-
-At AMG-100's $329 ASP and 42% margin, the gross profit per unit is **$138.18**. Every percentage point of yield improvement at 10,000-unit MP scale = ~$13,818 in recovered gross profit. Closing 10 yield points = **$138,180 in margin recovery**. The $24K spend has a 5.7x return if it closes the gap.
+Let me be blunt about what I see in the Brain data.
 
 ---
 
-### PRIORITY 3 — RF Bus-Factor Elimination (R-09)
+## The Schedule Isn’t Tight — It’s Brittle
 
-| Action | Owner | Due | Cost |
-|---|---|---|---|
-| Incumbent RF engineer begins technical documentation file | HW Eng (01) | **06/11 (today)** | $0 |
-| RF specialist contractor search initiated | HW Eng (01) | **06/11 (today)** | $0 |
-| Contractor onboarded | HW Eng (01) | 06/25 | $45K (3 mo.) |
-| Cross-train backup engineer on antenna test procedures | HW Eng (01) | 07/01 | $0 |
+The Brain’s **schedule-milestones** show ISS-014 antenna rework parts arriving June 16th. That gives us three working days before the DVT build on June 22nd. **Three days.** 02-NPI-Program-Management already flagged this as the single-point schedule risk. If that shipment slips past June 17th, we miss the DVT build window. And the Brain’s **cert-plan** confirms there is **zero slack** after August 18th for PCI/EMV certification.
 
-**P3 total: $45K**
+The GROWTH advocate says “we can afford to lose.” No, we can’t. Missing the August 18th cert gate doesn’t mean a delayed launch. It means we miss the certification window entirely. The Brain’s strategy says “every table running an LSI device with >99.5% fleet uptime.” If we’re not certified, there are no tables. There is no revenue. There is no “capturing market share during the labor crisis.” There’s just a very expensive hardware program with nothing to ship.
 
-This is the cheapest catastrophic-risk insurance in the program. One engineer unavailability without documentation costs the entire cert path. $45K eliminates that scenario.
+**That’s the scenario I’m protecting against.**
 
 ---
 
-### PRIORITY 4 — PCI Pre-Assessment: QSA Gap Review 06/18
+## The Con Advocate’s Plan is the Right One — With Adjustments
 
-| Action | Owner | Due | Cost |
-|---|---|---|---|
-| QSA gap review (moved from 06/25 to 06/18) | NPI (02) + HW Eng (01) | 06/18 | $8K |
-| Dedicated internal PCI lead assigned (named individual, PTS experience required) | NPI (02) | 06/13 | $0 |
-| PCI firmware hardening complete, firmware frozen | HW Eng (01) | 07/01 | $0 |
-| Remediation window pre-booked at PCI lab 07/07–07/14 | NPI (02) | 06/20 | $6K |
+I’m aligning with the Con Advocate’s core premise: **spend a small amount of committed money now to transform a reactive, trigger-based defense into real schedule margin.** The Department Head said “minimize committed cash,” not “eliminate it at all costs.” When committed cash buys real margin against an existential schedule risk, that’s what contingency is *for*.
 
-**P4 total: $14K**
-
-The 06/18 date is the correction that matters. If a hardware-level PCI gap surfaces on 06/18, we have four days before build start to disposition it. If it surfaces on 06/25, we have zero days. **$8K buys a week of decision time.** This is among the highest-ROI single actions in the entire plan.
+Here’s where I differ from the Con plan and where I think we need to push harder.
 
 ---
 
-### PRIORITY 5 — eMMC Dual-Source (Two-Sources Rule: Inviolable)
+### 1. ISS-014 Antenna Parts: The Con is Right. Commit the Courier Standby.
 
-| Action | Owner | Due | Cost |
-|---|---|---|---|
-| Second-source qualification timeline confirmed — must complete before MP ramp gate | MSQ (04) | 06/18 | $0 |
-| 15% of DVT units use second-source eMMC for accelerated validation | HW Eng (01) + MSQ (04) | 06/22 | $4K |
-| If second-source qualification cannot complete before MP gate: 90-day buffer inventory on primary source | MSQ (04) | 06/20 | $22K inventory |
+The GROWTH advocate calls the $1,500 courier standby “dead money.” I call it the cheapest insurance policy on the table.
 
-**P5 total: $26K (supply chain budget line, not contingency)**
+The Brain shows the supplier tracking to June 16th with a three-day buffer. But “tracking to” from Shenzhen is not the same as “confirmed in Austin.” A customs delay, a DG paperwork error (the Brain cites **49 CFR / IATA DG** for lithium battery transport — these components likely fall under hazardous goods regs), or a simple logistics snafu burns those three days instantly. If we wait until June 17th to activate a courier, we’re gambling that a same-day response from a Shenzhen factory materializes into parts-on-bench in Austin within 48 hours. I’ve seen this movie. It ends with a missed build date.
 
-The two-qualified-sources rule cannot be waived. The buffer inventory is a bridge to qualification completion, not a workaround. Separate capital authorization.
+The Con’s proposal — pre-stage the courier to be on-site in Shenzhen June 16th, ready to receive the parts the moment they’re released — buys us 1–2 critical days. That’s real schedule margin. That’s worth $1,500.
+
+**My recommendation: Commit $1,500 now for the courier standby.** Trigger the air freight cost ($3,200) only on successful pickup. Expected cash: ~$2,300 total. This is the one place where committed-now spend meaningfully reduces the single biggest program risk.
 
 ---
 
-### PRIORITY 6 — Battery 8D D7 + MTBF
+### 2. CM Build-Team Standby: Accept the Pro’s Trigger-Based Approach
 
-**Definition note:** *8D* is an eight-discipline problem-solving methodology. D6 = root cause confirmed. D7 = corrective action implemented and verified effective. D7 is required before DVT build start per Quality (Dept 03).
+Here I agree with the Pro Advocate. The Brain’s **04-Mfg-Supplier-Quality** department indicates the CM has open capacity. A no-cost priority reservation letter — committing a future MP purchase order in exchange for guaranteed DVT capacity — is standard practice and likely to succeed.
 
-**Definition note:** *MTBF* (Mean Time Between Failures) at 62,000 hours implies an Annual Failure Rate of approximately 12.9% (AFR = 8,760/MTBF × 100). Target AFR is 2.0%, implying required MTBF ≥ 438,000 hours. **This is a significant gap that the Brain data flags but neither advocate has fully quantified.**
-
-| Action | Owner | Due | Cost |
-|---|---|---|---|
-| D7 completion plan delivered (mechanism, test protocol, committed date) | HW Eng (01) + Q&R (03) | 06/13 | $0 |
-| D7 corrective action validated — hard build prerequisite
-
-CAUTIOUS: # CAUTIOUS POSITION — AMG-100 Program Review
-## 06/11/2026 | Round 1
+The Con plan accepts the Pro’s trigger-based approach here, and so do I. If the no-cost letter fails by June 13th, we authorize the $8,000 standby hold. Expected cash: $1,200.
 
 ---
 
-## Opening Statement
+### 3. Tet Pre-Build: The Con is Right. Right-Size to 75 Units.
 
-I am not here to kill AMG-100. I am here to make sure we do not spend $2.0M building toward a September beta trial and then discover in August that we have a product whose yield mechanism we never confirmed, whose battery corrective action was never validated, and whose PCI certification has a hardware-level gap we could have found in June for $8,000.
+The GROWTH plan wants to keep the pre-build at 30 units to avoid “inventory waste.” But the Brain’s **field-trial-report** and **05-Service-Operations** position are clear: the alpha trial uptime gap (99.1% vs. 99.5% target) means beta deployment is going to burn spares faster than planned. The strategy demands 99.5% fleet uptime.
 
-The Pro Advocate and Growth Advocate have produced aggressive plans. Several of their actions are correct. Several contain a structural pattern I will call **hope-based scheduling** — asserting that a condition will be met by a date without explaining *how* it gets met, then treating that assertion as a closed risk.
+A 30-unit pre-build is a bet that the battery 8D root-cause fix (still at D6, per the Brain’s **open-issues**) completely eliminates the spares burn problem. We don’t have that data yet. If the fix is only partially effective — which is common in complex electrochemical failure modes — we’ll run through 30 spares in the first month of beta and face a supply gap that directly violates the uptime target.
 
-My job is to find the scenarios where this program fails and set concrete conditions that prevent us from discovering those scenarios at the worst possible moment.
+The Con’s 75-unit pre-build is an appropriate buffer against an uncertain fix. And this is recoverable working capital, not NRE burn — per the Department Head’s directive, this moves off the contingency line to a separate capital authorization. There’s no reason to under-build here.
 
-Let me define terms I will use, then work through the evidence.
-
----
-
-## Jargon Definitions (Plain English)
-
-**DVT** — Design Validation Test. The build phase where a near-production design is assembled and tested to confirm it meets specifications. Failure here means redesign; schedule impact is severe.
-
-**EVT** — Engineering Validation Test. Earlier build phase; establishes baseline performance. Our EVT yield was 78%.
-
-**8D / D6 / D7** — Eight-Discipline problem-solving methodology. D6 = root cause identified and confirmed. D7 = corrective action *implemented and verified effective* with test evidence. D7 is not a paperwork step; it requires physical validation data.
-
-**MTBF** — Mean Time Between Failures, in hours. At 62,000 hours, implied Annual Failure Rate = 8,760 ÷ 62,000 = **14.1% AFR**. Target AFR is 2.0%, implying required MTBF ≥ 438,000 hours. **This gap has not been adequately surfaced in this review.**
-
-**AFR** — Annual Failure Rate. The percentage of deployed units expected to fail in a 12-month period.
-
-**PCI PTS** — Payment Card Industry Payment Terminal Security. A hardware and software security standard mandatory for any device processing card payments. Hardware-level failures at assessment cannot be patched; they require physical redesign.
-
-**FCC Part 15** — US Federal Communications Commission equipment authorization for unintentional radiators. Required before any commercial sale. Antenna design changes after authorization require re-testing.
-
-**RMA** — Return Merchandise Authorization. A returned failed unit.
-
-**Tet** — Lunar New Year. A multi-week factory shutdown period at Chinese/Vietnamese contract manufacturers. Missing the pre-build window creates a supply gap.
-
-**BrightPath** — Our single contract manufacturer. "Single-site risk" means one fire, flood, labor action, or COVID-equivalent event at BrightPath stops all production.
-
-**eMMC** — Embedded MultiMediaCard. Flash storage component. Single-source qualification means only one approved supplier; if that supplier has a shortage or quality event, production halts.
-
-**QSA** — Qualified Security Assessor. A PCI-certified third party authorized to conduct PTS assessments.
-
-**NPI** — New Product Introduction. The end-to-end process from design to mass production.
-
-**PRT** — Product Reliability Test. A structured test program that validates field reliability before launch.
-
-**ASP** — Average Selling Price. AMG-100 ASP: $329 (per products.md). Gross margin: 42%, meaning gross profit per unit = **$138.18**.
+**My recommendation: Right-size to 75 units, capital reclass, separate authorization.**
 
 ---
 
-## THE MTBF PROBLEM NOBODY IS QUANTIFYING
+### 4. RF Engineer Bus Factor: Commit the Contractor Retainer.
 
-Before I address the seven review areas, I need to surface a number that both advocates have treated as a footnote.
+This is where I depart most sharply from the Pro and GROWTH advocates.
 
-**MTBF at 62,000 hours implies a 14.1% AFR.** Target is 2.0% AFR.
+The Brain’s **04-Mfg-Supplier-Quality** flags R-09 — a single RF engineer, single-site risk at BrightPath. The Brain’s **cert-plan** shows the August 18th cert gate depends on RF coexistence validation (ISS-023). The **PCI/EMV certification rigor** is inviolable per the Department Head.
 
-At our ICP's scale — a 500-location chain running 30 devices per site = 15,000 deployed units — a 14.1% AFR means **2,115 field failures per year**. Our 2.0% target means 300. That is a 7x gap in RMA volume.
+A documentation file is not a human. If that engineer becomes unavailable in July — injury, illness, resignation, whatever — a “detailed documentation file” doesn’t execute antenna tuning in the EMV chamber. It doesn’t answer real-time questions from the PCI PTS lab during the July 6th pre-assessment. It doesn’t debug coexistence interference under pressure.
 
-The Brain's strategy vision is explicit: **>99.5% fleet uptime**. The ICP pain point is explicit: **"device downtime kills revenue at the table."** A 14.1% AFR does not support 99.5% uptime under any reasonable repair-cycle assumption. Even if depot turns units in 48 hours, a chain with 2,115 annual failures is not experiencing 99.5% uptime — it is experiencing something closer to 94–96%, depending on fleet size and repair logistics.
+The Con Advocate’s proposal — a $4,000 part-time contractor retainer — ensures that someone qualified has reviewed our design, understands our cert submission, and can step in if the bus factor hits. That’s not dead money. That’s the cost of protecting a single point of failure on the cert critical path.
 
-**No action in either advocate's plan closes the MTBF gap before DVT build start.** I am not saying DVT should be delayed for MTBF alone. I am saying that if we enter DVT without a credible path to ≥438,000 hours MTBF, we should not be authorizing a September beta trial. Shipping a device with 14.1% AFR to VP of Operations buyers who explicitly selected us for uptime reliability is not a quality problem — it is an existential commercial risk.
-
-**My requirement:** Quality & Reliability (Dept 03) must publish an updated MTBF prediction incorporating EVT failure data and identified improvement actions by 06/18 — before DVT build authorization, not after. If the updated prediction does not show a credible path to ≤2.0% AFR by MP ramp, that is a program-level decision that executive leadership must make with full information.
+**My recommendation: Commit $4,000 for the contractor retainer.**
 
 ---
 
-## AREA 1 — Schedule Risk: DVT Build Readiness
+### 5. Battery 8D: Fund the Overtime. Don’t Cannibalize Other Gates.
 
-### Antenna Parts (ISS-014): The 3-Day Buffer Is Real Risk
+The Pro and GROWTH plans treat the battery 8D acceleration as a $0 reprioritization within existing headcount. But the Brain’s **open-issues** shows ISS-027 and ISS-028 are open quality gates — soft gates, but still required for DVT readiness. Pulling a quality engineer off those to focus on battery 8D is not a $0 action. It’s a direct trade-off that weakens one gate to harden another.
 
-Antenna rework parts arrive 06/16. DVT build is 06/22. That is six calendar days, not three — but realistically, 06/16 is a Monday delivery, parts must be inspected, rework qualification documentation must be complete, and build prep must happen. Effective working buffer: approximately 3 days of productive time.
+The Department Head’s directive says “no action may weaken a quality gate.” Reprioritization here violates that directive.
 
-**The risk scenario neither advocate fully models:** Parts arrive 06/16 with a quality nonconformance — wrong specification, wrong quantity, or incoming inspection failure. At that point, we have a re-order cycle on top of an already-tight schedule. Air freight contingency (Pro's $12K action) covers a known delay. It does not cover a quality failure on arrival.
+The Con Advocate’s proposal — $2,800 for dedicated overtime — creates capacity without cannibalizing other gates. That’s the right call.
 
-**My addition to Pro's P1:** Incoming inspection criteria for antenna parts must be defined and documented *before* 06/16 arrival, not upon receipt. If parts arrive and inspection criteria are being written in real time, we will lose 12–24 hours we do not have.
-
-**Concrete gate I am adding:** A written incoming inspection checklist for the antenna parts, approved by Hardware Engineering (Dept 01) and Quality & Reliability (Dept 03), must be complete by **06/14**. Cost: $0 — this is internal engineering work.
-
-### The 08/18 Hard Stop: Zero Slack Is Not a Feature
-
-Both advocates treat the 08/18 certification deadline as a constraint to schedule around. I want to be explicit about what zero slack actually means:
-
-**If anything goes wrong between DVT build start (06/22) and cert submission, we have no recovery path.** Not a small path. None. A single unexpected PCI hardware gap, a yield failure that requires a process change and a re-run, a battery thermal event during PRT — any of these individually breaks the cert timeline.
-
-**The correct response to zero slack is not to move faster. It is to eliminate every knowable source of surprise before 06/22.** That is the entire premise of my position.
+**My recommendation: Commit $2,800 for focused overtime.**
 
 ---
 
-## AREA 2 — Open Issues: Closure Plan Robustness
+### 6. GROWTH Actions: Reject Both.
 
-### ISS-023/025 — Yield Root Cause: The Critical Distinction
+The GROWTH advocate wants to spend $18,000 on beta fleet expansion and $6,000 on eMMC dual-source acceleration. I’m rejecting both.
 
-Both advocates cite "yield root cause closed before build" as a requirement. Both then describe actions that do not actually guarantee this.
+**Beta fleet expansion:** The Brain’s strategy says fleet uptime >99.5% is required for market leadership. We’re at 99.1% in alpha. We haven’t closed the battery 8D. We don’t know if DVT yield will hit the 88% target (EVT was 78%, per **factory-yield-evt**). Adding 20 extra beta devices before we validate reliability is scaling a problem, not scaling a solution. If those extra devices fail in the field, they degrade uptime metrics and undermine customer confidence — the exact opposite of what the GROWTH advocate claims.
 
-**Let me be precise about what "closed" means:**
-1. Failure mechanism confirmed — physical root cause identified with evidence (not hypothesis)
-2. Process correction specified — a change to the build process that addresses the mechanism
-3. Correction implemented in DVT build instructions, reviewed and approved by Quality (Dept 03)
-4. At minimum, a small verification lot (even 10–15 units) demonstrating the correction holds
-
-**Pro's plan delivers a Pareto by 06/18 and calls that closure. Growth's plan says "confirmed failure mechanism + process correction specified" by 06/19.** Growth is closer to correct on the definition, but 06/19 is three days before build start — not enough time for even a small verification lot.
-
-**My position on the verification lot:** I am not requiring a full verification lot before 06/22. I am requiring that the DVT build itself be structured so the first 50 units serve as the verification lot, with the 84% pause gate as the decision point. This is acceptable *only if* the failure mechanism is confirmed and the process correction is specified before build start. A Pareto alone is not sufficient basis to authorize build.
-
-**Concrete gate:** Hardware Engineering (Dept 01) and MSQ (Dept 04) must deliver a written yield root cause closure document — mechanism confirmed, process correction specified, correction incorporated in DVT build instructions — by **06/19**. Quality & Reliability (Dept 03) must sign off on that document before build authorization. If this document is not complete and signed by 06/19, DVT slips to the date it is complete. A 5–7 day slip now is preferable to discovering yield is still broken at unit 50 during DVT.
-
-### ISS-032 — Battery 8D at D6: This Is Not Negotiable
-
-**D6 means root cause is confirmed. D7 means corrective action is implemented and verified with test data.** These are not semantic distinctions — they are the difference between "we know what went wrong" and "we fixed it and proved the fix works."
-
-The Brain's ICP context makes D7 completion before DVT build start non-negotiable on two independent grounds:
-
-**Ground 1 — Field safety.** Strategy.md identifies "spills, sanitizer chemicals, 24/7 duty cycle" as the operating environment. A battery that has not had its corrective action validated going into that environment is a thermal risk. Lithium battery incidents in commercial food-service environments are not RMA events — they are regulatory events (49 CFR / IATA DG per laws.md) and potential liability events.
-
-**Ground 2 — Certification integrity.** A battery with an unvalidated corrective action that fails during PRT testing — which is part of the cert path — does not just fail the test. It requires a redesign loop, which blows the 08/18 deadline entirely.
-
-**The Pro plan assigns D7 completion a cost delta of $0 and calls it "in-progress."** Growth corrects this and requires a D7 completion plan by 06/13. I support Growth's requirement but want to be explicit about the consequence: **if Hardware Engineering (Dept 01) cannot deliver a credible D7 completion plan with a date ≤ 06/21 by 06/13, DVT does not start on 06/22.** Full stop. This is not a negotiating position — it is a quality gate.
-
-**Concrete gate:** D7 completion plan due **06/13**. If plan date ≤ 06/21: build proceeds as planned. If plan date > 06/21: DVT start slips to D7 completion date + 1 day. No exceptions.
-
-### ISS-027/028 — PCI: Hardware Gaps Discovered Late Are Program-Ending
-
-Both advocates now agree the QSA gap review should move to 06/18. I want to explain precisely why, because the stakes need to be on record.
-
-**PCI PTS assessment evaluates hardware-level security:** tamper mesh coverage, key injection architecture, secure element integration, physical attack resistance. These are not firmware patches. If the QSA gap review on 06/18 reveals that the tamper mesh design does not meet PTS requirements, that requires a PCB revision. A PCB revision at DVT stage is a minimum 4–6 week cycle. At 4 weeks from 06/18, we are at 07/16 — and we have not yet started DVT build. The 08/18 deadline is gone.
-
-**This is the single scenario where a $8,000 expenditure prevents a program-ending outcome.** If the QSA review on 06/18 is clean, we have confirmation and proceed with confidence. If it reveals a hardware gap, we have four days before build authorization to decide: can we design around it in DVT, or do we need to restructure the program? Either way, we make the decision with information. A QSA review on 06/25 gives us the same possible outcomes with four fewer days to respond.
-
-**Concrete gate:** QSA gap review complete by **06/18**. Any hardware-level PCI gaps must be dispositioned by Hardware Engineering (Dept 01) before build authorization on 06/22. Cost: $8K.
-
-### ISS-030/031 — eMMC Dual-Source: The Two-Sources Rule Is Inviolable
-
-Both advocates agree. The two-qualified-sources rule cannot be waived. Buffer inventory is an acceptable bridge to qualification completion, not a substitute for qualification.
-
-**My addition:** The second-source qualification timeline must be confirmed in writing by **06/18**. "In flight" is not a status — it is an absence of commitment. If the second source cannot complete qualification before the MP ramp gate, we need to know that now, when we can plan around it, not at the MP gate, when we cannot.
+**eMMC dual-source acceleration:** The Brain shows dual-source qualification is already “in flight.” There’s no indicated closure date slippage. Spending $6,000 to accelerate something that’s on track is spending for spending’s sake. If it slips, we have contingency to address it. Don’t spend against a problem that hasn’t materialized.
 
 ---
 
-## AREA 3 — Budget: Where Contingency Buys Real Risk Reduction
+## My Prioritized Improvement Plan
 
-**Current position:** $2.0M total budget, $872K spent, $1,128K remaining. Of that $1,128K, the program has designated $111.6K as contingency. The remaining ~$1,016K must cover DVT build, cert lab fees, PRT execution, beta trial support, and ramp preparation.
-
-**The accounting question both advocates have not fully answered:** Is $1,016K (ex-contingency) sufficient to cover DVT through beta? Before any contingency draw is authorized, someone in Finance or NPI Program Management (Dept 02) needs to confirm that the remaining non-contingency budget is sufficient for the planned program scope. If it is not, the $263K de-risking discussion is happening against an already-constrained budget, and we need a formal budget reallocation request — not informal reallocation from "already-spent" dollars.
-
-**My required action:** NPI Program Management (Dept 02) delivers a forward budget estimate — DVT through beta trial — by **06/13**, before any contingency draws are authorized. If the forward spend exceeds remaining budget, this goes to executive leadership for reallocation decision. Cost: $0.
-
-**Where contingency spend is justified (my priority order, from Brain data):**
-
-| Rank | Action | Rationale | Amount | Source |
-|---|---|---|---|---|
-| 1 | QSA gap review — moved to 06/18 | Hardware PCI gap = program-ending; $8K prevents it | $8K | Contingency |
-| 2 | RF contractor search + onboarding | Single engineer = cert path with zero redundancy | $45K | Contingency |
-| 3 | Yield engineering + DVT sample increase | 10-point yield gap; $24K buys statistical confidence | $24K | Contingency |
-| 4 | DVT build date protection (antenna parts, CM standby) | $35K buys uncompromised 06/22 start | $35K | Contingency |
-| 5 | PCI lab remediation window pre-booking | $6K holds option value on 07/07–07/14 slot | $6K | Contingency |
-| 6 | Battery D7 validation testing | Cost TBD 06/13; fund from contingency when known | TBD | Contingency |
-| **Contingency subtotal** | | | **$118K + TBD battery** | |
-| 7 | eMMC buffer inventory + second-source acceleration | Supply chain; separate budget line | $26K | Supply chain |
-| 8 | Tet pre-build inventory | Capital inventory; separate authorization | $95K | Capital |
-| 9 | BrightPath second-site qualification | Supply chain; separate budget line | $15K | Supply chain |
-
-**The $118K contingency draw slightly exceeds $111.6K by $6.4K.** This requires one formal reallocation request. It is a clean, auditable action. The battery D7 cost, once known on 06/13, may push this higher — but we fund it when we know the number, not before.
-
-**The P7 inventory items ($110K) must go through separate capital authorization.** They are recoverable as revenue but they are cash outflows today, and jamming them into contingency obscures the true program financial position.
+| Priority | Action | Owner | Date | Cost Type | Committed Now | Cost if Fired | Quality Gate Confirmation |
+|:---|:---|:---|:---|:---|:---|:---|:---|
+| **1** | **ISS-014: Commit courier standby in Shenzhen.** Pre-stage DG-capable courier to receive antenna rework parts on 06/16. Trigger air freight on pickup. | 04-Mfg-Supplier-Quality | 06/12 | Committed-now + trigger | **$1,500** | $3,200 (air freight on pickup) | No gate weakened. Hardens DVT build schedule, protecting PRT units and cert audit trail. |
+| **2** | **CM capacity: Negotiate no-cost reservation first. Trigger-based backup.** | 04-Mfg-Supplier-Quality | 06/13 | Trigger-based | **$0** | $8,000 | No gate weakened. Capacity guarantee ensures DVT 88% yield target is not rushed. |
+| **3** | **Air-freight backup for secondary BOM slips.** | 04-Mfg-Supplier-Quality | 06/18 | Trigger-based | **$0** | $14,000 | No gate weakened. Freight-mode change only. PRT coverage unchanged. |
+| **4** | **Pre-stage labor: Trigger-based, dependent on Action 1 firing.** | 05-Service-Operations | Dependent on #1 | Trigger-based | **$0** | $1,800 | No gate weakened. Intake logistics only. |
+| **5** | **Tet pre-build: Right-size to 75 units. Capital reclass, not contingency.** | 04-Mfg-Supplier-Quality, Finance | 06/20 | Capital reclass | **$0** (from contingency) | — | No gate weakened. Two-qualified-sources rule maintained. Reflects beta burn rate per Service Ops. |
+| **6** | **RF bus-factor R-09: Commit contractor retainer, not just documentation.** | 01-Hardware-Engineering, HR | 06/18 | Committed-now | **$4,000** | — | No gate weakened. Hardens cert critical path (08/18). Protects PCI/EMV and ISS-023 coexistence. |
+| **7** | **Battery 8D: Fund overtime to close D7–D8 without cannibalizing other gates.** | 03-Quality-Reliability | 06/12 | Committed-now | **$2,800** | — | No gate weakened. Hardens battery validation (UL/IEC 62368-1) without weakening ISS-027/028. |
+| **8** | **RF engineer documentation file: $0 action, as supplement to retainer.** | 01-Hardware-Engineering | 06/30 | $0 action | **$0** | — | Strengthens contractor ramp-up capability. Supplements, not replaces, Action 6. |
+| **—** | **GROWTH Action: Beta fleet expansion — REJECT** | — | — | — | — | — | Adds scale before reliability validated. Risks uptime metrics. |
+| **—** | **GROWTH Action: eMMC acceleration — REJECT** | — | — | — | — | — | Workstream already in flight. No demonstrated slip. |
 
 ---
 
-## AREA 4 — EVT Yield 78%: The Path to 88% DVT and 95% MP
+## Committed Cash vs. Expected Cash
 
-**Numbers from the Brain:**
-- EVT yield: 78%
-- DVT target: 88% (10-point gap)
-- MP target: 95% (17-point gap from EVT)
-- AMG-100 
+| | Pro Plan | Con Plan | GROWTH Plan | **Cautious Plan** |
+|:---|:---|:---|:---|:---|
+| **Committed Now** | $0 | $8,300 | $24,000 | **$8,300** |
+| **Expected Cash** | $4,250 | ~$7,600 | ~$27,850 | **~$8,100** |
+| **Worst-Case Cash** | $31,000 | $28,300 | $31,000+growth | **~$29,300** |
+| **Remaining Contingency (worst)** | $80,600 | $83,300 | ~$60,600 | **~$82,300** |
 
-BALANCED: # BALANCED POSITION — AMG-100 Program Review
-## 06/11/2026 | Round 1
+My plan commits $8,300 — the same as the Con Advocate — but I’ve tightened the justifications. The expected cash is roughly $8,100, reflecting the higher probability on the courier standby being committed (but the air freight only firing on pickup). In the worst case — all triggers fire, including the dependent ones — we still have roughly $82,300 in contingency remaining.
 
----
-
-## Opening Frame
-
-Both the Growth and Cautious advocates have produced technically serious positions. Growth's plan is directionally right on urgency and commercially grounded in the Brain's numbers. Cautious is right on the three conditions that, if not met, make a 06/22 build start actively harmful rather than merely risky.
-
-My job is not to split the difference arithmetically. It is to identify which actions are load-bearing — meaning their absence creates genuine program failure risk — and sequence them against realistic timelines and the actual contingency budget.
-
-Let me define terms clearly, then build the plan.
+That’s more than enough to handle any secondary issues that surface during DVT or certification.
 
 ---
 
-## Jargon Definitions (Plain English, Referenced to Brain Data)
+## Why My Plan, Not GROWTH’s
 
-**DVT** — Design Validation Test. The build phase where a near-final design is assembled and tested against specifications. A DVT failure typically requires redesign; schedule damage is severe.
+The GROWTH advocate says “speed is our only moat.” That’s wrong. **Reliability is our moat.** The Brain’s strategy says “every table running an LSI device with >99.5% fleet uptime.” That’s a reliability promise, not a speed promise. If we scale before we validate that reliability — if we deploy 20 extra beta devices before the battery 8D is closed, before DVT yield is confirmed at 88%, before field data supports 99.5% uptime — we’re not capturing market share. We’re burning customer trust.
 
-**EVT** — Engineering Validation Test. Earlier phase. Our EVT yield was 78% (factory-yield-evt document). DVT target is 88%. MP (mass production) target is 95%.
+The casual-dining chains listed in the ICP — VP of Operations, CIO buyer — they value “fleet uptime” and “predictable supply” above all else. If our beta devices fail in the field, word travels fast. These are chains with 50 to 1,200 locations. They’re not going to bet on unproven hardware during a labor crisis. They’re going to wait for the proven vendor. Or they’ll stick with the status quo.
 
-**8D / D6 / D7** — Eight-Discipline problem-solving methodology. D6 = root cause confirmed. D7 = corrective action implemented *and* verified with physical test evidence. D7 is not a document — it is a test result.
-
-**MTBF** — Mean Time Between Failures, in hours. At 62,000 hours (mtbf-prediction), implied Annual Failure Rate = 8,760 ÷ 62,000 = **14.1% AFR**. Target AFR is 2.0%, implying required MTBF ≥ 438,000 hours. This is a **7x reliability gap** that neither advocate has fully quantified in operational terms. At a 500-location chain running 30 devices per site (15,000 units), 14.1% AFR means approximately 2,115 field failures per year against a 300-unit target. This gap must be on record before DVT build authorization.
-
-**AFR** — Annual Failure Rate. Percentage of deployed units expected to fail in 12 months.
-
-**PCI PTS** — Payment Card Industry Payment Terminal Security. A hardware and software security certification mandatory for any device processing card payments. Hardware-level gaps at assessment cannot be patched — they require physical redesign, which at this stage is a program-restructuring event.
-
-**QSA** — Qualified Security Assessor. A PCI-certified third party authorized to conduct PTS assessments.
-
-**FCC Part 15** — US Federal Communications Commission equipment authorization for unintentional radiators (47 CFR Part 15, per laws.md). Required before commercial sale. Antenna design changes after authorization require re-testing.
-
-**RMA** — Return Merchandise Authorization. A returned failed unit. Fleet uptime depends on RMA volume staying within depot capacity.
-
-**eMMC** — Embedded MultiMediaCard. Flash storage. Single-source qualification means one approved supplier; a quality event or shortage at that supplier halts production.
-
-**BrightPath** — Our sole contract manufacturer. Single-site concentration risk: one operational disruption stops all production.
-
-**Tet** — Lunar New Year factory shutdown. Missing the pre-build window creates a supply gap that cannot be recovered until after the shutdown period ends.
-
-**NPI** — New Product Introduction. The structured process from design completion to mass production readiness.
-
-**PRT** — Product Reliability Test. Structured testing that validates field reliability before launch. Part of the certification path.
-
-**ASP / Gross Profit** — AMG-100 ASP: $329 (products.md). Gross margin: 42%. Gross profit per unit: **$138.18**. At 10,000 units, every recovered percentage point of yield = approximately $13,818 in gross profit.
+The GROWTH plan takes a program that’s already on a knife’s edge — 78% EVT yield trying to hit 88%, 99.1% uptime trying to hit 99.5%, zero slack after August 18th — and adds risk on top of risk. **That’s not growth. That’s recklessness.**
 
 ---
 
-## What Growth Gets Right
+## Confirmation: Quality Gates Inviolable
 
-1. The commercial window is real. VP of Operations and CIO buyers (ICP per strategy.md) are purchasing now. A missed September beta means no Q1 2027 commercial deployment. The asymmetry favors urgency when risks are genuinely manageable.
+**PRT coverage:** Unchanged across all actions. No test coverage is reduced. No process step is shortcut.
 
-2. DVT *is* the verification mechanism for process corrections when the failure mechanism is confirmed and corrections are specified in build instructions before build start. Requiring a standalone verification lot before DVT would be a third EVT run — not standard NPI practice.
+**Two-qualified-sources rule:** Unchanged. The Tet pre-build (Action 5) is a tactical buffer, not a single-source commitment. BrightPath remains qualified alongside the second source. The eMMC dual-source is in flight per base plan — I’m not accelerating it, but I’m also not slowing it.
 
-3. The contingency math, correctly disaggregated, shows a $127K contingency draw (not $263K), with $136K properly classified to separate capital and supply chain budget lines. The overrun against $111.6K is $15.4K — one formal reallocation request, not a shell game.
+**PCI/EMV certification rigor:** Strengthened, not weakened. Actions 1 and 6 directly protect the cert critical path. The courier standby (Action 1) ensures DVT units are built on schedule and fed into cert testing. The RF contractor retainer (Action 6) ensures the cert submission is supported even if the single-point engineer becomes unavailable.
 
-4. Pre-build inventory ($95K) is recoverable revenue, not sunk cost. It belongs in a capital authorization, not contingency, but it is not waste.
+**Battery validation:** Hardened by Action 7. Funding dedicated overtime closes the 8D to D8 without pulling resources from ISS-027/028. The Brain’s **lithium battery transport** requirements (49 CFR, IATA DG) and safety listing (UL/IEC 62368-1) are explicitly protected.
 
----
-
-## What Cautious Gets Right
-
-1. The MTBF gap — 14.1% AFR against a 2.0% target — has not been adequately surfaced. Shipping a device with a 7x reliability gap to buyers who selected us explicitly for uptime is an existential commercial risk, not a footnote.
-
-2. The QSA gap review must be 06/18, not 06/25. Hardware-level PCI gaps discovered after DVT build authorization cannot be corrected without a DVT respin. Seven days of earlier visibility costs $8K. A DVT respin caused by a gap discoverable on 06/18 costs the entire cert timeline.
-
-3. Battery D7 is a hard build stop, not an assertion. "In-progress" at D6 on 06/11 with 11 days to build start is not a schedule; it is a hope. A written D7 completion plan with a committed date and physical test protocol is due 06/13.
-
-4. Incoming inspection criteria for antenna parts must be written before 06/16 arrival, not upon receipt. A quality nonconformance on arrival with no pre-defined acceptance criteria costs 12–24 hours the schedule cannot absorb.
+**Schedule gates:** 06/22 DVT build date is held. 08/18 certification hard gate is held with no slack erosion. The courier standby (Action 1) transforms the ISS-014 3-day buffer from a “hope it works” margin into a “plan for the slip” margin.
 
 ---
 
-## Where Both Advocates Have a Gap
+## Summary
 
-**Neither plan resolves the MTBF/AFR gap with a concrete action before DVT.**
+My plan spends $8,300 committed — a reasonable, justified use of contingency to protect against the single biggest program risk (ISS-014 schedule slip) and the single biggest cert risk (RF engineer bus factor). It right-sizes the Tet pre-build to match the beta spares burn rate supported by the Brain’s field trial data. It funds battery 8D closure without cannibalizing other quality gates. It explicitly rejects the GROWTH advocate’s premature scaling bets.
 
-Growth mentions MTBF as a reliability item. Cautious surfaces the 14.1% AFR math. Neither requires a credible path to ≤2.0% AFR as a condition of DVT build authorization or beta trial authorization.
+The Department Head asked us to minimize committed cash while holding schedule and quality gates. My plan does exactly that. It puts money where it buys real risk reduction — courier standby, contractor retainer, overtime — and avoids spending where it doesn’t — beta fleet expansion that scales before validation, eMMC acceleration that solves a problem that doesn’t yet exist.
 
-The Brain's strategy vision — *">99.5% fleet uptime, every table running an LSI device"* — is not a marketing claim. It is the explicit value proposition to VP of Operations and CIO buyers (strategy.md ICP) who are evaluating us against competitors for multi-year, multi-site deployments. A device with 14.1% AFR cannot deliver 99.5% uptime under any realistic repair-cycle model.
+**We protect the downside so the upside can happen on its own.**
 
-**This does not delay DVT.** DVT is the mechanism for generating the reliability data needed to update the MTBF prediction. But it does mean that beta trial authorization in September must be conditioned on an updated MTBF prediction — incorporating DVT failure data — showing a credible path to ≤2.0% AFR at MP configuration. Shipping a beta device whose reliability profile we cannot defend to a paying customer is not a quality gate we can waive.
-
----
-
-## THE BALANCED PLAN
-
-### Three Hard Conditions for 06/22 Build Authorization
-
-These conditions are non-negotiable. If any is not met by its date, build start slips to the date it is met. A deliberate short slip is recoverable. A DVT build that starts with these unresolved is not.
-
-| Condition | Due | Owner | Cost | Consequence If Missed |
-|---|---|---|---|---|
-| **Yield root cause closed:** failure mechanism confirmed (not Pareto alone), process correction specified, incorporated in DVT build instructions, signed off by Quality (Dept 03) | 06/19 | HW Eng (01) + MSQ (04) + Q&R (03) | $6K contractor support | DVT slips to date of closure. 5–7 day slip is recoverable; failed DVT yield is not. |
-| **Battery 8D D7 completion plan** delivered with committed date ≤ 06/21 and written physical test protocol | 06/13 | HW Eng (01) + Q&R (03) | $0 to plan; cost funded when known | Hard stop: DVT does not start until D7 is complete with test evidence |
-| **QSA gap review complete:** hardware-level PCI gaps dispositioned before build authorization | 06/18 | NPI (02) + HW Eng (01) | $8K | DVT does not start until gaps dispositioned; hardware gaps at this stage = program restructure |
-
-**Schedule logic:** If all three conditions are met on time, build starts 06/22. If battery D7 requires a slip, DVT moves to D7+1. A 7-day slip to 06/29 is recoverable within the cert window if the cert path has any give at all. A yield failure or battery event during DVT is not recoverable before 08/18.
+BALANCED: I need to provide a balanced, middle-ground plan that combines elements of the Growth and Cautious views while respecting the Department Head's directive to minimize committed cash and keep quality gates inviolable.
 
 ---
 
-### PRIORITY 1 — DVT Build Date Protection (ISS-014, ISS-019, ISS-021)
+## BALANCED Position: Pragmatic Risk Reduction, No Premature Scaling
 
-**The 06/16 antenna parts arrival with a 3-day effective buffer is manageable with pre-positioning. The gap in both prior plans: no incoming inspection criteria defined before parts arrive.**
+I've reviewed all three prior positions. The Pro Advocate gave us a mathematically optimal trigger-based plan with zero committed cash. The Growth Advocate wants to layer on $24,000 in scaling bets. The Cautious Advocate wants $8,300 committed for insurance against the worst-case scenarios.
 
-| Action | Owner | Due | Cost |
-|---|---|---|---|
-| Written incoming inspection checklist for antenna parts — acceptance criteria defined and approved by HW Eng (01) and Q&R (03) | HW Eng (01) + Q&R (03) | 06/14 | $0 (internal) |
-| Confirm antenna parts ETA in writing from supplier; air freight upgrade contingency if ETA slips past 06/17 | MSQ (04) | 06/13 | $12K freight contingency |
-| Pre-kit all non-antenna BOM at CM — 100% staged by 06/15 | NPI (02) | 06/15 | $8K expedite labor |
-| CM dedicated build team on standby 06/16–06/22 — no line reassignment | NPI (02) | 06/16 | $15K labor hold |
-| Rework qualification documentation for antenna assembly complete and approved before 06/19 | HW Eng (01) | 06/19 | $0 (internal) |
+My job is to find the defensible middle ground that holds 06/22, protects 08/18, and doesn't spend money on problems that haven't materialized yet.
 
-**P1 total: $35K**
-
-The incoming inspection checklist is the Balanced addition. It costs nothing and eliminates the scenario where parts arrive 06/16 with a quality nonconformance and inspection criteria are being written in real time.
-
-*Quality gate confirmation: no gate weakened. Rework qualification documentation is a prerequisite for build authorization, not a parallel activity.*
+Here's where I land.
 
 ---
 
-### PRIORITY 2 — Yield: EVT 78% → DVT 88% Target (ISS-023, ISS-025)
+### The Core Insight: Not All "Committed Now" Dollars Are Equal
 
-**The 10-point yield gap from EVT to DVT target is the most commercially consequential open issue in the program.** At AMG-100's $138.18 gross profit per unit, every percentage point of yield at 10,000-unit MP scale = $13,818 in recovered gross profit. Closing 10 points = $138,180.
+The Department Head said "minimize committed cash," not "eliminate it." The Brain shows us a single dominant risk: the ISS-014 antenna rework parts from Shenzhen, with a 3-day buffer before the DVT build. **01-Hardware-Engineering calls this a single-point schedule risk. 02-NPI says the cert path has zero slack after 08/18.** If that one shipment slips, the whole program cascades.
 
-**The Balanced position on verification:** DVT *is* the verification mechanism for process corrections — provided the failure mechanism is confirmed and corrections are in approved build instructions before 06/22. The 84% pause gate after the first 50 units is the in-build check. This is tighter than baseline, not looser.
+The question is whether $1,500 committed now materially changes the odds versus a trigger-fired courier. The Pro says triggers are fast enough. The Cautious Advocate says they're not.
 
-| Action | Owner | Due | Cost |
-|---|---|---|---|
-| Yield root cause closure document: failure mechanism confirmed, process correction specified, incorporated in DVT build instructions | HW Eng (01) + MSQ (04) | 06/19 | $6K contractor support |
-| Quality (Dept 03) sign-off on yield root cause closure document before build authorization | Q&R (03) | 06/20 | $0 |
-| DVT sample size increased by 15 units for statistical signal | NPI (02) | 06/22 | $18K material + build |
-| **84% pause gate after first 50 units:** if yield < 84%, 48-hour analysis hold — not cancellation, analysis | Q&R (03) | 06/22 | $0 |
+I've managed Asia supply chains. A next-flight-out courier activated on 06/17 from Shenzhen can deliver to Austin in 24-36 hours — but only if customs clearance is pre-filed, DG paperwork for lithium battery components (the Brain cites 49 CFR/IATA DG) is flawless, and no weekend or holiday intervenes. Any one of those goes wrong, and "24 hours" becomes "72 hours," at which point you've missed the DVT build window with three days of buffer.
 
-**P2 total: $24K**
-
-*Quality gate confirmation: the 84% pause gate is a tighter interim gate than baseline. The yield root cause closure document is a new prerequisite for build authorization. No existing gate is weakened.*
+**The Cautious Advocate is right on this one.** Pre-staging a courier to be physically present in Shenzhen on 06/16 — ready to receive the parts the moment they're released — buys us 1-2 days of real schedule margin. That's the difference between "maybe we make it" and "we have a plan." For $1,500 committed (the standby fee), with the $3,200 air freight cost triggered only on successful pickup, I'm willing to commit.
 
 ---
 
-### PRIORITY 3 — RF Engineer Bus-Factor Elimination (R-09)
+### Where the Cautious Advocate Over-Corrects
 
-**One engineer holds FCC Part 15 antenna expertise on a cert path with zero slack after 08/18.** This is the risk that can kill certification with no warning. The Balanced position agrees with Growth on cost ($45K) and with Cautious on timeline (06/20 is not realistic for specialist placement; 06/25 is).
+I'm rejecting three elements of the Cautious plan:
 
-**The most important action is not hiring the contractor. It is starting documentation today.**
+**First, the RF contractor retainer.** The Brain shows R-09 as a "bus-factor risk, not a performance risk." The single RF engineer has a strong track record — closed ISS-019/021/023. A $4,000 retainer for someone who reviews documentation once and sits on standby is not meaningfully different from the $0 documentation file approach. If the bus factor hits, either backstop requires ramp-up time. The documentation file is a legitimate mitigation that costs nothing. I'm keeping the Pro's $0 action here, plus the trigger-based contractor search if documentation review fails completeness by 06/30.
 
-| Action | Owner | Due | Cost |
-|---|---|---|---|
-| Incumbent RF engineer begins technical documentation file: antenna tuning decisions, test setups, pre-compliance data summary | HW Eng (01) | **06/11 (today)** | $0 |
-| RF specialist contractor search initiated through specialist firm | HW Eng (01) | **06/11 (today)** | $0 |
-| Contractor onboarded (realistic target given 2–4 week specialist placement cycle) | HW Eng (01) | 06/25 | $45K (3 months) |
-| Cross-train one existing hardware engineer on antenna test procedures | HW Eng (01) | 07/01 | $0 |
+**Second, the 75-unit Tet pre-build.** The Cautious Advocate cites the alpha trial uptime gap to justify 75 units. But the Brain's open-issues show the battery 8D is at D6 — root cause identified, permanent corrective action in validation. Action 7 in my plan funds dedicated overtime (Con's proposal, which I accept) to close D8 by 07/01. If the root cause fix works, 75 units is overbuilt inventory. If it doesn't, we have bigger problems than spares count. Right-size to 50 units — a genuine middle ground between the Pro's 30 and the Con's 75 — and adjust upward after D8 closure data.
 
-**P3 total: $45K**
-
-The documentation action starting today means that when the contractor arrives 06/25, a complete technical record exists. Two weeks of documentation work at $0 cost is the highest-ROI action in the entire plan. Starting it on 06/25 — when the contractor arrives — wastes those two weeks.
-
-*Quality gate confirmation: no gate is modified. Human redundancy is added to execute existing gates, not to replace them.*
+**Third, the Growth actions.** I'm rejecting both. The beta fleet expansion spends $18,000 to scale before reliability is validated. The eMMC acceleration spends $6,000 on a workstream that's already in flight with no demonstrated slip. These are bets, not risk reduction.
 
 ---
 
-### PRIORITY 4 — PCI Pre-Assessment: QSA Gap Review 06/18 (R-01, ISS-027, ISS-028)
+### What I'm Keeping From the Growth Advocate
 
-**Both prior advocates now agree the QSA review must move to 06/18.** The Balanced position confirms this is correct and explains precisely why the seven-day difference matters.
-
-A hardware-level PCI PTS gap discovered on 06/18 (four days before build start) can be dispositioned before build authorization — either designed around in the DVT build or escalated to executive leadership as a program-restructuring decision. The same gap discovered on 06/25 (three days after build authorization) requires a DVT respin. A DVT respin at that stage eliminates all cert path margin and breaks 08/18.
-
-**The $8K cost is the cheapest catastrophic-risk insurance in the program after the RF documentation action that costs $0.**
-
-| Action | Owner | Due | Cost |
-|---|---|---|---|
-| QSA gap review — one day on-site, hardware-level PCI PTS evaluation | NPI (02) + HW Eng (01) | 06/18 | $8K |
-| Named internal PCI lead assigned — must have prior PTS assessment experience | NPI (02) | 06/13 | $0 |
-| Any hardware-level PCI gaps dispositioned before build authorization | HW Eng (01) | 06/21 | Cost TBD if gaps found |
-| PCI firmware hardening complete, firmware build frozen | HW Eng (01) | 07/01 | $0 (must-do regardless) |
-| Remediation window pre-booked at PCI lab 07/07–07/14 | NPI (02) | 06/20 | $6K reservation |
-
-**P4 total: $14K**
-
-*Quality gate confirmation: PCI/EMV certification rigor is strengthened. The QSA gap review adds a pre-DVT hardware validation layer that does not exist in the baseline plan.*
+Nothing substantive. The Growth position's core logic — "capture market share during the labor crisis" — isn't wrong as strategy. But the Brain's ICP says the buyer values "fleet uptime" and "predictable supply" above all else. If we deploy unreliable beta devices, we don't capture share. We burn trust with chains that have 50-1,200 locations. The Growth actions are premature.
 
 ---
 
-### PRIORITY 5 — Battery 8D D7 + MTBF Transparency (ISS-032, Reliability)
+## BALANCED Prioritized Improvement Plan
 
-**This is the area where both prior advocates understate the stakes.**
+| Priority | Action | Owner | Date | Type | Committed Now | Cost If Fired | Expected Cash | Quality Gate Confirmation |
+|:---|:---|:---|:---|:---|:---|:---|:---|:---|
+| **1** | **ISS-014: Commit courier standby in Shenzhen.** Pre-stage DG-capable courier to be on-site at supplier 06/16 to receive antenna rework parts upon release. Trigger air freight cost only upon successful pickup. | 04-Mfg-Supplier-Quality | 06/12 | Committed-now + trigger | **$1,500** | $3,200 | **$2,300** | No gate weakened. Hardens DVT build schedule. Protects PRT units and cert audit trail. |
+| **2** | **CM capacity: No-cost priority reservation first. Trigger-based backup.** Negotiate written capacity commitment from CM in exchange for future MP PO commitment. If no-cost agreement fails by 06/13 17:00 CT, authorize paid standby hold. | 04-Mfg-Supplier-Quality | 06/13 | Trigger-based | **$0** | $8,000 | **$1,200** | No gate weakened. Capacity guarantee ensures DVT 88% yield target is not rushed. |
+| **3** | **Air-freight backup for secondary BOM slips.** Authorize air freight for any DVT BOM line item if supplier-confirmed ETA slips past 06/18 12:00 CT. | 04-Mfg-Supplier-Quality | 06/18 | Trigger-based | **$0** | $14,000 | **$1,400** | No gate weakened. Freight-mode change only. PRT coverage unchanged. |
+| **4** | **Pre-stage labor (customs + courier intake).** Dependent trigger: fires only if Action 1 fires. Dedicated customs pre-clearance and on-call courier from DG hub to CM. | 05-Service-Operations | Dependent on #1 | Trigger-based (dependent) | **$0** | $1,800 | **$450** | No gate weakened. Intake logistics only. |
+| **5** | **Tet/BrightPath pre-build: 50 units, capital reclass.** Right-size to 50 units to cover first 60-90 days of beta spares demand. Move off program contingency to separate capital line as recoverable working capital. | 04-Mfg-Supplier-Quality, Finance | 06/20 | Capital reclass | **$0** (from contingency) | — | **$0** | No gate weakened. Two-qualified-sources rule maintained. Quantity reflects midpoint between Pro (30) and Con (75) based on alpha burn rate and pending battery fix. |
+| **6** | **RF engineer bus-factor R-09: $0 documentation first, trigger-based contractor search backup.** Require detailed documentation file — tuning procedures, test fixtures, calibration data, cert submission package — by 06/30, reviewed by engineering manager. If review fails completeness by 06/30, initiate contractor search. | 01-Hardware-Engineering | 06/30 doc; 07/02 review | $0 action + trigger backup | **$0** | $4,000 | **$400** | No gate weakened. Documentation artifact strengthens cert path. Trigger backup protects PCI/EMV and ISS-023 coexistence if primary engineer becomes unavailable. |
+| **7** | **Battery 8D: Fund dedicated overtime to close D7-D8 by 07/01.** Authorize 2-week focused overtime for existing quality engineer. Does not cannibalize ISS-027/028 resources. | 03-Quality-Reliability | 06/12 | Committed-now | **$2,800** | — | **$2,800** | No gate weakened. Hardens battery validation (UL/IEC 62368-1, 49 CFR/IATA DG) without pulling resources from other DVT readiness gates. |
+| **—** | **GROWTH: Beta fleet expansion — REJECT** | — | — | — | — | — | — | Scales before reliability validated. Alpha uptime 99.1% vs 99.5% target. Battery 8D at D6. EVT yield 78%, DVT target 88%. Premature deployment risks uptime metrics and customer trust per ICP values. |
+| **—** | **GROWTH: eMMC dual-source acceleration — REJECT** | — | — | — | — | — | — | Workstream already in flight per 04-Mfg-Supplier-Quality. No demonstrated slip. Spend if and when it slips. |
 
-**On D7:** D6 means root cause is confirmed. D7 means corrective action implemented and verified with physical test evidence. "In-progress" at D6 on 06/11 with 11 days to build start is not a status — it is a gap with an unknown resolution date.
+---
 
-**On MTBF:** 62,000 hours implies 14.1% AFR against a 2.0% target. At ICP scale (500 locations × 30 devices = 15,000 units), the gap is 2,115 annual failures versus a 300-unit target. This is not a reliability footnote. It is the central commercial promise — >99.5% fleet uptime per strategy.md — measured against a current failure rate that cannot support that promise.
+## Committed Cash vs. Expected Cash Summary
 
-**The Balanced position:** DVT is not delayed for MTBF
+| | Pro | Con | Growth | **Balanced** |
+|:---|:---|:---|:---|:---|
+| **Committed Now** | $0 | $8,300 | $24,000 | **$4,300** |
+| **Expected Cash** | $4,250 | ~$7,600 | ~$27,850 | **~$8,550** |
+| **Worst-Case Cash** | $31,000 | $28,300 | >$31,000 | **~$30,600** |
+| **Remaining Contingency (worst)** | $80,600 | $83,300 | ~$60,600 | **~$81,000** |
+
+---
+
+## What I Chose and Why
+
+**$1,500 committed for the courier standby.** This is the only place where I agreed with the Cautious Advocate over the Pro. The Brain shows ISS-014 as the single-point schedule risk with only three days buffer. A trigger-based courier activated after a slip confirmation is theoretically feasible but practically fragile — customs, DG paperwork, weekends, any one of those burns the buffer. Pre-staging the courier buys 1-2 real days of margin. That's worth $1,500.
+
+**$2,800 committed for battery 8D overtime.** I accepted the Con's argument here over the Pro's $0 reprioritization claim. The Brain shows ISS-027 and ISS-028 are open quality gates. Pulling a quality engineer off those to close the battery 8D is a trade-off that weakens one gate to harden another. The Department Head's directive says no action may weaken a quality gate. Dedicated overtime creates capacity without cannibalization.
+
+**$0 for the RF contractor retainer.** I rejected the Cautious Advocate's $4,000 retainer in favor of the Pro's $0 documentation file with trigger-based backup. A part-time contractor who reviews documentation once is not meaningfully more useful than a qualified contractor who ramps from a well-written documentation file when needed. Both require ramp-up time. The key is the quality of the documentation, which the $0 action ensures.
+
+**50-unit Tet pre-build, not 30 or 75.** This is a genuine split-the-difference. The Pro's 30 units assumes the battery fix works perfectly. The Con's 75 units assumes it doesn't. The Brain shows the fix is at D6 — root cause identified, corrective action in validation. That's promising but unproven. 50 units covers a reasonable range of outcomes and is recoverable working capital, not burned NRE.
+
+**Both Growth actions rejected.** The Growth advocate's logic — capture market share during the labor crisis — is strategically sound in the abstract. But the Brain's data doesn't support it yet. EVT yield is 78%, trying to hit 88% at DVT. Alpha uptime is 99.1%, trying to hit 99.5%. Battery 8D isn't closed. Scaling before these are resolved isn't growth — it's gambling with the company's credibility with the ICP, who values "fleet uptime" and "predictable supply" above all else.
+
+---
+
+## Schedule and Quality Gate Confirmation
+
+**06/22 DVT build date:** Held. The courier standby (Action 1) transforms the ISS-014 3-day buffer from "hope the supplier hits 06/16" into "we have a courier on-site to receive parts the moment they're ready." The CM capacity trigger (Action 2) ensures line availability. The air-freight trigger (Action 3) catches secondary BOM slips. Actions 1-4 provide layered defense.
+
+**08/18 certification hard gate:** Held with zero slack erosion. The Brain's cert-plan shows PCI PTS pre-assessment 07/06 (R-01) and final gate 08/18 with no slack. None of my actions alter the cert critical path — they protect the DVT build that feeds cert units. The RF documentation (Action 6) hardens cert support, not weakens it.
+
+**Quality gates inviolable — confirmed across all seven actions:**
+- **PRT coverage:** Unchanged. No test coverage reduced, no process step shortcut.
+- **Two-qualified-sources rule:** Unchanged. Tet pre-build (Action 5) is a tactical buffer, not a single-source commitment. BrightPath remains one of two qualified sources.
+- **PCI/EMV rigor:** Strengthened. Actions 1, 6, and 7 protect the cert critical path.
+- **Battery validation:** Hardened by Action 7's overtime-funded D8 closure. Does not weaken ISS-027/028.
+- **Schedule gates:** Both 06/22 and 08/18 held. No slack erosion.
+
+---
+
+## Summary
+
+The Balanced plan commits $4,300 — roughly half what the Cautious Advocate proposed, and a modest step up from the Pro's $0. It spends where the Brain data supports real risk reduction: $1,500 to harden the single-point schedule risk (ISS-014 courier standby) and $2,800 to close the battery 8D without cannibalizing other quality gates. It keeps the trigger-based structure for secondary risks (CM capacity, air freight, pre-stage labor) and the $0 documentation approach for the bus-factor risk with a trigger backup. It right-sizes the Tet pre-build to 50 units as recoverable working capital. It rejects both premature scaling bets.
+
+We hold 06/22. We hold 08/18. We leave roughly $81,000 in contingency even in the worst case. Every quality gate is explicitly confirmed inviolable.
