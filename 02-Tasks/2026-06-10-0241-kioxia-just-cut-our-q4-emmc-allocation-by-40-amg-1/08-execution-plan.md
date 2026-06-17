@@ -45,25 +45,25 @@ Here’s the step-by-step plan to ensure we have enough reliable memory chips fo
 
 #### Risks and Mitigations
 
-| Risk | Severity | Our Response |
-|------|----------|--------------|
-| SanDisk chips fail the critical go/no-go checkpoint. | High | Immediately trigger Option 3 for production from month 3 onwards; send the pre-written customer notice within 48 hours. |
-| The emergency-bought chips are fake or damaged. | High | Inspect 100% of those chips. Prioritize getting a guaranteed supply from our main supplier, Kioxia (Task 2). We have a per-chip cost ceiling of $3.00 from emergency sources; exceeding it signals a major problem. |
-| The software sign-off for SanDisk chips is late (July 14). | Medium | Raise this immediately to the executive team. We will not delay, but will assess the production impact right then. |
-| Emergency chip spending exceeds the $25,000 hard cap. | Medium | Escalate to the executive team for approval before any further purchase order is issued. |
-| Our main supplier’s (Kioxia’s) backup supply deal succeeds even after we place the emergency order. | Low | We’d prefer Kioxia’s traceable chips. We will cancel or reduce the emergency order if Kioxia’s terms are better and guarantee traceability. |
+| Risk                                                                                                | Severity | Our Response                                                                                                                                                                                                        |
+| --------------------------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SanDisk chips fail the critical go/no-go checkpoint.                                                | High     | Immediately trigger Option 3 for production from month 3 onwards; send the pre-written customer notice within 48 hours.                                                                                             |
+| The emergency-bought chips are fake or damaged.                                                     | High     | Inspect 100% of those chips. Prioritize getting a guaranteed supply from our main supplier, Kioxia (Task 2). We have a per-chip cost ceiling of $3.00 from emergency sources; exceeding it signals a major problem. |
+| The software sign-off for SanDisk chips is late (July 14).                                          | Medium   | Raise this immediately to the executive team. We will not delay, but will assess the production impact right then.                                                                                                  |
+| Emergency chip spending exceeds the $25,000 hard cap.                                               | Medium   | Escalate to the executive team for approval before any further purchase order is issued.                                                                                                                            |
+| Our main supplier’s (Kioxia’s) backup supply deal succeeds even after we place the emergency order. | Low      | We’d prefer Kioxia’s traceable chips. We will cancel or reduce the emergency order if Kioxia’s terms are better and guarantee traceability.                                                                         |
 
 #### Success Metrics (Key Performance Indicators)
 
-| Metric | Target | Timeframe |
-|--------|--------|-----------|
-| Month 2 chips secured | 1,200 chips in our inventory | End of Week 2 |
-| SanDisk software sign-off | Approved test report | July 14, 2026 |
-| Mid-production test quality | At least 98% pass rate on 100+ units | 4-6 weeks into testing |
-| Total emergency-chip spending | $25,000 or less | Continuously tracked |
-| Extra cost per chip | $3.00 or less | Continuously tracked |
-| Customer notice ready | Approved draft on file | End of Week 2 |
-| Final quality gate | Two fully qualified, approved memory chip sources | Mid-October 2026 |
+| Metric                        | Target                                            | Timeframe              |
+| ----------------------------- | ------------------------------------------------- | ---------------------- |
+| Month 2 chips secured         | 1,200 chips in our inventory                      | End of Week 2          |
+| SanDisk software sign-off     | Approved test report                              | July 14, 2026          |
+| Mid-production test quality   | At least 98% pass rate on 100+ units              | 4-6 weeks into testing |
+| Total emergency-chip spending | $25,000 or less                                   | Continuously tracked   |
+| Extra cost per chip           | $3.00 or less                                     | Continuously tracked   |
+| Customer notice ready         | Approved draft on file                            | End of Week 2          |
+| Final quality gate            | Two fully qualified, approved memory chip sources | Mid-October 2026       |
 
 #### Templates to Create
 

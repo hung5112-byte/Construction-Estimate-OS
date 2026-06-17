@@ -2,7 +2,7 @@
 type: brain
 section: budget
 aliases: ["Budget", "Annual Budget"]
-last_updated: 06/10/2026
+last_updated: 06/15/2026
 ---
 # Budget
 
@@ -29,6 +29,7 @@ last_updated: 06/10/2026
 | Quality & Reliability            | $245k     | $96k  | $149k     |
 | Manufacturing & Supplier Quality | $220k     | $88k  | $132k     |
 | Service Operations               | $335k     | $158k | $177k     |
+| Finance                          | $120k     | $0k   | $120k     |
 
 ## Guardrails
 - Any single PO > $50k → VP approval

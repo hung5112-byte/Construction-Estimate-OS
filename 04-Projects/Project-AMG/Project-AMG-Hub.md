@@ -13,14 +13,14 @@ last_updated: 06/10/2026
 Concept → EVT → **DVT (current)** → PVT → MP · Budget **$2.0M** · MP gate **11/09/2026** · Sponsor: Brian H. Doan (VP) · PM: Sarah Whitfield
 
 ## 📊 Status at a glance (06/10/2026)
-| | |
-|---|---|
-| Phase | ✅ EVT exited 05/08 (2 waivers) → **DVT build 06/22** (12 days) |
-| Budget | $872k / $2,000k spent (43.6%) — 🟢 forecast $1,978k |
-| Issues | 10 open: 0 Sev-1 · 5 Sev-2 · 5 Sev-3 |
-| Top risk | PCI PTS pre-assessment 07/06 (R-01) |
-| BOM | EVT $186.40 → MP forecast $142.70 (target $142 ± 3) 🟢 |
-| Field | Alpha trial live: 24 units, 3 sites, uptime 99.1% |
+|          |                                                                |
+| -------- | -------------------------------------------------------------- |
+| Phase    | ✅ EVT exited 05/08 (2 waivers) → **DVT build 06/22** (12 days) |
+| Budget   | $872k / $2,000k spent (43.6%) — 🟢 forecast $1,978k            |
+| Issues   | 10 open: 0 Sev-1 · 5 Sev-2 · 5 Sev-3                           |
+| Top risk | PCI PTS pre-assessment 07/06 (R-01)                            |
+| BOM      | EVT $186.40 → MP forecast $142.70 (target $142 ± 3) 🟢         |
+| Field    | Alpha trial live: 24 units, 3 sites, uptime 99.1%              |
 
 ## 🗂️ Program documents
 
