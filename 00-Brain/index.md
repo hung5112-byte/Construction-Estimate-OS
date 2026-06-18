@@ -20,6 +20,7 @@ Navigation hub for all Brain files and the division departments.
 ## Projects
 
 - [[Project-AMG-Hub|🚀 Project AMG — AMG-100 tablet, Concept → MP (synthetic demo)]]
+- [[Project-Cyber-Hub|🛰️ Project Cyber — CY-80 8" POS tablet, Mass Production Year 2 (synthetic demo)]]
 
 ## Departments
 
