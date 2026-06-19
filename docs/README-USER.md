@@ -279,7 +279,7 @@ This is the system's "engine" — it contains the code for 13 departments + 192 
 
 8. **Verify the install points to the right repo folder** (avoids "my code edits do nothing" later):
    ```powershell
-   python -c "import json; from pathlib import Path; p = Path([d for d in __import__('site').getsitepackages() + [__import__('site').getusersitepackages()] if (Path(d) / 'vn_one_person_company-0.2.0.dist-info').exists()][0]) / 'vn_one_person_company-0.2.0.dist-info' / 'direct_url.json'; print(json.loads(p.read_text())['url'])"
+   python -c "import json; from pathlib import Path; p = Path([d for d in __import__('site').getsitepackages() + [__import__('site').getusersitepackages()] if (Path(d) / 'bd_business_os-0.2.0.dist-info').exists()][0]) / 'bd_business_os-0.2.0.dist-info' / 'direct_url.json'; print(json.loads(p.read_text())['url'])"
    ```
    Must show: `file:///F:/.work/bd-business-os` (the repo path you extracted).
 
@@ -1320,7 +1320,7 @@ Write-Host "`n[1/5] Python version:" -ForegroundColor Yellow
 python --version
 
 Write-Host "`n[2/5] Package install location:" -ForegroundColor Yellow
-python -c "import json; from pathlib import Path; p = Path([d for d in __import__('site').getsitepackages() + [__import__('site').getusersitepackages()] if (Path(d) / 'vn_one_person_company-0.2.0.dist-info').exists()][0]) / 'vn_one_person_company-0.2.0.dist-info' / 'direct_url.json'; print(json.loads(p.read_text())['url'])"
+python -c "import json; from pathlib import Path; p = Path([d for d in __import__('site').getsitepackages() + [__import__('site').getusersitepackages()] if (Path(d) / 'bd_business_os-0.2.0.dist-info').exists()][0]) / 'bd_business_os-0.2.0.dist-info' / 'direct_url.json'; print(json.loads(p.read_text())['url'])"
 
 Write-Host "`n[3/5] Claude Desktop processes:" -ForegroundColor Yellow
 (Get-Process claude -ErrorAction SilentlyContinue | Measure-Object).Count
@@ -1438,7 +1438,7 @@ Get-Process claude, bd-os-mcp -ErrorAction SilentlyContinue | Measure-Object | S
 
 **How to check:**
 ```powershell
-python -c "import json; from pathlib import Path; p = Path([d for d in __import__('site').getsitepackages() + [__import__('site').getusersitepackages()] if (Path(d) / 'vn_one_person_company-0.2.0.dist-info').exists()][0]) / 'vn_one_person_company-0.2.0.dist-info' / 'direct_url.json'; print(json.loads(p.read_text())['url'])"
+python -c "import json; from pathlib import Path; p = Path([d for d in __import__('site').getsitepackages() + [__import__('site').getusersitepackages()] if (Path(d) / 'bd_business_os-0.2.0.dist-info').exists()][0]) / 'bd_business_os-0.2.0.dist-info' / 'direct_url.json'; print(json.loads(p.read_text())['url'])"
 ```
 
 If the output is **not** `file:///F:/.work/bd-business-os` → it's loading from another folder.
