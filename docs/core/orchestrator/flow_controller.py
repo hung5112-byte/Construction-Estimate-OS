@@ -16,6 +16,7 @@ from core.clarifier.clarification_io import (
 from core.obsidian.vault import ObsidianVault
 from core.orchestrator.router import Router
 from core.utils.config import load_config
+from core.paths import data_root, templates_root
 
 
 class FlowStage(str, Enum):
@@ -400,12 +401,11 @@ class FlowController:
         translator = TranslatorPipeline(self.llm, vault_glossary_path=glossary_path)
 
         try:
-            repo_root = Path(__file__).parent.parent.parent
             plan_path = generate_execution_plan(
                 task_folder=task_folder,
                 llm=self.llm,
                 translator=translator,
-                templates_root=repo_root / "templates-us",
+                templates_root=templates_root(),
             )
         except FileNotFoundError as exc:
             return FlowResult(
@@ -431,7 +431,7 @@ class FlowController:
         from core.orchestrator.document_executor import execute_documents
         from core.brain.reader import BrainReader
 
-        repo_root = Path(__file__).parent.parent.parent
+        repo_root = data_root()
 
         # Load brain context for template substitutions (best-effort)
         brain_context: dict | None = None

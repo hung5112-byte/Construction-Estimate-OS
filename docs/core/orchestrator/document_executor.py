@@ -103,6 +103,10 @@ def execute_documents(
         template_requests = _llm_extract_templates(plan_text, llm)
 
     repo_templates = repo_root / "templates-us"
+    if not repo_templates.is_dir():
+        # Self-heal: caller passed a root without templates-us — resolve robustly.
+        from core.paths import templates_root
+        repo_templates = templates_root()
     resolver = TemplateResolver(vault_root=vault_root, repo_templates=repo_templates)
 
     outputs_dir = vault_root / "03-Outputs" / task_folder.name

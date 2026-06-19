@@ -10,8 +10,9 @@ from pathlib import Path
 
 import yaml
 
+from core.paths import data_root
 
-REPO_ROOT = Path(__file__).parent.parent
+REPO_ROOT = data_root()
 
 
 # Brain files are NEVER overwritten (the Department Head filled them in)
