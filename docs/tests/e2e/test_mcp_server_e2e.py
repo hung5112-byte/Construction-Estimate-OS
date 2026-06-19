@@ -1,6 +1,6 @@
 """E2E test: MCP server tools flow with mocked sampling.
 
-Verifies user can run vn-business-os entirely qua MCP (not subprocess CLI),
+Verifies user can run bd-business-os entirely qua MCP (not subprocess CLI),
 proving v0.2.0 architecture works.
 """
 import asyncio
@@ -42,12 +42,12 @@ def _make_ctx(responses: list[str]):
 
 
 def test_mcp_vn_status_no_llm(tmp_path):
-    """vn_status doesn't need LLM — just reads Brain."""
+    """bd_status doesn't need LLM — just reads Brain."""
     vault = tmp_path / "vault"
     shutil.copytree(FIXTURE, vault)
 
-    from core.mcp_server import vn_status
-    result = vn_status(str(vault))
+    from core.mcp_server import bd_status
+    result = bd_status(str(vault))
 
     assert "icp" in result
     assert result["products"] == 3
@@ -56,7 +56,7 @@ def test_mcp_vn_status_no_llm(tmp_path):
 
 
 def test_mcp_vn_run_routes_via_sampling(tmp_path):
-    """vn_run must call session.create_message (not Anthropic API directly)."""
+    """bd_run must call session.create_message (not Anthropic API directly)."""
     vault = tmp_path / "vault"
     shutil.copytree(FIXTURE, vault)
     (vault / "02-Tasks").mkdir(exist_ok=True)
@@ -67,8 +67,8 @@ def test_mcp_vn_run_routes_via_sampling(tmp_path):
         '[]',  # No gaps → skip clarification
     ])
 
-    from core.mcp_server import vn_run
-    result = asyncio.run(vn_run(brief="Draft an RMA intake SOP", vault=str(vault), ctx=ctx))
+    from core.mcp_server import bd_run
+    result = asyncio.run(bd_run(brief="Draft an RMA intake SOP", vault=str(vault), ctx=ctx))
 
     assert "stage" in result
     assert "task_folder" in result
@@ -81,7 +81,7 @@ def test_mcp_vn_run_routes_via_sampling(tmp_path):
 
 
 def test_mcp_full_flow_brief_to_clarification_pause(tmp_path):
-    """Full flow: vn_run → PAUSE_CLARIFICATION with questions written."""
+    """Full flow: bd_run → PAUSE_CLARIFICATION with questions written."""
     vault = tmp_path / "vault"
     shutil.copytree(FIXTURE, vault)
     (vault / "02-Tasks").mkdir(exist_ok=True)
@@ -108,8 +108,8 @@ def test_mcp_full_flow_brief_to_clarification_pause(tmp_path):
         }]),
     ])
 
-    from core.mcp_server import vn_run
-    result = asyncio.run(vn_run(
+    from core.mcp_server import bd_run
+    result = asyncio.run(bd_run(
         brief="Pilot deployment of 500 terminals for our top customer",
         vault=str(vault),
         ctx=ctx,
@@ -138,8 +138,8 @@ def test_mcp_no_anthropic_api_key_needed(tmp_path, monkeypatch):
         '[]',
     ])
 
-    from core.mcp_server import vn_run
-    result = asyncio.run(vn_run(brief="test", vault=str(vault), ctx=ctx))
+    from core.mcp_server import bd_run
+    result = asyncio.run(bd_run(brief="test", vault=str(vault), ctx=ctx))
 
     # Must succeed without API key — proves MCP sampling path is used
     assert "stage" in result
@@ -155,14 +155,14 @@ def test_install_mcp_then_uninstall_roundtrip(tmp_path):
     install_result = install(config_path=cfg)
     assert install_result["ok"] is True
 
-    # Read config — vn-business-os entry exists
+    # Read config — bd-business-os entry exists
     config = json.loads(cfg.read_text(encoding="utf-8"))
-    assert "vn-business-os" in config["mcpServers"]
+    assert "bd-business-os" in config["mcpServers"]
 
     # Uninstall
     uninstall_result = uninstall(config_path=cfg)
     assert uninstall_result["removed"] is True
 
-    # Config still valid JSON, vn-business-os removed
+    # Config still valid JSON, bd-business-os removed
     config_after = json.loads(cfg.read_text(encoding="utf-8"))
-    assert "vn-business-os" not in config_after.get("mcpServers", {})
+    assert "bd-business-os" not in config_after.get("mcpServers", {})

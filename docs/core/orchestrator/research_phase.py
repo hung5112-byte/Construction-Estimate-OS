@@ -59,7 +59,7 @@ class ResearchPhase:
             llm: LLM provider
             vault_root: P2.3 — if provided, the tool cache is stored in
                 <vault>/.cache/tool_cache.db instead of the global
-                ~/.vn-business-os/. A per-vault cache prevents cross-company
+                ~/.bd-business-os/. A per-vault cache prevents cross-company
                 cache poisoning.
         """
         # Filter ToolRouter to only credentialed tools (RULE 5 — no silent fail)

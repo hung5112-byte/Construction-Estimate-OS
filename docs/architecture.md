@@ -78,9 +78,9 @@ Department Head brief
 ┌─ Claude Desktop GUI ───────────────────────────┐
 │  Department Head chats with Claude Sonnet                  │
 │       ↓                                         │
-│  Claude calls the MCP tool vn_meeting           │
+│  Claude calls the MCP tool bd_meeting           │
 │       ↓                                         │
-│  ┌─ MCP Server (vn-business-os) ─────────────┐ │
+│  ┌─ MCP Server (bd-business-os) ─────────────┐ │
 │  │  FlowController.run_meeting()             │ │
 │  │       ↓                                    │ │
 │  │  llm.complete(messages)                    │ │

@@ -84,8 +84,8 @@ VP's direction — third-party attribution is maintained in `NOTICE`.
 - **Docs**: README rewritten; CLAUDE.md updated; all 8 `docs/` guides re-exampled; both adapter skills re-triggered on NPI/RMA/ODM/certification language; SPEC/ROADMAP/DECISIONS/START-HERE/NEXT-STEPS marked HISTORICAL with supersession notes; prior migration records archived to `docs/plans/reports/`
 - **Hazard removal**: 5 dev scripts that would regenerate the old 12-department layout now exit with deprecation notices
 
-**Deliberately kept:** the `vn_*` MCP tool names, `vn-business-os` server name,
-`vn-os` CLI, and `vn-one-person-company` package slug (installed API contract —
+**Deliberately kept:** the `vn_*` MCP tool names, `bd-business-os` server name,
+`bd-os` CLI, and `bd-business-os` package slug (installed API contract —
 user decision); the `name_vn`/`aliases_vn` YAML keys (schema compatibility, English
 values); the MODORO author credit in vendored templates (license attribution per
 `NOTICE`); the unused `google-genai`/`openai` dependencies (user decision);
@@ -94,7 +94,7 @@ noted in CLAUDE.md).
 
 ## 3. Open questions for the manager
 
-1. **Reinstall the adapters** — the Claude Cowork plugin installed on this machine still carries the old Vietnamese skill description. Rebuild (`bash docs/adapters/claude-cowork/build-plugin.sh`) and reinstall, and re-run `vn-os install-mcp` so Claude Desktop picks up the updated skill text.
+1. **Reinstall the adapters** — the Claude Cowork plugin installed on this machine still carries the old Vietnamese skill description. Rebuild (`bash docs/adapters/claude-cowork/build-plugin.sh`) and reinstall, and re-run `bd-os install-mcp` so Claude Desktop picks up the updated skill text.
 2. **Benchmarks and rate figures** — every figure in `benchmarks-us.yaml` and the tariff/AQL/yield ranges in agent prompts/templates is illustrative and `[UNCERTAIN]`-flagged. Replace with your division's real numbers (and your broker's current tariff rates) as you fill the Brain.
 3. **Certification scope per product** — the Quality department's prompts cover PCI PTS/EMVCo/FCC/UL generically; the per-product required set should be captured in `laws.md` and the certification-tracker template once real products are loaded.
 4. **`README-USER.md`** — the long non-coder guide was patched (departments, packs, examples, status checks) but its narrative walkthroughs still carry some generic-business flavor; a full rewrite is cosmetic and was deprioritized.

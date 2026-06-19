@@ -28,7 +28,7 @@ The Department Head ran a new session with the prompt from `START-HERE.md`. Clau
 - 12 department stubs (01-governance → 12-growth)
 - DepartmentLoader (Pydantic + YAML)
 - ObsidianVault I/O wrapper
-- CLI skeleton (vn-os --version, status, run, onboard)
+- CLI skeleton (bd-os --version, status, run, onboard)
 - Config loader + ClaudeProvider stub
 - Phase 1 smoke test → tag `phase-01-complete`
 
@@ -52,7 +52,7 @@ The Department Head ran a new session with the prompt from `START-HERE.md`. Clau
 - Clarification I/O (write markdown with checkboxes + parse [x])
 - PerspectivesCollector (parallel ThreadPoolExecutor for 5 departments)
 - FlowController (Stop 1: brief → router → gap → clarification → PAUSE)
-- CLI wired: `vn-os run` + `vn-os resume` to the FlowController
+- CLI wired: `bd-os run` + `bd-os resume` to the FlowController
 - `scripts/dev/check-domain-neutral.sh` + integration test
 - Phase 3 smoke test → tag `phase-03-complete`
 
@@ -125,7 +125,7 @@ The Department Head ran a new session with the prompt from `START-HERE.md`. Clau
 - `get_default_provider() -> LLMProvider` (returns the Protocol type, not the concrete `ClaudeProvider`)
 
 ### Stub instead of skip
-- Task 1 fix: a minimal `core/cli.py` stub added so `vn-os --version` works immediately (plan sequencing gap — the entry point is registered in Task 1 but cli.py isn't until Task 10)
+- Task 1 fix: a minimal `core/cli.py` stub added so `bd-os --version` works immediately (plan sequencing gap — the entry point is registered in Task 1 but cli.py isn't until Task 10)
 - `_read_decisions` returns `[]` with a `# TODO Phase 3:` comment
 
 ### Build sequence variations
@@ -138,7 +138,7 @@ The Department Head ran a new session with the prompt from `START-HERE.md`. Clau
 | Pain | Resolution |
 |---|---|
 | Docstring encoding issue | Editor encoding. Fixed manually. |
-| `vn-os` binary not on PATH (Windows) | Tests use `python -m core.cli` instead of `vn-os` |
+| `bd-os` binary not on PATH (Windows) | Tests use `python -m core.cli` instead of `bd-os` |
 | Bash script on Windows (Git Bash drive-letter quirks) | Tests use a relative path + `cwd=str(REPO)` |
 | `declare -A` not supported on bash 3.2 macOS | Added a bash-version guard at the top of the script |
 | `mktemp -d` not cleaned up on script failure | Added `trap 'rm -rf $TMP' EXIT` |

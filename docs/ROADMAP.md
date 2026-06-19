@@ -40,7 +40,7 @@ Target: another dev clones the repo, follows the README, and uses it for their o
 | 3 | DeepSeek thinking-mode toggle (default OFF for meeting speed) | ✅ Done | - | - |
 | 4 | Lenient Brain parser — accept `## Vision (3-5 years)`, not only `## Vision` | ❌ TODO | 2h | TBD |
 | 5 | English error messages instead of Python tracebacks | ❌ TODO | 4h | TBD |
-| 6 | `vn-os doctor` command — verify env, .vncoderc, .env, brain → checklist | ❌ TODO | 3h | TBD |
+| 6 | `bd-os doctor` command — verify env, .vncoderc, .env, brain → checklist | ❌ TODO | 3h | TBD |
 | 7 | Pin LangGraph version (using 0.2.0+ — high version churn) | ❌ TODO | 1h | TBD |
 | 8 | Tests pass with the DeepSeek provider (currently 261 tests, may have hardcoded Anthropic) | ❌ TODO | 4h | TBD |
 
@@ -48,8 +48,8 @@ Target: another dev clones the repo, follows the README, and uses it for their o
 
 | # | Item | Status | Effort |
 |---|---|---|---|
-| 9 | Brain wizard CLI — `vn-os brain-wizard` asks 16 questions → auto-fills 8 files | ❌ TODO | 1 day |
-| 10 | Task templates — `vn-os run --template employment-agreement` | ❌ TODO | 1 day |
+| 9 | Brain wizard CLI — `bd-os brain-wizard` asks 16 questions → auto-fills 8 files | ❌ TODO | 1 day |
+| 10 | Task templates — `bd-os run --template employment-agreement` | ❌ TODO | 1 day |
 | 11 | Better progress indicator — "Calling 7 departments to meet... (3/7)" | ❌ TODO | 0.5 day |
 | 12 | Resumable tasks — a meeting that fails midway can resume | ❌ TODO | 1 day |
 | 13 | Per-task cost tracker — print cost in USD after finishing | ❌ TODO | 0.5 day |
@@ -74,12 +74,12 @@ Target: another dev clones the repo, follows the README, and uses it for their o
 
 | # | Bug | Severity | Repro | Fix |
 |---|---|---|---|---|
-| B1 | `vn_run`, `vn_draft` via MCP time out at 60s (Cowork client cap) | 🔴 Critical | Call vn_draft with any brief via Cowork | Document the limitation. Recommend the CLI for heavy tasks. |
-| B2 | CLI `run/resume/meeting/approve/execute` doesn't call `apply_vault_env_to_os` → DEEPSEEK_API_KEY not in env | 🔴 Critical | Create vault/.env, run vn-os run | ✅ Patched 2026-05-08 |
+| B1 | `bd_run`, `bd_draft` via MCP time out at 60s (Cowork client cap) | 🔴 Critical | Call bd_draft with any brief via Cowork | Document the limitation. Recommend the CLI for heavy tasks. |
+| B2 | CLI `run/resume/meeting/approve/execute` doesn't call `apply_vault_env_to_os` → DEEPSEEK_API_KEY not in env | 🔴 Critical | Create vault/.env, run bd-os run | ✅ Patched 2026-05-08 |
 | B3 | `docs/core/llm/providers.py` only has ClaudeProvider + MCPSamplingProvider, no OpenAI/Gemini/DeepSeek despite pyproject.toml deps | 🔴 Critical | Set OPENAI_API_KEY → still uses Anthropic | ✅ Patched (DeepSeek). OpenAI/Gemini TODO. |
-| B4 | DeepSeek v4-pro thinking mode default ON → meeting has 7 LLM calls × 30-90s = 5-10 min | 🟡 High | vn-os meeting with DeepSeek | ✅ Patched (extra_body disables thinking) |
+| B4 | DeepSeek v4-pro thinking mode default ON → meeting has 7 LLM calls × 30-90s = 5-10 min | 🟡 High | bd-os meeting with DeepSeek | ✅ Patched (extra_body disables thinking) |
 | B5 | Brain parser requires the exact heading `## Vision`, fails with `## Vision (3-5 years)` | 🟡 High | Heading with a suffix | TODO P0-#4 |
-| B6 | `docs/vault-template/01-Departments/` not present — must clone from `repo/departments/` | 🟢 Medium | Onboard a new vault | TODO — fix `vn_onboard` |
+| B6 | `docs/vault-template/01-Departments/` not present — must clone from `repo/departments/` | 🟢 Medium | Onboard a new vault | TODO — fix `bd_onboard` |
 | B7 | `obsidian_delete_file` via the Obsidian REST API times out for a folder (only works for a file) | 🟢 Medium | MCP delete folder | Document — recommend deleting via the Obsidian app |
 
 ---
@@ -88,7 +88,7 @@ Target: another dev clones the repo, follows the README, and uses it for their o
 
 1. **Default LLM:** DeepSeek v4-pro (instead of Claude Sonnet) — ~10x cheaper, good enough for operational tasks.
 2. **Fallback:** Anthropic API (needs ANTHROPIC_API_KEY in .env). MCP sampling is only for the dev experience via Claude Desktop.
-3. **Main workflow:** CLI (vn-os) instead of MCP tool calls — avoids the Cowork 60s timeout for heavy tasks.
+3. **Main workflow:** CLI (bd-os) instead of MCP tool calls — avoids the Cowork 60s timeout for heavy tasks.
 4. **Thinking mode:** Default OFF for meetings (speed). User opt-in via config if they want deep reasoning.
 
 ---
@@ -103,7 +103,7 @@ Target: a 50-year-old restaurant owner who can't code, able to use it via a web 
 | 22 | Onboarding wizard — pick industry → auto-apply pack → fill the Brain via a form | 1 week |
 | 23 | Visual brain editor — drag-drop, no Markdown needed | 2 weeks |
 | 24 | Auth + multi-tenant — one vault per user | 1 week |
-| 25 | Deploy a hosted version — vn-os.app (custom domain) | 1 week |
+| 25 | Deploy a hosted version — bd-os.app (custom domain) | 1 week |
 | 26 | Stripe billing — free tier 5 tasks/month, pro $9/month | 1 week |
 
 ---

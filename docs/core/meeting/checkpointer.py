@@ -12,7 +12,7 @@ def make_checkpointer(db_path: Path | None = None):
     from langgraph.checkpoint.sqlite import SqliteSaver
 
     if db_path is None:
-        db_path = Path.home() / ".vn-business-os" / "checkpoints.db"
+        db_path = Path.home() / ".bd-business-os" / "checkpoints.db"
     db_path.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(str(db_path), check_same_thread=False)
     return SqliteSaver(conn)

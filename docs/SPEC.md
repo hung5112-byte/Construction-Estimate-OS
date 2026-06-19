@@ -8,7 +8,7 @@ hardware engineering & supply chain division OS** (Hardware Product Dev, Operati
 RMA, Supply Chain, Quality) — see `README.md` and `CLAUDE.md` for the current
 architecture. Department/pack specifics below describe the v1 design, not the
 shipped system.
-**Slug:** `vn-business-os` (alias `vbos`)
+**Slug:** `bd-business-os` (alias `vbos`)
 **License:** MIT
 
 ---
@@ -75,7 +75,7 @@ Works for any industry (F&B, retail, tech, edu, healthcare...). Not a trading sy
 ## 5. Repo structure
 
 ```
-vn-business-os/
+bd-business-os/
 ├── docs/core/                              # Python engine
 │   ├── orchestrator/                  # router, flow_controller
 │   ├── brain/                         # reader, gap_analyzer, memory
@@ -305,7 +305,7 @@ Pattern: 1 core Python + many thin adapters calling the CLI via the Bash tool.
 |---|---|---|
 | A | LLM (timeout/rate/filter) | Retry x3 → failover provider → reframe |
 | B | Tool (API down) | Cache fallback → mark UNVERIFIED |
-| C | State recovery | LangGraph checkpoint → `vn-os resume <task>` |
+| C | State recovery | LangGraph checkpoint → `bd-os resume <task>` |
 | D | Validation | Pause + ask the Department Head to add info |
 | E | User input | Spell check + intent confirm |
 

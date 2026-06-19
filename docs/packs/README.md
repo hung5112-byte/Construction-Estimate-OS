@@ -2,7 +2,7 @@
 
 Packs are optional overlays that add departments, agents, and templates on top of
 the core division departments. The pack **mechanism** (`core/agents/pack_loader.py`,
-`vn_onboard(packs=[...])`) is fully supported; no packs ship by default.
+`bd_onboard(packs=[...])`) is fully supported; no packs ship by default.
 
 The original generic-business packs (`fnb/`, `retail/`, `tech-saas/`) were removed
 on 06/09/2026 when the repo was specialized into a hardware engineering & supply
@@ -21,4 +21,4 @@ packs/<code>/
 ```
 
 See `docs/how-to-create-pack.md` for field documentation. Enable a pack per vault
-via `.vncoderc` (`packs: [<code>]`) or `vn_onboard(packs=["<code>"])`.
+via `.vncoderc` (`packs: [<code>]`) or `bd_onboard(packs=["<code>"])`.

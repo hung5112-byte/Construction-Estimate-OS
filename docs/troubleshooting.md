@@ -6,10 +6,10 @@ Common errors + how to fix them.
 
 ## Installation
 
-### `vn-os: command not found`
+### `bd-os: command not found`
 - Forgot to activate the venv: `.venv\Scripts\activate` (Win) or `source .venv/bin/activate`
 - Forgot `pip install -e .` (note the trailing `.`)
-- Verify: `which vn-os` (Linux/Mac) / `where vn-os` (Win)
+- Verify: `which bd-os` (Linux/Mac) / `where bd-os` (Win)
 
 ### `pip install -e .` fails with "Microsoft Visual C++ 14.0 required"
 - You need Build Tools for Windows: [vs_buildtools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
@@ -25,13 +25,13 @@ python --version
 
 ## MCP Server
 
-### Claude Desktop doesn't see `vn_run`/`vn_meeting`/...
+### Claude Desktop doesn't see `bd_run`/`bd_meeting`/...
 1. Verify config:
    ```powershell
    # Windows
    type "$env:APPDATA\Claude\claude_desktop_config.json"
    ```
-2. There must be a `"vn-business-os": {"command": "vn-os-mcp"}` entry
+2. There must be a `"bd-business-os": {"command": "bd-os-mcp"}` entry
 3. Restart Claude Desktop **COMPLETELY** (quit from the system tray, not just close the window)
 4. Check Claude Desktop logs:
    - Windows: `%APPDATA%\Claude\logs\mcp*.log`
@@ -43,7 +43,7 @@ The logs show a Python error → usually a missing dep:
 # Re-install
 pip install -e .
 # Test directly
-vn-os-mcp
+bd-os-mcp
 # Should hang quietly (waiting for MCP messages). Ctrl+C to exit.
 ```
 
@@ -55,28 +55,28 @@ pip install -e .
 # Restart Claude Desktop
 ```
 
-### `vn_run: 'NoneType' object has no attribute 'session'`
-The MCP context wasn't injected. The tools are running outside an MCP session (e.g. via the CLI `vn-os run`, which doesn't support MCP sampling). Use the MCP tool in Claude Desktop chat.
+### `bd_run: 'NoneType' object has no attribute 'session'`
+The MCP context wasn't injected. The tools are running outside an MCP session (e.g. via the CLI `bd-os run`, which doesn't support MCP sampling). Use the MCP tool in Claude Desktop chat.
 
 ---
 
 ## Vault setup
 
-### `vn_onboard` timeout (~4 min)
+### `bd_onboard` timeout (~4 min)
 Fixed by removing the subprocess (commit `ad21206`). Update the repo + restart Claude Desktop.
 
-### `vn_run` / `vn_meeting` timeout
+### `bd_run` / `bd_meeting` timeout
 
 **Symptom:** the tool reports a timeout after ~60s, even though the work isn't done.
 
-**Cause:** each step of `vn_run` (router → gap → clarify) and `vn_meeting`
+**Cause:** each step of `bd_run` (router → gap → clarify) and `bd_meeting`
 (research + perspectives × N depts + Pro/Con × M rounds + synthesizer) is one LLM
 call via MCP sampling. The total round-trip through Claude Desktop easily exceeds the
 default client timeout (~60s) when configured with many rounds.
 
 **How to fix (in priority order):**
 
-#### 1. Use `vn_draft` for doc boilerplate
+#### 1. Use `bd_draft` for doc boilerplate
 Employment agreement, JD, work rules, receipt, simple SOP → no debate engine needed.
 Just one LLM call, ~10-30s, never times out.
 
@@ -85,8 +85,8 @@ Draft an employment offer for an accounting assistant at cafe ABC, $45k/year, 2-
 must know QuickBooks and US GAAP. Vault: F:\work\xyz-vault.
 ```
 
-(Claude Desktop will pick `vn_draft` instead of `vn_run` if the prompt is clearly about drafting a
-specific document. Otherwise call it explicitly: "Use vn_draft to draft ...")
+(Claude Desktop will pick `bd_draft` instead of `bd_run` if the prompt is clearly about drafting a
+specific document. Otherwise call it explicitly: "Use bd_draft to draft ...")
 
 #### 2. Reduce rounds in `.vncoderc`
 The new default (v0.1.0+) is already lite — `0/1/3`. If still slow, reduce further:
@@ -101,20 +101,20 @@ meeting:
 #### 3. Increase the MCP client timeout (Claude Desktop)
 Edit `claude_desktop_config.json`:
 ```json
-"vn-business-os": {
-  "command": "vn-os-mcp",
+"bd-business-os": {
+  "command": "bd-os-mcp",
   "env": {"TAVILY_API_KEY": "..."},
   "timeout": 300000
 }
 ```
 Restart Claude Desktop. Raise the timeout to 5 minutes for a heavy meeting.
 
-#### 4. When `vn_run`/`vn_meeting` is worth it
+#### 4. When `bd_run`/`bd_meeting` is worth it
 - Strategic decisions: opening a location, changing prices, hiring senior, M&A
 - Significant legal/financial risk
 - Need multi-perspective review + citation validation
 
-Boilerplate doc → always `vn_draft`.
+Boilerplate doc → always `bd_draft`.
 
 ### Vault path with spaces / Unicode
 The plugin supports it but you should avoid it. Recommended:
@@ -134,12 +134,12 @@ The plugin supports it but you should avoid it. Recommended:
 ### `tools_skipped: [web_search, us_law_search, ...]`
 Missing `TAVILY_API_KEY`. Fix:
 ```powershell
-# Chat: enter the key via vn_onboard
+# Chat: enter the key via bd_onboard
 # OR edit the file manually:
 echo "TAVILY_API_KEY=tvly-xxx" >> "F:/work/xyz-vault/.env"
 
 # Re-install MCP to inject the env
-vn-os install-mcp --vault "F:/work/xyz-vault"
+bd-os install-mcp --vault "F:/work/xyz-vault"
 # Restart Claude Desktop
 ```
 
@@ -163,7 +163,7 @@ Remove-Item "F:/work/xyz-vault/.cache/tool_cache.db"
 ## Meeting / Debate
 
 ### Meeting hangs forever
-- Check `tools_skipped` in `vn_status` — if all 4 Tavily tools are skipped + the brief needs a lot of research → the LLM may loop. Enable at least one tool.
+- Check `tools_skipped` in `bd_status` — if all 4 Tavily tools are skipped + the brief needs a lot of research → the LLM may loop. Enable at least one tool.
 - LLM rate limit → there's a retry in P1.3. If it still hangs → restart Claude Desktop.
 
 ### Decision report too short / generic
@@ -185,17 +185,17 @@ This is a **feature** (P1.8), not a bug. The Department Head reviews those claim
   ```powershell
   type "$env:APPDATA\Claude\claude_desktop_config.json" | Select-String "TAVILY"
   ```
-- You should see `"TAVILY_API_KEY": "tvly-..."` in the `env:` section of vn-business-os
-- If not → re-run `vn-os install-mcp --vault <path>`
+- You should see `"TAVILY_API_KEY": "tvly-..."` in the `env:` section of bd-business-os
+- If not → re-run `bd-os install-mcp --vault <path>`
 
 ---
 
 ## Git / Vault sync
 
 ### `Git commit failed (Stop 1): ...`
-Check `<vault>/.vn-business-os.log`:
+Check `<vault>/.bd-business-os.log`:
 ```powershell
-Get-Content "F:/work/xyz-vault/.vn-business-os.log" -Tail 20
+Get-Content "F:/work/xyz-vault/.bd-business-os.log" -Tail 20
 ```
 
 Common causes:
@@ -250,7 +250,7 @@ pip install -e .
 # "Upgrade vault F:/work/xyz-vault"
 ```
 
-`vn_upgrade` only touches:
+`bd_upgrade` only touches:
 - Agent .md (refresh prompts)
 - Department.yaml (new aliases)
 - Brain frontmatter (inject aliases)
@@ -271,7 +271,7 @@ python -m pytest docs/tests/ -q
 
 If your error isn't here, open a [GitHub issue](https://github.com/<owner>/<repo>/issues) with:
 - The full error message (redact API keys if any)
-- `vn_status` output
+- `bd_status` output
 - Plugin version (`git rev-parse HEAD`)
 - Python version + OS
 - Steps to reproduce

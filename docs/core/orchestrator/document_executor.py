@@ -90,7 +90,7 @@ def execute_documents(
     if not plan_path.exists():
         raise FileNotFoundError(
             f"08-execution-plan.md not found in {task_folder}. "
-            "Run vn_approve first."
+            "Run bd_approve first."
         )
 
     # Parse template requests from structured table

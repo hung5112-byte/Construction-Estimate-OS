@@ -1,22 +1,22 @@
-"""MCP server wrapping vn-business-os FlowController as MCP tools.
+"""MCP server wrapping bd-business-os FlowController as MCP tools.
 
 When running in Claude Desktop / Code, every LLM call routes through MCP sampling
 (MCPSamplingProvider) — using the user's subscription, no ANTHROPIC_API_KEY needed.
 
 Run:
     python -m core.mcp_server          # stdio transport
-    vn-os-mcp                          # via console_script (after install)
+    bd-os-mcp                          # via console_script (after install)
 
 Tools registered (9):
-    vn_run         — Stage 1: brief → router → gap → clarify (PAUSE)
-    vn_resume      — Stage 2: resume after Department Head answers clarification
-    vn_meeting     — Stage 3: research + meeting → 07-decision-report.md (Stop 1)
-    vn_approve     — Stage 4: Department Head approves → 08-execution-plan.md (Stop 2)
-    vn_execute     — Stage 5: render .docx/.xlsx into 03-Outputs/
-    vn_draft       — Single LLM call for boilerplate (SOP, ECO form, RMA letter, policy...) — fast path
-    vn_status      — inspect vault (Brain summary + tasks)
-    vn_onboard     — run onboard wizard creating new vault scaffold
-    vn_upgrade     — refresh existing vault with enriched prompts + aliases
+    bd_run         — Stage 1: brief → router → gap → clarify (PAUSE)
+    bd_resume      — Stage 2: resume after Department Head answers clarification
+    bd_meeting     — Stage 3: research + meeting → 07-decision-report.md (Stop 1)
+    bd_approve     — Stage 4: Department Head approves → 08-execution-plan.md (Stop 2)
+    bd_execute     — Stage 5: render .docx/.xlsx into 03-Outputs/
+    bd_draft       — Single LLM call for boilerplate (SOP, ECO form, RMA letter, policy...) — fast path
+    bd_status      — inspect vault (Brain summary + tasks)
+    bd_onboard     — run onboard wizard creating new vault scaffold
+    bd_upgrade     — refresh existing vault with enriched prompts + aliases
 """
 from __future__ import annotations
 import os
@@ -33,7 +33,7 @@ from core.orchestrator.flow_controller import FlowController
 from core.upgrade import upgrade_vault
 
 
-mcp = FastMCP("vn-business-os")
+mcp = FastMCP("bd-business-os")
 
 
 def _pick_llm(ctx: Context):
@@ -76,14 +76,14 @@ def _vault_root_from_task(task_folder: Path) -> Path:
 
 
 @mcp.tool()
-async def vn_run(brief: str, vault: str, ctx: Context) -> dict:
+async def bd_run(brief: str, vault: str, ctx: Context) -> dict:
     """Stage 1: brief → router → gap → clarification (PAUSE).
 
     ⏱️ Duration: 20-50s (2-3 LLM calls). Run directly in the Claude Code tab.
     (The Cowork tab has a 60s timeout — switch to the Code tab if it fails.)
 
     Returns task_folder path + stage. If stage == PAUSE_CLARIFICATION,
-    Department Head needs to answer questions in 03-clarification.md before vn_resume.
+    Department Head needs to answer questions in 03-clarification.md before bd_resume.
     """
     fc = _make_fc(vault, ctx)
     result = await fc.arun(brief)
@@ -95,7 +95,7 @@ async def vn_run(brief: str, vault: str, ctx: Context) -> dict:
 
 
 @mcp.tool()
-def vn_resume(task_folder: str, ctx: Context) -> dict:
+def bd_resume(task_folder: str, ctx: Context) -> dict:
     """Stage 2: resume after Department Head answers 03-clarification.md.
 
     Validates all questions answered, writes 03-clarification-answered.md.
@@ -111,7 +111,7 @@ def vn_resume(task_folder: str, ctx: Context) -> dict:
 
 
 @mcp.tool()
-def vn_meeting(
+def bd_meeting(
     task_folder: str,
     ctx: Context,
     departments: list[str] | None = None,
@@ -133,7 +133,7 @@ def vn_meeting(
             return {
                 "stage": "ERROR",
                 "task_folder": str(folder),
-                "message": "01-routing.md not found — run vn_run first",
+                "message": "01-routing.md not found — run bd_run first",
             }
         m = re.search(r"\*\*Departments:\*\*\s*(.+)", routing_path.read_text(encoding="utf-8"))
         if not m:
@@ -153,7 +153,7 @@ def vn_meeting(
 
 
 @mcp.tool()
-def vn_approve(task_folder: str, ctx: Context) -> dict:
+def bd_approve(task_folder: str, ctx: Context) -> dict:
     """Stage 4: Department Head approves decision report → 08-execution-plan.md (Stop 2)."""
     folder = Path(task_folder)
     fc = _make_fc(str(_vault_root_from_task(folder)), ctx)
@@ -166,7 +166,7 @@ def vn_approve(task_folder: str, ctx: Context) -> dict:
 
 
 @mcp.tool()
-def vn_execute(task_folder: str, ctx: Context) -> dict:
+def bd_execute(task_folder: str, ctx: Context) -> dict:
     """Stage 5: render outputs (.docx/.xlsx) into vault/03-Outputs/<task>/."""
     folder = Path(task_folder)
     fc = _make_fc(str(_vault_root_from_task(folder)), ctx)
@@ -179,7 +179,7 @@ def vn_execute(task_folder: str, ctx: Context) -> dict:
 
 
 @mcp.tool()
-async def vn_draft(
+async def bd_draft(
     brief: str,
     vault: str,
     ctx: Context,
@@ -193,9 +193,9 @@ async def vn_draft(
     Use for: simple SOPs, ECO forms, RMA disposition letters, work instructions,
     checklists, supplier letters, policies...
     Do NOT use for: strategic decisions or high-risk docs
-    (use vn_run → vn_meeting → vn_approve → vn_execute for those).
+    (use bd_run → bd_meeting → bd_approve → bd_execute for those).
 
-    Trade-off: fast (~10-30s instead of the 1-3 minutes of vn_run+vn_meeting)
+    Trade-off: fast (~10-30s instead of the 1-3 minutes of bd_run+bd_meeting)
     but it does NOT go through multi-perspective review.
 
     Args:
@@ -222,7 +222,7 @@ async def vn_draft(
 
 
 @mcp.tool()
-def vn_status(vault: str = "") -> dict:
+def bd_status(vault: str = "") -> dict:
     """Inspect vault — Brain summary + active depts + tasks + tool availability.
 
     ⚡ Duration: <1s (no LLM call). Works in any tab (Code / Cowork / Chat).
@@ -231,7 +231,7 @@ def vn_status(vault: str = "") -> dict:
     (set on Windows via: setx VN_OS_DEFAULT_VAULT "F:\\vaults\\<CompanyName>").
 
     Live research tools (web/law/local/competitor) only run with a
-    TAVILY_API_KEY. vn_status reports which tools are ready vs. skipped so the Department Head
+    TAVILY_API_KEY. bd_status reports which tools are ready vs. skipped so the Department Head
     knows whether the decision report rests on real research or just Brain + LLM knowledge.
     """
     # Fallback: if no vault is passed, read from env VN_OS_DEFAULT_VAULT
@@ -296,28 +296,28 @@ def vn_status(vault: str = "") -> dict:
 🎯 Recommended environment: the Claude Code tab (10-minute timeout, can call every MCP tool).
 
 ✅ Every MCP tool is directly callable:
-   - vn_status, obsidian_* — instant (<1s)
-   - vn_draft — 10-30s (1 LLM call, drafts boilerplate)
-   - vn_run — 20-50s (router + clarification)
-   - vn_resume — <10s (resume after the Department Head answers clarification)
-   - vn_meeting — 60-180s (multi-department debate, 7+ LLM calls)
-   - vn_approve — 10-30s
-   - vn_execute — 10-30s (render docx/xlsx)
+   - bd_status, obsidian_* — instant (<1s)
+   - bd_draft — 10-30s (1 LLM call, drafts boilerplate)
+   - bd_run — 20-50s (router + clarification)
+   - bd_resume — <10s (resume after the Department Head answers clarification)
+   - bd_meeting — 60-180s (multi-department debate, 7+ LLM calls)
+   - bd_approve — 10-30s
+   - bd_execute — 10-30s (render docx/xlsx)
 
 ⚠️ Notes by tab:
    - 🟢 Claude Code tab: call every tool directly, no timeout worries
-   - 🟡 Cowork tab: only vn_status / vn_draft / obsidian_* work (60s cap)
-     → Heavy tasks (vn_run, vn_meeting) will fail. If the user is in Cowork and needs a
+   - 🟡 Cowork tab: only bd_status / bd_draft / obsidian_* work (60s cap)
+     → Heavy tasks (bd_run, bd_meeting) will fail. If the user is in Cowork and needs a
         heavy task, tell them to switch to the Code tab (click "</> Code" at the top of Claude Desktop).
 
 🔄 Standard workflow for a task that produces a .docx deliverable:
-   1. vn_draft(brief, vault, doc_type)  — fast path for a simple SOP/ECO form/RMA letter
+   1. bd_draft(brief, vault, doc_type)  — fast path for a simple SOP/ECO form/RMA letter
    OR the full pipeline for a strategic decision:
-   1. vn_run(brief, vault) → returns task_folder + may PAUSE_CLARIFICATION
-   2. (if PAUSE) the Department Head answers 03-clarification.md → vn_resume(task_folder)
-   3. vn_meeting(task_folder) → 07-decision-report.md (Stop 1 — Department Head approves)
-   4. vn_approve(task_folder) → 08-execution-plan.md (Stop 2 — Department Head approves)
-   5. vn_execute(task_folder) → .docx/.xlsx files in 03-Outputs/
+   1. bd_run(brief, vault) → returns task_folder + may PAUSE_CLARIFICATION
+   2. (if PAUSE) the Department Head answers 03-clarification.md → bd_resume(task_folder)
+   3. bd_meeting(task_folder) → 07-decision-report.md (Stop 1 — Department Head approves)
+   4. bd_approve(task_folder) → 08-execution-plan.md (Stop 2 — Department Head approves)
+   5. bd_execute(task_folder) → .docx/.xlsx files in 03-Outputs/
 
 After each step, report the task_folder + a summary of the new files. Wait for Department Head confirmation
 at Stop 1 / Stop 2 before running the next stage.
@@ -341,7 +341,7 @@ For details, see README-USER.md in the repo (Part 3 — Daily use).
 
 
 @mcp.tool()
-def vn_onboard(
+def bd_onboard(
     vault: str,
     packs: list[str] | None = None,
     tavily_api_key: str = "",
@@ -381,7 +381,7 @@ def vn_onboard(
 
 
 @mcp.tool()
-def vn_upgrade(
+def bd_upgrade(
     vault: str,
     refresh_agents: bool = True,
     refresh_dept_yaml: bool = True,

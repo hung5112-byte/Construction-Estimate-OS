@@ -341,12 +341,12 @@ class FlowController:
         )
 
     def _log_warning(self, message: str) -> None:
-        """Log a warning to <vault>/.vn-business-os.log instead of swallowing it.
+        """Log a warning to <vault>/.bd-business-os.log instead of swallowing it.
 
         The Department Head can read this file to see why a git commit failed, etc.
         """
         from datetime import datetime
-        log_path = self.vault.root / ".vn-business-os.log"
+        log_path = self.vault.root / ".bd-business-os.log"
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         line = f"[{timestamp}] WARN: {message}\n"
         try:

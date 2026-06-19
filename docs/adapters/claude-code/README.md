@@ -5,8 +5,8 @@ Skill for Claude Code (CLI / desktop). After installing, the Department Head typ
 ## Prerequisites
 
 ```bash
-pip install vn-business-os
-vn-os install-mcp        # auto-edit claude_desktop_config.json
+pip install bd-business-os
+bd-os install-mcp        # auto-edit claude_desktop_config.json
 # Restart Claude Desktop
 ```
 
@@ -22,9 +22,9 @@ In a Claude Desktop / Code session, type:
 > Create an ad campaign targeting high-income individuals
 
 Claude will:
-1. Detect the `vn-business-os` skill is active
-2. Call `vn_status(vault)` to verify the Brain
-3. Call `vn_run(brief, vault)` → PAUSE for clarification
+1. Detect the `bd-business-os` skill is active
+2. Call `bd_status(vault)` to verify the Brain
+3. Call `bd_run(brief, vault)` → PAUSE for clarification
 4. Read `03-clarification.md`, ask the Department Head to answer
 5. Continue through the stages
 

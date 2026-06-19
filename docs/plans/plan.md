@@ -8,7 +8,7 @@
 
 **Tech Stack:** Python 3.13, LangGraph 0.2+, LangChain core, Pydantic v2, SQLite, python-docx, openpyxl, PyYAML, Tavily/Serper API, Anthropic SDK (default), google-genai, openai SDK, pytest, ruff, mypy.
 
-**Spec reference:** `docs/superpowers/specs/2026-05-06-vn-business-os-design.md`
+**Spec reference:** `docs/superpowers/specs/2026-05-06-bd-business-os-design.md`
 
 ---
 

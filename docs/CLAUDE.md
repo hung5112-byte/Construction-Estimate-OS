@@ -8,7 +8,7 @@ AI Operating System for a hardware engineering & supply chain division of a Texa
 
 > General information only — the legal/tax content is not legal or tax advice. Confirm with a licensed Texas attorney and CPA.
 
-> Terminology: core code and prompts call the human principal the "Department Head" — the role that approves Stop 1/Stop 2. Each deployment maps it to a real person; in this one that's **Brian H. Doan, VP of Hardware Development, Quality & Supply Chain** (the repo's author), and his vault documents say "Brian". Legacy `vn_*` tool names and the `vn-one-person-company` package name are kept for API stability.
+> Terminology: core code and prompts call the human principal the "Department Head" — the role that approves Stop 1/Stop 2. Each deployment maps it to a real person; in this one that's **Brian H. Doan, VP of Hardware Development, Quality & Supply Chain** (the repo's author), and his vault documents say "Brian". Legacy `vn_*` tool names and the `bd-business-os` package name are kept for API stability.
 
 ## Commands
 
@@ -18,8 +18,8 @@ python -m venv .venv && .venv/Scripts/activate  # Windows
 pip install -e ".[dev]"
 
 # Install the MCP server into Claude Desktop
-vn-os install-mcp
-vn-os install-mcp --vault "F:/work/xyz-vault"   # inject vault path
+bd-os install-mcp
+bd-os install-mcp --vault "F:/work/xyz-vault"   # inject vault path
 
 # Run tests
 python -m pytest docs/tests/ -q                        # all (277 tests)
@@ -32,8 +32,8 @@ ruff check docs/core/ docs/tests/
 ruff format docs/core/ docs/tests/
 
 # CLI (development)
-vn-os status --vault <path>
-vn-os run "brief" --vault <path>
+bd-os status --vault <path>
+bd-os run "brief" --vault <path>
 ```
 
 ## Architecture
@@ -41,8 +41,8 @@ vn-os run "brief" --vault <path>
 ### 5-Stage Flow
 
 ```
-vn_run → PAUSE_CLARIFICATION → vn_resume → vn_meeting
-       → PAUSE_DECISION_REPORT → vn_approve → vn_execute → DONE
+bd_run → PAUSE_CLARIFICATION → bd_resume → bd_meeting
+       → PAUSE_DECISION_REPORT → bd_approve → bd_execute → DONE
 ```
 
 `FlowController` (`docs/core/orchestrator/flow_controller.py`) coordinates everything. Two mandatory stops require Department Head approval before continuing.

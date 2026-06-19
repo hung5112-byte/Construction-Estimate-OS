@@ -23,7 +23,7 @@ v1 (shipped `phase-06-complete` + tag `v0.1.0`) breaks 4 core limitations:
 
 ## Feature 1 — Auto-loop Cron
 
-**Problem:** the Department Head has to remember to type `vn-os run --brief ...` every time a periodic report is due.
+**Problem:** the Department Head has to remember to type `bd-os run --brief ...` every time a periodic report is due.
 
 **Solution:** a cron schedule in `vault/cron.yaml`, a daemon reads + runs tasks automatically.
 
@@ -48,7 +48,7 @@ v1 (shipped `phase-06-complete` + tag `v0.1.0`) breaks 4 core limitations:
 ### New modules
 - `core/scheduler/cron_runner.py` — Read cron.yaml, dispatch tasks via FlowController
 - `core/scheduler/notifier.py` — Email/Slack notification when a task finishes or needs Department Head approval
-- CLI: `vn-os daemon start|stop|status`
+- CLI: `bd-os daemon start|stop|status`
 
 ### Effort
 ~3-5 days
@@ -59,7 +59,7 @@ v1 (shipped `phase-06-complete` + tag `v0.1.0`) breaks 4 core limitations:
 
 **Problem:** a non-tech Department Head has to learn CLI commands. Editing markdown in Obsidian isn't for everyone.
 
-**Solution:** a web app running locally (`vn-os ui`) that shows a UI instead of the CLI.
+**Solution:** a web app running locally (`bd-os ui`) that shows a UI instead of the CLI.
 
 ### Proposed tabs
 
@@ -76,7 +76,7 @@ v1 (shipped `phase-06-complete` + tag `v0.1.0`) breaks 4 core limitations:
 - **Backend**: FastAPI (wrap the FlowController API)
 - **Frontend**: Vanilla HTML + HTMX or React (simple, few dependencies)
 - **Auth**: local-only HTTP basic, not exposed to the internet
-- CLI: `vn-os ui --port 8765`
+- CLI: `bd-os ui --port 8765`
 
 ### Effort
 ~10-15 days (backend API + 6 tabs + design)
@@ -92,26 +92,26 @@ v1 (shipped `phase-06-complete` + tag `v0.1.0`) breaks 4 core limitations:
 ### New CLI
 
 ```bash
-vn-os company add joes-diner --vault ~/vaults/diner --pack fnb
-vn-os company add fashion-shop --vault ~/vaults/shop --pack retail
-vn-os company add techco --vault ~/vaults/techco --pack tech-saas
+bd-os company add joes-diner --vault ~/vaults/diner --pack fnb
+bd-os company add fashion-shop --vault ~/vaults/shop --pack retail
+bd-os company add techco --vault ~/vaults/techco --pack tech-saas
 
-vn-os company list
+bd-os company list
 # - joes-diner    (F&B)   ~/vaults/diner
 # - fashion-shop  (retail) ~/vaults/shop
 # - techco        (saas)   ~/vaults/techco
 
-vn-os company switch joes-diner
-vn-os run --brief "Calculate May food cost"
+bd-os company switch joes-diner
+bd-os run --brief "Calculate May food cost"
 # → auto-loads the diner's Brain + agents
 
-vn-os company switch techco
-vn-os run --brief "Analyze Q2 churn"
+bd-os company switch techco
+bd-os run --brief "Analyze Q2 churn"
 # → loads the SaaS Brain
 ```
 
 ### New modules
-- `core/multi_company/registry.py` — `~/.vn-business-os/companies.yaml` stores the company list
+- `core/multi_company/registry.py` — `~/.bd-business-os/companies.yaml` stores the company list
 - Modify `core/cli.py` — wrap every command with context auto-resolution
 
 ### Use cases

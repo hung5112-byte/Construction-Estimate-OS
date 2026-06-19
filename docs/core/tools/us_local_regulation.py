@@ -23,7 +23,7 @@ class USLocalRegulation(BaseTool):
 
     def __init__(self, api_key: str | None = None, cache_path: Path | None = None):
         self.api_key = api_key or os.getenv("TAVILY_API_KEY", "")
-        self.cache = ToolCache(cache_path or Path.home() / ".vn-business-os" / "tool_cache.db")
+        self.cache = ToolCache(cache_path or Path.home() / ".bd-business-os" / "tool_cache.db")
 
     def is_available(self) -> bool:
         return bool(self.api_key)

@@ -1,4 +1,4 @@
-"""Install vn-business-os as MCP server in Claude Desktop config.
+"""Install bd-business-os as MCP server in Claude Desktop config.
 
 Cross-platform path detection:
 - Windows: %APPDATA%\\Claude\\claude_desktop_config.json
@@ -32,11 +32,11 @@ def get_config_path() -> Path:
 def get_server_command() -> tuple[str, list[str]]:
     """Return (command, args) for launching the MCP server.
 
-    Prefer the installed entry point `vn-os-mcp`. Fallback to python -m core.mcp_server.
+    Prefer the installed entry point `bd-os-mcp`. Fallback to python -m core.mcp_server.
     """
-    vn_mcp = shutil.which("vn-os-mcp")
-    if vn_mcp:
-        return vn_mcp, []
+    bd_mcp = shutil.which("bd-os-mcp")
+    if bd_mcp:
+        return bd_mcp, []
     # Fallback — needs python in PATH
     return sys.executable, ["-m", "core.mcp_server"]
 
@@ -82,7 +82,7 @@ def install_for_target(
 
 def install(
     config_path: Optional[Path] = None,
-    server_name: str = "vn-business-os",
+    server_name: str = "bd-business-os",
     vault_path: Optional[Path] = None,
 ) -> dict:
     """Install (or update) MCP server entry. Returns summary dict.
@@ -150,7 +150,7 @@ def install(
     }
 
 
-def uninstall(config_path: Optional[Path] = None, server_name: str = "vn-business-os") -> dict:
+def uninstall(config_path: Optional[Path] = None, server_name: str = "bd-business-os") -> dict:
     """Remove MCP server entry. Idempotent."""
     cfg_path = config_path or get_config_path()
     if not cfg_path.exists():

@@ -139,7 +139,7 @@ def onboard_vault(
 
     result["next_steps"] = [
         f"Open {vault}/00-Brain/ and fill strategy.md, products.md, budget.md, headcount.md, state.md",
-        f"Run: vn_run(brief='...', vault='{vault}')",
+        f"Run: bd_run(brief='...', vault='{vault}')",
     ]
 
     return result

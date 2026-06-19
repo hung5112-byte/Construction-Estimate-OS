@@ -91,7 +91,7 @@ def generate_execution_plan(
     if not decision_path.exists():
         raise FileNotFoundError(
             f"07-decision-report.md not found in {task_folder}. "
-            "Run vn_meeting first to generate the decision report."
+            "Run bd_meeting first to generate the decision report."
         )
 
     decision_text = decision_path.read_text(encoding="utf-8")

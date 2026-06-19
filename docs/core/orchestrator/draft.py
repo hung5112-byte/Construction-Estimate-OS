@@ -7,7 +7,7 @@ Brain context + 1 LLM call to render the full content.
 Trade-off: fast (~10-30s instead of 1-3 minutes) but NO pro/con review and
 NO citation validation. Only use for docs with a clear template/structure.
 
-When to use vn_meeting/vn_run instead:
+When to use bd_meeting/bd_run instead:
   - Strategic decisions (new ODM, factory transfer, certification program, EOL)
   - Significant legal/financial/quality risk
   - Needs multi-perspective review
@@ -94,7 +94,7 @@ def _finalize_draft(task_folder: Path, body: str, doc_type: str, vault_root: Pat
     draft_path = task_folder / "draft.md"
     draft_path.write_text(
         f"---\ntype: draft\ndoc_type: {doc_type}\ngenerated_at: {ts}\n"
-        f"source: vn_draft (single-call, no debate)\n---\n\n{body}\n",
+        f"source: bd_draft (single-call, no debate)\n---\n\n{body}\n",
         encoding="utf-8",
     )
     return {
@@ -103,7 +103,7 @@ def _finalize_draft(task_folder: Path, body: str, doc_type: str, vault_root: Pat
         "message": (
             f"Drafted the {doc_type} at {draft_path.relative_to(vault_root)}. "
             "Note: this is a single-call draft, not reviewed from multiple perspectives. "
-            "For a major decision, run vn_run/vn_meeting to debate it."
+            "For a major decision, run bd_run/bd_meeting to debate it."
         ),
     }
 

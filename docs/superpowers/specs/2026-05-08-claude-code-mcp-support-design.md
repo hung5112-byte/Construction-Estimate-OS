@@ -5,7 +5,7 @@
 
 ## Problem
 
-`vn-os install-mcp` only writes to the Claude Desktop config (`claude_desktop_config.json`). Claude Code uses a separate config (`~/.claude.json`). The Department Head wants to type a brief in the Claude Code terminal — the `vn_run`, `vn_meeting`... tools must be available via MCP.
+`bd-os install-mcp` only writes to the Claude Desktop config (`claude_desktop_config.json`). Claude Code uses a separate config (`~/.claude.json`). The Department Head wants to type a brief in the Claude Code terminal — the `bd_run`, `bd_meeting`... tools must be available via MCP.
 
 ## Solution
 
@@ -19,7 +19,7 @@ Only 2 files change:
 |------|----------|
 | `core/install_mcp.py` | Add `get_claude_code_config_path()` + `write_claude_code_config()` + rename `install_mcp()` → `write_desktop_config()` |
 | `core/cli.py` | Add `--target [desktop\|claude-code\|both]` to the `install-mcp` command (default: `both`) |
-| `adapters/claude-code/install.sh` | Update to call `vn-os install-mcp --target claude-code` |
+| `adapters/claude-code/install.sh` | Update to call `bd-os install-mcp --target claude-code` |
 
 ## Config Paths
 
@@ -44,7 +44,7 @@ def write_claude_code_config(vault_root: Path | None = None) -> Path:
     entry = {"command": command, "args": args}
     if vault_root:
         entry["env"] = {"VN_OS_VAULT": str(vault_root)}
-    config["mcpServers"]["vn-business-os"] = entry
+    config["mcpServers"]["bd-business-os"] = entry
     config_path.write_text(json.dumps(config, indent=2))
     return config_path
 
@@ -65,17 +65,17 @@ def install_mcp(target: str = "both", vault_root: Path | None = None) -> None:
 ## CLI Usage
 
 ```bash
-vn-os install-mcp                                       # default: both
-vn-os install-mcp --target claude-code
-vn-os install-mcp --target desktop
-vn-os install-mcp --target both --vault F:/work/xyz-vault
+bd-os install-mcp                                       # default: both
+bd-os install-mcp --target claude-code
+bd-os install-mcp --target desktop
+bd-os install-mcp --target both --vault F:/work/xyz-vault
 ```
 
 ## Error Handling
 
 - Config file doesn't exist → create a new one with `{}`
 - `mcpServers` key missing → `setdefault`
-- `vn-os-mcp` not on PATH → fallback `python -m core.mcp_server` (current logic)
+- `bd-os-mcp` not on PATH → fallback `python -m core.mcp_server` (current logic)
 
 ## Testing
 

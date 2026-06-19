@@ -38,7 +38,7 @@ checkpoints/
 
 # ─── Logs ───────────────────────────────────────────────────────────
 *.log
-.vn-business-os.log
+.bd-business-os.log
 
 # ─── IDE / Editor ───────────────────────────────────────────────────
 .idea/
@@ -67,7 +67,7 @@ TODO.private.md
 
 # Local Claude Code settings
 .claude/settings.local.json
-.vn-usage.jsonl
+.bd-usage.jsonl
 00-Dashboard.md
 
 # Obsidian app config (contains Local REST API bearer key) — never commit

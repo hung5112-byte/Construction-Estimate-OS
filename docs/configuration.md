@@ -25,10 +25,10 @@ The main config files + how to tune them.
 ## `.vncoderc` — full reference
 
 ```yaml
-# Vault path (auto-set by vn_onboard)
+# Vault path (auto-set by bd_onboard)
 vault_path: F:/work/division-vault
 
-# Installed packs (auto-set by vn_onboard; none ship by default)
+# Installed packs (auto-set by bd_onboard; none ship by default)
 packs: []
 
 version: "0.1.0"
@@ -64,7 +64,7 @@ llm:
 
 ### When to edit?
 
-- **Never** edit `vault_path`, `packs`, `version` — auto-set by vn_onboard
+- **Never** edit `vault_path`, `packs`, `version` — auto-set by bd_onboard
 - Commonly edited:
   - `meeting.intra_department_round: false` for quick/cheap meetings (managers speak without the team round — ~5× fewer round-1 calls)
   - `translator_mode: all_intermediate` if you want every intermediate output simplified
@@ -74,7 +74,7 @@ llm:
 
 > **Recommendation:** keep the lite defaults (`0/1/3`) for operational tasks. Bump rounds only when
 > running a big strategic decision, and raise the MCP client timeout at the same time
-> (see [troubleshooting.md](troubleshooting.md#vn_run--vn_meeting-timeout)).
+> (see [troubleshooting.md](troubleshooting.md#bd_run--bd_meeting-timeout)).
 
 ---
 
@@ -96,7 +96,7 @@ BRAVE_API_KEY=
 ### After adding/changing a key — REQUIRED
 
 ```powershell
-vn-os install-mcp --vault "F:\work\xyz-vault"
+bd-os install-mcp --vault "F:\work\xyz-vault"
 # Restart Claude Desktop
 ```
 
@@ -116,8 +116,8 @@ See [how-to-create-pack.md](how-to-create-pack.md). In short:
 3. (Optional) `brain-template/` to override the default Brain
 
 ### Install your pack
-Edit `.vncoderc`, add `- <your-pack>` under `packs:`, then call `vn_upgrade` —
-or pass `packs=["<your-pack>"]` to `vn_onboard` for a new vault.
+Edit `.vncoderc`, add `- <your-pack>` under `packs:`, then call `bd_upgrade` —
+or pass `packs=["<your-pack>"]` to `bd_onboard` for a new vault.
 
 ---
 
@@ -142,7 +142,7 @@ The plugin auto-classifies files by keyword:
 Copy the file into `<vault>/00-Templates-Custom/<dept-code>/<file-name>.docx`.
 
 ### How the plugin picks a template (RULE 6)
-When `vn_execute` needs to render the `rma-process-sop` template:
+When `bd_execute` needs to render the `rma-process-sop` template:
 1. **Division custom**: `<vault>/00-Templates-Custom/05-service-operations/rma-process-sop.docx` ← wins
 2. **Pack refs**: `<vault>/01-Departments/05-service-operations/refs/rma-process-sop.docx`
 3. **Default**: `docs/templates-us/05-service-operations/rma-process-sop.md`
@@ -167,9 +167,9 @@ F:/clients/
 
 Re-install the MCP for whichever vault you're working in (Claude Desktop reads only one env at a time):
 ```powershell
-vn-os install-mcp --vault "F:\clients\abc-coffee"
+bd-os install-mcp --vault "F:\clients\abc-coffee"
 # Work with ABC...
-vn-os install-mcp --vault "F:\clients\xyz-tech"
+bd-os install-mcp --vault "F:\clients\xyz-tech"
 # Work with XYZ...
 ```
 
@@ -185,15 +185,15 @@ Edit `claude_desktop_config.json` manually:
 ```json
 {
   "mcpServers": {
-    "vn-business-os-prod": {
-      "command": "vn-os-mcp",
+    "bd-business-os-prod": {
+      "command": "bd-os-mcp",
       "env": {
         "TAVILY_API_KEY": "tvly-prod",
         "VN_OS_VAULT": "F:/clients/abc-coffee"
       }
     },
-    "vn-business-os-staging": {
-      "command": "vn-os-mcp",
+    "bd-business-os-staging": {
+      "command": "bd-os-mcp",
       "env": {
         "TAVILY_API_KEY": "tvly-staging"
       }

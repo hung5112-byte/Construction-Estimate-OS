@@ -1,4 +1,4 @@
-"""Append-only token usage log → <vault>/.vn-usage.jsonl (consumed by the dashboard).
+"""Append-only token usage log → <vault>/.bd-usage.jsonl (consumed by the dashboard).
 
 Best-effort by design: logging must NEVER break an LLM call, so every entry point
 swallows its own exceptions. The vault is resolved from VN_OS_ACTIVE_VAULT (set by
@@ -12,7 +12,7 @@ import os
 import time
 from pathlib import Path
 
-USAGE_FILENAME = ".vn-usage.jsonl"
+USAGE_FILENAME = ".bd-usage.jsonl"
 
 
 def _log_path() -> Path | None:

@@ -33,7 +33,7 @@
 
 ### P1.3 — MCPSamplingProvider retry + timeout
 
-**Before:** when Anthropic returned 429 (subscription quota exhausted) or timed out → a single failure killed the whole `vn_meeting` flow. No retry.
+**Before:** when Anthropic returned 429 (subscription quota exhausted) or timed out → a single failure killed the whole `bd_meeting` flow. No retry.
 
 **After:**
 - `max_retries=3`, `timeout_seconds=120`, exponential backoff
@@ -76,7 +76,7 @@
 **Before:** `try: GitSync.commit(...) except: pass` → the Department Head doesn't know why a Git commit failed (permission, no git, conflict, ...).
 
 **After:**
-- `FlowController._log_warning()` writes to `<vault>/.vn-business-os.log`
+- `FlowController._log_warning()` writes to `<vault>/.bd-business-os.log`
 - Format: `[YYYY-MM-DD HH:MM:SS] WARN: Git commit failed (Stop 1): <error message>`
 - The Department Head opens the log to see the exact reason
 
@@ -154,12 +154,12 @@ meeting:
   use_checkpointer: true
 ```
 
-→ LangGraph saves the debate state to `~/.vn-business-os/checkpoints.db`. A mid-meeting crash → can resume (verify with your specific LangGraph version). If init fails, the plugin falls back off + logs.
+→ LangGraph saves the debate state to `~/.bd-business-os/checkpoints.db`. A mid-meeting crash → can resume (verify with your specific LangGraph version). If init fails, the plugin falls back off + logs.
 
 ### View log warnings
 
 ```powershell
-Get-Content "F:\.../my-vault/.vn-business-os.log" -Tail 20
+Get-Content "F:\.../my-vault/.bd-business-os.log" -Tail 20
 ```
 
 ---
@@ -167,7 +167,7 @@ Get-Content "F:\.../my-vault/.vn-business-os.log" -Tail 20
 ## Remaining — P2 (nice-to-have)
 
 See `audit-260507-repo-completeness.md` section P2:
-- Multi-turn `vn_onboard` via MCP elicitation
+- Multi-turn `bd_onboard` via MCP elicitation
 - Router JSON-mode
 - `tool_cache.db` per-vault
 - Real-LLM E2E test in CI
@@ -186,7 +186,7 @@ P2 is not blocking — the plugin is production-ready for beta testing with the 
 2. **(Optional) Enable translator mode all_intermediate:**
    - Edit `<vault>/.vncoderc`, add `translator_mode: all_intermediate`
 3. **Test the full flow:**
-   - Setup vault → vn_run → vn_resume → vn_meeting → vn_approve → vn_execute
+   - Setup vault → bd_run → bd_resume → bd_meeting → bd_approve → bd_execute
    - Check whether `07-decision-report.md` has a "⚠️ Warning: claims missing a source" section
    - Check that `03-Outputs/<task>/*.docx` is rendered
 4. **Report any bugs** — ready to keep fixing

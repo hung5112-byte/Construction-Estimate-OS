@@ -8,7 +8,7 @@ Day-to-day usage after onboarding. See [Getting Started](getting-started.md) fir
 
 ```
                     ┌─ Stage 1 ─┐         ┌─ Stage 2 ─┐
-Department Head chat brief ────→│  vn_run   │────────→│ vn_resume │
+Department Head chat brief ────→│  bd_run   │────────→│ bd_resume │
                     └───────────┘         └───────────┘
                           │                     │
                           ↓                     ↓
@@ -17,7 +17,7 @@ Department Head chat brief ────→│  vn_run   │───────
                     Generate clarification
 
                     ┌─ Stage 3 ─┐         ┌─ Stage 4 ─┐         ┌─ Stage 5 ─┐
-                    │ vn_meeting│────────→│ vn_approve│────────→│ vn_execute│
+                    │ bd_meeting│────────→│ bd_approve│────────→│ bd_execute│
                     └───────────┘         └───────────┘         └───────────┘
                           │                     │                     │
                           ↓                     ↓                     ↓
@@ -30,8 +30,8 @@ Department Head chat brief ────→│  vn_run   │───────
 ```
 
 **2 stops requiring Department Head intervention:**
-- **STOP 1:** after `vn_meeting` — read `07-decision-report.md`, OK → call `vn_approve`
-- **STOP 2:** after `vn_approve` — read `08-execution-plan.md`, OK → call `vn_execute`
+- **STOP 1:** after `bd_meeting` — read `07-decision-report.md`, OK → call `bd_approve`
+- **STOP 2:** after `bd_approve` — read `08-execution-plan.md`, OK → call `bd_execute`
 
 The Department Head can edit both files before moving to the next stage.
 
@@ -114,7 +114,7 @@ The plugin:
 
 ## Tools used only when needed
 
-### `vn_draft` — fast path for doc boilerplate
+### `bd_draft` — fast path for doc boilerplate
 Drafts one document in a single LLM call (~10-30s), WITHOUT the debate engine.
 
 **Use case:** employment agreement, JD, work rules, receipt, simple SOP, meeting invite...
@@ -123,15 +123,15 @@ Draft an employment offer for an accounting assistant at cafe ABC, $45k/year, 2-
 ```
 Output: `<vault>/02-Tasks/<ts>-draft-<slug>/draft.md`
 
-**Do NOT use** for strategic decisions / anything with significant legal risk → use `vn_run` + `vn_meeting`.
+**Do NOT use** for strategic decisions / anything with significant legal risk → use `bd_run` + `bd_meeting`.
 
-### `vn_status`
+### `bd_status`
 Inspect the vault state — Brain summary + active departments + tasks + tool availability.
 ```
-vn_status vault F:\work\xyz-vault
+bd_status vault F:\work\xyz-vault
 ```
 
-### `vn_upgrade`
+### `bd_upgrade`
 After pulling a plugin update, refresh an existing vault:
 ```
 Upgrade vault F:\work\xyz-vault
@@ -140,7 +140,7 @@ Upgrade vault F:\work\xyz-vault
 - Injects new Brain aliases
 - Does NOT touch Brain content / Tasks / Outputs (Department Head data)
 
-### `vn_onboard`
+### `bd_onboard`
 Create a new vault (see [Getting Started](getting-started.md)).
 
 ---
@@ -163,13 +163,13 @@ translator_mode: all_intermediate
 The plugin is idempotent: if a task fails midway, call the corresponding MCP tool again — the old task folder is resumed.
 
 ### 4. Edit the decision report before approving
-The Department Head opens `07-decision-report.md`, edits, saves → `vn_approve` reads the edited version.
+The Department Head opens `07-decision-report.md`, edits, saves → `bd_approve` reads the edited version.
 
 ### 5. Citation warnings
 If `07-decision-report.md` has a `## ⚠️ Warning: claims missing a source` section → review those claims before approving. They may be LLM hallucinations.
 
 ### 6. Tools skipped → enable the key
-If `vn_status` reports `tools_skipped: [web_search, ...]` → the flow still runs but the decision report relies entirely on the Brain + LLM common knowledge. Enable TAVILY_API_KEY to search real US law/competitors.
+If `bd_status` reports `tools_skipped: [web_search, ...]` → the flow still runs but the decision report relies entirely on the Brain + LLM common knowledge. Enable TAVILY_API_KEY to search real US law/competitors.
 
 ---
 

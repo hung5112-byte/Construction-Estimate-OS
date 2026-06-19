@@ -28,7 +28,7 @@ Read the following files in order to understand the context:
 
 Once done, use the skill superpowers:subagent-driven-development to implement Phase 1.
 12 tasks in Phase 1 — spawn an implementer + 2 reviewers (spec + quality) per task.
-Create the root repo RIGHT HERE in the current folder (do not create a vn-business-os subfolder).
+Create the root repo RIGHT HERE in the current folder (do not create a bd-business-os subfolder).
 ```
 
 ---
@@ -101,8 +101,8 @@ Hardware Division OS/
 Verify Phase 1:
 ```bash
 pip install -e .
-vn-os --version                    # 0.1.0
-vn-os status --vault docs/tests/fixtures/demo-vault   # green checks
+bd-os --version                    # 0.1.0
+bd-os status --vault docs/tests/fixtures/demo-vault   # green checks
 pytest docs/tests/integration/test_phase01_smoke.py -v
 git tag | grep phase-01-complete
 ```

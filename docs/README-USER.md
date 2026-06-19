@@ -24,7 +24,7 @@ This is an **AI Operating System** for a US division. You chat naturally in Clau
 
 ### How it differs from a normal ChatGPT chat
 
-| Aspect | Normal ChatGPT / Claude | This repo (vn-business-os) |
+| Aspect | Normal ChatGPT / Claude | This repo (bd-business-os) |
 |---|---|---|
 | Company context | Paste it again every time | Read from the **Brain** (`vault/00-Brain/`) automatically |
 | Big decisions | One AI viewpoint | **Multi-department debate** (Pro/Con + 3 perspectives Growth/Cautious/Balanced) |
@@ -44,7 +44,7 @@ Depending on your current state, follow the matching path:
 | You are... | Follow path |
 |---|---|
 | **🆕 Nothing installed** (no Obsidian, Python, Claude Desktop) | **Path A**: do all of PART 1 (Steps 1-9) |
-| **🟡 Obsidian + MCP-Obsidian already set up from a prior class** (existing vault, Local REST API enabled, already chatting with Claude via MCP-Obsidian) | **Path B**: skip Step 3, do Steps 1-2 + Steps 4-9 (install Python + repo + DeepSeek + add the `vn-business-os` MCP to the Claude Desktop config) |
+| **🟡 Obsidian + MCP-Obsidian already set up from a prior class** (existing vault, Local REST API enabled, already chatting with Claude via MCP-Obsidian) | **Path B**: skip Step 3, do Steps 1-2 + Steps 4-9 (install Python + repo + DeepSeek + add the `bd-business-os` MCP to the Claude Desktop config) |
 | **🟢 Repo + vault for company 1 already there, now want a 2nd company** | **Path C**: only do PART 2 (create a new vault, apply a pack, fill the Brain) — no need to reinstall Python/repo |
 
 **Path B details** (most common — students already have Obsidian):
@@ -54,12 +54,12 @@ Depending on your current state, follow the matching path:
 🆕 Need to add:
   - Step 1: Python 3.11+ (if not present)
   - Step 2: Node.js 20+ (if not present)
-  - Step 4: Clone the `vn-one-person-company` repo into `F:\.work\`
+  - Step 4: Clone the `bd-business-os` repo into `F:\.work\`
   - Step 5: pip install -e .
   - Step 6: DeepSeek API key
   - Step 6.5: Tavily API key
   - Step 7: Create .env in the vault + .vncoderc in $HOME
-  - Step 8.2: Add the "vn-business-os" entry to claude_desktop_config.json (do NOT remove the old "mcp-obsidian" entry)
+  - Step 8.2: Add the "bd-business-os" entry to claude_desktop_config.json (do NOT remove the old "mcp-obsidian" entry)
   - Step 8.3: Quit Claude Desktop from the tray + restart
 ```
 
@@ -217,21 +217,21 @@ This is the system's "engine" — it contains the code for 13 departments + 192 
    ```
    (Change `F:` to your largest drive — it doesn't have to be F:)
 
-2. Go to https://github.com/andyluu98/vn-one-person-company
+2. Go to https://github.com/andyluu98/bd-business-os
 
 3. Click the green **"Code"** button → **"Download ZIP"**
 
-4. **Extract the ZIP into the root folder**, e.g. `F:\.work\` → you'll get `F:\.work\vn-one-person-company\`
+4. **Extract the ZIP into the root folder**, e.g. `F:\.work\` → you'll get `F:\.work\bd-business-os\`
 
 5. **Verify** the final path (this matters — check that `README.md` is DIRECTLY inside the folder):
    ```powershell
-   Test-Path "F:\.work\vn-one-person-company\README.md"
+   Test-Path "F:\.work\bd-business-os\README.md"
    ```
    → Must return `True`.
 
-   ❌ If `False` → you may have a double-nested extract (`F:\.work\vn-one-person-company\vn-one-person-company-main\README.md`). Delete the outer folder, move the inner one up one level.
+   ❌ If `False` → you may have a double-nested extract (`F:\.work\bd-business-os\bd-business-os-main\README.md`). Delete the outer folder, move the inner one up one level.
 
-> 💡 **Tip for git users:** `cd "F:\.work" && git clone https://github.com/andyluu98/vn-one-person-company.git` — easier to update later.
+> 💡 **Tip for git users:** `cd "F:\.work" && git clone https://github.com/andyluu98/bd-business-os.git` — easier to update later.
 
 ---
 
@@ -242,7 +242,7 @@ This is the system's "engine" — it contains the code for 13 departments + 192 
 1. Open PowerShell (Windows + R → `powershell` → Enter)
 2. Go to the repo folder:
    ```powershell
-   cd "F:\.work\vn-one-person-company"
+   cd "F:\.work\bd-business-os"
    ```
 3. Create a Python virtual environment:
    ```powershell
@@ -261,7 +261,7 @@ This is the system's "engine" — it contains the code for 13 departments + 192 
    - When it works, the prompt has `(.venv)` at the start.
 5. **(Important if you installed an old version before)** Uninstall the old one first:
    ```powershell
-   pip uninstall vn-business-os vn-one-person-company -y
+   pip uninstall bd-business-os bd-business-os -y
    ```
    (If it says "not found" — skip, you haven't installed any.)
 
@@ -273,17 +273,17 @@ This is the system's "engine" — it contains the code for 13 departments + 192 
 
 7. Verify the install:
    ```powershell
-   vn-os --version
+   bd-os --version
    ```
-   Must show: `vn-os, version 0.2.0` (or higher).
+   Must show: `bd-os, version 0.2.0` (or higher).
 
 8. **Verify the install points to the right repo folder** (avoids "my code edits do nothing" later):
    ```powershell
    python -c "import json; from pathlib import Path; p = Path([d for d in __import__('site').getsitepackages() + [__import__('site').getusersitepackages()] if (Path(d) / 'vn_one_person_company-0.2.0.dist-info').exists()][0]) / 'vn_one_person_company-0.2.0.dist-info' / 'direct_url.json'; print(json.loads(p.read_text())['url'])"
    ```
-   Must show: `file:///F:/.work/vn-one-person-company` (the repo path you extracted).
+   Must show: `file:///F:/.work/bd-business-os` (the repo path you extracted).
 
-   ❌ If it shows another path (e.g. `file:///F:/OneDrive/.../vn-one-person-company`) → you still have an old install. Go back to step 5, uninstall, reinstall.
+   ❌ If it shows another path (e.g. `file:///F:/OneDrive/.../bd-business-os`) → you still have an old install. Go back to step 5, uninstall, reinstall.
 
 ---
 
@@ -296,7 +296,7 @@ DeepSeek is an AI service that lets the departments "think." ~10x cheaper than t
 1. Go to https://platform.deepseek.com → click **"Sign up"**
 2. Sign up with email or Google
 3. After logging in → go to **"API Keys"** (left menu)
-4. Click **"Create new API key"** → name it e.g. `vn-business-os`
+4. Click **"Create new API key"** → name it e.g. `bd-business-os`
 5. **COPY THE KEY NOW** (shown only once) → paste into `F:\setup-keys.txt` with the Obsidian key
 6. The key looks like `sk-xxxxxxxxxxxxxxxxxxxx`
 
@@ -314,7 +314,7 @@ Tavily is a search engine for the departments to look up **new laws**, **competi
 
 1. Go to https://app.tavily.com → click **"Sign up"** (free, email/Google)
 2. After logging in → choose **"API Keys"** on the left
-3. Click **"Generate API Key"** → name it e.g. `vn-business-os`
+3. Click **"Generate API Key"** → name it e.g. `bd-business-os`
 4. Copy the key (looks like `tvly-xxxxxxxxxxxxxxxxxxxxxxxxx`) → paste into `F:\setup-keys.txt` with the others
 
 **Free tier:** 1000 searches/month. Enough for one company running the full pipeline ~50-80 tasks/month (each task uses 5-15 searches).
@@ -329,7 +329,7 @@ Two small files that tell the system where your company is + which AI to use.
 
 **7.1 — The `.env` file in the vault:**
 
-> 🚨 **VERY IMPORTANT:** `DEEPSEEK_API_KEY` is the main LLM provider. Without it → every `vn_draft`/`vn_run`/`vn_meeting` task errors with `Method not found` (because the code falls back to MCP sampling, which the Claude Code tab doesn't support).
+> 🚨 **VERY IMPORTANT:** `DEEPSEEK_API_KEY` is the main LLM provider. Without it → every `bd_draft`/`bd_run`/`bd_meeting` task errors with `Method not found` (because the code falls back to MCP sampling, which the Claude Code tab doesn't support).
 
 In PowerShell, type (change `LoneStarCoffee` to your vault name):
 
@@ -389,7 +389,7 @@ Claude Desktop is the AI chat app — where you say "draft an employment offer",
 > 🎯 **IMPORTANT — Use the "Code" tab, not the "Chat" or "Cowork" tab.**
 > Claude Desktop has 3 tabs: **Chat** | **Cowork** | **</> Code** (top-right).
 > - **Code tab** = Claude Code, 10-minute timeout, can call **any MCP tool** (including a 2-3 minute multi-department debate).
-> - **Cowork tab** = 60-second timeout — only light tools (vn_status, read/edit files). Heavy tasks (drafting docs, debate) will **fail**.
+> - **Cowork tab** = 60-second timeout — only light tools (bd_status, read/edit files). Heavy tasks (drafting docs, debate) will **fail**.
 >
 > → **After installing, always click the "</> Code" tab before chatting.**
 
@@ -401,15 +401,15 @@ Claude Desktop is the AI chat app — where you say "draft an employment offer",
 
 **8.2 — Install 2 MCP servers into Claude Desktop:**
 
-> 🟡 **Students who already have MCP-Obsidian from before:** just **ADD** the `vn-business-os` entry to the existing config, **do NOT remove** the old `mcp-obsidian-*` entry.
+> 🟡 **Students who already have MCP-Obsidian from before:** just **ADD** the `bd-business-os` entry to the existing config, **do NOT remove** the old `mcp-obsidian-*` entry.
 > Open the config file:
 > ```powershell
 > notepad "$env:APPDATA\Claude\claude_desktop_config.json"
 > ```
 > In `mcpServers: { ... }`, add a new entry after the comma of the last entry:
 > ```json
-> "vn-business-os": {
->   "command": "F:\\.work\\vn-one-person-company\\.venv\\Scripts\\vn-os-mcp.exe"
+> "bd-business-os": {
+>   "command": "F:\\.work\\bd-business-os\\.venv\\Scripts\\bd-os-mcp.exe"
 > }
 > ```
 > → Skip the "Replace the whole content" part below.
@@ -443,8 +443,8 @@ Notepad opens `claude_desktop_config.json`. **Replace the whole content** with:
         "OBSIDIAN_PORT": "27124"
       }
     },
-    "vn-business-os": {
-      "command": "F:\\.work\\vn-one-person-company\\.venv\\Scripts\\vn-os-mcp.exe",
+    "bd-business-os": {
+      "command": "F:\\.work\\bd-business-os\\.venv\\Scripts\\bd-os-mcp.exe",
       "args": []
     }
   }
@@ -469,12 +469,12 @@ Notepad opens `claude_desktop_config.json`. **Replace the whole content** with:
 **Verify everything quit (PowerShell):**
 
 ```powershell
-Get-Process claude, vn-os-mcp -ErrorAction SilentlyContinue | Measure-Object | Select-Object -ExpandProperty Count
+Get-Process claude, bd-os-mcp -ErrorAction SilentlyContinue | Measure-Object | Select-Object -ExpandProperty Count
 ```
 
 → Must print `0`. If > 0 → processes remain. Force kill:
 ```powershell
-Get-Process claude, vn-os-mcp -ErrorAction SilentlyContinue | Stop-Process -Force
+Get-Process claude, bd-os-mcp -ErrorAction SilentlyContinue | Stop-Process -Force
 ```
 
 **Reopen Claude Desktop:**
@@ -501,17 +501,17 @@ List the files in my Obsidian vault
 
 ❌ If you get `connection refused` → Obsidian isn't open or the Local REST API plugin is off. Recheck Step 3.
 
-**9.2 — Test MCP vn-business-os:**
+**9.2 — Test MCP bd-business-os:**
 
 In the Claude Code session, type:
 
 ```
-Run vn_status with vault F:\vaults\LoneStarCoffee
+Run bd_status with vault F:\vaults\LoneStarCoffee
 ```
 
-→ Claude calls the `vn_status` tool. The first time it'll say `Brain dir not found` — that's normal, the vault isn't initialized yet. But it means the MCP connected.
+→ Claude calls the `bd_status` tool. The first time it'll say `Brain dir not found` — that's normal, the vault isn't initialized yet. But it means the MCP connected.
 
-❌ If you get `Method not found` → the vn-business-os MCP didn't load. Restart Claude Desktop.
+❌ If you get `Method not found` → the bd-business-os MCP didn't load. Restart Claude Desktop.
 
 ---
 
@@ -523,7 +523,7 @@ By now you have:
 |---|---|
 | Python 3.12 + Node.js 20 | ✅ |
 | Obsidian + Local REST API plugin | ✅ |
-| The vn-business-os repo + Python libraries | ✅ |
+| The bd-business-os repo + Python libraries | ✅ |
 | DeepSeek API key in `.env` | ✅ |
 | Tavily API key in `.env` (recommended) | ✅ |
 | `.vncoderc` config for the model | ✅ |
@@ -564,7 +564,7 @@ In a **Claude Code session** (the "</> Code" tab of Claude Desktop, after settin
 Initialize a Hardware Division vault structure at F:\vaults\<Division>.
 ```
 
-→ Claude calls the `vn_onboard` tool to auto-create the folders + copy templates.
+→ Claude calls the `bd_onboard` tool to auto-create the folders + copy templates.
 
 **Method 2 — Manual (if Method 1 fails):**
 
@@ -573,7 +573,7 @@ Initialize a Hardware Division vault structure at F:\vaults\<Division>.
 
 ```powershell
 $vault = "F:\vaults\LoneStarCoffee"
-$repo = "F:\.work\vn-one-person-company"
+$repo = "F:\.work\bd-business-os"
 
 # Create the 5 main folders
 New-Item -ItemType Directory -Force -Path "$vault\00-Brain" | Out-Null
@@ -605,7 +605,7 @@ built your own overlay pack (see `docs/how-to-create-pack.md`), apply it via Pow
 
 ```powershell
 $vault = "F:\vaults\MyDivision"
-$repo = "F:\.work\vn-one-person-company"
+$repo = "F:\.work\bd-business-os"
 $pack = "<your-pack-code>"
 
 # Copy the pack's departments
@@ -938,7 +938,7 @@ If Obsidian has "Auto-save" configured (on by default) → files save when you s
 In a **Claude Code session**, type:
 
 ```
-Run vn_status with vault F:\vaults\LoneStarCoffee
+Run bd_status with vault F:\vaults\LoneStarCoffee
 ```
 
 **Expected result:**
@@ -974,7 +974,7 @@ By now you have:
 | A vault with 5 standard folders | ✅ |
 | The 5 division departments | ✅ |
 | 8 Brain files filled with division info | ✅ |
-| `vn_status` reports data in all fields | ✅ |
+| `bd_status` reports data in all fields | ✅ |
 
 **Next:** Part 3 — Daily use, or read PART 2.5 below for a full workflow demo first.
 
@@ -997,7 +997,7 @@ You want to plan June marketing on a $700 budget.
 **You chat in the Claude Code tab:**
 > Plan June 2026 marketing for Misty Morning Café, $700 budget. Goal: grow revenue $7,850 → $9,000, raise the ticket $7.80 → $9.00 via combo upsell. Constraints: lead barista just quit, food cost 33%, flaky Wi-Fi.
 
-**Claude auto-calls `vn_run` → returns:**
+**Claude auto-calls `bd_run` → returns:**
 > Created task folder `02-Tasks/2026-MM-DD-...-june-marketing-cafe/`. There are 5 clarification questions to answer in `03-clarification.md`. Open Obsidian to see them.
 
 **5 sample questions the system asked (citing the Brain):**
@@ -1016,14 +1016,14 @@ Open `03-clarification.md` in Obsidian, tick the checkboxes + write free-text fo
 **You tell Claude:**
 > Done, continue.
 
-**Claude auto-calls `vn_resume`** → records the answers, ready for the meeting.
+**Claude auto-calls `bd_resume`** → records the answers, ready for the meeting.
 
 ### Stage 3 — Multi-department meeting (~2 min)
 
 **You:**
 > Run a meeting for 6 departments: Marketing + Finance + Operations + Sales + Customer + Kitchen.
 
-**Claude auto-calls `vn_meeting`** → 3 rounds of debate:
+**Claude auto-calls `bd_meeting`** → 3 rounds of debate:
 - **R1** (perspectives): each department gives its own view (~21KB output)
 - **R2** (debate): Pro vs Con argue (~20KB)
 - **R3** (synthesis): 3 views Growth/Cautious/Balanced (~31KB)
@@ -1057,7 +1057,7 @@ Open `07-decision-report.md` in Obsidian. Read the 30s TL;DR + Recommendation + 
 **You:**
 > Approve, make the execution plan.
 
-**Claude auto-calls `vn_approve`** → generates `08-execution-plan.md`: action items + deadlines + owners + budget.
+**Claude auto-calls `bd_approve`** → generates `08-execution-plan.md`: action items + deadlines + owners + budget.
 
 ### STOP 2: Department Head approves the execution plan
 
@@ -1066,7 +1066,7 @@ Read the plan, if OK:
 **You:**
 > OK, execute.
 
-**Claude auto-calls `vn_execute`** → renders `.docx`/`.xlsx` into `03-Outputs/<task>/`:
+**Claude auto-calls `bd_execute`** → renders `.docx`/`.xlsx` into `03-Outputs/<task>/`:
 - `june-marketing-plan-misty-morning.docx`
 - `budget-allocation.xlsx`
 - `weekly-kpi-gates.xlsx`
@@ -1137,14 +1137,14 @@ In a Code-tab session:
 
 In the Code tab, just chat naturally. Claude classifies the task and picks one of 2 paths:
 
-#### Path A — Fast path (`vn_draft`) for doc boilerplate
+#### Path A — Fast path (`bd_draft`) for doc boilerplate
 
 For: offer letter, JD, work rules, receipt, simple SOP, meeting invite...
 
 **You:**
 > Draft a barista JD for Lone Star Coffee, $18/hr, Q1 Austin.
 
-**Claude:** (auto-calls `vn_draft`, ~10-30s)
+**Claude:** (auto-calls `bd_draft`, ~10-30s)
 > Created a draft at `02-Tasks/2026-MM-DD-HHMM-barista-jd/draft.md`. Open Obsidian to see it. Summary: requires 6 months espresso experience, 8h shifts × 6 days/week, FLSA-compliant pay...
 
 → **One call, a file right away.** No debate, no decision report. Good for docs with a standard template.
@@ -1159,32 +1159,32 @@ For: big decisions (open a location, ad budget, rebrand), high-legal-risk docs, 
 
 | # | MCP tool | Output | Time |
 |---|---|---|---|
-| 1 | `vn_run(brief, vault)` | `01-routing.md`, `02-context.md`, (maybe) `03-clarification.md` | 20-50s |
-| 2 | `vn_resume(task_folder)` (if needed) | `03-clarification-answered.md` | <10s |
-| 3 | `vn_meeting(task_folder)` | `04..06-meeting-*.md`, **`07-decision-report.md`** ← Stop 1 | 60-180s |
-| 4 | `vn_approve(task_folder)` | **`08-execution-plan.md`** ← Stop 2 | 10-30s |
-| 5 | `vn_execute(task_folder)` | `.docx`/`.xlsx` files in `03-Outputs/<task>/` | 10-30s |
+| 1 | `bd_run(brief, vault)` | `01-routing.md`, `02-context.md`, (maybe) `03-clarification.md` | 20-50s |
+| 2 | `bd_resume(task_folder)` (if needed) | `03-clarification-answered.md` | <10s |
+| 3 | `bd_meeting(task_folder)` | `04..06-meeting-*.md`, **`07-decision-report.md`** ← Stop 1 | 60-180s |
+| 4 | `bd_approve(task_folder)` | **`08-execution-plan.md`** ← Stop 2 | 10-30s |
+| 5 | `bd_execute(task_folder)` | `.docx`/`.xlsx` files in `03-Outputs/<task>/` | 10-30s |
 
 **Real example:**
 
 **You:**
 > I want to analyze whether to open Lone Star Coffee location 2 in Q1 or Q3.
 
-**Claude:** (calls `vn_run` ~30s)
+**Claude:** (calls `bd_run` ~30s)
 > Created task folder `02-Tasks/2026-MM-DD-HHMM-location-2/`. There are 5 clarification questions to answer in `03-clarification.md` (open Obsidian). I'll wait.
 
 **You:** (open Obsidian, answer the 5 questions, save Ctrl+S)
 > Done, continue.
 
-**Claude:** (calls `vn_resume` → `vn_meeting` ~2-3 min)
+**Claude:** (calls `bd_resume` → `bd_meeting` ~2-3 min)
 > The decision report is generated at `07-decision-report.md`. Summary: the system recommends **Q3** with $130k CAPEX, 18-month payback. Main reasons: ... 3 warnings: ...
 >
-> **Stop 1 — you approve:** open `07-decision-report.md` and read carefully. Agree → I'll run `vn_approve`. Want to edit → edit the file directly and tell me.
+> **Stop 1 — you approve:** open `07-decision-report.md` and read carefully. Agree → I'll run `bd_approve`. Want to edit → edit the file directly and tell me.
 
 **You:**
 > OK, approve.
 
-**Claude:** (calls `vn_approve` ~30s → `vn_execute` ~15s)
+**Claude:** (calls `bd_approve` ~30s → `bd_execute` ~15s)
 > The execution plan is at `08-execution-plan.md`. The final `.docx` deliverable is at `03-Outputs/location-2/location-analysis.docx`. Open it.
 
 ---
@@ -1193,8 +1193,8 @@ For: big decisions (open a location, ad budget, rebrand), high-legal-risk docs, 
 
 The system has **2 deliberate stops** for you (the Department Head) to approve:
 
-- **Stop 1 — after `vn_meeting`**: you review `07-decision-report.md` before approving. This is your chance to **reject / edit the decision** before the system renders docx.
-- **Stop 2 — after `vn_approve`**: you review `08-execution-plan.md` before executing. This is your chance to see the **detailed rollout plan** and edit it before spending render effort.
+- **Stop 1 — after `bd_meeting`**: you review `07-decision-report.md` before approving. This is your chance to **reject / edit the decision** before the system renders docx.
+- **Stop 2 — after `bd_approve`**: you review `08-execution-plan.md` before executing. This is your chance to see the **detailed rollout plan** and edit it before spending render effort.
 
 → **Don't skip these 2 stops.** If the system proposes something bad → edit the file directly in Obsidian, save, then tell Claude to continue to the next stage.
 
@@ -1202,11 +1202,11 @@ The system has **2 deliberate stops** for you (the Department Head) to approve:
 
 | Stage | New file in the task folder | What you do |
 |---|---|---|
-| `vn_run` | `00-brief.md`, `01-routing.md`, `02-context.md`, maybe `03-clarification.md` | If there's a `03-clarification.md` → open, answer, save |
-| `vn_resume` | `03-clarification-answered.md` | (automatic) |
-| `vn_meeting` | `04..06-meeting-*.md`, `07-decision-report.md` | **Open `07-decision-report.md`, read + approve** |
-| `vn_approve` | `08-execution-plan.md` | Read the plan, OK? |
-| `vn_execute` | `03-Outputs/<task>/<file>.docx` | **Open the .docx → the final deliverable** |
+| `bd_run` | `00-brief.md`, `01-routing.md`, `02-context.md`, maybe `03-clarification.md` | If there's a `03-clarification.md` → open, answer, save |
+| `bd_resume` | `03-clarification-answered.md` | (automatic) |
+| `bd_meeting` | `04..06-meeting-*.md`, `07-decision-report.md` | **Open `07-decision-report.md`, read + approve** |
+| `bd_approve` | `08-execution-plan.md` | Read the plan, OK? |
+| `bd_execute` | `03-Outputs/<task>/<file>.docx` | **Open the .docx → the final deliverable** |
 
 ---
 
@@ -1269,15 +1269,15 @@ A. ...  B. ...  C. ...  D. ...
 
 | Tool | Actual time |
 |---|---|
-| `vn_status` | < 1 second |
+| `bd_status` | < 1 second |
 | Read/edit a file (obsidian_*) | 1-5 seconds |
-| `vn_draft` | 10-30 seconds |
-| `vn_run` (1 SIMPLE task) | 20-50 seconds |
-| `vn_run` (needs clarification) | 20-50 seconds + your answer time |
-| `vn_resume` | <10 seconds |
-| `vn_meeting` (DeepSeek v4-pro) | 1-3 minutes |
-| `vn_approve` | 10-30 seconds |
-| `vn_execute` (render docx) | 10-30 seconds |
+| `bd_draft` | 10-30 seconds |
+| `bd_run` (1 SIMPLE task) | 20-50 seconds |
+| `bd_run` (needs clarification) | 20-50 seconds + your answer time |
+| `bd_resume` | <10 seconds |
+| `bd_meeting` (DeepSeek v4-pro) | 1-3 minutes |
+| `bd_approve` | 10-30 seconds |
+| `bd_execute` (render docx) | 10-30 seconds |
 | **Total pipeline, 1 SIMPLE task** | **3-5 minutes** |
 | **Total pipeline, 1 task with clarification** | **5-10 minutes** |
 
@@ -1292,11 +1292,11 @@ This is the pattern you'll do daily once you're used to it — **all in one Code
 **Morning (5 minutes):**
 1. Open Claude Desktop → Code tab → **+ New session**
 2. Type: "What's new in the Lone Star Coffee vault? This week's KPIs?"
-3. Claude auto-calls `vn_status` + lists tasks → summarizes today's focus
+3. Claude auto-calls `bd_status` + lists tasks → summarizes today's focus
 
 **When there's a big task (3-10 minutes):**
 1. In the open Code session, type naturally: "Draft an offer for a store manager at $55k"
-2. Claude auto-picks the Fast path (`vn_draft`) or Full pipeline (`vn_run → meeting → ...`)
+2. Claude auto-picks the Fast path (`bd_draft`) or Full pipeline (`bd_run → meeting → ...`)
 3. Wait (do something else — you're still in the same session, no PowerShell)
 4. Claude says "done" → open Obsidian to see the deliverable file
 
@@ -1325,8 +1325,8 @@ python -c "import json; from pathlib import Path; p = Path([d for d in __import_
 Write-Host "`n[3/5] Claude Desktop processes:" -ForegroundColor Yellow
 (Get-Process claude -ErrorAction SilentlyContinue | Measure-Object).Count
 
-Write-Host "`n[4/5] vn-os-mcp processes:" -ForegroundColor Yellow
-(Get-Process vn-os-mcp -ErrorAction SilentlyContinue | Measure-Object).Count
+Write-Host "`n[4/5] bd-os-mcp processes:" -ForegroundColor Yellow
+(Get-Process bd-os-mcp -ErrorAction SilentlyContinue | Measure-Object).Count
 
 Write-Host "`n[5/5] Vault .env file:" -ForegroundColor Yellow
 $envFile = Read-Host "  Enter the vault path (e.g. F:\vaults\LoneStarCoffee)"
@@ -1337,7 +1337,7 @@ if (Test-Path "$envFile\.env") {
 
 **Expected results:**
 - [1/5] Python 3.11+ or 3.12+
-- [2/5] `file:///F:/.work/vn-one-person-company` (the real repo path)
+- [2/5] `file:///F:/.work/bd-business-os` (the real repo path)
 - [3/5] 1-12 (Claude Desktop running)
 - [4/5] 1-3 (MCP running — multiple processes are normal with multiple sessions)
 - [5/5] `DEEPSEEK_API_KEY=sk-xxxxx...` (a key, not blank)
@@ -1348,26 +1348,26 @@ If any is wrong → find the matching "Error" below.
 
 ### Error 1: MCP tool timeout / no response
 
-**Symptom:** Claude calls `vn_meeting` but it doesn't return after > 5 minutes.
+**Symptom:** Claude calls `bd_meeting` but it doesn't return after > 5 minutes.
 
 **Fix:**
 1. Are you on the **"</> Code"** tab? If you're on **Cowork** → switch to Code.
 2. Open Obsidian, go to `02-Tasks/<task_folder>/` and see which files were created:
    - Has `04-meeting-r1-perspectives.md` but not `07-decision-report.md` → meeting is running, wait more.
-   - Has `07-decision-report.md` → meeting is done, tell Claude "I see the decision report, continue with `vn_approve`".
+   - Has `07-decision-report.md` → meeting is done, tell Claude "I see the decision report, continue with `bd_approve`".
 3. If truly stuck → in the Code session type `/abort`, then retry the stage.
 
-### Error 2: `vn_status` reports `error: Brain dir not found`
+### Error 2: `bd_status` reports `error: Brain dir not found`
 
 **Symptom:** `{"error": "...00-Brain not found..."}`
 
 **Fix:**
 - Wrong vault path → check spelling, especially spaces (`"F:\vaults\LoneStarCoffee"` should be in quotes).
-- Vault not onboarded → run `vn_onboard` (Step 10, Method 1).
+- Vault not onboarded → run `bd_onboard` (Step 10, Method 1).
 
 ### Error 3: `tools_skipped` contains `web_search / us_law_search`
 
-**Symptom:** vn_status reports 4 tools skipped due to missing `TAVILY_API_KEY`.
+**Symptom:** bd_status reports 4 tools skipped due to missing `TAVILY_API_KEY`.
 
 **Fix:**
 1. Sign up for free Tavily at https://app.tavily.com → Settings → API Keys → create a key (like `tvly-xxxxx`).
@@ -1376,29 +1376,29 @@ If any is wrong → find the matching "Error" below.
    TAVILY_API_KEY=tvly-xxxxxxxxxxx
    ```
 3. Restart Claude Desktop (quit fully → reopen).
-4. Test: `vn_status` → `tools_live` should have 6 tools.
+4. Test: `bd_status` → `tools_live` should have 6 tools.
 
 > 💡 **You can still use it without a Tavily key** — the decision report just won't have live research (new laws, real competitors). The system still uses the Brain + LLM knowledge to debate.
 
-### Error 4: `Method not found` when calling vn_draft / vn_run / vn_meeting
+### Error 4: `Method not found` when calling bd_draft / bd_run / bd_meeting
 
 There are **2 different causes** for the same error message:
 
 #### 4.A — The MCP server didn't load the tool
 
-**Symptom:** Claude says "I don't have access to the vn_status tool" or Method not found on **every** vn_* tool.
+**Symptom:** Claude says "I don't have access to the bd_status tool" or Method not found on **every** vn_* tool.
 
 **Fix:**
-1. Check `claude_desktop_config.json` has a `vn-business-os` entry:
+1. Check `claude_desktop_config.json` has a `bd-business-os` entry:
    ```powershell
    notepad "$env:APPDATA\Claude\claude_desktop_config.json"
    ```
-2. Is the `vn-os-mcp.exe` path correct: `F:\\.work\\vn-one-person-company\\.venv\\Scripts\\vn-os-mcp.exe` (escape `\` as `\\`).
+2. Is the `bd-os-mcp.exe` path correct: `F:\\.work\\bd-business-os\\.venv\\Scripts\\bd-os-mcp.exe` (escape `\` as `\\`).
 3. **Quit Claude Desktop THE RIGHT WAY** from the tray (see Step 8.3) — NOT just close the window.
 
 #### 4.B — Missing DEEPSEEK_API_KEY (LLM sampling unavailable)
 
-**Symptom:** `vn_status` runs OK, but `vn_draft` / `vn_run` / `vn_meeting` reports `Method not found`.
+**Symptom:** `bd_status` runs OK, but `bd_draft` / `bd_run` / `bd_meeting` reports `Method not found`.
 
 **Root cause:** the code falls back to MCP sampling when there's no `DEEPSEEK_API_KEY` / `ANTHROPIC_API_KEY`. But the Claude Code tab doesn't implement the MCP sampling protocol → `Method not found`.
 
@@ -1408,7 +1408,7 @@ There are **2 different causes** for the same error message:
    DEEPSEEK_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxx
    ```
 2. **Verify the key loads**: in Claude Code chat:
-   > Run vn_status with vault F:\vaults\<Company>
+   > Run bd_status with vault F:\vaults\<Company>
    → The `tools_live` field should have `industry_benchmark`, `tax_calculator`. If both are missing → `.env` didn't load.
 3. **Quit + restart Claude Desktop** from the tray (Step 8.3) so the MCP server picks up the new env vars.
 
@@ -1416,17 +1416,17 @@ There are **2 different causes** for the same error message:
 
 **Symptom:** you edited a `.py` file in the repo, restarted Claude Desktop, called a tool — still the old code.
 
-**Root cause:** the old `vn-os-mcp.exe` process is still running in the background (Claude Desktop "close" only minimizes to the tray).
+**Root cause:** the old `bd-os-mcp.exe` process is still running in the background (Claude Desktop "close" only minimizes to the tray).
 
 **Fix:**
 ```powershell
 # 1. Kill all old MCP processes
-Get-Process vn-os-mcp -ErrorAction SilentlyContinue | Stop-Process -Force
+Get-Process bd-os-mcp -ErrorAction SilentlyContinue | Stop-Process -Force
 
 # 2. Quit Claude Desktop from the tray (right-click icon → Quit)
 
 # 3. Verify
-Get-Process claude, vn-os-mcp -ErrorAction SilentlyContinue | Measure-Object | Select-Object -ExpandProperty Count
+Get-Process claude, bd-os-mcp -ErrorAction SilentlyContinue | Measure-Object | Select-Object -ExpandProperty Count
 # → must be 0
 
 # 4. Reopen Claude Desktop → click the "</> Code" tab
@@ -1434,25 +1434,25 @@ Get-Process claude, vn-os-mcp -ErrorAction SilentlyContinue | Measure-Object | S
 
 ### Error 4.6: Code edits don't take effect because the install points to another folder
 
-**Symptom:** you edit files in `F:\.work\vn-one-person-company\` but the MCP server still loads old code from another folder (e.g. an OneDrive copy).
+**Symptom:** you edit files in `F:\.work\bd-business-os\` but the MCP server still loads old code from another folder (e.g. an OneDrive copy).
 
 **How to check:**
 ```powershell
 python -c "import json; from pathlib import Path; p = Path([d for d in __import__('site').getsitepackages() + [__import__('site').getusersitepackages()] if (Path(d) / 'vn_one_person_company-0.2.0.dist-info').exists()][0]) / 'vn_one_person_company-0.2.0.dist-info' / 'direct_url.json'; print(json.loads(p.read_text())['url'])"
 ```
 
-If the output is **not** `file:///F:/.work/vn-one-person-company` → it's loading from another folder.
+If the output is **not** `file:///F:/.work/bd-business-os` → it's loading from another folder.
 
 **Fix:**
 ```powershell
 # Uninstall the old one
-pip uninstall vn-business-os vn-one-person-company -y
+pip uninstall bd-business-os bd-business-os -y
 
 # Kill the MCP process (so the exe file isn't locked)
-Get-Process vn-os-mcp -ErrorAction SilentlyContinue | Stop-Process -Force
+Get-Process bd-os-mcp -ErrorAction SilentlyContinue | Stop-Process -Force
 
 # Reinstall from the right folder
-cd "F:\.work\vn-one-person-company"
+cd "F:\.work\bd-business-os"
 pip install -e .
 
 # Quit + restart Claude Desktop from the tray
@@ -1460,7 +1460,7 @@ pip install -e .
 
 ### Error 5: DeepSeek `API key invalid`
 
-**Symptom:** `vn_run` / `vn_draft` reports `Authentication failed`.
+**Symptom:** `bd_run` / `bd_draft` reports `Authentication failed`.
 
 **Fix:**
 1. Open `F:\vaults\<Company>\.env`, check `DEEPSEEK_API_KEY=sk-...` is the right key.
@@ -1509,12 +1509,12 @@ A "living" Brain → every new task reflects the company's current situation, no
 
 A good brief = fewer clarification questions = the right output the first time.
 
-### Tip 4: Use `vn_draft` for simple docs, the full pipeline for big decisions
+### Tip 4: Use `bd_draft` for simple docs, the full pipeline for big decisions
 
 | Task | Tool to use |
 |---|---|
-| Offer letter, JD, work rules, receipt, meeting invite, simple SOP | `vn_draft` |
-| Strategic analysis, opening a location, big budget, rebrand | Full pipeline (`vn_run → meeting → approve → execute`) |
+| Offer letter, JD, work rules, receipt, meeting invite, simple SOP | `bd_draft` |
+| Strategic analysis, opening a location, big budget, rebrand | Full pipeline (`bd_run → meeting → approve → execute`) |
 | High legal stakes (big partner contracts, IPO docs) | Full pipeline + hire a lawyer to review |
 
 ### Tip 5: At the end of a session, archive old tasks
@@ -1552,11 +1552,11 @@ When you pull a new version of the repo, or edit Python code yourself:
 
 ```powershell
 # 1. Pull the new version (if using git)
-cd "F:\.work\vn-one-person-company"
+cd "F:\.work\bd-business-os"
 git pull
 
 # 2. Kill old MCP processes
-Get-Process vn-os-mcp -ErrorAction SilentlyContinue | Stop-Process -Force
+Get-Process bd-os-mcp -ErrorAction SilentlyContinue | Stop-Process -Force
 
 # 3. (If pyproject.toml changed) reinstall:
 pip install -e .
@@ -1564,7 +1564,7 @@ pip install -e .
 # 4. Quit Claude Desktop from the tray (right-click icon → Quit)
 
 # 5. Reopen Claude Desktop → Code tab → test:
-#    "Run vn_status with vault F:\vaults\<Company>"
+#    "Run bd_status with vault F:\vaults\<Company>"
 ```
 
 > ⚠️ **Skipping any step can cause "code edits do nothing."** Especially step 2 (kill MCP) and step 4 (Quit tray) — these are the 2 students forget most.
@@ -1576,10 +1576,10 @@ pip install -e .
 ### Run the MCP server in debug mode
 
 ```powershell
-cd "F:\.work\vn-one-person-company"
+cd "F:\.work\bd-business-os"
 .\.venv\Scripts\Activate.ps1
 $env:MCP_DEBUG = "1"
-vn-os-mcp
+bd-os-mcp
 ```
 
 Logs print directly to the console → you can debug tool calls.
@@ -1611,11 +1611,11 @@ pytest docs/tests/ -k "your_pack" -v
 
 ### Contribute
 
-PR at https://github.com/<owner>/vn-one-person-company. Especially needed:
+PR at https://github.com/<owner>/bd-business-os. Especially needed:
 - New packs: Real Estate, Healthcare, Education, Beauty
 - Glossary: add terms
 - Test coverage: real-LLM E2E
 
 ---
 
-**Problem with Parts 1-6?** Open an issue at: https://github.com/<owner>/vn-one-person-company/issues
+**Problem with Parts 1-6?** Open an issue at: https://github.com/<owner>/bd-business-os/issues

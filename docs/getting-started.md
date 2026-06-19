@@ -20,8 +20,8 @@ A guide from zero to your first task. About **15-20 minutes** if you already hav
 ## Step 1 — Install the plugin
 
 ```powershell
-git clone https://github.com/<owner>/<repo>.git vn-business-os
-cd vn-business-os
+git clone https://github.com/<owner>/<repo>.git bd-business-os
+cd bd-business-os
 
 python -m venv .venv
 .venv\Scripts\activate                      # Windows
@@ -32,7 +32,7 @@ pip install -e .
 
 Verify:
 ```powershell
-vn-os --help
+bd-os --help
 # Shows: onboard, install-mcp, uninstall-mcp, ...
 ```
 
@@ -41,12 +41,12 @@ vn-os --help
 ## Step 2 — Install the MCP server into Claude Desktop
 
 ```powershell
-vn-os install-mcp
+bd-os install-mcp
 ```
 
 Output:
 ```
-✓ Installed MCP server 'vn-business-os'
+✓ Installed MCP server 'bd-business-os'
    Config: C:\Users\<you>\AppData\Roaming\Claude\claude_desktop_config.json
    Backup: ...claude_desktop_config.json.bak
 
@@ -60,7 +60,7 @@ Verify in a Claude Desktop chat:
 List the available MCP tools.
 ```
 
-You should see 9 tools: `vn_run`, `vn_resume`, `vn_meeting`, `vn_approve`, `vn_execute`, `vn_draft`, `vn_status`, `vn_onboard`, `vn_upgrade`.
+You should see 9 tools: `bd_run`, `bd_resume`, `bd_meeting`, `bd_approve`, `bd_execute`, `bd_draft`, `bd_status`, `bd_onboard`, `bd_upgrade`.
 
 ---
 
@@ -75,7 +75,7 @@ F:\work\division-vault
 My TAVILY_API_KEY: tvly-xxx
 ```
 
-Claude automatically calls `vn_onboard(vault=..., tavily_api_key="tvly-xxx")`.
+Claude automatically calls `bd_onboard(vault=..., tavily_api_key="tvly-xxx")`.
 
 The plugin will:
 1. Copy the vault scaffold (8 Brain files + 5 departments + division templates)
@@ -105,7 +105,7 @@ next_steps:
 **Required when you onboarded with a TAVILY_API_KEY** — so Claude Desktop launches the MCP with the env.
 
 ```powershell
-vn-os install-mcp --vault "F:\work\xyz-vault"
+bd-os install-mcp --vault "F:\work\xyz-vault"
 ```
 
 The output adds:
@@ -117,7 +117,7 @@ The output adds:
 
 Verify in a chat:
 ```
-vn_status vault F:\work\xyz-vault
+bd_status vault F:\work\xyz-vault
 ```
 
 You should see:
@@ -166,28 +166,28 @@ Budget about $20,000.
 
 The plugin runs the 5 stages automatically:
 
-### Stage 1: `vn_run` (router + clarification)
+### Stage 1: `bd_run` (router + clarification)
 - Classifies COMPLEX (3-5 departments debate)
 - Departments: `01-hardware-engineering`, `02-npi-program-management`, `03-quality-reliability`, `05-service-operations`
 - Creates `03-clarification.md` with 4 questions
 - → Open the file, answer the checkboxes
 
-### Stage 2: `vn_resume`
+### Stage 2: `bd_resume`
 - Reads the answers → continue
 
-### Stage 3: `vn_meeting`
+### Stage 3: `bd_meeting`
 - Live research: certification rules + hardware benchmarks
 - Intra-department round: each team gives its manager a short take, the manager synthesizes
 - 5 managers debate × Pro + Con + 3 perspectives (Growth/Cautious/Balanced)
 - Synthesizer + Translator + Citation validator → `07-decision-report.md`
 
-### Stage 4: `vn_approve`
+### Stage 4: `bd_approve`
 - Generates `08-execution-plan.md` with:
   - A tasks table (owner, deadline, deliverable)
   - A table of templates to render
   - Risks + mitigation + KPIs
 
-### Stage 5: `vn_execute`
+### Stage 5: `bd_execute`
 - Renders `.docx/.xlsx` from templates → `<vault>/03-Outputs/<task>/`
 - You open the folder, send it to the team
 

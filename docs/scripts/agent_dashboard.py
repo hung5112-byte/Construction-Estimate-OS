@@ -8,7 +8,7 @@ Data sources (all read-only):
     01-Departments/*/department.yaml   agents, managers, debate roles
     02-Tasks/*/                        pipeline stage detection by file presence
     03-Outputs/<task>/                 rendered deliverables (stage DONE)
-    .vn-usage.jsonl                    real token usage (logged by core/llm/usage_log.py)
+    .bd-usage.jsonl                    real token usage (logged by core/llm/usage_log.py)
 
 Re-run any time; the output file is fully regenerated. Schedule it or run it from the
 Obsidian terminal plugin for a refresh-on-demand workflow.
@@ -54,33 +54,33 @@ def detect_stage(task: Path, outputs_root: Path) -> tuple[str, str, str]:
         return (
             "⏸️ STOP 2 — execution plan awaits approval",
             "Department Head",
-            f"Review [[02-Tasks/{task.name}/08-execution-plan|execution plan]] → run `vn_execute`",
+            f"Review [[02-Tasks/{task.name}/08-execution-plan|execution plan]] → run `bd_execute`",
         )
     if has("07-decision-report.md"):
         return (
             "⏸️ STOP 1 — decision report awaits approval",
             "Department Head",
-            f"Review [[02-Tasks/{task.name}/07-decision-report|decision report]] → run `vn_approve`",
+            f"Review [[02-Tasks/{task.name}/07-decision-report|decision report]] → run `bd_approve`",
         )
     if has("03-clarification.md") and not has("03-clarification-answered.md"):
         return (
             "⏸️ CLARIFICATION — agents have questions",
             "Department Head",
-            f"Answer [[02-Tasks/{task.name}/03-clarification|clarification]] → run `vn_resume`",
+            f"Answer [[02-Tasks/{task.name}/03-clarification|clarification]] → run `bd_resume`",
         )
     if has("03b-research-findings.md") or has("04-meeting-r1-perspectives.md"):
         return (
             "🔄 MEETING incomplete",
             "system",
-            f"Re-run: `.venv\\Scripts\\vn-os.exe meeting \"02-Tasks\\{task.name}\"`",
+            f"Re-run: `.venv\\Scripts\\bd-os.exe meeting \"02-Tasks\\{task.name}\"`",
         )
     if has("01-routing.md"):
         return (
             "🔄 ROUTED — ready for meeting",
             "system",
-            f"Run: `.venv\\Scripts\\vn-os.exe meeting \"02-Tasks\\{task.name}\"`",
+            f"Run: `.venv\\Scripts\\bd-os.exe meeting \"02-Tasks\\{task.name}\"`",
         )
-    return "🆕 BRIEF only", "system", "Run `vn_run` to route"
+    return "🆕 BRIEF only", "system", "Run `bd_run` to route"
 
 
 def task_title(task: Path) -> str:
@@ -148,7 +148,7 @@ def agent_activity(vault: Path, depts: list[dict]) -> dict[str, dict]:
 
 
 def read_usage(vault: Path) -> list[dict]:
-    log = vault / ".vn-usage.jsonl"
+    log = vault / ".bd-usage.jsonl"
     if not log.exists():
         return []
     records = []
@@ -275,7 +275,7 @@ generated: {now}
 |---|---|---|
 {chr(10).join(pipeline_rows) if pipeline_rows else "| — | no tasks yet | |"}
 
-Pipeline: `vn_run` → *(clarify?)* → `vn_meeting` → **Stop 1** `vn_approve` → **Stop 2** `vn_execute` → `.docx/.xlsx`
+Pipeline: `bd_run` → *(clarify?)* → `bd_meeting` → **Stop 1** `bd_approve` → **Stop 2** `bd_execute` → `.docx/.xlsx`
 
 ## 🔢 Token usage
 
@@ -285,7 +285,7 @@ Pipeline: `vn_run` → *(clarify?)* → `vn_meeting` → **Stop 1** `vn_approve`
 
 - **Total logged cost ≈ ${total_cost:.2f}** (rates in `docs/scripts/agent_dashboard.py` → RATES; edit to your contract)
 - Historical artifacts (pre-logging) estimated at chars/4: **~{est_total_out:,} generated tokens** across all task folders
-- Real per-call logging: `.vn-usage.jsonl` (gitignored), written by every provider in `core/llm/providers.py`
+- Real per-call logging: `.bd-usage.jsonl` (gitignored), written by every provider in `core/llm/providers.py`
 
 ## 🤖 Agents
 

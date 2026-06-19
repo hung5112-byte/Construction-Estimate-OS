@@ -61,7 +61,7 @@ class ClaudeProvider:
 class MCPSamplingProvider:
     """LLM provider routing complete() through the MCP sampling protocol.
 
-    Lets vn-business-os run inside a Claude Desktop / Code session,
+    Lets bd-business-os run inside a Claude Desktop / Code session,
     using the subscription instead of an API key.
 
     Spec: https://modelcontextprotocol.io/docs/concepts/sampling

@@ -42,19 +42,19 @@ A **division manager** at a Texas electronics company who owns hardware product 
 ┌────────────────────────────────────────────────────────────────┐
 │  Manager chats in Claude Desktop / Code                        │
 │              ↓                                                  │
-│  vn_run(brief) → Router classifies → Read the division Brain  │
+│  bd_run(brief) → Router classifies → Read the division Brain  │
 │              ↓                                                  │
 │  Detect a gap → Ask clarification (cites the Brain)           │
 │              ↓                                                  │
-│  vn_meeting → Live research (law, benchmarks, competitors)    │
+│  bd_meeting → Live research (law, benchmarks, competitors)    │
 │              ↓                                                  │
 │  5 departments meet → Pro/Con debate → 3 perspectives         │
 │              ↓                                                  │
 │  Synthesizer + Translator (plain English) + Citation validator│
 │              ↓                                                  │
-│  vn_approve → Structured execution plan                        │
+│  bd_approve → Structured execution plan                        │
 │              ↓                                                  │
-│  vn_execute → Render .docx/.xlsx → 03-Outputs/                │
+│  bd_execute → Render .docx/.xlsx → 03-Outputs/                │
 │              ↓                                                  │
 │  Auto-commit to a private Git repo (Obsidian vault)           │
 └────────────────────────────────────────────────────────────────┘
@@ -107,7 +107,7 @@ Choose one of two clients depending on what you use:
 **A) Claude Desktop** (GUI app)
 
 ```powershell
-vn-os install-mcp
+bd-os install-mcp
 # Fully restart Claude Desktop (Quit from the taskbar → reopen)
 # Click the "</> Code" tab at the top right
 ```
@@ -116,12 +116,12 @@ vn-os install-mcp
 
 ```bash
 bash docs/adapters/claude-code/install.sh
-# Automatically: installs the `vn-business-os` skill + registers the MCP in ~/.claude.json
+# Automatically: installs the `bd-business-os` skill + registers the MCP in ~/.claude.json
 ```
 
 Or manually:
 ```powershell
-vn-os install-mcp --target claude-code
+bd-os install-mcp --target claude-code
 ```
 
 > 💡 On Windows with Claude Code: run `install.sh` via Git Bash or WSL. Or use the manual command above.
@@ -135,17 +135,17 @@ Set up a vault for my hardware division at the path F:/work/division-vault.
 My TAVILY_API_KEY: tvly-xxx (get a free one at tavily.com).
 ```
 
-Claude automatically calls the MCP tool `vn_onboard` to create the vault scaffold + save the key to `<vault>/.env` (gitignored).
+Claude automatically calls the MCP tool `bd_onboard` to create the vault scaffold + save the key to `<vault>/.env` (gitignored).
 
 ### 4. Re-install the MCP with the env injected
 
 ```powershell
 # Claude Desktop
-vn-os install-mcp --vault "F:/work/division-vault"
+bd-os install-mcp --vault "F:/work/division-vault"
 # Restart Claude Desktop again
 
 # Claude Code
-vn-os install-mcp --vault "F:/work/division-vault" --target claude-code
+bd-os install-mcp --vault "F:/work/division-vault" --target claude-code
 # Restart the Claude Code session
 ```
 

@@ -1,5 +1,5 @@
 {
-  "name": "vn-business-os",
+  "name": "bd-business-os",
   "version": "0.1.0",
   "description": "AI agent OS for a US small business — departments debate and generate .docx/.xlsx documents aligned with US federal + Texas law. Powered by a Python + LangGraph backend.",
   "author": {

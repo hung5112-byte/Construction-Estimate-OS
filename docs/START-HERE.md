@@ -39,7 +39,7 @@ After answering the 4 questions, do NOTHING more. Wait until I say "OK, correct,
 
 Step 4 — Implementation:
 When I confirm, use the skill `superpowers:subagent-driven-development` to run Phase 1.
-Create the root repo RIGHT HERE in the current folder (do NOT create a vn-business-os subfolder).
+Create the root repo RIGHT HERE in the current folder (do NOT create a bd-business-os subfolder).
 
 NOTE:
 - I am the Department Head/owner (your-email@example.com)
@@ -100,7 +100,7 @@ Hardware Division OS/
 | ❌ DON'T | ✅ DO |
 |---|---|
 | Skip reading DECISIONS.md because "I think I know" | Read the 6 RULES carefully, be able to cite them |
-| Create a `vn-business-os/` subfolder | Create directly in the CWD (`Hardware Division OS/`) |
+| Create a `bd-business-os/` subfolder | Create directly in the CWD (`Hardware Division OS/`) |
 | Make up numbers / US law | Search live via tools (RULE 5) |
 | Output in another language or full jargon | Plain English + definitions + TL;DR (RULE 4) |
 | Skip the 6-RULES check on each commit | Run `docs/scripts/dev/check-domain-neutral.sh` |
@@ -136,14 +136,14 @@ cd "<path>/Hardware Division OS"
 
 # 1. pip install
 pip install -e .
-# expect: Successfully installed vn-business-os-0.1.0
+# expect: Successfully installed bd-business-os-0.1.0
 
 # 2. CLI works
-vn-os --version
+bd-os --version
 # expect: 0.1.0
 
 # 3. Brain reader works
-vn-os status --vault docs/tests/fixtures/demo-vault
+bd-os status --vault docs/tests/fixtures/demo-vault
 # expect: green checks for Brain
 
 # 4. Smoke test passes

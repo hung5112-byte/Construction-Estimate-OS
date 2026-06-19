@@ -22,7 +22,7 @@
 | Decision | Choice applied |
 |---|---|
 | Backups | Full-tree snapshot of the Vietnamese originals (kept outside the working tree) |
-| Code identifiers | Kept the MCP/package contract (`vn_run`…, `vn-business-os`, `vn-os`); anglicized internals (`vn_law_search`→`us_law_search`, `vn_local_regulation`→`us_local_regulation`, `*_vnd`→`*_usd`, `benchmarks-vn.yaml`→`benchmarks-us.yaml`) |
+| Code identifiers | Kept the MCP/package contract (`bd_run`…, `bd-business-os`, `bd-os`); anglicized internals (`vn_law_search`→`us_law_search`, `vn_local_regulation`→`us_local_regulation`, `*_vnd`→`*_usd`, `benchmarks-vn.yaml`→`benchmarks-us.yaml`) |
 | TX locale | State-level only (texas.gov / Comptroller / SOS / TWC / DSHS / TDLR; "City, TX") |
 | Display name | "Hardware Division OS" |
 | MODORO footer | Keep credit + link, translate the label (applied to all 192 templates) |
@@ -153,7 +153,7 @@ The following are **internal developer build-logs** (step-by-step implementation
 **Recommendation:** translate these in a focused follow-up pass; collapse the `-vn` report duplicates into their English twins (a deletion — held back here per your "show a diff before deleting" stop condition).
 
 ### Directory/filename rename ✅ DONE (06/09/2026)
-The directory is renamed **`templates-vn/` → `templates-us/`** and all **178 Vietnamese-slugged files renamed to English slugs** derived from each template's translated title (14 already had English names; 192 total, zero collisions). The full old→new map is recorded at `plans/reports/template-rename-map.json`. All ~30 referencing files updated (`document_executor.py`, `template_resolver.py`, smoke/e2e/unit tests, CLAUDE.md, README, docs, adapters skill files, `.gitignore`, vendor script, plans). Test mocks updated from VN names to `business-plan`/`annual-budget`/etc. **This closed the one critical post-translation runtime break found in review:** the execution-planner LLM emits English template names, and the resolver substring-matches file stems — with Vietnamese stems, every `vn_execute` document render would have been silently skipped. `scripts/dev/vendor-bb-plugin.sh` now carries a do-not-re-run warning (re-running would restore Vietnamese-named files from the upstream zip). Suite re-verified: **273 passed, 3 skipped, 1 pre-existing git-tag failure** (unchanged).
+The directory is renamed **`templates-vn/` → `templates-us/`** and all **178 Vietnamese-slugged files renamed to English slugs** derived from each template's translated title (14 already had English names; 192 total, zero collisions). The full old→new map is recorded at `plans/reports/template-rename-map.json`. All ~30 referencing files updated (`document_executor.py`, `template_resolver.py`, smoke/e2e/unit tests, CLAUDE.md, README, docs, adapters skill files, `.gitignore`, vendor script, plans). Test mocks updated from VN names to `business-plan`/`annual-budget`/etc. **This closed the one critical post-translation runtime break found in review:** the execution-planner LLM emits English template names, and the resolver substring-matches file stems — with Vietnamese stems, every `bd_execute` document render would have been silently skipped. `scripts/dev/vendor-bb-plugin.sh` now carries a do-not-re-run warning (re-running would restore Vietnamese-named files from the upstream zip). Suite re-verified: **273 passed, 3 skipped, 1 pre-existing git-tag failure** (unchanged).
 
 ### Review-pass doc fixes (06/09/2026)
 - `README-USER.md` — products example switched to whole-dollar prices (the Brain parser strips `.`/`,`, so `3.50` would have been stored as `350`); header matched to the shipped vault-template (`Code | Name | Price | Margin | Status`); citation-warning section title matched to the validator's actual output.
@@ -164,7 +164,7 @@ The directory is renamed **`templates-vn/` → `templates-us/`** and all **178 V
 ### Out of scope / untouched (per your constraints)
 - `references/business-builder.plugin` (vendored upstream blob).
 - `LICENSE`, lockfiles, `.env`/secrets, build artifacts, `.git/`.
-- The MCP tool names / package slug / `vn-os` CLI (API contract — kept by design).
+- The MCP tool names / package slug / `bd-os` CLI (API contract — kept by design).
 
 ---
 

@@ -1,4 +1,4 @@
-"""CLI entry: vn-os <command>."""
+"""CLI entry: bd-os <command>."""
 from __future__ import annotations
 import sys
 
@@ -45,10 +45,10 @@ def run(brief_arg, brief_opt, vault):
     """Run a task through the orchestrator (Stage 1: brief → clarification).
 
     Usage (short syntax — recommended):
-      vn-os run "Draft an RMA intake SOP, 10-business-day turnaround"
+      bd-os run "Draft an RMA intake SOP, 10-business-day turnaround"
 
     Or the long syntax (backward compat):
-      vn-os run --vault . --brief "Draft an RMA intake SOP..."
+      bd-os run --vault . --brief "Draft an RMA intake SOP..."
     """
     from pathlib import Path
     from core.orchestrator.flow_controller import FlowController, FlowStage
@@ -58,9 +58,9 @@ def run(brief_arg, brief_opt, vault):
     brief = brief_arg or brief_opt
     if not brief:
         console.print("[red]✗ Missing brief. Use:[/]")
-        console.print('  [cyan]vn-os run "Your brief text"[/]')
+        console.print('  [cyan]bd-os run "Your brief text"[/]')
         console.print("Or:")
-        console.print('  [cyan]vn-os run --brief "Your brief text"[/]')
+        console.print('  [cyan]bd-os run --brief "Your brief text"[/]')
         return
 
     from core.utils.config import apply_vault_env_to_os
@@ -75,7 +75,7 @@ def run(brief_arg, brief_opt, vault):
         console.print(f"   {result.message}")
         console.print(f"\n[bold]Next:[/] open {result.task_folder}/03-clarification.md, "
                       f"tick your answers, save the file. Then run:")
-        console.print(f"  [cyan]vn-os resume {result.task_folder}[/]")
+        console.print(f"  [cyan]bd-os resume {result.task_folder}[/]")
     elif result.stage == FlowStage.ERROR:
         console.print(f"[red]✗ {result.error}[/]")
     else:
@@ -188,7 +188,7 @@ def onboard(vault):
     help="Host to register the MCP server with",
 )
 def install_mcp_cmd(vault, target):
-    """Install vn-business-os as MCP server (Claude Desktop + Claude Code).
+    """Install bd-business-os as MCP server (Claude Desktop + Claude Code).
 
     Registers with both by default. Use --target to choose one.
     After installing, restart Claude Desktop / Claude Code to load the server.
@@ -231,7 +231,7 @@ def install_mcp_cmd(vault, target):
     help="Host to remove the MCP server from",
 )
 def uninstall_mcp_cmd(target):
-    """Remove vn-business-os MCP server entry from config(s)."""
+    """Remove bd-business-os MCP server entry from config(s)."""
     from core.install_mcp import uninstall, get_config_path, get_claude_code_config_path
 
     targets = []

@@ -1,12 +1,12 @@
 # Claude Cowork Plugin Adapter
 
-Plugin for Claude Cowork. Bundles the `vn-business-os` skill into a `.plugin` package you can install into a Cowork workspace.
+Plugin for Claude Cowork. Bundles the `bd-business-os` skill into a `.plugin` package you can install into a Cowork workspace.
 
 ## Prerequisites
 
 ```bash
-pip install vn-business-os
-vn-os install-mcp        # auto-edit Claude config (Desktop / Code)
+pip install bd-business-os
+bd-os install-mcp        # auto-edit Claude config (Desktop / Code)
 # Restart Claude
 ```
 
@@ -16,14 +16,14 @@ vn-os install-mcp        # auto-edit Claude config (Desktop / Code)
 bash adapters/claude-cowork/build-plugin.sh
 ```
 
-Output: `vn-business-os.plugin`, ready to install into a Cowork workspace.
+Output: `bd-business-os.plugin`, ready to install into a Cowork workspace.
 
 ## Verify
 
 After installing the plugin into Cowork, type naturally about a business task:
 > Create an ad campaign targeting high-income individuals
 
-Cowork will activate the `vn-business-os` skill and call the 9 MCP tools (`vn_status`, `vn_run`, `vn_resume`, `vn_meeting`, `vn_approve`, `vn_execute`, `vn_draft`, `vn_onboard`, `vn_upgrade`).
+Cowork will activate the `bd-business-os` skill and call the 9 MCP tools (`bd_status`, `bd_run`, `bd_resume`, `bd_meeting`, `bd_approve`, `bd_execute`, `bd_draft`, `bd_onboard`, `bd_upgrade`).
 
 ## Notes
 

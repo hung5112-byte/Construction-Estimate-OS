@@ -18,8 +18,8 @@
 
 ```bash
 # Clone locally
-git clone https://github.com/andyluu98/vn-one-person-company.git
-cd vn-one-person-company
+git clone https://github.com/andyluu98/bd-business-os.git
+cd bd-business-os
 
 # Create a virtual env (recommended)
 python -m venv .venv
@@ -32,7 +32,7 @@ pip install -e .
 
 Verify:
 ```bash
-vn-os --help
+bd-os --help
 # → prints the command list: install-mcp, ...
 ```
 
@@ -47,37 +47,37 @@ bash docs/adapters/claude-code/install.sh
 ```
 
 The script does 2 things:
-1. Copies `skill.md` → `~/.claude/skills/vn-business-os/SKILL.md`
-2. Runs `vn-os install-mcp --target claude-code` → adds a `vn-business-os` entry to `~/.claude.json`
+1. Copies `skill.md` → `~/.claude/skills/bd-business-os/SKILL.md`
+2. Runs `bd-os install-mcp --target claude-code` → adds a `bd-business-os` entry to `~/.claude.json`
 
 ### Option B — Manual (Windows PowerShell, no Git Bash)
 
 ```powershell
 # 1: Create the skill folder
-mkdir "$env:USERPROFILE\.claude\skills\vn-business-os" -Force
+mkdir "$env:USERPROFILE\.claude\skills\bd-business-os" -Force
 
 # 2: Copy the skill file
-Copy-Item adapters\claude-code\skill.md "$env:USERPROFILE\.claude\skills\vn-business-os\SKILL.md"
+Copy-Item adapters\claude-code\skill.md "$env:USERPROFILE\.claude\skills\bd-business-os\SKILL.md"
 
 # 3: Register the MCP server
-vn-os install-mcp --target claude-code
+bd-os install-mcp --target claude-code
 ```
 
 ### Verify the install
 
 ```bash
 # Check the skill was copied
-ls ~/.claude/skills/vn-business-os/SKILL.md     # Linux/macOS
-dir "$env:USERPROFILE\.claude\skills\vn-business-os\SKILL.md"   # Windows
+ls ~/.claude/skills/bd-business-os/SKILL.md     # Linux/macOS
+dir "$env:USERPROFILE\.claude\skills\bd-business-os\SKILL.md"   # Windows
 
 # Check the MCP was registered
-cat ~/.claude.json | grep -A 3 "vn-business-os"
+cat ~/.claude.json | grep -A 3 "bd-business-os"
 ```
 
 You should see an entry like:
 ```json
-"vn-business-os": {
-  "command": "vn-os-mcp"
+"bd-business-os": {
+  "command": "bd-os-mcp"
 }
 ```
 
@@ -104,8 +104,8 @@ Set up a Hardware Division vault for my division.
 ```
 
 **Claude will:**
-1. Detect the `vn-business-os` skill is active (because of the keyword "Set up a ... vault")
-2. Call the MCP tool `vn_onboard(vault="F:/work/division-vault")`
+1. Detect the `bd-business-os` skill is active (because of the keyword "Set up a ... vault")
+2. Call the MCP tool `bd_onboard(vault="F:/work/division-vault")`
 3. The tool creates the scaffold:
    ```
    F:/work/division-vault/
@@ -126,7 +126,7 @@ Set up a Hardware Division vault for my division.
 **After the vault has a Tavily key**, run the inject-env command again:
 
 ```bash
-vn-os install-mcp --target claude-code --vault "F:/work/division-vault"
+bd-os install-mcp --target claude-code --vault "F:/work/division-vault"
 ```
 
 This reads `<vault>/.env` and injects it into the MCP server entry in `~/.claude.json` → the search tools have credentials available and won't skip silently. **Restart Claude Code once more.**
@@ -173,8 +173,8 @@ This is the **standard flow** the user will see. Show it to users first so they 
 > Pilot 500 units of the PayTerm 500 with our top retail customer. Budget $20,000, ship before 06/30. Vault: F:/work/division-vault
 
 **Claude (automatically):**
-1. Calls `vn_status(vault="F:/work/division-vault")` → verifies the Brain
-2. Calls `vn_run(brief, vault)` → the tool returns `{"stage": "PAUSE_CLARIFICATION", "task_folder": "F:/work/division-vault/02-Tasks/260530-2340-pilot-deployment/"}`
+1. Calls `bd_status(vault="F:/work/division-vault")` → verifies the Brain
+2. Calls `bd_run(brief, vault)` → the tool returns `{"stage": "PAUSE_CLARIFICATION", "task_folder": "F:/work/division-vault/02-Tasks/260530-2340-pilot-deployment/"}`
 3. Reads `03-clarification.md` in the task folder
 4. **Asks the user (in plain English, citing the Brain)**:
 
@@ -201,7 +201,7 @@ Do you choose (a) or (b) for question 1?
 
 **Claude:**
 5. Ticks `[x]` in `03-clarification.md` for the user's choices
-6. Calls `vn_resume(task_folder)` → continues to Stage 2
+6. Calls `bd_resume(task_folder)` → continues to Stage 2
 
 ---
 
@@ -210,7 +210,7 @@ Do you choose (a) or (b) for question 1?
 **Claude (auto, no user action needed):**
 
 1. Reports: *"Starting a meeting of 5 departments: Hardware PD, Supply Chain, Quality, Operations, RMA. Takes about 5-8 minutes."*
-2. Calls `vn_meeting(task_folder)` — the tool runs:
+2. Calls `bd_meeting(task_folder)` — the tool runs:
    - Research phase (Tavily searches certification rules, hardware benchmarks)
    - 3 perspectives in parallel (Growth / Cautious / Balanced)
    - 2-3 rounds of Pro/Con debate
@@ -249,7 +249,7 @@ Do you approve this plan? (approve / revise / reject)
 > Approve, stage wave 2 via the Texas warehouse
 
 **Claude:**
-1. Calls `vn_approve(task_folder)`
+1. Calls `bd_approve(task_folder)`
 2. The tool generates `08-execution-plan.md`
 3. Reports: *"Plan approved. Generate the .docx/.xlsx files?"*
 
@@ -261,7 +261,7 @@ Do you approve this plan? (approve / revise / reject)
 ### Stage 4: Execute → render files
 
 **Claude:**
-1. Calls `vn_execute(task_folder)`
+1. Calls `bd_execute(task_folder)`
 2. The tool renders:
    - `field-deployment-checklist.docx` — site install + acceptance
    - `rma-process-sop.docx` — the pilot's returns lane
@@ -275,7 +275,7 @@ Do you approve this plan? (approve / revise / reject)
 
 ## Troubleshooting
 
-### Error: `vn-os: command not found`
+### Error: `bd-os: command not found`
 
 The venv isn't activated, or you haven't run `pip install -e .`. Run:
 ```bash
@@ -285,7 +285,7 @@ pip install -e .
 
 ### Error: MCP server doesn't appear in Claude Code
 
-1. Check `~/.claude.json` has a `vn-business-os` entry
+1. Check `~/.claude.json` has a `bd-business-os` entry
 2. Restart Claude Code (close the terminal, reopen)
 3. Run `claude --mcp-debug` to see the log
 
@@ -293,7 +293,7 @@ pip install -e .
 
 The Tavily key isn't injected. Re-run:
 ```bash
-vn-os install-mcp --target claude-code --vault "<path-to-vault>"
+bd-os install-mcp --target claude-code --vault "<path-to-vault>"
 ```
 Then restart Claude Code.
 
@@ -314,7 +314,7 @@ Then restart Claude Code.
 ```
 Set up a vault for company XYZ at path ... before running a task.
 ```
-Or call `vn_onboard` directly via the MCP tool.
+Or call `bd_onboard` directly via the MCP tool.
 
 ### Windows: `bash: command not found` when running `install.sh`
 
@@ -331,8 +331,8 @@ Before class, verify each student has:
 - [ ] Installed Git (+ Git Bash on Windows)
 - [ ] A Tavily API key (free tier)
 - [ ] Cloned the repo + run `pip install -e .` successfully
-- [ ] Run `vn-os --help` and seen the command list
-- [ ] Run `install.sh` (or Option B) — verified `~/.claude.json` has a `vn-business-os` entry
+- [ ] Run `bd-os --help` and seen the command list
+- [ ] Run `install.sh` (or Option B) — verified `~/.claude.json` has a `bd-business-os` entry
 - [ ] Restarted Claude Code
 - [ ] Created a test vault + filled in a sample Brain (can use the bundled demo vault)
 - [ ] Run one SIMPLE task to verify end-to-end (e.g. "Draft a JD for a software developer at $90k")

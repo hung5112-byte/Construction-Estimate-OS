@@ -2,7 +2,7 @@
 
 > **Ship date:** 2026-05-06
 > **Tag:** `v0.2.0` + `phase-07-mcp-sampling`
-> **Goal:** Let vn-business-os run via a Claude Desktop / Code subscription, WITHOUT an ANTHROPIC_API_KEY
+> **Goal:** Let bd-business-os run via a Claude Desktop / Code subscription, WITHOUT an ANTHROPIC_API_KEY
 
 ## Answer for the Department Head
 
@@ -15,7 +15,7 @@ To the question: "How do we keep 100% of v1 and only change the LLM-call mechani
 | File | Role |
 |---|---|
 | `core/llm/providers.py` (extend) | `MCPSamplingProvider` class — routes complete() via MCP `session.create_message()` |
-| `core/mcp_server.py` (new) | FastMCP server exposing 7 tools: vn_run, vn_resume, vn_meeting, vn_approve, vn_execute, vn_status, vn_onboard |
+| `core/mcp_server.py` (new) | FastMCP server exposing 7 tools: bd_run, bd_resume, bd_meeting, bd_approve, bd_execute, bd_status, bd_onboard |
 | `core/install_mcp.py` (new) | Auto-edit Claude Desktop's `claude_desktop_config.json` (cross-platform: Win/Mac/Linux) |
 | `adapters/claude-code/skill.md` (rewrite) | Skill file using the 7 MCP tools instead of the subprocess CLI |
 
@@ -38,11 +38,11 @@ To the question: "How do we keep 100% of v1 and only change the LLM-call mechani
 ```
 User chats in English in Claude Desktop
   ↓
-The `vn-business-os` skill activates
+The `bd-business-os` skill activates
   ↓
-Claude (subscription) calls the MCP tool: vn_run(brief, vault)
+Claude (subscription) calls the MCP tool: bd_run(brief, vault)
   ↓ via MCP protocol
-core/mcp_server.py:vn_run handler
+core/mcp_server.py:bd_run handler
   ↓ instantiate
 FlowController(vault_root, llm=MCPSamplingProvider(ctx.session))
   ↓ run pipeline (Router, GapAnalyzer, ...)
@@ -64,8 +64,8 @@ Claude shows the Department Head a summary in English
 ## Department Head one-time setup
 
 ```bash
-pip install vn-business-os         # or pipx install vn-business-os
-vn-os install-mcp                  # auto-edit claude_desktop_config.json
+pip install bd-business-os         # or pipx install bd-business-os
+bd-os install-mcp                  # auto-edit claude_desktop_config.json
 # Restart Claude Desktop
 bash adapters/claude-code/install.sh    # install the skill (optional)
 ```
@@ -100,10 +100,10 @@ Full suite: **126 passed + 1 skipped** (after T5).
 
 If a later session hits an MCP error:
 
-1. **Verify install**: `cat ~/.config/Claude/claude_desktop_config.json` (Mac/Linux) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows). Must have a `vn-business-os` entry.
-2. **Test server start**: `vn-os-mcp` (or `python -m core.mcp_server`) — should listen on stdio.
-3. **Re-install**: `vn-os install-mcp` (idempotent).
-4. **Uninstall + clean**: `vn-os uninstall-mcp` → manually edit config → restart.
+1. **Verify install**: `cat ~/.config/Claude/claude_desktop_config.json` (Mac/Linux) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows). Must have a `bd-business-os` entry.
+2. **Test server start**: `bd-os-mcp` (or `python -m core.mcp_server`) — should listen on stdio.
+3. **Re-install**: `bd-os install-mcp` (idempotent).
+4. **Uninstall + clean**: `bd-os uninstall-mcp` → manually edit config → restart.
 
 ## Open questions
 

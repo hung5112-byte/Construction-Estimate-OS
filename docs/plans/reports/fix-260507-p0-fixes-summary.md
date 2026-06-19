@@ -12,12 +12,12 @@
 → **Fixed:**
 - New `onboard_vault(api_keys={...})` param
 - CLI wizard asks for `TAVILY_API_KEY` + `ANTHROPIC_API_KEY` (password input)
-- MCP tool `vn_onboard` gains 4 params: `tavily_api_key`, `anthropic_api_key`, `google_api_key`, `openai_api_key`
+- MCP tool `bd_onboard` gains 4 params: `tavily_api_key`, `anthropic_api_key`, `google_api_key`, `openai_api_key`
 - Saved to `<vault>/.env` (auto-adds `.env` to `.gitignore`)
 
 ### ❌ "Search functionality doesn't work"
 **PARTIALLY CORRECT:**
-- Search WAS wired into `vn_meeting` (calls `ResearchPhase.run()` before the meeting)
+- Search WAS wired into `bd_meeting` (calls `ResearchPhase.run()` before the meeting)
 - BUT the 4 Tavily tools (web/law/local/competitor) hit auth errors without a key → caught silently → the meeting continued with empty findings → a silent RULE 5 violation
 - The 2 tools that need no key (`industry_benchmark`, `tax_calculator`) still worked
 
@@ -25,7 +25,7 @@
 - The 4 Tavily tools now have an `is_available()` check
 - When the key is missing: return `ToolResult(data={"skipped": True}, notes="Missing TAVILY_API_KEY...")` instead of crashing
 - ToolRouter only plans tools that have credentials (no wasted LLM tokens)
-- `vn_status` reports `tools_live` + `tools_skipped` so the Department Head knows up front
+- `bd_status` reports `tools_live` + `tools_skipped` so the Department Head knows up front
 
 ---
 
@@ -53,9 +53,9 @@
 
 ### P2 (3 bugs) — Polish later
 
-- Multi-turn `vn_onboard` via MCP elicitation
+- Multi-turn `bd_onboard` via MCP elicitation
 - Router JSON mode for deterministic parsing
-- `tool_cache.db` per-vault (currently `~/.vn-business-os/`)
+- `tool_cache.db` per-vault (currently `~/.bd-business-os/`)
 
 ---
 
@@ -71,7 +71,7 @@
 - `core/orchestrator/execution_planner.py` — NEW (LLM generates 08-execution-plan.md)
 - `core/orchestrator/document_executor.py` — NEW (DocWriter + TemplateResolver wired)
 - `core/onboard.py` — api_keys param
-- `core/mcp_server.py` — vn_onboard 4 key params, vn_status tool availability, _make_fc auto-loads env
+- `core/mcp_server.py` — bd_onboard 4 key params, bd_status tool availability, _make_fc auto-loads env
 - `core/install_mcp.py` — vault_path env injection
 - `core/cli.py` — install-mcp --vault flag
 - `scripts/onboard.py` — interactive API key prompts (password input)
@@ -92,19 +92,19 @@
 In chat: "Set up a vault for company XYZ at the path F:/.../my-company.
 Install the F&B pack. My Tavily API key is: tvly-xxx"
 ```
-→ Claude calls `vn_onboard(vault=..., packs=["fnb"], tavily_api_key="tvly-xxx")`
+→ Claude calls `bd_onboard(vault=..., packs=["fnb"], tavily_api_key="tvly-xxx")`
 → The key is saved to `<vault>/.env`, and `.gitignore` excludes the file
 
 ### After onboarding, inject env into the MCP server
 **Important step:** after saving the key, re-install MCP so Claude Desktop launches with the env:
 ```bash
-vn-os install-mcp --vault "F:/.../my-company"
+bd-os install-mcp --vault "F:/.../my-company"
 ```
 → Reads `<vault>/.env` → injects `env: {TAVILY_API_KEY: ...}` into `claude_desktop_config.json`
 → Restart Claude Desktop
 
 ### Verify
-In chat: "vn_status vault F:/.../my-company"
+In chat: "bd_status vault F:/.../my-company"
 → Returns `tools_live: [web_search, vn_law_search, ...]` (when the key exists)
 → Or `tools_skipped: [{name: web_search, reason: Missing TAVILY_API_KEY}]` when missing
 
@@ -141,9 +141,9 @@ $ python -m pytest tests/ -q
 2. **Test a new vault setup** with the syntax: "Set up a vault... my TAVILY key is..."
 3. **Re-install MCP with --vault** for env injection:
    ```
-   vn-os install-mcp --vault "F:/path/to/vault"
+   bd-os install-mcp --vault "F:/path/to/vault"
    ```
-4. **Verify with vn_status** to see how many `tools_live` there are
+4. **Verify with bd_status** to see how many `tools_live` there are
 
 ## Pending (P1 + P2 — next phase)
 

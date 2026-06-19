@@ -102,8 +102,8 @@ The CEO re-emphasized RULE 1.
 → Decided to bundle 191 templates from bb-plugin into the repo's `docs/templates-us/`.
 
 ### 1.10 Spec doc + plan
-- Spec saved at: `docs/superpowers/specs/2026-05-06-vn-business-os-design.md` (~330 lines)
-- Plan saved at: `docs/plans/260506-0011-vn-business-os/` with `plan.md` + 6 phase files (~3500 lines total, 65 tasks, ~330 bite-sized steps)
+- Spec saved at: `docs/superpowers/specs/2026-05-06-bd-business-os-design.md` (~330 lines)
+- Plan saved at: `docs/plans/260506-0011-bd-business-os/` with `plan.md` + 6 phase files (~3500 lines total, 65 tasks, ~330 bite-sized steps)
 
 ### 1.11 CEO chose execution
 - Subagent-driven-development → option 1
@@ -246,9 +246,9 @@ In short: prompt the new session with:
 ```
 Agent company/
 ├── docs/superpowers/specs/
-│   └── 2026-05-06-vn-business-os-design.md      # SPEC
+│   └── 2026-05-06-bd-business-os-design.md      # SPEC
 ├── docs/plans/
-│   ├── 260506-0011-vn-business-os/
+│   ├── 260506-0011-bd-business-os/
 │   │   ├── plan.md
 │   │   └── phase-0[1-6]-*.md                    # 6 phase plans
 │   └── reports/

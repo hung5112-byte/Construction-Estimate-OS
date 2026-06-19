@@ -30,9 +30,9 @@
 
 ## 1. Repo orientation (what the system is)
 
-A Python + LangGraph "AI Operating System" for a department head. The Department Head chats in Claude Desktop/Code → an MCP server (`vn-business-os`) exposes tools (`vn_run`, `vn_resume`, `vn_meeting`, `vn_approve`, `vn_execute`, `vn_draft`, `vn_status`, `vn_onboard`, `vn_upgrade`) → 12 "departments" of AI agents debate → produce reports and render `.docx/.xlsx` into an Obsidian vault. Heavy Vietnamese localization is baked into: agent prompts, ~192 document templates, the Brain (vault knowledge base), tax/law tools, routing keywords, and all docs.
+A Python + LangGraph "AI Operating System" for a department head. The Department Head chats in Claude Desktop/Code → an MCP server (`bd-business-os`) exposes tools (`bd_run`, `bd_resume`, `bd_meeting`, `bd_approve`, `bd_execute`, `bd_draft`, `bd_status`, `bd_onboard`, `bd_upgrade`) → 12 "departments" of AI agents debate → produce reports and render `.docx/.xlsx` into an Obsidian vault. Heavy Vietnamese localization is baked into: agent prompts, ~192 document templates, the Brain (vault knowledge base), tax/law tools, routing keywords, and all docs.
 
-**Code identifiers / API contracts that MUST be preserved unchanged** (per your constraints): the MCP tool names (`vn_*`), the package/CLI names (`vn-os`, `vn-os-mcp`, slug `vn-business-os`), Python module/class/field names (incl. the dataclass field `name_vn`), and the 5-stage flow. These are addressed under "Decisions" rather than translated blindly.
+**Code identifiers / API contracts that MUST be preserved unchanged** (per your constraints): the MCP tool names (`vn_*`), the package/CLI names (`bd-os`, `bd-os-mcp`, slug `bd-business-os`), Python module/class/field names (incl. the dataclass field `name_vn`), and the 5-stage flow. These are addressed under "Decisions" rather than translated blindly.
 
 ---
 
@@ -49,7 +49,7 @@ No legal change; just language. Largest bucket by volume.
 | Vault Brain templates | `vault-template/00-Brain/*.md` (strategy, products, budget, headcount, state, glossary, decisions-log), `vault-template/00-Templates-Custom/README.md` | **`laws.md`, `budget.md` → see (b)/(d).** |
 | Translator data | `core/translator/terms_dictionary.yaml` (EN acronym → VN explanation; flip to EN explanation), `glossary.py`, `jargon_detector.py`, `simplifier.py`, `tldr_generator.py`, `pipeline.py` | RULE 4 ("Department-Head-friendly **Vietnamese**") becomes "plain **English**". |
 | Core code comments/docstrings/user-strings | ~30 `core/**/*.py` incl. `mcp_server.py` (72 VN lines — tool descriptions shown in Claude Desktop), `flow_controller.py`, `cli.py`, `onboard.py`, `upgrade.py`, providers, brain, agents, orchestrator | Translate comments/docstrings/**user-visible strings**; do not touch identifiers. |
-| MCP adapters | `adapters/claude-code/skill.md`, `adapters/claude-cowork/skills/vn-business-os/SKILL.md`, plugin READMEs, `plugin.json` description | The skill `description:` is the trigger text shown to Claude — translate. |
+| MCP adapters | `adapters/claude-code/skill.md`, `adapters/claude-cowork/skills/bd-business-os/SKILL.md`, plugin READMEs, `plugin.json` description | The skill `description:` is the trigger text shown to Claude — translate. |
 | Test fixtures & assertions | `tests/fixtures/**` (demo-vault, techco-vault Brain files), plus ~50 test files. **Tests that assert on VN strings/keywords must be updated in lockstep** (e.g., `test_router.py`, `test_citation_validator.py`, `test_b_campaign_high_income.py`). | Changing prose without updating asserts = red tests. |
 | Scripts | `scripts/onboard.py`, `scripts/add_*_aliases.py`, `scripts/dev/*.sh` | Comments + echo strings. |
 
@@ -119,7 +119,7 @@ This is the substance of the migration. Each row: **VN concept found → candida
 | `gso.gov.vn` | `census.gov`, `bls.gov` | `tests/unit/test_citation_validator.py` |
 | `base.vn`, `misa.vn` (example competitors / accounting SaaS in tests) | US analogs (illustrative only, e.g., QuickBooks, Gusto) — low stakes | `tests/unit/test_competitor_research.py`, `phase-04` plan |
 | `bio.ybai.me/777777` + "Tác giả: Quốc MODORO / Tài liệu được tạo bởi MODORO" footer (in ~100 `templates-vn/` files) | **Third-party attribution** from the vendored `business-builder.plugin` (see `NOTICE`). **Decision D5** — keep (translate label, retain link) vs remove. | every `templates-vn/**` file |
-| `andyluu98/vn-one-person-company`, `<owner>/<repo>` GitHub URLs | Repo-owner's choice (placeholder) — leave or update per your repo | `README-USER.md`, `docs/install-claude-code.md` |
+| `andyluu98/bd-business-os`, `<owner>/<repo>` GitHub URLs | Repo-owner's choice (placeholder) — leave or update per your repo | `README-USER.md`, `docs/install-claude-code.md` |
 
 Non-jurisdiction links to **keep as-is**: `python.org`, `nodejs.org`, `obsidian.md`, `claude.ai`, `tavily.com`, `platform.deepseek.com`, `langchain-ai/langgraph`, `apache.org/licenses`, `modelcontextprotocol.io`, TradingAgents/agency-agents credits.
 
@@ -154,8 +154,8 @@ Non-jurisdiction links to **keep as-is**: `python.org`, `nodejs.org`, `obsidian.
 
 ### Product/structure decisions I need from you before Phase 2:
 
-- **D0 — Backup strategy (blocking).** Not a git repo, so "git history" isn't available. Options: (A) one full-tree snapshot copy `…\vn-one-person-company-master.vi-backup\` before any edit; (B) per-file `.vi` sibling for each of the ~411 edited files; (C) `git init` + initial commit, then edit on a branch. *(Recommend A or C.)*
-- **D1 — Brand/product name.** Code contracts (`vn_*` MCP tools, `vn-os` CLI, slug `vn-business-os`, package name) **must stay** to avoid breaking the MCP/skill. But the human-readable title "VN Hardware Division OS / VN Business OS" can be rebranded (e.g., "Hardware Division OS" / "TX Business OS"). What do you want the displayed name to be? *(Recommend: keep code slugs; rename only display title.)*
+- **D0 — Backup strategy (blocking).** Not a git repo, so "git history" isn't available. Options: (A) one full-tree snapshot copy `…\bd-business-os-master.vi-backup\` before any edit; (B) per-file `.vi` sibling for each of the ~411 edited files; (C) `git init` + initial commit, then edit on a branch. *(Recommend A or C.)*
+- **D1 — Brand/product name.** Code contracts (`vn_*` MCP tools, `bd-os` CLI, slug `bd-business-os`, package name) **must stay** to avoid breaking the MCP/skill. But the human-readable title "VN Hardware Division OS / VN Business OS" can be rebranded (e.g., "Hardware Division OS" / "TX Business OS"). What do you want the displayed name to be? *(Recommend: keep code slugs; rename only display title.)*
 - **D2 — `templates-vn/` directory name.** Referenced by `core/orchestrator/document_executor.py`, `core/obsidian/template_resolver.py`, and ~6 tests. Keep the path (zero code churn) vs rename to `templates/`/`templates-us/` (update all refs). *(Recommend: keep path, translate contents — lowest risk.)*
 - **D3 — Template/agent filenames (Vietnamese slugs, e.g. `hop-dong-lao-dong-mau.md`).** Keep slugs (referenced by resolver + tests) vs anglicize (e.g., `employment-agreement-template.md`, requires updating tests + any references). *(Recommend: phase it — translate contents first; anglicize filenames as an optional follow-up.)*
 - **D4 — Identifier-embedded jurisdiction tokens** (`name_vn` field, `*_vnd` dict keys, `benchmarks-vn.yaml` filename, `vn_law_search`/`vn_local_regulation` tool names). These are code identifiers. *(Recommend: keep identifiers unchanged to honor API contracts; translate only their string values. Note: `agent_loader.py`/`department.py` already support an optional `name_en` field we can populate.)*
