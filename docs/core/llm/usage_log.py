@@ -1,8 +1,8 @@
 """Append-only token usage log → <vault>/.bd-usage.jsonl (consumed by the dashboard).
 
 Best-effort by design: logging must NEVER break an LLM call, so every entry point
-swallows its own exceptions. The vault is resolved from VN_OS_ACTIVE_VAULT (set by
-apply_vault_env_to_os) with VN_OS_DEFAULT_VAULT as fallback; if neither points to an
+swallows its own exceptions. The vault is resolved from BD_OS_ACTIVE_VAULT (set by
+apply_vault_env_to_os) with BD_OS_DEFAULT_VAULT as fallback; if neither points to an
 existing directory the record is silently dropped.
 """
 from __future__ import annotations
@@ -16,11 +16,11 @@ USAGE_FILENAME = ".bd-usage.jsonl"
 
 
 def _log_path() -> Path | None:
-    # Unit tests exercise providers with mock servers; VN_OS_DEFAULT_VAULT may point at
+    # Unit tests exercise providers with mock servers; BD_OS_DEFAULT_VAULT may point at
     # a real vault machine-wide, so explicitly skip logging under pytest.
     if "PYTEST_CURRENT_TEST" in os.environ:
         return None
-    vault = os.getenv("VN_OS_ACTIVE_VAULT") or os.getenv("VN_OS_DEFAULT_VAULT")
+    vault = os.getenv("BD_OS_ACTIVE_VAULT") or os.getenv("BD_OS_DEFAULT_VAULT")
     if not vault:
         return None
     root = Path(vault)

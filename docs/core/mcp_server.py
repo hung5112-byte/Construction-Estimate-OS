@@ -227,22 +227,22 @@ def bd_status(vault: str = "") -> dict:
 
     ⚡ Duration: <1s (no LLM call). Works in any tab (Code / Cowork / Chat).
 
-    Vault resolution: if not passed, read from the env var VN_OS_DEFAULT_VAULT
-    (set on Windows via: setx VN_OS_DEFAULT_VAULT "F:\\vaults\\<CompanyName>").
+    Vault resolution: if not passed, read from the env var BD_OS_DEFAULT_VAULT
+    (set on Windows via: setx BD_OS_DEFAULT_VAULT "F:\\vaults\\<CompanyName>").
 
     Live research tools (web/law/local/competitor) only run with a
     TAVILY_API_KEY. bd_status reports which tools are ready vs. skipped so the Department Head
     knows whether the decision report rests on real research or just Brain + LLM knowledge.
     """
-    # Fallback: if no vault is passed, read from env VN_OS_DEFAULT_VAULT
+    # Fallback: if no vault is passed, read from env BD_OS_DEFAULT_VAULT
     if not vault:
-        vault = os.environ.get("VN_OS_DEFAULT_VAULT", "")
+        vault = os.environ.get("BD_OS_DEFAULT_VAULT", "")
         if not vault:
             return {
                 "error": (
                     "Vault path not found. How to fix: "
                     "(1) Pass the vault argument vault='F:\\vaults\\<CompanyName>', OR "
-                    "(2) Set the env var: setx VN_OS_DEFAULT_VAULT 'F:\\vaults\\<CompanyName>' "
+                    "(2) Set the env var: setx BD_OS_DEFAULT_VAULT 'F:\\vaults\\<CompanyName>' "
                     "then restart Claude Desktop (quit completely, then reopen)."
                 ),
             }

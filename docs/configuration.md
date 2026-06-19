@@ -189,7 +189,7 @@ Edit `claude_desktop_config.json` manually:
       "command": "bd-os-mcp",
       "env": {
         "TAVILY_API_KEY": "tvly-prod",
-        "VN_OS_VAULT": "F:/clients/abc-coffee"
+        "BD_OS_DEFAULT_VAULT": "F:/clients/abc-coffee"
       }
     },
     "bd-business-os-staging": {

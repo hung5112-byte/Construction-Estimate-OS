@@ -1386,7 +1386,7 @@ There are **2 different causes** for the same error message:
 
 #### 4.A — The MCP server didn't load the tool
 
-**Symptom:** Claude says "I don't have access to the bd_status tool" or Method not found on **every** vn_* tool.
+**Symptom:** Claude says "I don't have access to the bd_status tool" or Method not found on **every** bd_* tool.
 
 **Fix:**
 1. Check `claude_desktop_config.json` has a `bd-business-os` entry:

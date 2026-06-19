@@ -43,7 +43,7 @@ def write_claude_code_config(vault_root: Path | None = None) -> Path:
     command, args = get_server_command()
     entry = {"command": command, "args": args}
     if vault_root:
-        entry["env"] = {"VN_OS_VAULT": str(vault_root)}
+        entry["env"] = {"BD_OS_DEFAULT_VAULT": str(vault_root)}
     config["mcpServers"]["bd-business-os"] = entry
     config_path.write_text(json.dumps(config, indent=2))
     return config_path

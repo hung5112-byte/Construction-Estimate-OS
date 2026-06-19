@@ -1,7 +1,7 @@
 """Generate 00-Dashboard.md — agent / task / token-usage dashboard for the Obsidian vault.
 
 Usage:
-    python docs/scripts/agent_dashboard.py                      # vault = VN_OS_DEFAULT_VAULT or repo root
+    python docs/scripts/agent_dashboard.py                      # vault = BD_OS_DEFAULT_VAULT or repo root
     python docs/scripts/agent_dashboard.py --vault <path>
 
 Data sources (all read-only):
@@ -192,7 +192,7 @@ def usage_rollup(records: list[dict]) -> tuple[list[str], float]:
 def main() -> None:
     ap = argparse.ArgumentParser()
     # Script lives at <repo>/docs/scripts/ — repo root (= vault) is three levels up.
-    ap.add_argument("--vault", default=os.getenv("VN_OS_DEFAULT_VAULT") or str(Path(__file__).parent.parent.parent))
+    ap.add_argument("--vault", default=os.getenv("BD_OS_DEFAULT_VAULT") or str(Path(__file__).parent.parent.parent))
     args = ap.parse_args()
     vault = Path(args.vault).resolve()
     tasks_root, outputs_root = vault / "02-Tasks", vault / "03-Outputs"

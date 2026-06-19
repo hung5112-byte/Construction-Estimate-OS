@@ -84,9 +84,9 @@ VP's direction — third-party attribution is maintained in `NOTICE`.
 - **Docs**: README rewritten; CLAUDE.md updated; all 8 `docs/` guides re-exampled; both adapter skills re-triggered on NPI/RMA/ODM/certification language; SPEC/ROADMAP/DECISIONS/START-HERE/NEXT-STEPS marked HISTORICAL with supersession notes; prior migration records archived to `docs/plans/reports/`
 - **Hazard removal**: 5 dev scripts that would regenerate the old 12-department layout now exit with deprecation notices
 
-**Deliberately kept:** the `vn_*` MCP tool names, `bd-business-os` server name,
+**Deliberately kept:** the `bd-business-os` server name,
 `bd-os` CLI, and `bd-business-os` package slug (installed API contract —
-user decision); the `name_vn`/`aliases_vn` YAML keys (schema compatibility, English
+user decision; the MCP tool names, originally `vn_*`, were **later renamed to `bd_*`** in the bd rebrand and are no longer `vn_*`); the `name_vn`/`aliases_vn` YAML keys (schema compatibility, English
 values); the MODORO author credit in vendored templates (license attribution per
 `NOTICE`); the unused `google-genai`/`openai` dependencies (user decision);
 core code's "CEO" terminology for the human principal (= the division manager;

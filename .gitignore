@@ -68,6 +68,7 @@ TODO.private.md
 # Local Claude Code settings
 .claude/settings.local.json
 .bd-usage.jsonl
+.vn-usage.jsonl
 00-Dashboard.md
 
 # Obsidian app config (contains Local REST API bearer key) — never commit

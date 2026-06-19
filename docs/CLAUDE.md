@@ -8,7 +8,7 @@ AI Operating System for a hardware engineering & supply chain division of a Texa
 
 > General information only — the legal/tax content is not legal or tax advice. Confirm with a licensed Texas attorney and CPA.
 
-> Terminology: core code and prompts call the human principal the "Department Head" — the role that approves Stop 1/Stop 2. Each deployment maps it to a real person; in this one that's **Brian H. Doan, VP of Hardware Development, Quality & Supply Chain** (the repo's author), and his vault documents say "Brian". Legacy `vn_*` tool names and the `bd-business-os` package name are kept for API stability.
+> Terminology: core code and prompts call the human principal the "Department Head" — the role that approves Stop 1/Stop 2. Each deployment maps it to a real person; in this one that's **Brian H. Doan, VP of Hardware Development, Quality & Supply Chain** (the repo's author), and his vault documents say "Brian". The MCP tools are named `bd_*`; the package/server name `bd-business-os` is the stable installed API contract.
 
 ## Commands
 

@@ -122,10 +122,10 @@ def save_vault_env(vault_path: Path, keys: dict[str, str]) -> Path:
 def apply_vault_env_to_os(vault_path: Path) -> dict[str, str]:
     """Load vault/.env and set into os.environ (only if not already set). Returns keys applied.
 
-    Also exports VN_OS_ACTIVE_VAULT so downstream code that never sees the vault
+    Also exports BD_OS_ACTIVE_VAULT so downstream code that never sees the vault
     argument (e.g. the LLM usage log) can resolve the active vault.
     """
-    os.environ["VN_OS_ACTIVE_VAULT"] = str(Path(vault_path))
+    os.environ["BD_OS_ACTIVE_VAULT"] = str(Path(vault_path))
     keys = load_vault_env(vault_path)
     for k, v in keys.items():
         if v and not os.environ.get(k):
