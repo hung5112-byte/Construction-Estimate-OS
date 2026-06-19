@@ -69,10 +69,56 @@ RULES:
 """
 
 
+_DIVISION_DEPTS = [
+    "01-hardware-engineering",
+    "02-npi-program-management",
+    "03-quality-reliability",
+    "04-mfg-supplier-quality",
+    "05-service-operations",
+]
+
+
+def _available_templates(templates_root: Path) -> dict[str, list[str]]:
+    """Catalog of real template slugs per dept (finance routed from _shared/03-finance)."""
+    index: dict[str, list[str]] = {}
+    for dept in _DIVISION_DEPTS:
+        folder = templates_root / dept
+        if folder.is_dir():
+            index[dept] = sorted(p.stem for p in folder.glob("*.md"))
+    fin = templates_root / "_shared" / "03-finance"
+    if fin.is_dir():
+        index["06-finance"] = sorted(p.stem for p in fin.glob("*.md"))
+    return {k: v for k, v in index.items() if v}
+
+
+def _catalog_text(index: dict[str, list[str]]) -> str:
+    out: list[str] = []
+    for dept, slugs in index.items():
+        out.append(f"[{dept}]")
+        out.extend(f"- {s}" for s in slugs)
+    return "\n".join(out)
+
+
+def _grounded_prompt(templates_root: Path | None) -> str:
+    """Append the real template catalog so the planner cannot invent template names."""
+    if not templates_root:
+        return _SYSTEM_PROMPT
+    index = _available_templates(Path(templates_root))
+    if not index:
+        return _SYSTEM_PROMPT
+    return _SYSTEM_PROMPT + (
+        "\n\nAVAILABLE TEMPLATES — for the 'Templates to create' table you MUST pick "
+        "names ONLY from this catalog. Use the exact slug shown and the dept code in "
+        "[brackets]. If no listed template fits a document you need, OMIT it — never "
+        "invent a template name.\n\n" + _catalog_text(index)
+    )
+
+
 def generate_execution_plan(
     task_folder: Path,
     llm,
     translator,
+    templates_root: Path | None = None,
 ) -> Path:
     """Read 07-decision-report.md, call LLM, write 08-execution-plan.md.
 
@@ -98,7 +144,7 @@ def generate_execution_plan(
 
     # Build prompt: include the full decision report as context
     messages = [
-        {"role": "system", "content": _SYSTEM_PROMPT},
+        {"role": "system", "content": _grounded_prompt(templates_root)},
         {
             "role": "user",
             "content": (

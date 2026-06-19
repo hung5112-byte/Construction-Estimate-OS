@@ -30,6 +30,16 @@ class TemplateResolver:
             found = self._find_in(folder, template_name)
             if found:
                 return found
+        # Fallback: _shared/<category>/ holds cross-cutting templates (finance, HR,
+        # sales, governance) with no top-level division folder. Search them so a
+        # finance template requested as dept '06-finance' still resolves.
+        shared = self.repo / "_shared"
+        if shared.is_dir():
+            for sub in sorted(shared.iterdir()):
+                if sub.is_dir():
+                    found = self._find_in(sub, template_name)
+                    if found:
+                        return found
         return None
 
     @staticmethod

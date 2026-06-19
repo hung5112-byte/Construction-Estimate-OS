@@ -400,10 +400,12 @@ class FlowController:
         translator = TranslatorPipeline(self.llm, vault_glossary_path=glossary_path)
 
         try:
+            repo_root = Path(__file__).parent.parent.parent
             plan_path = generate_execution_plan(
                 task_folder=task_folder,
                 llm=self.llm,
                 translator=translator,
+                templates_root=repo_root / "templates-us",
             )
         except FileNotFoundError as exc:
             return FlowResult(
