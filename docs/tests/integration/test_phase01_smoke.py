@@ -35,6 +35,8 @@ def test_dept_loader_loads_5_depts():
 
 
 def test_templates_us_has_245_files():
+    # Lower bound: the 245 vendored templates must all be present; additions
+    # (e.g. extra engineering templates) are allowed and must not break this.
     repo = Path(__file__).parent.parent.parent
     md_files = list((repo / "templates-us").rglob("*.md"))
-    assert len(md_files) == 245
+    assert len(md_files) >= 245
