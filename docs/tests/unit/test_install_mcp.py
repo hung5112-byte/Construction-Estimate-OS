@@ -29,8 +29,8 @@ def test_install_creates_config_when_missing(tmp_path):
 
     config = json.loads(cfg.read_text(encoding="utf-8"))
     assert "mcpServers" in config
-    assert "bd-business-os" in config["mcpServers"]
-    assert "command" in config["mcpServers"]["bd-business-os"]
+    assert "construction-estimate-os" in config["mcpServers"]
+    assert "command" in config["mcpServers"]["construction-estimate-os"]
 
 
 def test_install_preserves_existing_servers(tmp_path):
@@ -45,7 +45,7 @@ def test_install_preserves_existing_servers(tmp_path):
 
     config = json.loads(cfg.read_text(encoding="utf-8"))
     assert "other-server" in config["mcpServers"]
-    assert "bd-business-os" in config["mcpServers"]
+    assert "construction-estimate-os" in config["mcpServers"]
 
 
 def test_install_creates_backup(tmp_path):
@@ -64,8 +64,8 @@ def test_install_idempotent(tmp_path):
     install(config_path=cfg)  # second run should not error
 
     config = json.loads(cfg.read_text(encoding="utf-8"))
-    # Still only 1 bd-business-os entry (no duplicate)
-    assert list(config["mcpServers"].keys()).count("bd-business-os") == 1
+    # Still only 1 construction-estimate-os entry (no duplicate)
+    assert list(config["mcpServers"].keys()).count("construction-estimate-os") == 1
 
 
 def test_install_handles_malformed_json(tmp_path):
@@ -85,7 +85,7 @@ def test_uninstall_removes_entry(tmp_path):
     assert result["removed"] is True
 
     config = json.loads(cfg.read_text(encoding="utf-8"))
-    assert "bd-business-os" not in config.get("mcpServers", {})
+    assert "construction-estimate-os" not in config.get("mcpServers", {})
 
 
 def test_uninstall_no_config_is_safe(tmp_path):
@@ -107,7 +107,7 @@ def test_install_injects_env_from_vault(tmp_path):
     assert "TAVILY_API_KEY" in result["env_keys_injected"]
 
     config = json.loads(cfg.read_text(encoding="utf-8"))
-    server = config["mcpServers"]["bd-business-os"]
+    server = config["mcpServers"]["construction-estimate-os"]
     assert server["env"]["TAVILY_API_KEY"] == "test-key-123"
 
 
@@ -115,7 +115,7 @@ def test_install_no_vault_no_env_field(tmp_path):
     cfg = tmp_path / "claude_desktop_config.json"
     result = install(config_path=cfg)
     config = json.loads(cfg.read_text(encoding="utf-8"))
-    server = config["mcpServers"]["bd-business-os"]
+    server = config["mcpServers"]["construction-estimate-os"]
     assert "env" not in server
     assert result["env_keys_injected"] == []
 
@@ -175,7 +175,7 @@ def test_install_for_target_claude_code_preserves_existing_keys(tmp_path, monkey
 
     config = json.loads(cc_cfg.read_text(encoding="utf-8"))
     assert config["theme"] == "dark"
-    assert "bd-business-os" in config["mcpServers"]
+    assert "construction-estimate-os" in config["mcpServers"]
 
 
 def test_install_for_target_invalid_target_raises():

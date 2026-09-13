@@ -57,24 +57,25 @@ stop: 2
 
 | Template name | Dept | Notes |
 |---------------|------|-------|
-| engineering-change-order | 02-npi-program-management | Change with disposition |
-| rma-process-sop | 05-service-operations | Returns process |
+| pre-bid-rfi-log | 01-bid-coordination | Questions to the architect |
+| estimate-summary | 05-cost-engineering | Division summary |
 
 RULES:
 - Plain English, avoid technical jargon
 - Keep the numbers from the Decision Report unchanged
 - "Templates to create" table: list only practical recommendations (1-5 templates), do not invent
-- Owner dept uses the code (e.g. 03-quality-reliability, 04-mfg-supplier-quality)
+- Owner dept uses the code (e.g. 03-architectural, 05-cost-engineering)
 - Due: a specific date or "Week X" from the approval date
 """
 
 
 _DIVISION_DEPTS = [
-    "01-hardware-engineering",
-    "02-npi-program-management",
-    "03-quality-reliability",
-    "04-mfg-supplier-quality",
-    "05-service-operations",
+    "01-bid-coordination",
+    "02-civil-structural",
+    "03-architectural",
+    "04-mep",
+    "05-cost-engineering",
+    "06-estimate-review",
 ]
 
 
@@ -119,13 +120,17 @@ def generate_execution_plan(
     llm,
     translator,
     templates_root: Path | None = None,
+    revision_context: str | None = None,
 ) -> Path:
     """Read 07-decision-report.md, call LLM, write 08-execution-plan.md.
 
     Args:
         task_folder: path to the task folder containing decision report.
         llm: LLM provider with .complete(messages) interface.
-        translator: TranslatorPipeline instance (RULE 4).
+        translator: TranslatorPipeline instance (RULE 4), or None when
+            translator_mode is "off".
+        revision_context: optional critic Pass-B revision block (prior plan +
+            fix-only instruction) appended to the prompt on a fix round.
 
     Returns:
         Path to the written 08-execution-plan.md.
@@ -143,16 +148,19 @@ def generate_execution_plan(
     decision_text = decision_path.read_text(encoding="utf-8")
 
     # Build prompt: include the full decision report as context
+    user_content = (
+        "DECISION REPORT:\n\n"
+        f"{decision_text}\n\n"
+        "Generate the execution plan in exactly the format described above."
+    )
+    if revision_context:
+        user_content += (
+            "\n\n" + revision_context
+            + "\nApply the revision instruction FIX-ONLY and regenerate the FULL plan."
+        )
     messages = [
         {"role": "system", "content": _grounded_prompt(templates_root)},
-        {
-            "role": "user",
-            "content": (
-                "DECISION REPORT:\n\n"
-                f"{decision_text}\n\n"
-                "Generate the execution plan in exactly the format described above."
-            ),
-        },
+        {"role": "user", "content": user_content},
     ]
 
     try:
@@ -161,15 +169,19 @@ def generate_execution_plan(
         log.error("LLM call failed during execution plan generation: %s", exc)
         raise
 
-    # Apply translator pipeline (RULE 4 — Department-Head-friendly language)
-    try:
-        translated_plan = translator.apply(raw_plan)
-    except Exception as exc:
-        log.warning(
-            "Translator failed during execution plan generation (%s), using raw output.",
-            exc,
-        )
+    # Apply translator pipeline (RULE 4 — Department-Head-friendly language).
+    # None ⇒ translator_mode "off": skip the rewrite entirely.
+    if translator is None:
         translated_plan = raw_plan
+    else:
+        try:
+            translated_plan = translator.apply(raw_plan)
+        except Exception as exc:
+            log.warning(
+                "Translator failed during execution plan generation (%s), using raw output.",
+                exc,
+            )
+            translated_plan = raw_plan
 
     # Ensure YAML frontmatter present (defensive: LLM may omit it)
     if not translated_plan.strip().startswith("---"):

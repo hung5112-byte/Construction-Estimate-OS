@@ -3,6 +3,8 @@ type: brain
 section: glossary
 aliases: ["Glossary", "Terms", "Dictionary"]
 last_updated: MM/DD/YYYY
+label: internal
+trust_tier: brain
 ---
 # Glossary (auto-grown)
 

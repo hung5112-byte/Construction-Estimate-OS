@@ -1,0 +1,59 @@
+code: 01-bid-coordination
+name_local: Bid Coordination & Document Control
+tier: 1
+description: 'Intake and document control for every bid package: sheet register, addenda, specification index, project profile and AACE class, the consolidated RFI list, and the final report to the Chief Estimator. The bid coordinator speaks for the department; teams contribute in the intake and reporting stages.'
+agents:
+- bid-coordinator
+- document-controller
+- spec-analyst
+- rfi-coordinator
+- proposal-writer
+default_speaker: bid-coordinator
+refs_folder: refs/
+depends_on:
+- 05-cost-engineering
+- 06-estimate-review
+debate_role:
+  default: pro
+routing_rules:
+- keywords:
+  - sheet register
+  - drawing log
+  - addendum
+  - addenda
+  - revision
+  - drawing index
+  agent: document-controller
+- keywords:
+  - spec
+  - specification
+  - project manual
+  - division 01
+  - division 00
+  - allowance
+  - alternate
+  - unit price
+  - submittal
+  agent: spec-analyst
+- keywords:
+  - rfi
+  - clarification
+  - question
+  - ambiguity
+  - conflict between
+  agent: rfi-coordinator
+- keywords:
+  - report
+  - basis of estimate
+  - proposal
+  - scope letter
+  - executive summary
+  - bid form
+  agent: proposal-writer
+aliases_local:
+- Bid Coordination & Document Control
+- Bid Coordination
+- Document Control
+- Precon Admin
+- Intake
+author: Brian H. Doan

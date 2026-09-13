@@ -1,0 +1,9 @@
+city,factor,source
+Dallas,0.88,"roofobservations.com author-built table (not RSMeans) [UNCERTAIN]"
+Fort Worth,0.86,"roofobservations.com author-built table [UNCERTAIN]"
+Plano,0.88,"assumed = Dallas [UNCERTAIN]"
+Frisco,0.88,"assumed = Dallas [UNCERTAIN]"
+Houston,0.86,"roofobservations.com author-built table [UNCERTAIN]"
+Austin,0.85,"roofobservations.com author-built table [UNCERTAIN]"
+San Antonio,0.86,"roofobservations.com author-built table [UNCERTAIN]"
+National,1.00,"baseline"

@@ -3,6 +3,8 @@ type: brain
 section: decisions
 aliases: ["Decisions Log", "Decisions", "Decision History"]
 last_updated: MM/DD/YYYY
+label: internal
+trust_tier: brain
 ---
 # Decisions log (append-only)
 

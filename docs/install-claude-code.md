@@ -118,7 +118,7 @@ Set up a Hardware Division vault for my division.
    ├── 01-Departments/    ← the 5 division departments (managers + teams)
    ├── 02-Tasks/          ← one folder per task
    ├── 03-Outputs/        ← generated .docx/.xlsx
-   ├── .vncoderc          ← config
+   ├── .bd-os.yaml          ← config
    └── .env               ← TAVILY_API_KEY (gitignored)
    ```
 4. Then asks: *"The vault is created. Want me to walk you through filling in the Brain now?"*
@@ -301,7 +301,7 @@ Then restart Claude Code.
 
 - Pro plan ≈ 45 msg/5h → one COMPLEX task nearly hits the quota
 - Suggestion: take a 1-2h break and retry, or upgrade to the Max plan (~225 msg/5h)
-- Or enable **lite mode** in `.vncoderc`:
+- Or enable **lite mode** in `.bd-os.yaml`:
   ```yaml
   meeting:
     max_debate_rounds: 1

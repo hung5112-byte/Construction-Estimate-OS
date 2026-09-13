@@ -27,16 +27,16 @@ def test_cli_status_works():
     assert "Brain loaded" in result.stdout
 
 
-def test_dept_loader_loads_5_depts():
+def test_dept_loader_loads_6_depts():
     from core.agents.department import DepartmentLoader
     repo = Path(__file__).parent.parent.parent
     depts = DepartmentLoader(repo / "departments").load_all()
-    assert len(depts) == 5
+    assert len(depts) == 6
 
 
-def test_templates_us_has_245_files():
-    # Lower bound: the 245 vendored templates must all be present; additions
-    # (e.g. extra engineering templates) are allowed and must not break this.
+def test_templates_us_has_180_files():
+    # Lower bound for this fork: 155 generic + 9 orchestrator + 16 estimating templates;
+    # additions are allowed and must not break this.
     repo = Path(__file__).parent.parent.parent
     md_files = list((repo / "templates-us").rglob("*.md"))
-    assert len(md_files) >= 245
+    assert len(md_files) >= 180

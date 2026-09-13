@@ -1,0 +1,14 @@
+item_class,waste_pct,source
+concrete-slab,4,ASPE convention / Handoff concrete takeoff guide (3–5%)
+concrete-footing,5,ASPE convention (3–5%; footings higher)
+rebar,5,industry convention
+cmu,5,ScopeTakeoff masonry guide (5%; 7–8% cuts/curves)
+brick,7,ScopeTakeoff masonry guide (5–10%)
+drywall,8,PILARS drywall guide (8–10% commercial)
+roofing,7,PILARS roofing guide (5–10% flat)
+paint,5,PILARS painting guide (5–7% smooth)
+flooring,8,industry convention
+ductwork,10,Virtual Estimation HVAC guide (10%)
+pipe,7,FieldPulse plumbing guide (5–10%)
+conduit-wire,7,industry convention
+lumber,8,BuildVision waste factor table (5–10%)

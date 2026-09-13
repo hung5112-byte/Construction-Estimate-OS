@@ -14,8 +14,8 @@ venv/
 .env
 .env.*
 !.env.example
-.vncoderc
-.vncoderc.*
+.bd-os.yaml
+.bd-os.yaml.*
 *.key
 *.pem
 secrets.yaml
@@ -58,7 +58,7 @@ desktop.ini
 
 # ─── External references (read-only, not vendored) ──────────────────
 references/tradingagents/
-references/business-builder.plugin/
+references/
 
 # ─── User experiments / scratch ─────────────────────────────────────
 scratch/
@@ -68,8 +68,20 @@ TODO.private.md
 # Local Claude Code settings
 .claude/settings.local.json
 .bd-usage.jsonl
-.vn-usage.jsonl
 00-Dashboard.md
 
 # Obsidian app config (contains Local REST API bearer key) — never commit
 .obsidian/
+
+# ─── Office lock files + generated decks ────────────────────────────
+~$*
+*.pptx
+!templates-us/**/*.pptx
+.tools/
+.bd-llm-events.jsonl
+.bd-agent-activity.jsonl
+
+# ─── Estimating fixtures (synthetic bid package, committed on purpose) ──
+!docs/tests/fixtures/**/*.pdf
+02-Estimates/**/renders/
+02-Estimates/**/*.png

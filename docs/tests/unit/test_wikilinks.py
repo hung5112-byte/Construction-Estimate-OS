@@ -20,19 +20,19 @@ def test_onboard_creates_brain_hub(tmp_path):
     for stem in ("strategy", "products", "budget", "headcount", "state", "laws"):
         assert f"[[{stem}]]" in text
     # Links to departments via path
-    assert "[[01-Departments/01-hardware-engineering/index" in text
+    assert "[[01-Departments/01-bid-coordination/index" in text
 
 
 def test_onboard_creates_dept_hub_with_org_chart(tmp_path):
     vault = _bootstrap(tmp_path)
-    hub = vault / "01-Departments" / "01-hardware-engineering" / "index.md"
+    hub = vault / "01-Departments" / "01-bid-coordination" / "index.md"
     assert hub.exists()
     text = hub.read_text(encoding="utf-8")
     assert "[[../../00-Brain/index" in text
     # V2: manager listed first with the star, teams below
-    assert "**Manager:** [[hw-engineering-manager]]" in text
-    assert "[[me-team]]" in text
-    assert "[[ee-team]]" in text
+    assert "**Manager:** [[bid-coordinator]]" in text
+    assert "[[document-controller]]" in text
+    assert "[[spec-analyst]]" in text
     # Brain reference present
     assert "[[strategy]]" in text
 
@@ -40,27 +40,27 @@ def test_onboard_creates_dept_hub_with_org_chart(tmp_path):
 def test_dept_hub_works_with_links_depends_on(tmp_path):
     """V2: depends_on renders as 'Works with' links with display names."""
     vault = _bootstrap(tmp_path)
-    hub = (vault / "01-Departments" / "05-service-operations" / "index.md").read_text(
+    hub = (vault / "01-Departments" / "06-estimate-review" / "index.md").read_text(
         encoding="utf-8"
     )
     assert "## Works with" in hub
-    assert "[[../04-mfg-supplier-quality/index|Manufacturing & Supplier Quality]]" in hub
+    assert "[[../05-cost-engineering/index|Cost Engineering & General Conditions]]" in hub
 
 
 def test_onboard_appends_wikilinks_to_agent_files(tmp_path):
     vault = _bootstrap(tmp_path)
-    agent = vault / "01-Departments" / "01-hardware-engineering" / "agents" / "me-team.md"
+    agent = vault / "01-Departments" / "01-bid-coordination" / "agents" / "document-controller.md"
     text = agent.read_text(encoding="utf-8")
     assert LINK_MARKER in text
     assert "[[../index|🏢" in text
     assert "[[../../../00-Brain/index" in text
     # V2: team agents link to their manager
-    assert "- Manager: [[hw-engineering-manager]]" in text
+    assert "- Manager: [[bid-coordinator]]" in text
 
 
 def test_manager_agent_has_no_self_manager_link(tmp_path):
     vault = _bootstrap(tmp_path)
-    mgr = vault / "01-Departments" / "01-hardware-engineering" / "agents" / "hw-engineering-manager.md"
+    mgr = vault / "01-Departments" / "01-bid-coordination" / "agents" / "bid-coordinator.md"
     links_block = mgr.read_text(encoding="utf-8").split(LINK_MARKER)[-1]
     assert "- Manager:" not in links_block
 
@@ -68,7 +68,7 @@ def test_manager_agent_has_no_self_manager_link(tmp_path):
 def test_wikilinks_idempotent(tmp_path):
     """Re-run generate_wikilinks: agent files don't get duplicate Links blocks."""
     vault = _bootstrap(tmp_path)
-    agent = vault / "01-Departments" / "01-hardware-engineering" / "agents" / "me-team.md"
+    agent = vault / "01-Departments" / "01-bid-coordination" / "agents" / "document-controller.md"
     first = agent.read_text(encoding="utf-8")
 
     summary = generate_wikilinks(vault)
@@ -93,7 +93,7 @@ def test_wikilinks_with_pack_covers_pack_dept(tmp_path):
     (extra / "department.yaml").write_text(
         yaml.safe_dump({
             "code": "06-test-pack-dept",
-            "name_vn": "Test Pack Dept",
+            "name_local": "Test Pack Dept",
             "tier": 3,
             "agents": ["test-agent"],
             "default_speaker": "test-agent",
@@ -101,7 +101,7 @@ def test_wikilinks_with_pack_covers_pack_dept(tmp_path):
         encoding="utf-8",
     )
     (extra / "agents" / "test-agent.md").write_text(
-        "---\nid: test-agent\nname_vn: Test Agent\ndepartment: 06-test-pack-dept\n---\n# Test Agent\n",
+        "---\nid: test-agent\nname_local: Test Agent\ndepartment: 06-test-pack-dept\n---\n# Test Agent\n",
         encoding="utf-8",
     )
 

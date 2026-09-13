@@ -26,7 +26,6 @@ import yaml
 
 # $/1M tokens (input, output). Edit to your contracted rates — costs shown are estimates.
 RATES = {
-    "deepseek": (0.28, 1.14),
     "claude": (3.00, 15.00),
     "mcp-sampling": (0.0, 0.0),  # subscription — no marginal cost
 }
@@ -46,7 +45,7 @@ def detect_stage(task: Path, outputs_root: Path) -> tuple[str, str, str]:
     """Return (stage_label, waiting_on, next_step) for a task folder."""
     has = lambda name: (task / name).exists()  # noqa: E731
     out_dir = outputs_root / task.name
-    has_outputs = out_dir.exists() and any(out_dir.iterdir())
+    has_outputs = out_dir.is_dir() and any(out_dir.iterdir())
 
     if has_outputs:
         return "✅ DONE", "", f"Outputs in `03-Outputs/{task.name}/`"
@@ -126,6 +125,8 @@ def agent_activity(vault: Path, depts: list[dict]) -> dict[str, dict]:
             stats[a] = {"mentions": 0, "last": None}
 
     for task in sorted((vault / "02-Tasks").glob("*/")):
+        if not task.is_dir():  # Python <3.13 glob("*/") also matches files (.gitkeep)
+            continue
         transcripts = [task / n for n in GENERATED[1:4] if (task / n).exists()]
         if not transcripts:
             continue
@@ -205,6 +206,8 @@ def main() -> None:
     pending_rows, pipeline_rows = [], []
     est_total_out = 0
     for task in sorted(tasks_root.glob("*/"), reverse=True):
+        if not task.is_dir():  # Python <3.13 glob("*/") also matches files (.gitkeep)
+            continue
         stage, waiting, next_step = detect_stage(task, outputs_root)
         title = task_title(task)
         link = f"[[02-Tasks/{task.name}/00-brief\\|{title}]]"
@@ -226,7 +229,7 @@ def main() -> None:
         role = d.get("debate_role", {}).get("default", "pro")
         dstat = stats.get(code, {})
         agent_lines.append(
-            f"### [[01-Departments/{d['_folder']}/index|{d.get('name_vn', code)}]] "
+            f"### [[01-Departments/{d['_folder']}/index|{d.get('name_local', code)}]] "
             f"(`{code}`) — debate role: **{role}** · meetings: {dstat.get('meetings', 0)}"
             + (f" · last: {dstat['last']}" if dstat.get("last") else "")
         )
@@ -258,7 +261,7 @@ generated: {now}
 ---
 # 🎛️ Division Dashboard
 
-> Generated **{now}** · refresh: `python docs/scripts/agent_dashboard.py` (works in the Obsidian terminal plugin)
+> Generated **{now}** · refresh: `python3 docs/scripts/agent_dashboard.py` (works in the Obsidian terminal plugin)
 > Agents: **{n_agents}** in **{len(depts)} departments** · Tasks: **{len(pipeline_rows)}** · LLM calls logged: **{len(records)}**
 
 ## ⏸️ Needs action — agents waiting for permission

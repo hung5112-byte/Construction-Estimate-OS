@@ -13,7 +13,7 @@ def test_onboard_creates_minimal_vault(tmp_path):
     assert (vault / "00-Templates-Custom" / "README.md").exists()
     assert (vault / "01-Departments").exists()
     assert (vault / "02-Tasks").exists()
-    assert (vault / ".vncoderc").exists()
+    assert (vault / ".bd-os.yaml").exists()
     # Git init disabled
     assert not (vault / ".git").exists()
 
@@ -36,7 +36,7 @@ def test_onboard_with_pack_installs_pack_dept(tmp_path, monkeypatch):
         encoding="utf-8",
     )
     (dept_dir / "department.yaml").write_text(
-        "code: 06-test-dept\nname_vn: Test Dept\ntier: 3\nagents: []\ndefault_speaker: ''\n",
+        "code: 06-test-dept\nname_local: Test Dept\ntier: 3\nagents: []\ndefault_speaker: ''\n",
         encoding="utf-8",
     )
     monkeypatch.setattr(onboard_mod, "REPO_ROOT", fake_repo)

@@ -44,7 +44,7 @@ compliance_refs:
 `docs/packs/<pack>/departments/06-XX/department.yaml`:
 ```yaml
 code: "06-XX"
-name_vn: "Department name"
+name_local: "Department name"
 tier: 3                    # 1-5, lower = higher priority
 agents:
   - agent-id-1
@@ -55,7 +55,7 @@ debate_role:
   default: pro              # or con
 ```
 
-> Note: `name_vn` is a schema key kept for backward compatibility; its value is the English display name.
+> Note: `name_local` is a schema key kept for backward compatibility; its value is the English display name.
 
 ## 4. Agent definition
 
@@ -63,7 +63,7 @@ debate_role:
 ```markdown
 ---
 id: agent-id
-name_vn: "Agent Name"
+name_local: "Agent Name"
 department: 06-XX
 seniority: senior
 expertise: ["skill1", "skill2"]

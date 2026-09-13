@@ -3,6 +3,8 @@ type: brain
 section: state
 aliases: ["State", "Stage", "Business State"]
 last_updated: MM/DD/YYYY
+label: internal
+trust_tier: brain
 ---
 # Current Business State
 

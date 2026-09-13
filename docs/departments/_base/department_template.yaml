@@ -1,6 +1,6 @@
 # Template for creating a new department definition
 code: "XX-name"
-name_vn: ""
+name_local: ""
 name_en: ""
 tier: 1
 description: |

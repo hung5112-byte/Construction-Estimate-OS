@@ -1,0 +1,57 @@
+code: 05-cost-engineering
+name_local: Cost Engineering & General Conditions
+tier: 1
+description: 'Turns the consolidated takeoff into money: unit costs from the cost library (own history first, published data second and marked), crews and productivity, location factor and escalation, general conditions from the schedule, contingency by estimate class and risk register, bond, insurance, Texas sales-tax treatment and fee. Levels subcontractor quotes. The pricing lead speaks for the department. Arithmetic is done by the cost engine, never by an agent.'
+agents:
+- pricing-lead
+- general-conditions-estimator
+- risk-markup-analyst
+- sub-bid-leveler
+default_speaker: pricing-lead
+refs_folder: refs/
+depends_on:
+- 02-civil-structural
+- 03-architectural
+- 04-mep
+- 06-estimate-review
+debate_role:
+  default: pro
+routing_rules:
+- keywords:
+  - general conditions
+  - duration
+  - staffing
+  - temporary
+  - trailer
+  - fence
+  - dumpster
+  - temp power
+  - cleanup
+  agent: general-conditions-estimator
+- keywords:
+  - contingency
+  - escalation
+  - bond
+  - insurance
+  - tax
+  - markup
+  - fee
+  - risk
+  - overhead
+  agent: risk-markup-analyst
+- keywords:
+  - sub bid
+  - quote
+  - leveling
+  - scope sheet
+  - plug number
+  - subcontractor proposal
+  - exclusions
+  agent: sub-bid-leveler
+aliases_local:
+- Cost Engineering & General Conditions
+- Cost Engineering
+- Pricing
+- General Conditions
+- Estimating Markups
+author: Brian H. Doan

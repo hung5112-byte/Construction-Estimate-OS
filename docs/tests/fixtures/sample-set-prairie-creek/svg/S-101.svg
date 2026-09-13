@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36in" height="24in" viewBox="0 0 3600 2400" font-family="Helvetica, Arial, sans-serif">
+<rect x="0" y="0" width="3600" height="2400" fill="white"/>
+<rect x="40" y="40" width="3520" height="2320" fill="none" stroke="black" stroke-width="4"/>
+<g id="grid" font-size="22">
+<line x1="520.0" y1="122.5" x2="520.0" y2="1785.0" stroke="black" stroke-width="1" stroke-dasharray="14,10"/>
+<circle cx="520.0" cy="72.5" r="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="520.0" y="80.5" font-size="22" font-weight="bold" text-anchor="middle">A</text>
+<line x1="1020.0" y1="122.5" x2="1020.0" y2="1785.0" stroke="black" stroke-width="1" stroke-dasharray="14,10"/>
+<circle cx="1020.0" cy="72.5" r="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1020.0" y="80.5" font-size="22" font-weight="bold" text-anchor="middle">B</text>
+<line x1="1520.0" y1="122.5" x2="1520.0" y2="1785.0" stroke="black" stroke-width="1" stroke-dasharray="14,10"/>
+<circle cx="1520.0" cy="72.5" r="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1520.0" y="80.5" font-size="22" font-weight="bold" text-anchor="middle">C</text>
+<line x1="2020.0" y1="122.5" x2="2020.0" y2="1785.0" stroke="black" stroke-width="1" stroke-dasharray="14,10"/>
+<circle cx="2020.0" cy="72.5" r="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2020.0" y="80.5" font-size="22" font-weight="bold" text-anchor="middle">D</text>
+<line x1="145.0" y1="460.0" x2="2095.0" y2="460.0" stroke="black" stroke-width="1" stroke-dasharray="14,10"/>
+<circle cx="95.0" cy="460.0" r="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="95.0" y="468.0" font-size="22" font-weight="bold" text-anchor="middle">1</text>
+<line x1="145.0" y1="1085.0" x2="2095.0" y2="1085.0" stroke="black" stroke-width="1" stroke-dasharray="14,10"/>
+<circle cx="95.0" cy="1085.0" r="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="95.0" y="1093.0" font-size="22" font-weight="bold" text-anchor="middle">2</text>
+<line x1="145.0" y1="1710.0" x2="2095.0" y2="1710.0" stroke="black" stroke-width="1" stroke-dasharray="14,10"/>
+<circle cx="95.0" cy="1710.0" r="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="95.0" y="1718.0" font-size="22" font-weight="bold" text-anchor="middle">3</text>
+</g>
+<rect x="520.0" y="460.0" width="1500.0" height="1250.0" fill="none" stroke="black" stroke-width="8"/>
+<line x1="1020.0" y1="460.0" x2="1020.0" y2="1710.0" stroke="black" stroke-width="6"/>
+<rect x="507.5" y="447.5" width="1525.0" height="1275.0" fill="none" stroke="black" stroke-width="2" stroke-dasharray="10,8"/>
+<rect x="532.5" y="472.5" width="1475.0" height="1225.0" fill="none" stroke="black" stroke-width="2" stroke-dasharray="10,8"/>
+<rect x="995.0" y="435.0" width="50.0" height="50.0" fill="none" stroke="black" stroke-width="2" stroke-dasharray="6,5" class="footing"/>
+<rect x="1015.0" y="455.0" width="10" height="10" fill="black"/>
+<text x="1050.0" y="430.0" font-size="16" font-weight="bold" text-anchor="start">F1</text>
+<rect x="995.0" y="1060.0" width="50.0" height="50.0" fill="none" stroke="black" stroke-width="2" stroke-dasharray="6,5" class="footing"/>
+<rect x="1015.0" y="1080.0" width="10" height="10" fill="black"/>
+<text x="1050.0" y="1055.0" font-size="16" font-weight="bold" text-anchor="start">F1</text>
+<rect x="995.0" y="1685.0" width="50.0" height="50.0" fill="none" stroke="black" stroke-width="2" stroke-dasharray="6,5" class="footing"/>
+<rect x="1015.0" y="1705.0" width="10" height="10" fill="black"/>
+<text x="1050.0" y="1680.0" font-size="16" font-weight="bold" text-anchor="start">F1</text>
+<rect x="1495.0" y="435.0" width="50.0" height="50.0" fill="none" stroke="black" stroke-width="2" stroke-dasharray="6,5" class="footing"/>
+<rect x="1515.0" y="455.0" width="10" height="10" fill="black"/>
+<text x="1550.0" y="430.0" font-size="16" font-weight="bold" text-anchor="start">F1</text>
+<rect x="1495.0" y="1060.0" width="50.0" height="50.0" fill="none" stroke="black" stroke-width="2" stroke-dasharray="6,5" class="footing"/>
+<rect x="1515.0" y="1080.0" width="10" height="10" fill="black"/>
+<text x="1550.0" y="1055.0" font-size="16" font-weight="bold" text-anchor="start">F1</text>
+<rect x="1495.0" y="1685.0" width="50.0" height="50.0" fill="none" stroke="black" stroke-width="2" stroke-dasharray="6,5" class="footing"/>
+<rect x="1515.0" y="1705.0" width="10" height="10" fill="black"/>
+<text x="1550.0" y="1680.0" font-size="16" font-weight="bold" text-anchor="start">F1</text>
+<rect x="1995.0" y="435.0" width="50.0" height="50.0" fill="none" stroke="black" stroke-width="2" stroke-dasharray="6,5" class="footing"/>
+<rect x="2015.0" y="455.0" width="10" height="10" fill="black"/>
+<text x="2050.0" y="430.0" font-size="16" font-weight="bold" text-anchor="start">F1</text>
+<rect x="1995.0" y="1060.0" width="50.0" height="50.0" fill="none" stroke="black" stroke-width="2" stroke-dasharray="6,5" class="footing"/>
+<rect x="2015.0" y="1080.0" width="10" height="10" fill="black"/>
+<text x="2050.0" y="1055.0" font-size="16" font-weight="bold" text-anchor="start">F1</text>
+<rect x="1995.0" y="1685.0" width="50.0" height="50.0" fill="none" stroke="black" stroke-width="2" stroke-dasharray="6,5" class="footing"/>
+<rect x="2015.0" y="1705.0" width="10" height="10" fill="black"/>
+<text x="2050.0" y="1680.0" font-size="16" font-weight="bold" text-anchor="start">F1</text>
+<text x="1395.0" y="1085.0" font-size="18" font-weight="normal" text-anchor="middle">6" SOG, 4000 PSI, #4 @ 18" OC EW, ON VAPOR BARRIER</text>
+<text x="770.0" y="1085.0" font-size="16" font-weight="normal" text-anchor="middle">4" SOG, 4000 PSI, 6x6-W2.9xW2.9 WWM</text>
+<line x1="520.0" y1="247.5" x2="1020.0" y2="247.5" stroke="black" stroke-width="1.5"/>
+<line x1="520.0" y1="235.5" x2="520.0" y2="259.5" stroke="black" stroke-width="1.5"/>
+<line x1="1020.0" y1="235.5" x2="1020.0" y2="259.5" stroke="black" stroke-width="1.5"/>
+<text x="770.0" y="237.5" font-size="20" font-weight="normal" text-anchor="middle">40'-0"</text>
+<line x1="1020.0" y1="247.5" x2="1520.0" y2="247.5" stroke="black" stroke-width="1.5"/>
+<line x1="1020.0" y1="235.5" x2="1020.0" y2="259.5" stroke="black" stroke-width="1.5"/>
+<line x1="1520.0" y1="235.5" x2="1520.0" y2="259.5" stroke="black" stroke-width="1.5"/>
+<text x="1270.0" y="237.5" font-size="20" font-weight="normal" text-anchor="middle">40'-0"</text>
+<line x1="1520.0" y1="247.5" x2="2020.0" y2="247.5" stroke="black" stroke-width="1.5"/>
+<line x1="1520.0" y1="235.5" x2="1520.0" y2="259.5" stroke="black" stroke-width="1.5"/>
+<line x1="2020.0" y1="235.5" x2="2020.0" y2="259.5" stroke="black" stroke-width="1.5"/>
+<text x="1770.0" y="237.5" font-size="20" font-weight="normal" text-anchor="middle">40'-0"</text>
+<line x1="282.5" y1="460.0" x2="282.5" y2="1085.0" stroke="black" stroke-width="1.5"/>
+<line x1="270.5" y1="460.0" x2="294.5" y2="460.0" stroke="black" stroke-width="1.5"/>
+<line x1="270.5" y1="1085.0" x2="294.5" y2="1085.0" stroke="black" stroke-width="1.5"/>
+<text x="268.5" y="772.5" font-size="20" font-weight="normal" text-anchor="middle" transform="rotate(-90 268.5,772.5)">50'-0"</text>
+<line x1="282.5" y1="1085.0" x2="282.5" y2="1710.0" stroke="black" stroke-width="1.5"/>
+<line x1="270.5" y1="1085.0" x2="294.5" y2="1085.0" stroke="black" stroke-width="1.5"/>
+<line x1="270.5" y1="1710.0" x2="294.5" y2="1710.0" stroke="black" stroke-width="1.5"/>
+<text x="268.5" y="1397.5" font-size="20" font-weight="normal" text-anchor="middle" transform="rotate(-90 268.5,1397.5)">50'-0"</text>
+<text x="2140.0" y="1548.0" font-size="24" font-weight="bold" text-anchor="start">FOOTING SCHEDULE</text>
+<rect x="2140" y="1560" width="780" height="102" fill="none" stroke="black" stroke-width="2"/>
+<line x1="2140.0" y1="1594.0" x2="2920.0" y2="1594.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="1628.0" x2="2920.0" y2="1628.0" stroke="black" stroke-width="1"/>
+<line x1="2240.0" y1="1560.0" x2="2240.0" y2="1662.0" stroke="black" stroke-width="1"/>
+<line x1="2540.0" y1="1560.0" x2="2540.0" y2="1662.0" stroke="black" stroke-width="1"/>
+<line x1="2800.0" y1="1560.0" x2="2800.0" y2="1662.0" stroke="black" stroke-width="1"/>
+<text x="2148.0" y="1584.0" font-size="17" font-weight="bold" text-anchor="start">MARK</text>
+<text x="2248.0" y="1584.0" font-size="17" font-weight="bold" text-anchor="start">SIZE</text>
+<text x="2548.0" y="1584.0" font-size="17" font-weight="bold" text-anchor="start">REINF.</text>
+<text x="2808.0" y="1584.0" font-size="17" font-weight="bold" text-anchor="start">QTY</text>
+<text x="2148.0" y="1618.0" font-size="17" font-weight="normal" text-anchor="start">F1</text>
+<text x="2248.0" y="1618.0" font-size="17" font-weight="normal" text-anchor="start">4'-0" x 4'-0" x 1'-6"</text>
+<text x="2548.0" y="1618.0" font-size="17" font-weight="normal" text-anchor="start">(6) #5 EA WAY</text>
+<text x="2808.0" y="1618.0" font-size="17" font-weight="normal" text-anchor="start">9</text>
+<text x="2148.0" y="1652.0" font-size="17" font-weight="normal" text-anchor="start">F2</text>
+<text x="2248.0" y="1652.0" font-size="17" font-weight="normal" text-anchor="start">CONT. 2'-0" x 1'-0"</text>
+<text x="2548.0" y="1652.0" font-size="17" font-weight="normal" text-anchor="start">(3) #5 CONT.</text>
+<text x="2808.0" y="1652.0" font-size="17" font-weight="normal" text-anchor="start">440 LF</text>
+<text x="2140.0" y="300.0" font-size="24" font-weight="bold" text-anchor="start">STRUCTURAL GENERAL NOTES</text>
+<text x="2140.0" y="344.0" font-size="17" font-weight="normal" text-anchor="start">1. CODES: IBC 2021; ASCE 7-22. ROOF LL 20 PSF; WIND 115 MPH EXP C; SEISMIC SDC A.</text>
+<text x="2140.0" y="376.0" font-size="17" font-weight="normal" text-anchor="start">2. CONCRETE: f'c = 4,000 PSI AT 28 DAYS ALL FOOTINGS AND SLABS; 3,000 PSI FILL.</text>
+<text x="2140.0" y="408.0" font-size="17" font-weight="normal" text-anchor="start">3. REINFORCING: ASTM A615 GR 60. WWM ASTM A1064.</text>
+<text x="2140.0" y="440.0" font-size="17" font-weight="normal" text-anchor="start">4. CMU: ASTM C90, f'm = 2,000 PSI, TYPE S MORTAR, GROUT ALL CELLS SOLID; #5 @ 32" OC VERT.</text>
+<text x="2140.0" y="472.0" font-size="17" font-weight="normal" text-anchor="start">5. STRUCTURAL STEEL: W-SHAPES ASTM A992; HSS ASTM A500 GR C; JOISTS SJI K-SERIES; DECK ASTM A653.</text>
+<text x="2140.0" y="504.0" font-size="17" font-weight="normal" text-anchor="start">6. BEARING: 3,000 PSF ALLOWABLE PER GEOTECH REPORT (TERRA-TEX 26-1188); FOOTINGS 24" MIN BELOW GRADE.</text>
+<text x="2140.0" y="536.0" font-size="17" font-weight="normal" text-anchor="start">7. SPECIAL INSPECTIONS PER IBC CH. 17: CONCRETE, MASONRY, STEEL BOLTING/WELDING — SEE 01 45 00.</text>
+<text x="2140.0" y="568.0" font-size="17" font-weight="normal" text-anchor="start">8. SLAB CONTROL JOINTS AT 12'-0" OC MAX EACH WAY, SAW CUT 1/4 DEPTH.</text>
+<g id="north" stroke="black" fill="none" stroke-width="2">
+<circle cx="3300" cy="300" r="60"/>
+<path d="M3300,250 L3320,330 L3300,310 L3280,330 Z" fill="black"/>
+<text x="3285" y="400" font-size="26" stroke="none" fill="black">N</text>
+</g>
+<g id="titleblock" font-size="22">
+<rect x="2960" y="1980" width="600" height="380" fill="none" stroke="black" stroke-width="3"/>
+<line x1="2960" y1="2080" x2="3560" y2="2080" stroke="black" stroke-width="2"/>
+<line x1="2960" y1="2180" x2="3560" y2="2180" stroke="black" stroke-width="2"/>
+<line x1="2960" y1="2270" x2="3560" y2="2270" stroke="black" stroke-width="2"/>
+<text x="2980" y="2015" font-size="24" font-weight="bold">BLACKLAND COMMERCIAL BUILDERS (SYNTHETIC DEMO)</text>
+<text x="2980" y="2050" font-size="20">PRAIRIE CREEK OFFICE/WAREHOUSE — BUILDING 2</text>
+<text x="2980" y="2110" font-size="18">SHEET TITLE</text>
+<text x="2980" y="2150" font-size="28" font-weight="bold">FOUNDATION PLAN & GENERAL NOTES</text>
+<text x="2980" y="2210" font-size="20">SCALE: 1/8" = 1'-0"</text>
+<text x="3300" y="2210" font-size="20">DATE: 09/12/2026</text>
+<text x="2980" y="2250" font-size="20">REV: 2   ADDENDUM 1: 09/19/2026</text>
+<text x="2980" y="2305" font-size="18">SHEET NUMBER</text>
+<text x="3300" y="2330" font-size="44" font-weight="bold">S-101</text>
+</g>
+</svg>

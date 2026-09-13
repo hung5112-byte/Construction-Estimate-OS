@@ -1,0 +1,42 @@
+# Default signal rules for the hardware division.
+# BYOT (RULE 6): copy this file to <vault>/00-Brain/signal-rules.yaml and edit —
+# the vault copy always wins over this bundled default.
+
+departments:
+  - Hardware Engineering
+  - NPI & Program Management
+  - Quality & Reliability
+  - Manufacturing & Supplier Quality
+  - Service Operations
+
+senders:
+  allow: []        # always forwarded to triage (e.g. factory ops mailing list)
+  block: []        # always dropped (e.g. no-reply@ads.example.com)
+
+keywords:
+  critical:        # any hit passes prefilter; offline fallback severity = critical
+    - "line down"
+    - "production halt"
+    - "recall"
+    - "quality escape"
+    - "shipment hold"
+    - "supplier stoppage"
+    - "safety incident"
+    - "certification suspended"
+  high:
+    - "shortage"
+    - "yield drop"
+    - "rma spike"
+    - "audit finding"
+    - "delivery delay"
+    - "price increase"
+  ignore:          # dropped unless a critical keyword also matches
+    - "unsubscribe"
+    - "newsletter"
+    - "webinar"
+    - "promotion"
+
+policy:
+  min_severity_to_trigger: critical
+  dedup_window_hours: 24
+  max_auto_meetings_per_day: 3

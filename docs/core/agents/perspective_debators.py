@@ -42,7 +42,7 @@ def _build_extra(state: MeetingState) -> str:
 class GrowthDebator:
     def __init__(self, llm):
         self.agent = BaseAgent(
-            name_vn="Growth",
+            name_local="Growth",
             role="growth",
             system_prompt=GROWTH_PROMPT,
             llm=llm,
@@ -69,7 +69,7 @@ class GrowthDebator:
 class CautiousDebator:
     def __init__(self, llm):
         self.agent = BaseAgent(
-            name_vn="Cautious",
+            name_local="Cautious",
             role="cautious",
             system_prompt=CAUTIOUS_PROMPT,
             llm=llm,
@@ -96,7 +96,7 @@ class CautiousDebator:
 class BalancedDebator:
     def __init__(self, llm):
         self.agent = BaseAgent(
-            name_vn="Balanced",
+            name_local="Balanced",
             role="balanced",
             system_prompt=BALANCED_PROMPT,
             llm=llm,

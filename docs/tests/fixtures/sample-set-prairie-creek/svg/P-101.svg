@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36in" height="24in" viewBox="0 0 3600 2400" font-family="Helvetica, Arial, sans-serif">
+<rect x="0" y="0" width="3600" height="2400" fill="white"/>
+<rect x="40" y="40" width="3520" height="2320" fill="none" stroke="black" stroke-width="4"/>
+<rect x="520.0" y="460.0" width="1500.0" height="1250.0" fill="none" stroke="black" stroke-width="12"/>
+<line x1="1020.0" y1="460.0" x2="1020.0" y2="1710.0" stroke="black" stroke-width="10"/>
+<line x1="770.0" y1="460.0" x2="770.0" y2="1710.0" stroke="black" stroke-width="5"/>
+<line x1="520.0" y1="772.5" x2="1020.0" y2="772.5" stroke="black" stroke-width="5"/>
+<line x1="520.0" y1="1085.0" x2="1020.0" y2="1085.0" stroke="black" stroke-width="5"/>
+<line x1="520.0" y1="1397.5" x2="1020.0" y2="1397.5" stroke="black" stroke-width="5"/>
+<line x1="520.0" y1="1553.8" x2="770.0" y2="1553.8" stroke="black" stroke-width="5"/>
+<text x="645.0" y="602.2" font-size="16" font-weight="bold" text-anchor="middle">101 LOBBY</text>
+<text x="645.0" y="632.2" font-size="14" font-weight="normal" text-anchor="middle">500 SF</text>
+<text x="895.0" y="602.2" font-size="16" font-weight="bold" text-anchor="middle">102 CONFERENCE</text>
+<text x="895.0" y="632.2" font-size="14" font-weight="normal" text-anchor="middle">500 SF</text>
+<text x="645.0" y="914.8" font-size="16" font-weight="bold" text-anchor="middle">103 OFFICE</text>
+<text x="645.0" y="944.8" font-size="14" font-weight="normal" text-anchor="middle">500 SF</text>
+<text x="895.0" y="914.8" font-size="16" font-weight="bold" text-anchor="middle">104 OFFICE</text>
+<text x="895.0" y="944.8" font-size="14" font-weight="normal" text-anchor="middle">500 SF</text>
+<text x="645.0" y="1227.2" font-size="16" font-weight="bold" text-anchor="middle">105 BREAK ROOM</text>
+<text x="645.0" y="1257.2" font-size="14" font-weight="normal" text-anchor="middle">500 SF</text>
+<text x="895.0" y="1227.2" font-size="16" font-weight="bold" text-anchor="middle">108 OFFICE</text>
+<text x="895.0" y="1257.2" font-size="14" font-weight="normal" text-anchor="middle">500 SF</text>
+<text x="645.0" y="1461.6" font-size="16" font-weight="bold" text-anchor="middle">106 RESTROOM M</text>
+<text x="645.0" y="1491.6" font-size="14" font-weight="normal" text-anchor="middle">250 SF</text>
+<text x="645.0" y="1617.9" font-size="16" font-weight="bold" text-anchor="middle">107 RESTROOM W</text>
+<text x="645.0" y="1647.9" font-size="14" font-weight="normal" text-anchor="middle">250 SF</text>
+<text x="895.0" y="1539.8" font-size="16" font-weight="bold" text-anchor="middle">109 IT / STORAGE</text>
+<text x="895.0" y="1569.8" font-size="14" font-weight="normal" text-anchor="middle">500 SF</text>
+<text x="1520.0" y="1071.0" font-size="16" font-weight="bold" text-anchor="middle">200 WAREHOUSE</text>
+<text x="1520.0" y="1101.0" font-size="14" font-weight="normal" text-anchor="middle">8,000 SF</text>
+<rect x="558.0" y="1423.0" width="24" height="24" fill="none" stroke="black" stroke-width="2"/>
+<text x="586.0" y="1440.0" font-size="12" font-weight="bold" text-anchor="start">WC-1</text>
+<rect x="620.5" y="1423.0" width="24" height="24" fill="none" stroke="black" stroke-width="2"/>
+<text x="648.5" y="1440.0" font-size="12" font-weight="bold" text-anchor="start">WC-1</text>
+<rect x="558.0" y="1585.5" width="24" height="24" fill="none" stroke="black" stroke-width="2"/>
+<text x="586.0" y="1602.5" font-size="12" font-weight="bold" text-anchor="start">WC-1</text>
+<rect x="620.5" y="1585.5" width="24" height="24" fill="none" stroke="black" stroke-width="2"/>
+<text x="648.5" y="1602.5" font-size="12" font-weight="bold" text-anchor="start">WC-1</text>
+<rect x="683.0" y="1423.0" width="24" height="24" fill="none" stroke="black" stroke-width="2"/>
+<text x="711.0" y="1440.0" font-size="12" font-weight="bold" text-anchor="start">UR-1</text>
+<rect x="708.0" y="1498.0" width="24" height="24" fill="none" stroke="black" stroke-width="2"/>
+<text x="736.0" y="1515.0" font-size="12" font-weight="bold" text-anchor="start">LAV-1</text>
+<rect x="733.0" y="1498.0" width="24" height="24" fill="none" stroke="black" stroke-width="2"/>
+<text x="761.0" y="1515.0" font-size="12" font-weight="bold" text-anchor="start">LAV-1</text>
+<rect x="708.0" y="1660.5" width="24" height="24" fill="none" stroke="black" stroke-width="2"/>
+<text x="736.0" y="1677.5" font-size="12" font-weight="bold" text-anchor="start">LAV-1</text>
+<rect x="733.0" y="1660.5" width="24" height="24" fill="none" stroke="black" stroke-width="2"/>
+<text x="761.0" y="1677.5" font-size="12" font-weight="bold" text-anchor="start">LAV-1</text>
+<rect x="558.0" y="1135.5" width="24" height="24" fill="none" stroke="black" stroke-width="2"/>
+<text x="586.0" y="1152.5" font-size="12" font-weight="bold" text-anchor="start">SK-1</text>
+<rect x="958.0" y="1648.0" width="24" height="24" fill="none" stroke="black" stroke-width="2"/>
+<text x="986.0" y="1665.0" font-size="12" font-weight="bold" text-anchor="start">MS-1</text>
+<rect x="770.5" y="1073.0" width="24" height="24" fill="none" stroke="black" stroke-width="2"/>
+<text x="798.5" y="1090.0" font-size="12" font-weight="bold" text-anchor="start">EWC-1</text>
+<rect x="958.0" y="1573.0" width="24" height="24" fill="none" stroke="black" stroke-width="2"/>
+<text x="986.0" y="1590.0" font-size="12" font-weight="bold" text-anchor="start">WH-1</text>
+<text x="530.0" y="952.0" font-size="12" font-weight="bold" text-anchor="start">HB-1</text>
+<text x="1260.0" y="1724.0" font-size="12" font-weight="bold" text-anchor="end">HB-1</text>
+<text x="2010.0" y="952.0" font-size="12" font-weight="bold" text-anchor="end">HB-1</text>
+<text x="1260.0" y="452.0" font-size="12" font-weight="bold" text-anchor="end">HB-1</text>
+<line x1="770.0" y1="460.0" x2="770.0" y2="1710.0" stroke="black" stroke-width="3" stroke-dasharray="6,6"/>
+<text x="778.0" y="960.0" font-size="13" font-weight="normal" text-anchor="start">2" CW MAIN</text>
+<line x1="520.0" y1="385.0" x2="2020.0" y2="385.0" stroke="black" stroke-width="3" stroke-dasharray="12,6"/>
+<text x="1270.0" y="310.0" font-size="14" font-weight="normal" text-anchor="middle">4" SANITARY TO 5' OUTSIDE BLDG (SITE UTILITIES BY CIVIL)</text>
+<text x="2140.0" y="288.0" font-size="24" font-weight="bold" text-anchor="start">PLUMBING FIXTURE SCHEDULE</text>
+<rect x="2140" y="300" width="690" height="306" fill="none" stroke="black" stroke-width="2"/>
+<line x1="2140.0" y1="334.0" x2="2830.0" y2="334.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="368.0" x2="2830.0" y2="368.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="402.0" x2="2830.0" y2="402.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="436.0" x2="2830.0" y2="436.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="470.0" x2="2830.0" y2="470.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="504.0" x2="2830.0" y2="504.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="538.0" x2="2830.0" y2="538.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="572.0" x2="2830.0" y2="572.0" stroke="black" stroke-width="1"/>
+<line x1="2230.0" y1="300.0" x2="2230.0" y2="606.0" stroke="black" stroke-width="1"/>
+<line x1="2750.0" y1="300.0" x2="2750.0" y2="606.0" stroke="black" stroke-width="1"/>
+<text x="2148.0" y="324.0" font-size="15" font-weight="bold" text-anchor="start">TAG</text>
+<text x="2238.0" y="324.0" font-size="15" font-weight="bold" text-anchor="start">DESCRIPTION</text>
+<text x="2758.0" y="324.0" font-size="15" font-weight="bold" text-anchor="start">QTY</text>
+<text x="2148.0" y="358.0" font-size="15" font-weight="normal" text-anchor="start">WC-1</text>
+<text x="2238.0" y="358.0" font-size="15" font-weight="normal" text-anchor="start">WATER CLOSET, FLOOR MOUNT, 1.28 GPF</text>
+<text x="2758.0" y="358.0" font-size="15" font-weight="normal" text-anchor="start">4</text>
+<text x="2148.0" y="392.0" font-size="15" font-weight="normal" text-anchor="start">UR-1</text>
+<text x="2238.0" y="392.0" font-size="15" font-weight="normal" text-anchor="start">URINAL, WALL HUNG, 0.125 GPF</text>
+<text x="2758.0" y="392.0" font-size="15" font-weight="normal" text-anchor="start">1</text>
+<text x="2148.0" y="426.0" font-size="15" font-weight="normal" text-anchor="start">LAV-1</text>
+<text x="2238.0" y="426.0" font-size="15" font-weight="normal" text-anchor="start">LAVATORY, WALL HUNG</text>
+<text x="2758.0" y="426.0" font-size="15" font-weight="normal" text-anchor="start">4</text>
+<text x="2148.0" y="460.0" font-size="15" font-weight="normal" text-anchor="start">SK-1</text>
+<text x="2238.0" y="460.0" font-size="15" font-weight="normal" text-anchor="start">BREAK ROOM SINK, DOUBLE BOWL</text>
+<text x="2758.0" y="460.0" font-size="15" font-weight="normal" text-anchor="start">1</text>
+<text x="2148.0" y="494.0" font-size="15" font-weight="normal" text-anchor="start">MS-1</text>
+<text x="2238.0" y="494.0" font-size="15" font-weight="normal" text-anchor="start">MOP SINK</text>
+<text x="2758.0" y="494.0" font-size="15" font-weight="normal" text-anchor="start">1</text>
+<text x="2148.0" y="528.0" font-size="15" font-weight="normal" text-anchor="start">EWC-1</text>
+<text x="2238.0" y="528.0" font-size="15" font-weight="normal" text-anchor="start">ELECTRIC WATER COOLER, BI-LEVEL</text>
+<text x="2758.0" y="528.0" font-size="15" font-weight="normal" text-anchor="start">1</text>
+<text x="2148.0" y="562.0" font-size="15" font-weight="normal" text-anchor="start">WH-1</text>
+<text x="2238.0" y="562.0" font-size="15" font-weight="normal" text-anchor="start">ELECTRIC WATER HEATER, 40 GAL</text>
+<text x="2758.0" y="562.0" font-size="15" font-weight="normal" text-anchor="start">1</text>
+<text x="2148.0" y="596.0" font-size="15" font-weight="normal" text-anchor="start">HB-1</text>
+<text x="2238.0" y="596.0" font-size="15" font-weight="normal" text-anchor="start">HOSE BIBB</text>
+<text x="2758.0" y="596.0" font-size="15" font-weight="normal" text-anchor="start">4</text>
+<text x="2140.0" y="708.0" font-size="24" font-weight="bold" text-anchor="start">FIRE PROTECTION BASIS (DESIGN-BUILD)</text>
+<rect x="2140" y="720" width="680" height="102" fill="none" stroke="black" stroke-width="2"/>
+<line x1="2140.0" y1="754.0" x2="2820.0" y2="754.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="788.0" x2="2820.0" y2="788.0" stroke="black" stroke-width="1"/>
+<line x1="2400.0" y1="720.0" x2="2400.0" y2="822.0" stroke="black" stroke-width="1"/>
+<line x1="2600.0" y1="720.0" x2="2600.0" y2="822.0" stroke="black" stroke-width="1"/>
+<line x1="2720.0" y1="720.0" x2="2720.0" y2="822.0" stroke="black" stroke-width="1"/>
+<text x="2148.0" y="744.0" font-size="15" font-weight="bold" text-anchor="start">AREA</text>
+<text x="2408.0" y="744.0" font-size="15" font-weight="bold" text-anchor="start">HAZARD</text>
+<text x="2608.0" y="744.0" font-size="15" font-weight="bold" text-anchor="start">SF/HEAD</text>
+<text x="2728.0" y="744.0" font-size="15" font-weight="bold" text-anchor="start">HEADS</text>
+<text x="2148.0" y="778.0" font-size="15" font-weight="normal" text-anchor="start">OFFICE 4,000 SF</text>
+<text x="2408.0" y="778.0" font-size="15" font-weight="normal" text-anchor="start">LIGHT</text>
+<text x="2608.0" y="778.0" font-size="15" font-weight="normal" text-anchor="start">200</text>
+<text x="2728.0" y="778.0" font-size="15" font-weight="normal" text-anchor="start">20</text>
+<text x="2148.0" y="812.0" font-size="15" font-weight="normal" text-anchor="start">WAREHOUSE 8,000 SF</text>
+<text x="2408.0" y="812.0" font-size="15" font-weight="normal" text-anchor="start">ORDINARY GRP 2</text>
+<text x="2608.0" y="812.0" font-size="15" font-weight="normal" text-anchor="start">130</text>
+<text x="2728.0" y="812.0" font-size="15" font-weight="normal" text-anchor="start">62</text>
+<text x="2140.0" y="900.0" font-size="24" font-weight="bold" text-anchor="start">PLUMBING NOTES</text>
+<text x="2140.0" y="942.0" font-size="16" font-weight="normal" text-anchor="start">1. DOMESTIC WATER: 2" SERVICE WITH RPZ BACKFLOW; COPPER TYPE L ABOVE GRADE, PEX-A PERMITTED IN WALLS.</text>
+<text x="2140.0" y="972.0" font-size="16" font-weight="normal" text-anchor="start">2. SANITARY: PVC SCH 40 UNDERGROUND, CAST IRON ABOVE GRADE; APPROX. 420 LF TOTAL.</text>
+<text x="2140.0" y="1002.0" font-size="16" font-weight="normal" text-anchor="start">3. GAS: 1-1/2" TO UH-1/UH-2 AND 3/4" TO WH-1; METER BY UTILITY.</text>
+<text x="2140.0" y="1032.0" font-size="16" font-weight="normal" text-anchor="start">4. ROOF DRAINS (4) AND OVERFLOWS (4) WITH 6" LEADERS TO STORM; SEE CIVIL FOR SITE STORM.</text>
+<text x="2140.0" y="1062.0" font-size="16" font-weight="normal" text-anchor="start">5. SPRINKLER: WET PIPE, 6" RISER, FDC AT NORTH WALL; FLOW TEST 09/2026 TO BE PROVIDED BY OWNER.</text>
+<g id="north" stroke="black" fill="none" stroke-width="2">
+<circle cx="3300" cy="300" r="60"/>
+<path d="M3300,250 L3320,330 L3300,310 L3280,330 Z" fill="black"/>
+<text x="3285" y="400" font-size="26" stroke="none" fill="black">N</text>
+</g>
+<g id="titleblock" font-size="22">
+<rect x="2960" y="1980" width="600" height="380" fill="none" stroke="black" stroke-width="3"/>
+<line x1="2960" y1="2080" x2="3560" y2="2080" stroke="black" stroke-width="2"/>
+<line x1="2960" y1="2180" x2="3560" y2="2180" stroke="black" stroke-width="2"/>
+<line x1="2960" y1="2270" x2="3560" y2="2270" stroke="black" stroke-width="2"/>
+<text x="2980" y="2015" font-size="24" font-weight="bold">BLACKLAND COMMERCIAL BUILDERS (SYNTHETIC DEMO)</text>
+<text x="2980" y="2050" font-size="20">PRAIRIE CREEK OFFICE/WAREHOUSE — BUILDING 2</text>
+<text x="2980" y="2110" font-size="18">SHEET TITLE</text>
+<text x="2980" y="2150" font-size="28" font-weight="bold">PLUMBING PLAN & FIXTURE SCHEDULE</text>
+<text x="2980" y="2210" font-size="20">SCALE: 1/8" = 1'-0"</text>
+<text x="3300" y="2210" font-size="20">DATE: 09/12/2026</text>
+<text x="2980" y="2250" font-size="20">REV: 2   ADDENDUM 1: 09/19/2026</text>
+<text x="2980" y="2305" font-size="18">SHEET NUMBER</text>
+<text x="3300" y="2330" font-size="44" font-weight="bold">P-101</text>
+</g>
+</svg>

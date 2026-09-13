@@ -16,9 +16,9 @@ def test_collector_loads_dept_and_calls_agent():
     )
 
     state = new_meeting_state(
-        brief="test", departments=["05-service-operations"],
+        brief="test", departments=["05-cost-engineering"],
     )
     out = collector.collect(state)
 
-    assert "05-service-operations" in out["perspectives"]
-    assert "ABC" in out["perspectives"]["05-service-operations"]
+    assert "05-cost-engineering" in out["perspectives"]
+    assert "ABC" in out["perspectives"]["05-cost-engineering"]

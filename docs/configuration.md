@@ -8,7 +8,7 @@ The main config files + how to tune them.
 
 | File | Location | Purpose | Committed? |
 |---|---|---|---|
-| `.vncoderc` | `<vault>/.vncoderc` or `~/.vncoderc` | Settings (vault path, packs, meeting, translator) | **NO** (gitignored) |
+| `.bd-os.yaml` | `<vault>/.bd-os.yaml` or `~/.bd-os.yaml` | Settings (vault path, packs, meeting, translator) | **NO** (gitignored) |
 | `.env` | `<vault>/.env` | API keys (TAVILY, ANTHROPIC, ...) | **NO** (gitignored) |
 | `claude_desktop_config.json` | OS-specific (see below) | MCP server registration | NO (Claude config) |
 
@@ -22,7 +22,7 @@ The main config files + how to tune them.
 
 ---
 
-## `.vncoderc` — full reference
+## `.bd-os.yaml` — full reference
 
 ```yaml
 # Vault path (auto-set by bd_onboard)
@@ -116,7 +116,7 @@ See [how-to-create-pack.md](how-to-create-pack.md). In short:
 3. (Optional) `brain-template/` to override the default Brain
 
 ### Install your pack
-Edit `.vncoderc`, add `- <your-pack>` under `packs:`, then call `bd_upgrade` —
+Edit `.bd-os.yaml`, add `- <your-pack>` under `packs:`, then call `bd_upgrade` —
 or pass `packs=["<your-pack>"]` to `bd_onboard` for a new vault.
 
 ---
@@ -157,7 +157,7 @@ One consultant serving multiple companies → one vault per company:
 F:/clients/
 ├── abc-coffee/         # Company 1 vault
 │   ├── .env            # ABC's TAVILY_API_KEY
-│   ├── .vncoderc
+│   ├── .bd-os.yaml
 │   ├── 00-Brain/
 │   ├── 01-Departments/
 │   └── ...

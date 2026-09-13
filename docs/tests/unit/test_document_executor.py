@@ -19,8 +19,8 @@ PLAN_WITH_REAL_TEMPLATES = textwrap.dedent("""\
 
     | Template name | Dept | Notes |
     |---------------|------|-------|
-    | rma-process-sop | 05-service-operations | Returns process |
-    | vendor-scorecard | 04-mfg-supplier-quality | Supplier evaluation |
+    | pre-bid-rfi-log | 01-bid-coordination | Questions to the architect |
+    | estimate-summary | 05-cost-engineering | Division summary |
 """)
 
 PLAN_WITH_UNKNOWN_TEMPLATE = textwrap.dedent("""\
@@ -40,7 +40,7 @@ PLAN_WITHOUT_TABLE = textwrap.dedent("""\
     type: execution_plan
     stop: 2
     ---
-    # Execution plan — improve the returns process and supplier scoring.
+    # Execution plan — log the pre-bid questions and summarize the estimate.
 """)
 
 
@@ -134,7 +134,7 @@ class TestExecuteDocuments:
             llm=self._make_llm(),
         )
 
-        # rma-process-sop and vendor-scorecard exist in repo/templates-us/
+        # pre-bid-rfi-log and estimate-summary exist in repo/templates-us/
         # Both are .md → rendered as .docx
         assert len(result["generated"]) >= 1
         for rel_path in result["generated"]:
@@ -179,7 +179,7 @@ class TestExecuteDocuments:
 
         import json
         fallback_json = json.dumps([
-            {"name": "rma-process-sop", "dept_code": "05-service-operations"},
+            {"name": "pre-bid-rfi-log", "dept_code": "01-bid-coordination"},
         ])
         llm = self._make_llm(fallback_response=fallback_json)
 
@@ -190,9 +190,9 @@ class TestExecuteDocuments:
             llm=llm,
         )
 
-        # LLM was called for template extraction
-        llm.complete.assert_called_once()
-        # rma-process-sop exists in repo templates → should generate
+        # LLM was called (extraction + optional doc generation)
+        llm.complete.assert_called()
+        # pre-bid-rfi-log exists in repo templates → should generate
         assert len(result["generated"]) >= 1
 
     def test_brain_context_included_in_substitutions(self, tmp_path):
@@ -235,7 +235,7 @@ class TestExecuteDocuments:
 
             | Template name | Dept | Notes |
             |---------------|------|-------|
-            | rma-process-sop | 05-service-operations | Valid |
+            | pre-bid-rfi-log | 01-bid-coordination | Valid |
         """)
         (task_folder / "08-execution-plan.md").write_text(plan_text, encoding="utf-8")
 

@@ -100,16 +100,16 @@ Department Head brief
 
 ## Cost budget
 
-| Component | Per COMPLEX task |
-|---|---|
-| Router classify | ~$0.01 |
-| Gap analysis | ~$0.05 |
-| Question gen | ~$0.02 |
-| Tool calls (3 tools) | ~$0.10 |
-| Perspectives (5 departments × 1 turn) | ~$0.30 |
-| Pro/Con debate (2 rounds × 2 = 4 turns) | ~$0.40 |
-| Perspective debate (3 voices × 1 round) | ~$0.30 |
-| Synthesizer | ~$0.20 |
-| Translator (simplify + TL;DR) | ~$0.10 |
-| **Total** | **~$1.50/task** |
-| Limit | <$2.00/task |
+| Component                               | Per COMPLEX task |
+| --------------------------------------- | ---------------- |
+| Router classify                         | ~$0.01           |
+| Gap analysis                            | ~$0.05           |
+| Question gen                            | ~$0.02           |
+| Tool calls (3 tools)                    | ~$0.10           |
+| Perspectives (5 departments × 1 turn)   | ~$0.30           |
+| Pro/Con debate (2 rounds × 2 = 4 turns) | ~$0.40           |
+| Perspective debate (3 voices × 1 round) | ~$0.30           |
+| Synthesizer                             | ~$0.20           |
+| Translator (simplify + TL;DR)           | ~$0.10           |
+| **Total**                               | **~$1.50/task**  |
+| Limit                                   | <$2.00/task      |

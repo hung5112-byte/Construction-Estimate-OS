@@ -1,0 +1,56 @@
+code: 02-civil-structural
+name_local: Civil & Structural Estimating
+tier: 1
+description: 'Takeoff and scope for sitework, concrete, masonry and structural steel from the C, L and S sheets and the geotechnical report: earthwork in bank cubic yards, utilities and paving, footings/slabs/tilt panels in CY with forms and rebar, steel tonnage and piece counts, CMU and brick. The lead speaks for the department.'
+agents:
+- civil-structural-lead
+- sitework-estimator
+- concrete-estimator
+- steel-masonry-estimator
+default_speaker: civil-structural-lead
+refs_folder: refs/
+depends_on:
+- 03-architectural
+- 05-cost-engineering
+debate_role:
+  default: pro
+routing_rules:
+- keywords:
+  - earthwork
+  - grading
+  - cut and fill
+  - utilities
+  - paving
+  - site plan
+  - swppp
+  - storm
+  - detention
+  agent: sitework-estimator
+- keywords:
+  - concrete
+  - slab
+  - footing
+  - foundation
+  - rebar
+  - tilt
+  - formwork
+  - pier
+  agent: concrete-estimator
+- keywords:
+  - steel
+  - joist
+  - deck
+  - masonry
+  - cmu
+  - brick
+  - metal
+  - column
+  - beam
+  agent: steel-masonry-estimator
+aliases_local:
+- Civil & Structural Estimating
+- Civil & Structural
+- Civil Estimating
+- Structural Estimating
+- Sitework
+author: Brian H. Doan

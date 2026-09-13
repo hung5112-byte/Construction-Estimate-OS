@@ -25,7 +25,7 @@ CON_SYSTEM_PROMPT = """You are the Con Advocate (the challenger) in the company'
 class ConAdvocate:
     def __init__(self, llm):
         self.agent = BaseAgent(
-            name_vn="Con Advocate",
+            name_local="Con Advocate",
             role="con_advocate",
             system_prompt=CON_SYSTEM_PROMPT,
             llm=llm,

@@ -1,11 +1,11 @@
-"""MCP server wrapping bd-business-os FlowController as MCP tools.
+"""MCP server wrapping construction-estimate-os FlowController as MCP tools.
 
 When running in Claude Desktop / Code, every LLM call routes through MCP sampling
 (MCPSamplingProvider) — using the user's subscription, no ANTHROPIC_API_KEY needed.
 
 Run:
     python -m core.mcp_server          # stdio transport
-    bd-os-mcp                          # via console_script (after install)
+    ce-os-mcp                          # via console_script (after install)
 
 Tools registered (9):
     bd_run         — Stage 1: brief → router → gap → clarify (PAUSE)
@@ -33,24 +33,34 @@ from core.orchestrator.flow_controller import FlowController
 from core.upgrade import upgrade_vault
 
 
-mcp = FastMCP("bd-business-os")
+mcp = FastMCP("construction-estimate-os")
 
 
 def _pick_llm(ctx: Context):
     """Choose the LLM provider based on env vars.
 
-    Priority: DeepSeek > Anthropic API > MCP sampling.
-    - DEEPSEEK_API_KEY set → DeepSeekProvider (~10x cheaper, good for small businesses)
-    - ANTHROPIC_API_KEY set → ClaudeProvider
-    - Neither set → MCPSamplingProvider (subscription via Claude Desktop)
+    BD_OS_LLM_PROVIDER ∈ {claude-cli, anthropic-api, mcp-sampling} overrides
+    the heuristic (2026-07-05 ruling: runs move onto the Claude subscription
+    via headless `claude -p` — works in every tab, unlike MCP sampling).
 
-    Why the fallback: the Claude Code tab currently does NOT support MCP sampling →
-    create_message returns 'Method not found'. The DeepSeek/Anthropic API is the main
-    path for every tab. MCP sampling is the last fallback when the user has no key.
+    Unset → existing heuristic unchanged:
+    - ANTHROPIC_API_KEY set → ClaudeProvider
+    - Not set → MCPSamplingProvider (subscription via Claude Desktop; the
+      Claude Code tab does NOT support sampling → 'Method not found').
     """
-    if os.getenv("DEEPSEEK_API_KEY"):
-        from core.llm.providers import DeepSeekProvider
-        return DeepSeekProvider()
+    choice = os.getenv("BD_OS_LLM_PROVIDER", "").strip().lower()
+    if choice == "claude-cli":
+        from core.llm.providers import ClaudeCLIProvider
+        from core.utils.config import load_config
+        return ClaudeCLIProvider(
+            timeout_seconds=load_config().llm.timeout_seconds,  # None → env → 900s
+        )
+    if choice == "anthropic-api":
+        from core.llm.providers import ClaudeProvider
+        return ClaudeProvider()
+    if choice == "mcp-sampling":
+        return MCPSamplingProvider(ctx.session)
+
     if os.getenv("ANTHROPIC_API_KEY"):
         from core.llm.providers import ClaudeProvider
         return ClaudeProvider()
@@ -60,8 +70,8 @@ def _pick_llm(ctx: Context):
 def _make_fc(vault_root: str, ctx: Context) -> FlowController:
     """Build FlowController bound to current MCP request session.
 
-    Load vault/.env (DEEPSEEK_API_KEY, TAVILY_API_KEY, ...) into os.environ
-    before picking the LLM provider (priority: DeepSeek > Anthropic > MCP sampling).
+    Load vault/.env (ANTHROPIC_API_KEY, TAVILY_API_KEY, ...) into os.environ
+    before picking the LLM provider (priority: Anthropic API > MCP sampling).
     """
     from core.utils.config import apply_vault_env_to_os
     apply_vault_env_to_os(Path(vault_root))
@@ -179,6 +189,76 @@ def bd_execute(task_folder: str, ctx: Context) -> dict:
 
 
 @mcp.tool()
+def bd_ingest(path: str, vault: str, label: str = "internal") -> dict:
+    """Ingest a document or folder (docx/pptx/pdf/xlsx/csv/txt) into searchable memory.
+
+    Creates a citable shadow card (.md) next to each binary — provenance,
+    extraction confidence, anti-poisoning screening — then refreshes the vault
+    search index so agents can find and cite the content immediately.
+    ⏱️ seconds per document; first embedding run may add ~1-2s model init.
+    """
+    from core.ingest.pipeline import ingest_paths
+    from core.retrieval.indexer import VaultIndexer
+
+    vault_path = Path(vault)
+    src = Path(path)
+    if not src.exists():
+        return {"ok": False, "message": f"Path not found: {src}"}
+    if label not in ("public", "internal", "restricted"):
+        return {"ok": False, "message": "label must be public, internal, or restricted"}
+    results = ingest_paths(vault_path, [src], label=label)
+    ingested = [r for r in results if r.status == "ingested"]
+    if ingested:
+        VaultIndexer(vault_path).build()
+    return {
+        "ok": True,
+        "ingested": [{"source": r.source, "card": r.card, "confidence": r.confidence,
+                      "quarantined": r.quarantined} for r in ingested],
+        "skipped_unchanged": sum(r.status == "skipped-unchanged" for r in results),
+        "unsupported": [r.source for r in results if r.status == "unsupported"],
+        "failed": [{"source": r.source, "error": r.error}
+                   for r in results if r.status == "failed"],
+    }
+
+
+@mcp.tool()
+def bd_outcome(
+    task_folder: str,
+    outcome: str,
+    quality: float,
+    reflection: str = "",
+) -> dict:
+    """Record the real-world outcome of an approved decision (ADR-004 episodic loop).
+
+    Call when the Department Head reports how a past decision actually played out.
+    Flips the decision-ledger entry pending→resolved and writes outcome.md in the
+    task folder. quality ∈ [0,1] (1 = the decision worked exactly as intended).
+    reflection: 2-4 sentences — was the call right (cite the outcome), which part
+    of the thesis held/failed, one concrete lesson. Compose it from the Department
+    Head's words; leave empty rather than inventing one.
+    """
+    from core.brain.ledger import DecisionLedger, ledger_path, write_outcome_note
+
+    folder = Path(task_folder)
+    if not 0.0 <= quality <= 1.0:
+        return {"ok": False, "message": "quality must be between 0 and 1"}
+    if not folder.exists():
+        return {"ok": False, "message": f"Task folder not found: {folder}"}
+    vault_root = _vault_root_from_task(folder)
+    ledger = DecisionLedger(ledger_path(vault_root))
+    if not ledger.resolve(folder.name, outcome=outcome, quality=quality, reflection=reflection):
+        return {
+            "ok": False,
+            "message": f"No ledger entry for '{folder.name}' — was this task approved via bd_execute?",
+        }
+    note = write_outcome_note(folder, outcome=outcome, quality=quality)
+    return {
+        "ok": True,
+        "message": f"Outcome recorded: ledger entry resolved (quality {quality}), {note.name} written.",
+    }
+
+
+@mcp.tool()
 async def bd_draft(
     brief: str,
     vault: str,
@@ -268,12 +348,12 @@ def bd_status(vault: str = "") -> dict:
     packs_info: list[dict] = []
     try:
         from core.agents.pack_loader import PackLoader
-        # Read the vault's .vncoderc to know which packs are installed
-        vncoderc = vault_path / ".vncoderc"
+        # Read the vault's .bd-os.yaml to know which packs are installed
+        cfg_path = vault_path / ".bd-os.yaml"
         installed_codes: list[str] = []
-        if vncoderc.exists():
+        if cfg_path.exists():
             import yaml
-            cfg = yaml.safe_load(vncoderc.read_text(encoding="utf-8")) or {}
+            cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
             installed_codes = cfg.get("packs", []) or []
         repo = Path(__file__).parent.parent
         loader = PackLoader(repo / "packs")
@@ -333,11 +413,33 @@ For details, see README-USER.md in the repo (Part 3 — Daily use).
         "active_departments": brain.headcount.active_departments,
         "state": brain.state,
         "active_tasks": [t.name for t in tasks],
-        "tools_live": list_available_tools(),
-        "tools_skipped": list_skipped_tools(),
+        "critic": _critic_status(tasks),
+        "tools_live": list_available_tools(vault_root=vault_path),
+        "tools_skipped": list_skipped_tools(vault_root=vault_path),
         "packs": packs_info,
         "_workflow_rules": workflow_rules,
     }
+
+
+def _critic_status(tasks: list[Path]) -> dict[str, str]:
+    """Surface `CRITIC round N/M` per task while the loop runs (critic-draft §7)."""
+    import json
+
+    status: dict[str, str] = {}
+    for t in tasks:
+        state_path = t / "critic" / "state.json"
+        if not state_path.exists():
+            continue
+        try:
+            st = json.loads(state_path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            continue
+        verdict = st.get("final_verdict")
+        if verdict:
+            status[t.name] = f"CRITIC {verdict}"
+        else:
+            status[t.name] = f"CRITIC round {st.get('round', '?')}/{st.get('max_rounds', '?')}"
+    return status
 
 
 @mcp.tool()
@@ -396,7 +498,7 @@ def bd_upgrade(
     Args:
         vault: Path to the existing vault
         refresh_agents: Overwrite agent .md files with the new enriched prompts
-        refresh_dept_yaml: Overwrite department.yaml (aliases_vn, routing rules)
+        refresh_dept_yaml: Overwrite department.yaml (aliases_local, routing rules)
         refresh_brain_aliases: Inject aliases into the frontmatter of Brain files
         regenerate_hubs: Delete old index.md + recreate (default NO)
 

@@ -60,8 +60,15 @@ class DecisionEntry(BaseModel):
     slug: str
     owner: str
     decision: str
-    reason: str
+    reason: str = ""
     task_ref: Optional[str] = None
+    # Episodic lifecycle (ADR-004 §1): pending at Stop-2 approval,
+    # resolved once the real-world outcome is recorded.
+    status: Literal["pending", "resolved"] = "pending"
+    quality: Optional[float] = Field(default=None, ge=0.0, le=1.0)
+    outcome: Optional[str] = None
+    reflection: Optional[str] = None
+    resolved_date: Optional[date] = None
 
 
 class BrainContext(BaseModel):

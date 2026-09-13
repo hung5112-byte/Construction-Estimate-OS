@@ -17,6 +17,42 @@ from core.agents.con_advocate import ConAdvocate
 from core.agents.perspective_debators import (
     GrowthDebator, CautiousDebator, BalancedDebator,
 )
+from core.llm.activity_log import agent_span, log_activity
+
+
+def _traced(fn, agent: str, stage: str):
+    """Wrap a graph node with start/end/say activity records (best-effort).
+
+    Zero semantic change: the node result passes through untouched; the records
+    only feed the live activity log so visualizations can show whose turn it is
+    and what was said.
+    """
+    def wrapped(state):
+        task = state.get("task_id", "") if isinstance(state, dict) else ""
+        with agent_span(agent, stage=stage, task=task):
+            result = fn(state)
+        _log_say(agent, stage, task, result)
+        return result
+    return wrapped
+
+
+def _log_say(agent: str, stage: str, task: str, result) -> None:
+    """Pull the utterance out of a node's state update; swallow any surprise."""
+    try:
+        text = ""
+        if isinstance(result, dict):
+            if isinstance(result.get("final_report"), str):
+                text = result["final_report"]
+            else:
+                for key in ("pro_con_debate", "perspective_debate"):
+                    part = result.get(key)
+                    if isinstance(part, dict) and part.get("history"):
+                        text = part["history"][-1]
+                        break
+        if text:
+            log_activity(agent, "say", stage=stage, task=task, text=text)
+    except Exception:  # noqa: BLE001 — telemetry never breaks the meeting
+        pass
 
 
 class MeetingGraph:
@@ -47,13 +83,14 @@ class MeetingGraph:
     def build(self):
         graph = StateGraph(MeetingState)
 
+        # perspectives traces per-department/per-team spans inside the collector
         graph.add_node("perspectives", self.perspectives_collector)
-        graph.add_node("pro", self.pro.run)
-        graph.add_node("con", self.con.run)
-        graph.add_node("growth", self.growth.run)
-        graph.add_node("cautious", self.cautious.run)
-        graph.add_node("balanced", self.balanced.run)
-        graph.add_node("synthesizer", self.synthesizer.run)
+        graph.add_node("pro", _traced(self.pro.run, "pro-advocate", "meeting-r2"))
+        graph.add_node("con", _traced(self.con.run, "con-advocate", "meeting-r2"))
+        graph.add_node("growth", _traced(self.growth.run, "growth-debator", "meeting-r3"))
+        graph.add_node("cautious", _traced(self.cautious.run, "cautious-debator", "meeting-r3"))
+        graph.add_node("balanced", _traced(self.balanced.run, "balanced-debator", "meeting-r3"))
+        graph.add_node("synthesizer", _traced(self.synthesizer.run, "synthesizer", "decision"))
 
         graph.set_entry_point("perspectives")
         graph.add_edge("perspectives", "pro")

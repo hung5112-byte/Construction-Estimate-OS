@@ -1,92 +1,40 @@
-"""Live, READ-ONLY web dashboard that visualizes 00-Dashboard.md on localhost.
+"""Live "good morning" division dashboard on localhost — demo edition.
 
-This server NEVER writes to the vault. It opens 00-Dashboard.md in read mode on
-every request, renders it as a styled visual dashboard, and auto-refreshes the page
-when the file's modification time changes (e.g. after agent_dashboard.py regenerates
-it). Information-only — no control mutates any file.
+Executive morning briefing from real vault data: a one-line state-of-the-division,
+KPI tiles with trend arrows, a value-vs-cost ROI banner, a hero alert, "needs your
+approval", "risks & alerts", and "recent activity". Click any item to read the
+underlying document. Optional present/kiosk mode + branding for a projector, print
+to PDF, and a guarded live "Approve → execute" action.
 
-Design system (via ui-ux-pro-max): "Data-Dense Dashboard" style, "Real-Time /
-Operations" pattern, Analytics palette (#1E40AF data + #D97706 amber accent,
-full light/dark), Fira Code/Fira Sans typography with tabular numerals, token
-usage as a sorted AAA bar chart with always-visible value labels.
+Read-only by default. The /doc endpoint is sandboxed to vault .md files. The live
+approve action is OFF unless started with --enable-actions (demo mode).
 
 Usage:
-    python docs/scripts/dashboard_server.py                       # vault = repo root, port 8787
-    python docs/scripts/dashboard_server.py --port 9000 --poll 5
-    python docs/scripts/dashboard_server.py --vault "C:/path/to/vault"
-    python docs/scripts/dashboard_server.py --file  "C:/path/to/00-Dashboard.md"
-
-Open the printed URL (default http://127.0.0.1:8787/). Stop with Ctrl+C.
-Dependencies: Python 3.11+ standard library only. Fonts load from Google Fonts
-when online and fall back to system fonts (font-display: swap) when offline.
+    python docs/scripts/dashboard_server.py
+    python docs/scripts/dashboard_server.py --company "Acme Devices" --logo assets/logo.png
+    python docs/scripts/dashboard_server.py --enable-actions     # demo: live approve
+Open http://127.0.0.1:8787/  (add ?present=1 for projector mode). Stdlib only.
 """
 from __future__ import annotations
 
 import argparse
+import base64
 import html
 import json
 import re
+import subprocess
+import sys
 import time
+from datetime import datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
+
+HIST = Path("/tmp/bd-dashboard-history.json")
+VENDOR = Path(__file__).resolve().parent / "vendor"   # locally-served Chart.js + D3 (offline-proof)
 
 # --------------------------------------------------------------------------- #
-# Inline SVG icon set (Lucide-style, stroke=currentColor) — no emoji as icons   #
-# --------------------------------------------------------------------------- #
-
-ICONS = {
-    "activity": '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
-    "refresh": '<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/>'
-    '<path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/>',
-    "users": '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>'
-    '<path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
-    "grid": '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>'
-    '<rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>',
-    "clipboard": '<rect x="8" y="2" width="8" height="4" rx="1"/>'
-    '<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>'
-    '<path d="M9 12h6"/><path d="M9 16h6"/>',
-    "zap": '<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>',
-    "dollar": '<line x1="12" y1="2" x2="12" y2="22"/>'
-    '<path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
-    "barchart": '<line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/>'
-    '<line x1="6" y1="20" x2="6" y2="16"/>',
-    "alert": '<path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>'
-    '<line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
-    "workflow": '<rect x="3" y="3" width="8" height="8" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/>'
-    '<rect x="13" y="13" width="8" height="8" rx="2"/>',
-    "cpu": '<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/>'
-    '<path d="M9 2v2"/><path d="M15 2v2"/><path d="M9 20v2"/><path d="M15 20v2"/>'
-    '<path d="M2 9h2"/><path d="M2 15h2"/><path d="M20 9h2"/><path d="M20 15h2"/>',
-}
-
-
-def icon(name: str, cls: str = "ic", size: int = 18) -> str:
-    inner = ICONS.get(name, ICONS["activity"])
-    return (
-        f'<svg class="{cls}" width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" '
-        f'stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" '
-        f'aria-hidden="true">{inner}</svg>'
-    )
-
-
-def heading_icon(text: str) -> tuple[str, str]:
-    """Pick an icon by heading keyword and strip a leading emoji/symbol run."""
-    low = text.lower()
-    name = "activity"
-    if "needs action" in low:
-        name = "alert"
-    elif "pipeline" in low:
-        name = "workflow"
-    elif "token" in low:
-        name = "barchart"
-    elif "agent" in low:
-        name = "cpu"
-    clean = re.sub(r"^[^\w(]+", "", text).strip() or text
-    return name, clean
-
-
-# --------------------------------------------------------------------------- #
-# Markdown -> HTML (minimal GFM subset: enough to faithfully render the file)  #
+# Markdown helpers                                                              #
 # --------------------------------------------------------------------------- #
 
 _WIKILINK = re.compile(r"\[\[([^\]]+)\]\]")
@@ -95,124 +43,13 @@ _CODE = re.compile(r"`([^`]+)`")
 _LINK = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 
 
-def _wikilink_repl(m: re.Match) -> str:
-    inner = m.group(1).replace("\\|", "|")
-    if "|" in inner:
-        return inner.split("|")[-1].strip()
-    seg = inner.split("/")[-1]
-    return seg[:-3].strip() if seg.endswith(".md") else seg.strip()
-
-
-def clean_inline(text: str) -> str:
-    text = html.escape(text)
-    text = _WIKILINK.sub(_wikilink_repl, text)
-    text = _LINK.sub(lambda m: m.group(1), text)
-    text = _BOLD.sub(r"<strong>\1</strong>", text)
-    text = _CODE.sub(r"<code>\1</code>", text)
-    return text
-
-
-def _is_table_sep(line: str) -> bool:
-    return bool(re.match(r"^\s*\|?[\s:|-]+\|?\s*$", line)) and "-" in line
-
-
-def _split_row(line: str) -> list[str]:
-    line = line.strip()
-    if line.startswith("|"):
-        line = line[1:]
-    if line.endswith("|"):
-        line = line[:-1]
-    # Protect pipes inside [[wikilinks]] (escaped or not) so they aren't
-    # mistaken for column delimiters, then restore them after the split.
-    line = re.sub(r"\[\[[^\]]*\]\]", lambda m: m.group(0).replace("|", "\x00"), line)
-    return [c.strip().replace("\x00", "|") for c in re.split(r"(?<!\\)\|", line)]
-
-
-def render_blocks(lines: list[str]) -> str:
-    out: list[str] = []
-    i, n = 0, len(lines)
-    while i < n:
-        line = lines[i]
-        stripped = line.strip()
-
-        if not stripped:
-            i += 1
-            continue
-
-        if re.match(r"^---+$", stripped):
-            out.append("<hr/>")
-            i += 1
-            continue
-
-        h = re.match(r"^(#{1,6})\s+(.*)$", stripped)
-        if h:
-            level = len(h.group(1))
-            if level <= 2:
-                name, clean = heading_icon(h.group(2))
-                out.append(
-                    f'<h{level} class="sec"><span class="sec-ic">{icon(name, "ic", 18)}</span>'
-                    f"<span>{clean_inline(clean)}</span></h{level}>"
-                )
-            else:
-                out.append(f'<h{level} class="sub">{clean_inline(h.group(2))}</h{level}>')
-            i += 1
-            continue
-
-        if stripped.startswith(">"):
-            block: list[str] = []
-            while i < n and lines[i].strip().startswith(">"):
-                block.append(re.sub(r"^\s*>\s?", "", lines[i]))
-                i += 1
-            kind, title = "note", ""
-            if block:
-                cm = re.match(r"^\[!(\w+)\]\s*(.*)$", block[0].strip())
-                if cm:
-                    kind = cm.group(1).lower()
-                    title = cm.group(2).strip()
-                    block = block[1:]
-            body = render_blocks(block)
-            ic = icon("alert", "ic", 16) if kind in ("warning", "danger", "caution") else ""
-            title_html = (
-                f'<div class="cw-title">{ic}<span>{clean_inline(title)}</span></div>' if title else ""
-            )
-            out.append(f'<div class="cw cw-{html.escape(kind)}">{title_html}{body}</div>')
-            continue
-
-        if stripped.startswith("|") and i + 1 < n and _is_table_sep(lines[i + 1]):
-            headers = _split_row(lines[i])
-            i += 2
-            rows: list[list[str]] = []
-            while i < n and lines[i].strip().startswith("|"):
-                rows.append(_split_row(lines[i]))
-                i += 1
-            thead = "".join(f"<th>{clean_inline(c)}</th>" for c in headers)
-            tbody = ""
-            for r in rows:
-                tbody += "<tr>" + "".join(f"<td>{clean_inline(c)}</td>" for c in r) + "</tr>"
-            out.append(
-                f'<div class="tw"><table><thead><tr>{thead}</tr></thead>'
-                f"<tbody>{tbody}</tbody></table></div>"
-            )
-            continue
-
-        if re.match(r"^[-*]\s+", stripped):
-            items = []
-            while i < n and re.match(r"^\s*[-*]\s+", lines[i]):
-                items.append(clean_inline(re.sub(r"^\s*[-*]\s+", "", lines[i])))
-                i += 1
-            out.append("<ul>" + "".join(f"<li>{it}</li>" for it in items) + "</ul>")
-            continue
-
-        para = [stripped]
-        i += 1
-        while i < n and lines[i].strip() and not re.match(
-            r"^(#{1,6}\s|>|\||[-*]\s|---+$)", lines[i].strip()
-        ):
-            para.append(lines[i].strip())
-            i += 1
-        out.append(f"<p>{clean_inline(' '.join(para))}</p>")
-
-    return "\n".join(out)
+def txt(s: str) -> str:
+    s = s or ""
+    s = _WIKILINK.sub(lambda m: m.group(1).replace("\\|", "|").split("|")[-1].strip(), s)
+    s = _LINK.sub(lambda m: m.group(1), s)
+    s = _BOLD.sub(r"\1", s)
+    s = _CODE.sub(r"\1", s)
+    return html.escape(s.strip())
 
 
 def strip_frontmatter(md: str) -> str:
@@ -221,281 +58,835 @@ def strip_frontmatter(md: str) -> str:
         if parts and parts[0].strip() == "---":
             for j in range(1, len(parts)):
                 if parts[j].strip() == "---":
-                    return "\n".join(parts[j + 1 :])
+                    return "\n".join(parts[j + 1:])
     return md
 
 
-# --------------------------------------------------------------------------- #
-# Structured parse for the KPI hero strip + token bar chart                      #
-# --------------------------------------------------------------------------- #
+def _is_sep(line: str) -> bool:
+    return bool(re.match(r"^\s*>?\s*\|?[\s:|-]+\|?\s*$", line)) and "-" in line
 
 
-def find_tables(md: str):
+def _row(line: str) -> list[str]:
+    line = re.sub(r"^\s*>\s?", "", line.strip())
+    if line.startswith("|"):
+        line = line[1:]
+    if line.endswith("|"):
+        line = line[:-1]
+    line = re.sub(r"\[\[[^\]]*\]\]", lambda m: m.group(0).replace("|", "\x00"), line)
+    return [c.strip().replace("\x00", "|") for c in re.split(r"(?<!\\)\|", line)]
+
+
+def _tables(md: str):
     lines = md.split("\n")
-    tables, i, n = [], 0, len(lines)
+    out, i, n = [], 0, len(lines)
     while i < n:
-        if lines[i].strip().startswith("|") and i + 1 < n and _is_table_sep(lines[i + 1]):
-            headers = _split_row(lines[i])
+        cur = lines[i].strip()
+        is_row = cur.startswith("|") or (cur.startswith(">") and "|" in cur)
+        if is_row and i + 1 < n and _is_sep(lines[i + 1]):
+            headers = _row(lines[i])
+            i += 2
+            rows = []
+            while i < n and ("|" in lines[i]) and lines[i].strip().startswith(("|", ">")):
+                if not _is_sep(lines[i]):
+                    rows.append(_row(lines[i]))
+                i += 1
+            out.append((headers, rows))
+        else:
+            i += 1
+    return out
+
+
+def _section(md: str, key: str) -> str:
+    grab, buf = False, []
+    for ln in md.split("\n"):
+        if re.match(r"^#{1,6}\s", ln):
+            grab = key.lower() in ln.lower()
+            continue
+        if grab:
+            buf.append(ln)
+    return "\n".join(buf)
+
+
+def _task_cell(cell: str):
+    m = _WIKILINK.search(cell)
+    if not m:
+        return txt(cell), ""
+    inner = m.group(1).replace("\\|", "|")
+    path, _, title = inner.partition("|")
+    parts = path.split("/")
+    folder = parts[1] if len(parts) >= 2 and parts[0] == "02-Tasks" else ""
+    return html.escape((title or path).strip()), folder
+
+
+# --------------------------------------------------------------------------- #
+# Full markdown -> HTML for the click-through document modal                    #
+# --------------------------------------------------------------------------- #
+
+
+def _inline(text, vault):
+    text = html.escape(text)
+
+    def wl(m):
+        inner = m.group(1).replace("\\|", "|")
+        path, _, alias = inner.partition("|")
+        label = (alias or path.split("/")[-1]).strip()
+        rel = path.strip()
+        if "/" in rel:
+            if not rel.lower().endswith(".md"):
+                rel += ".md"
+            if (vault / rel).is_file():
+                return f'<a class="dl" data-doc="{html.escape(rel)}">{html.escape(label)}</a>'
+        return html.escape(label)
+
+    def lk(m):
+        label, url = m.group(1), m.group(2)
+        if url.lower().endswith(".md") and (vault / url).is_file():
+            return f'<a class="dl" data-doc="{html.escape(url)}">{html.escape(label)}</a>'
+        if url.startswith(("http://", "https://")):
+            return f'<a href="{html.escape(url)}" target="_blank" rel="noopener">{html.escape(label)}</a>'
+        return html.escape(label)
+
+    text = _WIKILINK.sub(wl, text)
+    text = _LINK.sub(lk, text)
+    text = _BOLD.sub(r"<strong>\1</strong>", text)
+    text = _CODE.sub(r"<code>\1</code>", text)
+    return text
+
+
+def md_to_html(md, vault):
+    lines = strip_frontmatter(md).split("\n")
+    out, i, n = [], 0, len(lines)
+    while i < n:
+        s = lines[i].strip()
+        if not s:
+            i += 1
+            continue
+        if re.match(r"^---+$", s):
+            out.append("<hr/>")
+            i += 1
+            continue
+        h = re.match(r"^(#{1,6})\s+(.*)$", s)
+        if h:
+            lv = min(len(h.group(1)), 6)
+            out.append(f"<h{lv}>{_inline(h.group(2), vault)}</h{lv}>")
+            i += 1
+            continue
+        if s.startswith(">"):
+            blk = []
+            while i < n and lines[i].strip().startswith(">"):
+                blk.append(re.sub(r"^\s*>\s?", "", lines[i]))
+                i += 1
+            cm = re.match(r"^\[!(\w+)\]\s*(.*)$", blk[0].strip()) if blk else None
+            inner = md_to_html("\n".join(blk[1:] if cm else blk), vault)
+            cls = "callout " + (cm.group(1).lower() if cm else "note")
+            ttl = f'<div class="co-t">{_inline(cm.group(2), vault)}</div>' if cm and cm.group(2) else ""
+            out.append(f'<div class="{cls}">{ttl}{inner}</div>')
+            continue
+        if s.startswith("|") and i + 1 < n and _is_sep(lines[i + 1]):
+            hd = _row(lines[i])
             i += 2
             rows = []
             while i < n and lines[i].strip().startswith("|"):
-                rows.append(_split_row(lines[i]))
+                if not _is_sep(lines[i]):
+                    rows.append(_row(lines[i]))
                 i += 1
-            tables.append((headers, rows))
-        else:
+            th = "".join(f"<th>{_inline(c, vault)}</th>" for c in hd)
+            tb = "".join("<tr>" + "".join(f"<td>{_inline(c, vault)}</td>" for c in r) + "</tr>" for r in rows)
+            out.append(f'<div class="tw"><table><thead><tr>{th}</tr></thead><tbody>{tb}</tbody></table></div>')
+            continue
+        if re.match(r"^[-*]\s+", s):
+            its = []
+            while i < n and re.match(r"^\s*[-*]\s+", lines[i]):
+                its.append(_inline(re.sub(r"^\s*[-*]\s+", "", lines[i]), vault))
+                i += 1
+            out.append("<ul>" + "".join(f"<li>{x}</li>" for x in its) + "</ul>")
+            continue
+        para = [s]
+        i += 1
+        while i < n and lines[i].strip() and not re.match(r"^(#{1,6}\s|>|\||[-*]\s|---+$)", lines[i].strip()):
+            para.append(lines[i].strip())
             i += 1
-    return tables
+        out.append(f"<p>{_inline(' '.join(para), vault)}</p>")
+    return "\n".join(out)
 
 
-def _num(s: str) -> int:
-    digits = re.sub(r"[^\d]", "", s or "")
-    return int(digits) if digits else 0
+def best_doc(vault, folder):
+    if not folder:
+        return ""
+    for name in ("07-decision-report.md", "08-execution-plan.md", "00-brief.md"):
+        if (vault / "02-Tasks" / folder / name).is_file():
+            return f"02-Tasks/{folder}/{name}"
+    return ""
 
 
-def parse_hero(md: str) -> dict:
-    def grab(pat):
+def plan_is_valid(vault, tdir):
+    """True if the task already has an execution plan whose template table references a real catalog slug.
+    When valid, the live action runs execute only (deterministic) and skips the LLM approve step."""
+    pf = tdir / "08-execution-plan.md"
+    if not pf.is_file():
+        return False
+    try:
+        t = pf.read_text(encoding="utf-8")
+    except OSError:
+        return False
+    if "templates to create" not in t.lower():
+        return False
+    for headers, rows in _tables(t):
+        if "template" in " ".join(headers).lower():
+            for r in rows:
+                if len(r) >= 2 and (vault / "docs" / "templates-us" / r[1].strip() / (r[0].strip() + ".md")).is_file():
+                    return True
+    return False
+
+
+# --------------------------------------------------------------------------- #
+# Extract structured data                                                       #
+# --------------------------------------------------------------------------- #
+
+
+def parse_meta(md):
+    def g(pat):
         m = re.search(pat, md)
         return m.group(1) if m else None
-
-    hero = {
-        "generated": grab(r"[Gg]enerated\s+\*\*(.+?)\*\*"),
-        "agents": grab(r"Agents:\s*\*\*(\d+)\*\*"),
-        "departments": grab(r"in\s*\*\*(\d+)\s*departments"),
-        "tasks": grab(r"Tasks:\s*\*\*(\d+)\*\*"),
-        "calls": grab(r"LLM calls logged:\s*\*\*(\d+)\*\*"),
-        "total_cost": grab(r"[Tt]otal logged cost\s*≈?\s*\$([\d.]+)"),
-        "tokens": [],
+    return {
+        "generated": g(r"[Gg]enerated\s+\*\*(.+?)\*\*") or g(r"generated:\s*(.+)"),
+        "agents": g(r"Agents:\s*\*\*(\d+)\*\*"),
+        "departments": g(r"in\s*\*\*(\d+)\s*departments"),
+        "tasks": g(r"Tasks:\s*\*\*(\d+)\*\*"),
+        "calls": g(r"LLM calls logged:\s*\*\*(\d+)\*\*"),
+        "cost": g(r"[Tt]otal logged cost\s*≈?\s*\$([\d.]+)"),
     }
-    for headers, rows in find_tables(md):
+
+
+def parse_pending(md):
+    sec = _section(md, "needs action") or md
+    out = []
+    for headers, rows in _tables(sec):
         joined = " ".join(headers).lower()
-        if "cost" in joined and ("calls" in joined or "model" in joined or "provider" in joined):
-            today_idx = next((k for k, h in enumerate(headers) if "today" in h.lower()), None)
-            cost_idx = next((k for k, h in enumerate(headers) if "cost" in h.lower()), None)
-            calls_idx = next((k for k, h in enumerate(headers) if "call" in h.lower()), None)
+        if "task" in joined and ("waiting" in joined or "next" in joined):
             for r in rows:
                 if not r or not r[0]:
                     continue
-                hero["tokens"].append(
-                    {
-                        "label": r[0],
-                        "today": _num(r[today_idx]) if today_idx is not None and today_idx < len(r) else 0,
-                        "calls": r[calls_idx] if calls_idx is not None and calls_idx < len(r) else "",
-                        "cost": r[cost_idx] if cost_idx is not None and cost_idx < len(r) else "",
-                    }
-                )
+                title, folder = _task_cell(r[0])
+                out.append({"title": title, "folder": folder,
+                            "stage": txt(r[1]) if len(r) > 1 else "",
+                            "next": txt(r[2]) if len(r) > 2 else ""})
             break
-    hero["tokens"].sort(key=lambda t: t["today"], reverse=True)  # AAA: sort descending
-    return hero
+    return out
 
 
-def render_hero(hero: dict) -> str:
-    def card(ic, label, value, accent=False):
-        v = value if value not in (None, "") else "—"
-        cls = "kpi kpi-accent" if accent else "kpi"
-        return (
-            f'<div class="{cls}"><div class="kpi-top"><span class="kpi-ic">{icon(ic, "ic", 16)}</span>'
-            f'<span class="kpi-l">{html.escape(label)}</span></div>'
-            f'<div class="kpi-v">{html.escape(str(v))}</div></div>'
-        )
-
-    cards = (
-        card("users", "Agents", hero["agents"])
-        + card("grid", "Departments", hero["departments"])
-        + card("clipboard", "Tasks", hero["tasks"])
-        + card("zap", "LLM calls", hero["calls"])
-        + card("dollar", "Logged cost", ("$" + hero["total_cost"]) if hero["total_cost"] else None, True)
-    )
-    hero_html = f'<section class="hero" aria-label="Key metrics">{cards}</section>'
-
-    toks = [t for t in hero["tokens"] if t["today"] > 0]
-    if not toks:
-        return hero_html
-    total = sum(t["today"] for t in toks)
-    mx = max(t["today"] for t in toks)
-    top = toks[0]
-    rows = ""
-    for t in toks:
-        w = max(2, round(t["today"] / mx * 100))
-        meta = " · ".join(x for x in [(t["calls"] + " calls") if t["calls"] else "", t["cost"]] if x)
-        rows += (
-            '<div class="bar-row"><div class="bar-top">'
-            f'<span class="bar-lbl">{clean_inline(t["label"])}</span>'
-            f'<span class="bar-num">{t["today"]:,} tok</span></div>'
-            f'<div class="bar-track"><div class="bar-fill" style="width:{w}%"></div></div>'
-            + (f'<div class="bar-meta">{clean_inline(meta)}</div>' if meta else "")
-            + "</div>"
-        )
-    aria = f"Tokens used today by model. Total {total:,}. Highest: {top['label']} at {top['today']:,}."
-    return (
-        hero_html
-        + '<section class="bars" role="img" aria-label="' + html.escape(aria) + '">'
-        '<div class="bars-h"><span class="bars-ic">' + icon("barchart", "ic", 16) + "</span>"
-        '<span>Tokens used today</span>'
-        f'<span class="bars-total">{total:,} total</span></div>' + rows + "</section>"
-    )
+def parse_pipeline(md):
+    sec = _section(md, "pipeline") or md
+    out = []
+    for headers, rows in _tables(sec):
+        joined = " ".join(headers).lower()
+        if "task" in joined and "stage" in joined:
+            for r in rows:
+                if not r or not r[0]:
+                    continue
+                title, folder = _task_cell(r[0])
+                out.append({"title": title, "folder": folder,
+                            "stage": txt(r[1]) if len(r) > 1 else "",
+                            "tokens": txt(r[2]) if len(r) > 2 else ""})
+            break
+    return out
 
 
-def build_content(md: str) -> str:
-    hero = parse_hero(md)
-    body = render_blocks(strip_frontmatter(md).split("\n"))
-    return render_hero(hero) + '<div class="doc">' + body + "</div>"
+_SEV = {"🔴": ("red", 3), "🟠": ("amber", 2), "🟡": ("amber", 1), "🟢": ("green", 0)}
+RATES = {"claude": (3.0, 15.0), "mcp-sampling": (0.0, 0.0)}
+
+
+def read_risks(vault):
+    risks = []
+    proj = vault / "04-Projects"
+    if not proj.exists():
+        return risks
+    seen = set()
+    files = set(proj.glob("*/01-PM/risk-register.md")) | set(proj.glob("*/*/risk-register.md"))
+    for rf in sorted(files):
+        try:
+            md = rf.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        project = rf.parts[rf.parts.index("04-Projects") + 1].replace("Project-", "")
+        rel = str(rf.relative_to(vault))
+        for headers, rows in _tables(md):
+            hl = [h.lower() for h in headers]
+            if "risk" not in " ".join(hl) or "score" not in " ".join(hl):
+                continue
+            ix = {k: next((j for j, h in enumerate(hl) if k in h), None) for k in ("id", "risk", "score", "owner", "status")}
+            pix = next((j for j, h in enumerate(headers) if h.strip().lower() == "p"), None)
+            iix = next((j for j, h in enumerate(headers) if h.strip().lower() == "i"), None)
+            for r in rows:
+                def cell(k):
+                    j = ix[k]
+                    return r[j] if j is not None and j < len(r) else ""
+
+                def intcol(j):
+                    if j is None or j >= len(r):
+                        return 0
+                    d = re.sub(r"[^\d]", "", r[j])
+                    return int(d) if d else 0
+                sev = next((v for s, v in _SEV.items() if s in cell("score")), None)
+                status = cell("status").lower()
+                if not sev or "closed" in status or "retired" in status:
+                    continue
+                rid = txt(cell("id"))
+                if (project, rid) in seen:
+                    continue
+                seen.add((project, rid))
+                num = re.sub(r"[^\d]", "", cell("score"))
+                risks.append({"sev": sev[0], "rank": sev[1], "score": int(num) if num else 0,
+                              "id": rid, "text": txt(cell("risk")), "owner": txt(cell("owner")),
+                              "status": txt(cell("status")), "project": html.escape(project), "file": rel,
+                              "p": intcol(pix), "i": intcol(iix)})
+    risks.sort(key=lambda x: (x["rank"], x["score"]), reverse=True)
+    return risks
+
+
+def risk_health(risks):
+    return {"red": sum(1 for r in risks if r["sev"] == "red"),
+            "amber": sum(1 for r in risks if r["sev"] == "amber"),
+            "green": sum(1 for r in risks if r["sev"] == "green")}
+
+
+def risk_points(risks):
+    out = []
+    for r in risks:
+        if r["p"] and r["i"]:
+            out.append({"x": r["p"], "y": r["i"], "sev": r["sev"], "id": r["id"],
+                        "label": _short(re.sub(r"\*\*", "", r["text"]), 48), "file": r["file"]})
+    return out
+
+
+def pipeline_progress(pipeline):
+    total = len(pipeline)
+    done = sum(1 for p in pipeline if "done" in p["stage"].lower())
+    return {"done": done, "total": total, "pct": round(done / total * 100) if total else 0}
+
+
+def parse_targets(vault):
+    out = []
+    proj = vault / "04-Projects"
+    if proj.exists():
+        for cw in sorted(proj.glob("*/05-BOM-Cost/cost-walk.md")):
+            try:
+                t = cw.read_text(encoding="utf-8")
+            except OSError:
+                continue
+            sop = cur = tgt = None
+            for ln in t.split("\n"):
+                if not ln.strip().startswith("|") or "$" not in ln:
+                    continue  # only the cost-trajectory table rows, not prose
+                m = re.search(r"\$(\d+\.?\d*)", ln)
+                if not m:
+                    continue
+                v = float(m.group(1))
+                if "SOP" in ln:
+                    sop = v
+                elif "Current" in ln:
+                    cur = v
+                elif "Target" in ln:
+                    tgt = v
+            if sop and cur and tgt and sop > tgt:
+                pct = round((sop - cur) / (sop - tgt) * 100)
+                out.append({"pct": max(0, min(100, pct)), "label": "BOM cost-down", "detail": f"${cur:.2f} → ${tgt:.0f}"})
+                break
+    pm = vault / "00-Brain" / "products.md"
+    if pm.is_file():
+        m = re.search(r"AFR\s*(\d+\.?\d*)%\s*→\s*(?:target\s*)?(\d+\.?\d*)%", pm.read_text(encoding="utf-8"))
+        if m:
+            cur, tgt = float(m.group(1)), float(m.group(2))
+            if cur > 0:
+                out.append({"pct": round(min(100, tgt / cur * 100)), "label": "Field AFR", "detail": f"{cur}% → {tgt}%"})
+    return out
+
+
+def agent_network(md):
+    nodes, links, cur, inseg = [], [], None, False
+    for ln in md.split("\n"):
+        if re.match(r"^##\s+\S", ln):          # level-2 heading (## ...), not ###
+            inseg = "agents" in ln.lower()
+            cur = None
+            continue
+        if not inseg:
+            continue
+        h = re.match(r"^###\s+\[\[[^|\]]*\|([^\]]+)\]\]", ln)
+        if h:
+            name = h.group(1).strip()
+            mm = re.search(r"meetings:\s*(\d+)", ln)
+            cur = "d:" + name
+            nodes.append({"id": cur, "label": name, "type": "dept", "activity": int(mm.group(1)) if mm else 0})
+            continue
+        if cur and ln.strip().startswith("|") and not _is_sep(ln):
+            cells = _row(ln)
+            if not cells or cells[0].lower().startswith("agent"):
+                continue
+            am = _WIKILINK.search(cells[0])
+            if not am:
+                continue
+            aname = am.group(1).replace("\\|", "|").split("|")[-1].strip()
+            ment = re.sub(r"[^\d]", "", cells[2]) if len(cells) >= 3 else ""
+            aid = "a:" + cur + ":" + aname
+            nodes.append({"id": aid, "label": aname, "type": "agent", "activity": int(ment) if ment else 0})
+            links.append({"source": cur, "target": aid})
+    return {"nodes": nodes, "links": links}
+
+
+def spend_series(vault):
+    f = vault / ".bd-usage.jsonl"
+    if not f.is_file():
+        return []
+    cum, out = 0.0, []
+    try:
+        lines = f.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return []
+    for ln in lines:
+        try:
+            r = json.loads(ln)
+        except Exception:
+            continue
+        ri, ro = RATES.get(r.get("provider", "?"), (0.0, 0.0))
+        cum += r.get("prompt_tokens", 0) / 1e6 * ri + r.get("completion_tokens", 0) / 1e6 * ro
+        out.append(round(cum, 4))
+    return out[-40:]
+
+
+def read_activity(vault, pipeline):
+    by = {p["folder"]: p for p in pipeline if p["folder"]}
+    root = vault / "02-Tasks"
+    if not root.exists():
+        return []
+    items = []
+    for d in root.glob("*/"):
+        if not d.is_dir():
+            continue
+        try:
+            mt = max((f.stat().st_mtime for f in d.iterdir() if f.is_file()), default=d.stat().st_mtime)
+        except OSError:
+            continue
+        info = by.get(d.name, {})
+        items.append({"mtime": mt, "title": info.get("title", d.name), "stage": info.get("stage", ""), "folder": d.name})
+    items.sort(key=lambda x: x["mtime"], reverse=True)
+    return items[:6]
+
+
+def trends(cur):
+    """Append a snapshot to /tmp history (never the vault); return deltas vs the prior distinct snapshot."""
+    try:
+        hist = json.loads(HIST.read_text())
+    except Exception:
+        hist = []
+    keys = ("tasks", "pending", "high")
+    if not hist or any(hist[-1].get(k) != cur.get(k) for k in keys + ("cost",)):
+        hist.append({**cur, "ts": time.time()})
+        hist = hist[-60:]
+        try:
+            HIST.write_text(json.dumps(hist))
+        except Exception:
+            pass
+    base = hist[-2] if len(hist) >= 2 else None
+    return {k: ((cur.get(k) or 0) - (base.get(k) or 0)) if base else 0 for k in keys}
 
 
 # --------------------------------------------------------------------------- #
-# Page shell (CSS/JS are a plain string; placeholders filled via .replace)      #
+# Render                                                                        #
 # --------------------------------------------------------------------------- #
+
+
+def _num(s):
+    return s if s not in (None, "") else "—"
+
+
+def _short(s, n=46):
+    s = s or ""
+    return s if len(s) <= n else s[: n - 1].rstrip() + "…"
+
+
+def _risk_label(r):
+    t = re.split(r"\s[—-]\s|\(", r["text"])[0].strip()
+    return _short(t, 30)
+
+
+def _stage_phrase(stage):
+    s = stage.lower()
+    if "done" in s:
+        return "green", "completed — outputs rendered"
+    if "stop 2" in s or "execution plan" in s:
+        return "amber", "execution plan ready — awaiting approval"
+    if "stop 1" in s or "decision report" in s:
+        return "amber", "decision report ready — awaiting approval"
+    if "clarification" in s:
+        return "amber", "needs clarification answered"
+    if "meeting" in s:
+        return "blue", "meeting in progress"
+    if "routed" in s:
+        return "blue", "routed — ready for meeting"
+    return "blue", txt(stage) or "updated"
+
+
+def _doc_attr(path):
+    return f' data-doc="{html.escape(path)}" class="clk"' if path else ""
+
+
+def _arrow(delta, up="red", down="green"):
+    if not delta:
+        return ""
+    if delta > 0:
+        return f'<span class="dl dl-{up}">▲{delta}</span>'
+    return f'<span class="dl dl-{down}">▼{abs(delta)}</span>'
+
+
+def render_content(md, vault, owner, division, company, logo, rate, hours, actions):
+    meta = parse_meta(md)
+    pending = parse_pending(md)
+    pipeline = parse_pipeline(md)
+    risks = read_risks(vault)
+    activity = read_activity(vault, pipeline)
+    high = [r for r in risks if r["sev"] == "red"]
+    n_tasks = int(meta["tasks"] or 0)
+    tr = trends({"tasks": n_tasks, "pending": len(pending), "high": len(high), "cost": meta["cost"] or "0"})
+
+    data = {"health": risk_health(risks), "pipeline": pipeline_progress(pipeline),
+            "targets": parse_targets(vault), "riskPoints": risk_points(risks),
+            "network": agent_network(md), "spark": spend_series(vault)}
+
+    now = datetime.now()
+    greet = "Good morning" if now.hour < 12 else ("Good afternoon" if now.hour < 18 else "Good evening")
+    when = now.strftime("%A, %B %-d · %-I:%M %p")
+
+    brand = ""
+    if logo:
+        brand += f'<img src="{logo}" alt="" style="height:30px;border-radius:6px"/>'
+    if company:
+        brand += f'<span class="co">{html.escape(company)}</span>'
+    head = (
+        '<div class="hdr">'
+        f'<div><h1>{greet}, {html.escape(owner)}</h1>'
+        f'<p class="sub">{html.escape(when)} · here\'s where your division stands</p></div>'
+        f'<div class="hdr-r"><div class="brand">{brand}<span class="live"><span class="ld"></span>live</span>'
+        f'<button class="btn" id="exportbtn" onclick="window.print()">Export PDF</button></div>'
+        f'<p class="div">{html.escape(division)}</p></div></div>'
+    )
+
+    # exec one-liner — rule-based state of the division
+    bits = []
+    if high:
+        names = ", ".join(_risk_label(r) for r in high[:2])
+        bits.append(f"{len(high)} high risk{'s' if len(high) != 1 else ''} open ({names})")
+    if pending:
+        bits.append(f"{len(pending)} decision{'s' if len(pending) != 1 else ''} await your sign-off")
+    lead = "All programs tracking — " + "; ".join(bits) + "." if bits else "All clear — no high risks or pending decisions."
+    summary = f'<div class="summary">{html.escape(lead)}</div>'
+    gov = ('<div class="gov"><span class="gv">✓ AI proposes, you approve</span>'
+           '<span class="gv">✓ every claim cited to a source</span>'
+           '<span class="gv">✓ cert boundaries protected</span>'
+           '<span class="gv">✓ 2 mandatory sign-off gates</span></div>')
+
+    def kpi(color, val, label, arrow="", count=None, prefix="", dec=0, extra=""):
+        cnt = f' data-count="{count}" data-prefix="{html.escape(prefix)}" data-dec="{dec}"' if count is not None else ""
+        return (f'<div class="kpi"><div class="kpi-top"><span class="sq sq-{color}"></span>'
+                f'<span class="kpi-v"{cnt}>{html.escape(str(val))}</span>{arrow}</div>'
+                f'<div class="kpi-l">{html.escape(label)}</div>{extra}</div>')
+    spark = '<div class="sparkwrap"><canvas id="spark"></canvas></div>' if data["spark"] else ""
+    kpis = ('<div class="kpis">'
+            + kpi("blue", _num(meta["tasks"]), "active tasks", _arrow(tr["tasks"], "blue", "gray"), count=n_tasks)
+            + kpi("amber", len(pending), "need approval", _arrow(tr["pending"], "amber", "green"), count=len(pending))
+            + kpi("red", len(high), "high risks open", _arrow(tr["high"], "red", "green"), count=len(high))
+            + kpi("gray", ("$" + meta["cost"]) if meta["cost"] else "—", "compute cost",
+                  count=(float(meta["cost"]) if meta["cost"] else None), prefix="$", dec=2, extra=spark)
+            + "</div>")
+
+    def gauge_card(cid, center_id, label, sub):
+        return (f'<div class="gz"><div class="gz-c"><canvas id="{cid}"></canvas>'
+                f'<div class="gz-center" id="{center_id}"></div></div>'
+                f'<div class="gz-l">{html.escape(label)}</div><div class="gz-sub">{html.escape(sub) or "&nbsp;"}</div></div>')
+    gz = '<div class="gauges">'
+    gz += gauge_card("healthDonut", "healthCenter", "risk health", f'{data["health"]["red"]} high · {data["health"]["amber"]} med')
+    gz += gauge_card("pipeGauge", "pipeCenter", "pipeline done", f'{data["pipeline"]["done"]}/{data["pipeline"]["total"]} tasks')
+    for idx, t in enumerate(data["targets"]):
+        gz += gauge_card(f"tg{idx}", f"tgc{idx}", t["label"], t["detail"])
+    gz += "</div>"
+
+    # ROI band — value / revenue framing
+    ah = round(n_tasks * hours)
+    days = round(ah / 8, 1)
+    val = round(n_tasks * hours * rate)
+    roi = (f'<div class="roi"><span class="roi-ic">↳</span>'
+           f'<span><b>{n_tasks} cross-functional decisions</b> · ≈ {ah} analyst-hours (~{days} analyst-days, ~${val:,} of loaded labor) '
+           f'— <b>compressed to minutes</b>, for <b>${meta["cost"] or "0"}</b> in compute</span></div>')
+
+    if high:
+        h = high[0]
+        hero = (
+            f'<div class="hero hero-red"{_doc_attr(h["file"])}>'
+            '<span class="sq sq-red hero-sq"></span><div class="hero-body">'
+            f'<div class="pills"><span class="pill pill-red">High risk · {h["id"]}</span>'
+            f'<span class="pill pill-gray">{h["project"]} · {h["status"]}</span></div>'
+            f'<h3>{h["text"]}</h3>'
+            f'<p class="hero-sub">Owner: {h["owner"] or "—"}. Top open red-rated risk across your projects — click to read the full register and mitigation.</p>'
+            f'<div class="btns"><button class="btn" data-doc="{html.escape(h["file"])}">Open risk register</button></div>'
+            "</div></div>")
+    elif pending:
+        p = pending[0]
+        doc = best_doc(vault, p["folder"])
+        hero = (
+            f'<div class="hero hero-amber"{_doc_attr(doc)}><span class="sq sq-amber hero-sq"></span><div class="hero-body">'
+            f'<div class="pills"><span class="pill pill-amber">{html.escape(p["stage"])}</span></div>'
+            f'<h3>{p["title"]}</h3><p class="hero-sub">{html.escape(p["next"])}</p>'
+            f'<div class="btns"><button class="btn" data-doc="{html.escape(doc)}">Open report</button></div></div></div>')
+    else:
+        hero = ('<div class="hero hero-green"><span class="sq sq-green hero-sq"></span><div class="hero-body">'
+                '<div class="pills"><span class="pill pill-green">All clear</span></div>'
+                '<h3>No high risks or pending approvals</h3>'
+                '<p class="hero-sub">Every task has cleared its stops and no red-rated risks are open.</p></div></div>')
+
+    if pending:
+        items = ""
+        for p in pending:
+            doc = best_doc(vault, p["folder"])
+            approve_btn = (f'<button class="btn btn-go" data-approve="{html.escape(p["folder"])}">Approve →</button>'
+                           if actions and p["folder"] else '<button class="btn">Approve</button>')
+            items += (
+                f'<div class="item"{_doc_attr(doc)}><span class="sq sq-blue"></span><div class="item-b">'
+                f'<div class="item-t">{p["title"]}</div>'
+                f'<div class="meta">{html.escape(p["stage"])}</div>'
+                f'<div class="btns"><button class="btn" data-doc="{html.escape(doc)}">Open report</button>{approve_btn}</div></div></div>')
+        approvals = f'<div class="card"><div class="sec-h">Needs your approval</div>{items}</div>'
+    else:
+        approvals = '<div class="card"><div class="sec-h">Needs your approval</div><p class="empty">Nothing waiting — all stops cleared.</p></div>'
+
+    rl = ""
+    for r in risks[:5]:
+        rl += (f'<div class="risk"{_doc_attr(r["file"])}><span class="dot dot-{r["sev"]}"></span>'
+               f'<span>{r["text"]} <span class="risk-meta">· {r["project"]} {r["id"]}</span></span></div>')
+    risks_inner = rl or '<p class="empty">No open risks.</p>'
+    risks_card = f'<div class="card"><div class="sec-h">Risks &amp; alerts</div>{risks_inner}</div>'
+
+    al = ""
+    for a in activity:
+        color, phrase = _stage_phrase(a["stage"])
+        t = datetime.fromtimestamp(a["mtime"])
+        wa = t.strftime("%-I:%M %p") if t.date() == now.date() else t.strftime("%b %-d")
+        doc = best_doc(vault, a["folder"])
+        al += (f'<div class="tline"{_doc_attr(doc)}><span class="tt">{wa}</span>'
+               f'<span><span class="dot dot-{color} dot-sm"></span>{html.escape(_short(a["title"]))} — {html.escape(phrase)}</span></div>')
+    activity_inner = al or '<p class="empty">No recent task activity.</p>'
+    activity_card = f'<div class="card"><div class="sec-h">Recent activity</div>{activity_inner}</div>'
+
+    board = ('<div class="board">'
+             '<div class="card"><div class="sec-h">Risk matrix — probability × impact</div>'
+             '<div class="chart-h"><canvas id="riskMatrix"></canvas></div>'
+             '<div class="chart-leg"><span><i class="lg lg-red"></i>high</span><span><i class="lg lg-amber"></i>medium</span>'
+             '<span><i class="lg lg-green"></i>low</span><span class="chart-tip">click a bubble to open the risk</span></div></div>'
+             '<div class="card"><div class="sec-h">Division at work — agents by activity</div>'
+             '<div id="network" class="net"></div></div></div>')
+    html_out = (head + summary + gov + kpis + roi + gz + hero
+                + '<div class="cols"><div class="col">' + approvals + "</div>"
+                + '<div class="col">' + risks_card + activity_card + "</div></div>"
+                + board)
+    return html_out, data
+
 
 PAGE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Division Dashboard — live</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<title>Division dashboard — morning briefing</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap');
-:root{
-  --bg:#F8FAFC; --surface:#FFFFFF; --surface2:#F1F5F9; --text:#0F172A; --text2:#475569; --text3:#64748B;
-  --border:#E2E8F0; --border2:#CBD5E1; --primary:#1E40AF; --primary2:#2563EB; --primary-bg:#EFF4FE;
-  --accent:#B45309; --accent-bg:#FEF3C7; --accent-line:#F59E0B;
-  --danger:#B91C1C; --danger-bg:#FEF2F2; --ok:#15803D; --ok-bg:#DCFCE7; --ring:#1E40AF;
-  --font-sans:'Fira Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  --font-mono:'Fira Code',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  --z-header:20;
-}
-@media (prefers-color-scheme:dark){:root{
-  --bg:#0B1220; --surface:#111A2E; --surface2:#16223B; --text:#E2E8F0; --text2:#94A3B8; --text3:#8597AD;
-  --border:#1E293B; --border2:#334155; --primary:#60A5FA; --primary2:#3B82F6; --primary-bg:#16223B;
-  --accent:#FBBF24; --accent-bg:#2A2410; --accent-line:#B7791F;
-  --danger:#F87171; --danger-bg:#2A1414; --ok:#34D399; --ok-bg:#0F2A1E; --ring:#60A5FA;
-}}
+:root{--bg:#1b1a17;--card:#25241f;--tile:#211f1a;--bd:rgba(255,255,255,.10);--bd2:rgba(255,255,255,.18);
+--t1:#ECEAE2;--t2:#A8A49A;--t3:#76726A;
+--blue:#8FBDEE;--blue-b:rgba(55,138,221,.6);--blue-bg:rgba(55,138,221,.14);
+--amber:#F4C879;--amber-b:rgba(239,159,39,.6);--amber-bg:rgba(239,159,39,.14);
+--red:#F09A9A;--red-b:rgba(226,75,74,.6);--red-bg:rgba(226,75,74,.15);
+--green:#A6CE6A;--green-bg:rgba(99,153,34,.15);--gray-b:rgba(255,255,255,.22);}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);
-  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;}
-.wrap{max-width:1120px;margin:0 auto;padding:0 24px 64px;}
-header.top{position:sticky;top:0;z-index:var(--z-header);background:color-mix(in srgb,var(--bg) 88%,transparent);
-  backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--border);
-  padding:12px 24px;margin:0 -24px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
-.brand{display:flex;align-items:center;gap:11px;}
-.brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;
-  background:var(--primary);color:#fff;}
-.brand h1{font-size:17px;font-weight:600;margin:0;line-height:1.15;letter-spacing:-.2px;}
-.brand .sub{font-size:12px;color:var(--text3);}
-.spacer{flex:1}
-.live{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:500;color:var(--ok);
-  background:var(--ok-bg);padding:4px 11px;border-radius:999px;}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:pulse 1.8s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.82)}}
-.status{font-size:12px;color:var(--text3);font-variant-numeric:tabular-nums;min-width:150px;text-align:right;}
-button.rf{display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:13px;font-weight:500;
-  background:var(--surface);color:var(--text);border:1px solid var(--border2);border-radius:9px;
-  padding:7px 13px;cursor:pointer;transition:background .18s ease,border-color .18s ease;}
-button.rf:hover{background:var(--surface2);border-color:var(--primary2);}
-button.rf:active{transform:scale(.98)}
-button.rf .ic.spin{animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-a:focus-visible,button:focus-visible{outline:2px solid var(--ring);outline-offset:2px;border-radius:6px;}
-.ic{display:block}
-.hero{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:13px;margin-bottom:14px;}
-.kpi{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:15px 17px;
-  transition:border-color .18s ease,transform .18s ease;}
-.kpi:hover{border-color:var(--border2);transform:translateY(-1px);}
-.kpi-top{display:flex;align-items:center;gap:8px;margin-bottom:9px;color:var(--text3);}
-.kpi-ic{display:grid;place-items:center;width:26px;height:26px;border-radius:7px;
-  background:var(--primary-bg);color:var(--primary);}
-.kpi-l{font-size:12.5px;font-weight:500;color:var(--text2);}
-.kpi-v{font-family:var(--font-mono);font-size:28px;font-weight:600;letter-spacing:-1px;
-  font-variant-numeric:tabular-nums;color:var(--text);}
-.kpi-accent .kpi-ic{background:var(--accent-bg);color:var(--accent);}
-.kpi-accent .kpi-v{color:var(--accent);}
-.bars{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:24px;}
-.bars-h{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:500;color:var(--text2);margin-bottom:14px;}
-.bars-ic{display:grid;place-items:center;width:24px;height:24px;border-radius:7px;background:var(--primary-bg);color:var(--primary);}
-.bars-total{margin-left:auto;font-family:var(--font-mono);font-size:12px;color:var(--text3);font-variant-numeric:tabular-nums;}
-.bar-row{margin-bottom:13px}.bar-row:last-child{margin-bottom:0}
-.bar-top{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;margin-bottom:6px;gap:10px;}
-.bar-lbl{color:var(--text)}.bar-lbl code{font-family:var(--font-mono);font-size:12px;background:var(--surface2);padding:1px 6px;border-radius:5px;}
-.bar-num{font-family:var(--font-mono);color:var(--text2);font-variant-numeric:tabular-nums;white-space:nowrap;}
-.bar-track{height:10px;background:var(--surface2);border-radius:6px;overflow:hidden;}
-.bar-fill{height:100%;background:var(--primary);border-radius:6px;transition:width .5s cubic-bezier(.4,0,.2,1);}
-.bar-meta{font-size:12px;color:var(--text3);margin-top:5px;font-family:var(--font-mono);}
-.doc h1.sec{font-size:21px}.doc h2.sec{font-size:17px;margin-top:34px;padding-top:24px;border-top:1px solid var(--border);}
-.doc .sec{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.2px;}
-.doc .sec:first-child{margin-top:0;padding-top:0;border-top:0;}
-.sec-ic{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:var(--primary-bg);color:var(--primary);flex:none;}
-.doc h2.sec .sec-ic{width:27px;height:27px}
-.doc h3.sub{font-size:14.5px;font-weight:600;margin:24px 0 6px;padding-left:11px;
-  border-left:3px solid var(--primary2);line-height:1.4;}
-.tw{overflow-x:auto;margin:13px 0;border:1px solid var(--border);border-radius:11px;}
-table{border-collapse:collapse;width:100%;font-size:13.5px;}
-th,td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--border);vertical-align:top;
-  font-variant-numeric:tabular-nums;}
-th{color:var(--text2);font-weight:600;background:var(--surface2);white-space:nowrap;position:sticky;top:0;}
-tbody tr{transition:background .15s ease}
-tbody tr:hover{background:var(--surface2)}
-tbody tr:last-child td{border-bottom:0}
-code{font-family:var(--font-mono);background:var(--surface2);padding:1.5px 6px;border-radius:5px;font-size:12.5px;}
-ul{padding-left:20px;margin:10px 0}li{margin:4px 0}
-hr{border:0;border-top:1px solid var(--border);margin:26px 0}
-.cw{border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:16px 0;background:var(--surface);}
-.cw-warning,.cw-danger,.cw-caution{background:var(--accent-bg);border-color:var(--accent-line);}
-.cw-title{display:flex;align-items:center;gap:8px;font-weight:600;margin-bottom:8px;color:var(--text);}
-.cw-warning .cw-title,.cw-danger .cw-title{color:var(--accent);}
-.cw .tw{border:0;margin:6px 0 0}.cw table{background:transparent}
-.cw-note{background:var(--surface2);border-color:var(--border);color:var(--text2);font-size:13.5px;}
-.foot{margin-top:34px;padding-top:18px;border-top:1px solid var(--border);
-  font-size:12px;color:var(--text3);display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-.foot code{font-size:11.5px}
-.err{background:var(--danger-bg);color:var(--danger);padding:16px;border-radius:12px;border:1px solid var(--danger);}
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;}
-@media (max-width:640px){.wrap{padding:0 16px 48px}header.top{margin:0 -16px 18px;padding:12px 16px}
-  .status{display:none}.brand h1{font-size:16px}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style></head><body>
-<header class="top">
-  <div class="brand">
-    <span class="brand-mark">__BRANDICON__</span>
-    <div><h1>Division Dashboard</h1><div class="sub">live · read-only view</div></div>
-  </div>
-  <span class="spacer"></span>
-  <span class="live"><span class="dot"></span>LIVE</span>
-  <span class="status" id="status" aria-live="polite">checking…</span>
-  <button class="rf" id="refresh" aria-label="Refresh now">__RFICON__<span>Refresh</span></button>
-</header>
+body{margin:0;background:var(--bg);color:var(--t1);
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;}
+.wrap{max-width:1040px;margin:0 auto;padding:22px 22px 56px;}
+.hdr{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:12px;}
+h1{margin:0;font-size:26px;font-weight:600;} .sub{margin:5px 0 0;font-size:14px;color:var(--t2);}
+.hdr-r{text-align:right;} .div{margin:8px 0 0;font-size:13px;color:var(--t3);}
+.brand{display:flex;align-items:center;gap:10px;justify-content:flex-end;}
+.co{font-size:14px;font-weight:600;color:var(--t1);}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--green);}
+.ld{width:7px;height:7px;border-radius:50%;background:var(--green);animation:p 1.8s ease-in-out infinite;}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.35}}
+.summary{font-size:16px;color:var(--t1);background:var(--card);border:.5px solid var(--bd);border-left:3px solid var(--blue-b);
+border-radius:10px;padding:11px 16px;margin:0 0 12px;}
+.gov{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px;}
+.gov .gv{font-size:12px;color:var(--green);background:var(--green-bg);border:.5px solid rgba(99,153,34,.35);border-radius:8px;padding:4px 10px;}
+body.present .gov .gv{font-size:13px;}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:13px;}
+.kpi{background:var(--tile);border-radius:11px;padding:14px 16px;}
+.kpi-top{display:flex;align-items:center;gap:11px;} .kpi-v{font-size:25px;font-weight:600;}
+.kpi-l{font-size:13px;color:var(--t2);margin-top:7px;}
+.dl{font-size:12px;font-weight:600;margin-left:2px;} .dl-red{color:var(--red);} .dl-green{color:var(--green);}
+.dl-amber{color:var(--amber);} .dl-blue{color:var(--blue);} .dl-gray{color:var(--t3);}
+.sq{width:30px;height:30px;border-radius:8px;flex:none;}
+.sq-blue{background:var(--blue-bg);border:1.5px solid var(--blue-b);}
+.sq-amber{background:var(--amber-bg);border:1.5px solid var(--amber-b);}
+.sq-red{background:var(--red-bg);border:1.5px solid var(--red-b);}
+.sq-green{background:var(--green-bg);border:1.5px solid rgba(99,153,34,.6);}
+.sq-gray{background:rgba(255,255,255,.06);border:1.5px solid var(--gray-b);}
+.roi{display:flex;align-items:center;gap:10px;background:var(--green-bg);border:.5px solid rgba(99,153,34,.4);
+border-radius:11px;padding:11px 16px;margin-bottom:16px;font-size:14px;color:var(--t1);}
+.roi b{color:var(--green);font-weight:600;} .roi-ic{color:var(--green);font-size:18px;}
+.card{background:var(--card);border:.5px solid var(--bd);border-radius:13px;padding:16px 19px;}
+.sec-h{font-size:16px;font-weight:600;margin:0 0 6px;}
+.hero{display:flex;gap:13px;background:var(--card);border-radius:13px;padding:17px 19px;margin-bottom:16px;}
+.hero-red{border:2px solid var(--red-b);} .hero-amber{border:2px solid var(--amber-b);} .hero-green{border:.5px solid var(--bd);}
+.hero-sq{width:38px;height:38px;} .hero-body{flex:1;min-width:0;}
+.pills{display:flex;gap:8px;flex-wrap:wrap;} .pill{font-size:11px;font-weight:500;padding:3px 9px;border-radius:8px;}
+.pill-red{color:var(--red);background:var(--red-bg);} .pill-amber{color:var(--amber);background:var(--amber-bg);}
+.pill-green{color:var(--green);background:var(--green-bg);} .pill-gray{color:var(--t2);background:rgba(255,255,255,.07);}
+.hero h3{margin:9px 0 5px;font-size:16px;font-weight:600;} .hero-sub{margin:0;font-size:13px;color:var(--t2);line-height:1.55;}
+.btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+.btn{font-size:12px;padding:5px 13px;border-radius:8px;border:.5px solid var(--bd2);background:transparent;color:var(--t1);cursor:pointer;}
+.btn:hover{background:rgba(255,255,255,.06);} .btn-go{border-color:var(--green);color:var(--green);}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;}
+.col{display:flex;flex-direction:column;gap:16px;}
+.item{display:flex;gap:12px;padding:13px 0;border-top:.5px solid var(--bd);border-radius:8px;}
+.item:first-of-type{border-top:none;} .item-b{flex:1;min-width:0;} .item-t{font-size:14px;font-weight:500;}
+.meta{font-size:12px;color:var(--t2);margin-top:3px;}
+.risk{display:flex;gap:10px;padding:7px 0;font-size:13px;border-radius:8px;}
+.risk+.risk{border-top:.5px solid var(--bd);} .risk-meta{color:var(--t3);font-size:12px;}
+.dot{width:9px;height:9px;border-radius:50%;flex:none;margin-top:5px;}
+.dot-sm{width:7px;height:7px;display:inline-block;margin:0 7px 1px 0;vertical-align:middle;}
+.dot-red{background:var(--red);} .dot-amber{background:var(--amber);} .dot-green{background:var(--green);} .dot-blue{background:var(--blue);}
+.tline{display:flex;gap:11px;padding:5px 0;font-size:13px;border-radius:8px;}
+.tt{color:var(--t3);flex:none;min-width:62px;font-variant-numeric:tabular-nums;}
+.empty{color:var(--t3);font-size:13px;margin:6px 0 0;}
+.clk{cursor:pointer;} .clk:hover{background:rgba(255,255,255,.04);}
+.foot{margin-top:26px;font-size:12px;color:var(--t3);}
+.gauges{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:16px;}
+.gz{background:var(--tile);border-radius:11px;padding:12px 12px 10px;text-align:center;}
+.gz-c{position:relative;height:92px;} .gz-c canvas{max-height:92px;}
+.gz-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:600;color:var(--t1);}
+.gz-l{font-size:12.5px;color:var(--t2);margin-top:8px;font-weight:500;} .gz-sub{font-size:11px;color:var(--t3);margin-top:2px;}
+.sparkwrap{height:24px;margin-top:8px;position:relative;}
+.board{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;align-items:start;}
+.chart-h{position:relative;height:300px;}
+.chart-leg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--t2);margin-top:10px;align-items:center;}
+.chart-leg .lg{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:-1px;}
+.lg-red{background:var(--red);} .lg-amber{background:var(--amber);} .lg-green{background:var(--green);} .chart-tip{margin-left:auto;color:var(--t3);}
+.net{height:320px;} .net circle.hot{animation:hot 1.7s ease-in-out infinite;}
+@keyframes hot{0%,100%{opacity:1}50%{opacity:.45}}
+body.present .gz-c{height:120px} body.present .gz-c canvas{max-height:120px} body.present .chart-h{height:360px} body.present .net{height:380px}
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;z-index:50;} #ov.on{display:block;overflow:auto;}
+#panel{background:var(--card);border:.5px solid var(--bd2);border-radius:14px;max-width:840px;width:calc(100% - 32px);margin:36px auto;}
+#ph{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 20px;border-bottom:.5px solid var(--bd);position:sticky;top:0;background:var(--card);border-radius:14px 14px 0 0;}
+#pt{margin:0;font-size:16px;font-weight:600;}
+#x{cursor:pointer;border:.5px solid var(--bd2);background:transparent;color:var(--t1);border-radius:8px;padding:5px 12px;font-size:13px;}
+#pb{padding:18px 24px 28px;font-size:14px;line-height:1.65;}
+#pb h1{font-size:21px} #pb h2{font-size:17px;margin-top:22px} #pb h3{font-size:15px}
+#pb table{border-collapse:collapse;width:100%;font-size:12.5px;margin:10px 0}
+#pb th,#pb td{border:.5px solid var(--bd);padding:7px 10px;text-align:left;vertical-align:top}
+#pb th{background:rgba(255,255,255,.05)} #pb code{background:rgba(255,255,255,.07);padding:1px 5px;border-radius:5px}
+#pb a.dl,#pb a{color:var(--blue);cursor:pointer} #pb ul{padding-left:20px} #pb li{margin:4px 0}
+#pb .callout{border:.5px solid var(--bd);border-radius:10px;padding:10px 14px;margin:12px 0;background:rgba(255,255,255,.03)}
+#pb .co-t{font-weight:600;margin-bottom:6px} #pb hr{border:0;border-top:.5px solid var(--bd);margin:18px 0}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid var(--bd2);border-top-color:var(--green);border-radius:50%;animation:sp 1s linear infinite;vertical-align:-3px;margin-right:8px}
+@keyframes sp{to{transform:rotate(360deg)}}
+body.present{font-size:18px} body.present .wrap{max-width:1280px;padding:34px 34px 60px}
+body.present h1{font-size:34px} body.present .kpi-v{font-size:34px} body.present .summary{font-size:19px}
+body.present .sec-h{font-size:19px} body.present .hero h3{font-size:21px} body.present .roi{font-size:16px}
+@media print{body{background:#fff;color:#111}.live,.btn,#exportbtn,.foot,#ov,.brand{display:none!important}
+.card,.kpi,.hero,.summary{border:1px solid #ccc!important;background:#fff!important}
+.summary,.item-t,.kpi-v,.hero h3,.sec-h,h1{color:#111!important}
+.sub,.div,.meta,.kpi-l,.risk-meta,.hero-sub,.tt{color:#555!important}
+.roi{background:#eef6ea!important;color:#1a3a1a!important}.roi b{color:#1a3a1a!important}}
+@media(max-width:720px){.kpis{grid-template-columns:repeat(2,1fr)}.cols{grid-template-columns:1fr}}
+</style></head><body class="__BODYCLASS__">
 <main class="wrap">
-  <h2 class="sr-only">Live read-only dashboard rendered from 00-Dashboard.md, auto-refreshing when the file changes.</h2>
-  <div id="content">__CONTENT__</div>
-  <div class="foot">__FOOTICON__<span>Source <code>__SRCFILE__</code> · generated __GENERATED__ · information-only, the file is never modified.</span></div>
+<div id="content">__CONTENT__</div>
+<div class="foot" id="foot">read-only · click any item to open its document · generated __GENERATED__</div>
 </main>
+<div id="ov"><div id="panel"><div id="ph"><h2 id="pt">Document</h2><button id="x" onclick="closeDoc()">Close ✕</button></div><div id="pb"></div></div></div>
+<script src="/lib/chart.umd.min.js"></script>
+<script src="/lib/d3.min.js"></script>
 <script>
-var POLL=__POLL_MS__, lastM="__MTIME__";
-var statusEl=document.getElementById('status'), btn=document.getElementById('refresh');
-function fmt(d){return d.toLocaleTimeString();}
-function setStatus(t){statusEl.textContent=t;}
-function busy(on){var s=btn.querySelector('.ic');if(s){s.classList.toggle('spin',on);}}
-async function poll(force){
-  busy(true);
-  try{
-    var r=await fetch('/fragment?t='+Date.now());
-    if(!r.ok) throw new Error(r.status);
-    var j=await r.json();
-    if(force || j.mtime!==lastM){
-      document.getElementById('content').innerHTML=j.html; lastM=j.mtime; flash();
-    }
-    setStatus('updated '+fmt(new Date())+' · every '+(POLL/1000)+'s');
-  }catch(e){ setStatus('source unavailable — retrying…'); }
-  finally{ busy(false); }
-}
-function flash(){var c=document.getElementById('content');
-  c.style.transition='none';c.style.opacity='.4';
-  requestAnimationFrame(function(){c.style.transition='opacity .45s ease';c.style.opacity='1';});}
-btn.addEventListener('click',function(){poll(true);});
-setInterval(poll,POLL); setStatus('auto-refresh every '+(POLL/1000)+'s');
+var POLL=__POLL_MS__, PRESENT=__PRESENT__, lastM="__MTIME__", DASH=__DATA__;
+var CH={},C={red:'#E24B4A',amber:'#EF9F27',green:'#639922',blue:'#378ADD',t2:'#A8A49A',grid:'rgba(255,255,255,.08)',track:'rgba(255,255,255,.07)'};
+function modalOpen(){return document.getElementById('ov').classList.contains('on');}
+function mk(id,cfg){var el=document.getElementById(id);if(!el||!window.Chart)return;if(CH[id]){CH[id].destroy();}CH[id]=new Chart(el,cfg);}
+function ring(id,pct,color){pct=Math.max(0,Math.min(100,Math.round(pct)));mk(id,{type:'doughnut',data:{datasets:[{data:[pct,100-pct],backgroundColor:[color,C.track],borderWidth:0}]},options:{cutout:'74%',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},animation:{duration:PRESENT?900:0}}});}
+function setTx(id,t){var e=document.getElementById(id);if(e)e.textContent=t;}
+var LC={};
+function animateCounters(){document.querySelectorAll('.kpi-v[data-count]').forEach(function(el){
+var tgt=parseFloat(el.getAttribute('data-count')),dec=parseInt(el.getAttribute('data-dec')||'0'),pre=el.getAttribute('data-prefix')||'';
+var lab=el.parentNode.parentNode.querySelector('.kpi-l');var key=pre+'|'+(lab?lab.textContent:'');
+function show(v){el.textContent=pre+v.toFixed(dec);}
+if(LC[key]===tgt){show(tgt);return;}var from=LC[key]||0;LC[key]=tgt;var t0=performance.now();
+function step(t){var k=Math.min(1,(t-t0)/700);show(from+(tgt-from)*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step);}requestAnimationFrame(step);});}
+function buildNetwork(d){var wrap=document.getElementById('network');if(!wrap||!window.d3||!d.network||!d.network.nodes.length)return;
+wrap.innerHTML='';var W=wrap.clientWidth||520,H=wrap.clientHeight||320,pal=['#7F77DD','#1D9E75','#D85A30','#378ADD','#D4537E','#BA7517'],di=0,dc={};
+var nodes=d.network.nodes.map(function(n){return Object.assign({},n);}),links=d.network.links.map(function(l){return Object.assign({},l);});
+nodes.forEach(function(n){if(n.type==='dept'){dc[n.id]=pal[di++%pal.length];}});
+var svg=d3.select(wrap).append('svg').attr('width','100%').attr('height',H).attr('viewBox','0 0 '+W+' '+H);
+var sim=d3.forceSimulation(nodes).force('link',d3.forceLink(links).id(function(n){return n.id;}).distance(38).strength(.45)).force('charge',d3.forceManyBody().strength(-85)).force('center',d3.forceCenter(W/2,H/2)).force('collide',d3.forceCollide(13));
+var link=svg.append('g').attr('stroke','rgba(255,255,255,.10)').selectAll('line').data(links).join('line');
+var node=svg.append('g').selectAll('circle').data(nodes).join('circle').attr('r',function(n){return n.type==='dept'?Math.min(20,9+Math.sqrt(n.activity||0)*1.6):Math.min(12,4+Math.sqrt(n.activity||0));}).attr('fill',function(n){return n.type==='dept'?dc[n.id]:'rgba(236,234,226,.30)';}).attr('stroke',function(n){return n.type==='dept'?'rgba(255,255,255,.25)':'none';}).attr('class',function(n){return (n.activity||0)>50?'hot':'';});
+node.append('title').text(function(n){return n.label+' · '+(n.activity||0)+' active';});
+var lab=svg.append('g').selectAll('text').data(nodes.filter(function(n){return n.type==='dept';})).join('text').text(function(n){return n.label;}).attr('font-size',10).attr('fill','#ECEAE2').attr('text-anchor','middle');
+sim.on('tick',function(){link.attr('x1',function(l){return l.source.x;}).attr('y1',function(l){return l.source.y;}).attr('x2',function(l){return l.target.x;}).attr('y2',function(l){return l.target.y;});
+node.attr('cx',function(n){return n.x=Math.max(12,Math.min(W-12,n.x));}).attr('cy',function(n){return n.y=Math.max(12,Math.min(H-12,n.y));});
+lab.attr('x',function(n){return n.x;}).attr('y',function(n){return n.y-14;});});}
+function renderVisuals(d){if(!d)return;try{
+mk('healthDonut',{type:'doughnut',data:{labels:['high','medium','low'],datasets:[{data:[d.health.red,d.health.amber,d.health.green],backgroundColor:[C.red,C.amber,C.green],borderWidth:0}]},options:{cutout:'66%',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},animation:{duration:PRESENT?900:0}}});
+setTx('healthCenter',d.health.red+d.health.amber+d.health.green);
+ring('pipeGauge',d.pipeline.pct,C.green);setTx('pipeCenter',d.pipeline.pct+'%');
+(d.targets||[]).forEach(function(t,i){ring('tg'+i,t.pct,C.blue);setTx('tgc'+i,t.pct+'%');});
+if(d.riskPoints&&d.riskPoints.length){mk('riskMatrix',{type:'bubble',data:{datasets:[{data:d.riskPoints.map(function(p){return{x:p.x,y:p.y,r:9};}),backgroundColor:d.riskPoints.map(function(p){return p.sev==='red'?C.red:p.sev==='amber'?C.amber:C.green;})}]},options:{responsive:true,maintainAspectRatio:false,onClick:function(e,els){if(els.length){var p=d.riskPoints[els[0].index];if(p&&p.file)openDoc(p.file);}},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){var p=d.riskPoints[c.dataIndex];return p.id+' · '+p.label;}}}},scales:{x:{min:.5,max:5.5,title:{display:true,text:'probability →',color:C.t2},ticks:{stepSize:1,color:C.t2},grid:{color:C.grid}},y:{min:.5,max:5.5,title:{display:true,text:'impact →',color:C.t2},ticks:{stepSize:1,color:C.t2},grid:{color:C.grid}}}}});}
+if(d.spark&&d.spark.length){mk('spark',{type:'line',data:{labels:d.spark.map(function(_,i){return i;}),datasets:[{data:d.spark,borderColor:C.green,borderWidth:1.5,pointRadius:0,tension:.35}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}},animation:false}});}
+animateCounters();buildNetwork(d);}catch(e){}}
+async function poll(){try{var r=await fetch('/fragment?t='+Date.now());if(!r.ok)return;var j=await r.json();
+if(j.mtime!==lastM && !modalOpen()){document.getElementById('content').innerHTML=j.html;lastM=j.mtime;renderVisuals(j.data);}
+document.getElementById('foot').textContent='live · updated '+new Date().toLocaleTimeString();}catch(e){}}
+if(!PRESENT)setInterval(poll,POLL);
+function showPanel(t,h){document.getElementById('pt').textContent=t;document.getElementById('pb').innerHTML=h;var ov=document.getElementById('ov');ov.classList.add('on');ov.scrollTop=0;}
+async function openDoc(p){if(!p)return;try{var r=await fetch('/doc?path='+encodeURIComponent(p));var j=await r.json();showPanel(j.title||'Document',j.error?('<p>'+j.error+'</p>'):j.html);}catch(e){}}
+function closeDoc(){document.getElementById('ov').classList.remove('on');}
+var APMSG=['Reviewing the decision report and execution plan…','Drafting the engineering change order…','Drafting the supplier qualification report…','Drafting the first-article inspection report…','Formatting and filing the documents…'];
+var EMBEDDED=(function(){try{return window.self!==window.top;}catch(e){return true;}})();
+function askApprove(){
+/* confirm() is suppressed inside a sandboxed iframe (e.g. the Obsidian embed): without allow-modals it
+   silently returns false, which would abort the approve. When embedded, the explicit button click IS the
+   confirmation, so skip the dialog. Top-level (the standalone demo window) still gets the confirm. */
+if(EMBEDDED)return true;
+try{return window.confirm('Approve this decision and draft the documents live? The agents write each one — about a minute.');}
+catch(e){return true;}}
+async function runApprove(folder){if(askApprove()===false)return;
+var mi=0;function tick(){showPanel('Drafting documents…','<p><span class="spin"></span>'+APMSG[Math.min(mi,APMSG.length-1)]+'</p><p style="color:var(--t3);font-size:12px">the agents are writing each document from the approved decision</p>');mi++;}
+tick();var iv=setInterval(tick,12000);
+try{var r=await fetch('/action/approve?folder='+encodeURIComponent(folder),{method:'POST'});var j=await r.json();clearInterval(iv);
+if(j.error){showPanel('Action','<p>'+j.error+'</p>');return;}
+var h='<p>';j.steps.forEach(function(s){h+=(s.ok?'✓':'✗')+' '+s.cmd+'<br/>';});h+='</p>';
+if(j.outputs&&j.outputs.length){h+='<p><b>Documents generated:</b></p><ul>';j.outputs.forEach(function(o){h+='<li>'+o+'</li>';});h+='</ul>';
+h+='<p><button class="btn btn-go" data-reveal="'+folder+'">Open documents in Finder ↗</button></p>';}
+if(j.plan){h+='<p><a class="dl" data-doc="'+j.plan+'">Open the execution plan →</a></p>';}
+showPanel('Approved — documents ready',h);}catch(e){clearInterval(iv);showPanel('Action','<p>Action failed.</p>');}}
+async function revealDocs(folder){try{await fetch('/action/reveal?folder='+encodeURIComponent(folder),{method:'POST'});}catch(e){}}
+document.addEventListener('click',function(e){var ap=e.target.closest('[data-approve]');if(ap){e.preventDefault();e.stopPropagation();runApprove(ap.getAttribute('data-approve'));return;}
+var rv=e.target.closest('[data-reveal]');if(rv){e.preventDefault();e.stopPropagation();revealDocs(rv.getAttribute('data-reveal'));return;}
+if(e.target.closest('#panel')&&!e.target.closest('[data-doc]'))return;var t=e.target.closest('[data-doc]');if(t){e.preventDefault();e.stopPropagation();openDoc(t.getAttribute('data-doc'));return;}
+if(e.target.id==='ov')closeDoc();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDoc();});
+window.addEventListener('load',function(){renderVisuals(DASH);});
 </script>
 </body></html>"""
 
 
 class Handler(BaseHTTPRequestHandler):
-    dash_file: Path = Path("00-Dashboard.md")
-    poll_ms: int = 8000
+    dash_file = Path("00-Dashboard.md")
+    vault = Path(".")
+    owner = "Brian"
+    division = "Hardware engineering & supply chain division"
+    company = ""
+    logo = ""
+    rate = 75.0
+    hours = 6.0
+    actions = False
+    poll_ms = 8000
 
     def log_message(self, *a):
         pass
@@ -505,7 +896,13 @@ class Handler(BaseHTTPRequestHandler):
         if not p.exists():
             return None, "0", None
         md = p.read_text(encoding="utf-8")  # READ ONLY
-        return md, str(p.stat().st_mtime), parse_hero(md).get("generated")
+        return md, str(p.stat().st_mtime), parse_meta(md).get("generated")
+
+    def _content(self, md):
+        if md is None:
+            return f'<div class="card">Source not found: {html.escape(str(self.dash_file))}. Run agent_dashboard.py first.</div>', {}
+        return render_content(md, self.vault, self.owner, self.division, self.company,
+                              self.logo, self.rate, self.hours, self.actions)
 
     def _send(self, code, body, ctype="text/html; charset=utf-8"):
         data = body.encode("utf-8")
@@ -517,42 +914,94 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(data)
 
     def do_GET(self):
-        path = self.path.split("?")[0]
+        u = urlparse(self.path)
+        path = u.path
         if path in ("/", "/index.html"):
             md, mtime, gen = self._read()
-            content = (
-                build_content(md)
-                if md is not None
-                else f'<div class="err">Source file not found: {html.escape(str(self.dash_file))}</div>'
-            )
-            page = (
-                PAGE.replace("__CONTENT__", content)
-                .replace("__BRANDICON__", icon("activity", "ic", 19))
-                .replace("__RFICON__", icon("refresh", "ic", 15))
-                .replace("__FOOTICON__", icon("activity", "ic", 14))
-                .replace("__SRCFILE__", html.escape(str(self.dash_file)))
-                .replace("__GENERATED__", html.escape(gen or "—"))
-                .replace("__MTIME__", mtime)
-                .replace("__POLL_MS__", str(self.poll_ms))
-            )
+            present = "present" in parse_qs(u.query)
+            content, data = self._content(md)
+            djson = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
+            page = (PAGE.replace("__CONTENT__", content)
+                    .replace("__BODYCLASS__", "present" if present else "")
+                    .replace("__DATA__", djson)
+                    .replace("__PRESENT__", "true" if present else "false")
+                    .replace("__GENERATED__", html.escape(gen or "—"))
+                    .replace("__MTIME__", mtime).replace("__POLL_MS__", str(self.poll_ms)))
             self._send(200, page)
         elif path == "/fragment":
             md, mtime, gen = self._read()
-            content = (
-                build_content(md)
-                if md is not None
-                else f'<div class="err">Source file not found: {html.escape(str(self.dash_file))}</div>'
-            )
-            self._send(
-                200,
-                json.dumps({"html": content, "mtime": mtime, "generated": gen, "read_at": time.time()}),
-                "application/json",
-            )
-        elif path == "/raw":
-            md, _, _ = self._read()
-            self._send(200, md or "", "text/plain; charset=utf-8")
+            content, data = self._content(md)
+            self._send(200, json.dumps({"html": content, "mtime": mtime, "data": data}, ensure_ascii=False), "application/json")
+        elif path == "/doc":
+            rel = parse_qs(u.query).get("path", [""])[0]
+            try:
+                target = (self.vault / rel).resolve()
+            except (OSError, ValueError):
+                target = None
+            if (not target or not str(target).startswith(str(self.vault) + "/")
+                    or target.suffix.lower() != ".md" or not target.is_file()):
+                self._send(404, json.dumps({"error": "Document not found or outside the vault."}), "application/json")
+                return
+            doc = target.read_text(encoding="utf-8")  # READ ONLY
+            m = re.search(r"^#\s+(.+)$", doc, re.M)
+            title = html.escape((m.group(1).strip() if m else target.stem))
+            self._send(200, json.dumps({"title": title, "html": md_to_html(doc, self.vault)}), "application/json")
+        elif path.startswith("/lib/"):
+            name = path[len("/lib/"):]
+            f = (VENDOR / name).resolve()
+            if name in ("chart.umd.min.js", "d3.min.js") and str(f).startswith(str(VENDOR) + "/") and f.is_file():
+                self._send(200, f.read_text(encoding="utf-8"), "application/javascript; charset=utf-8")
+            else:
+                self._send(404, "not found", "text/plain")
         elif path == "/health":
             self._send(200, "ok", "text/plain")
+        else:
+            self._send(404, "not found", "text/plain")
+
+    def do_POST(self):
+        u = urlparse(self.path)
+        if not self.actions:
+            self._send(403, json.dumps({"error": "Live actions are disabled. Start the server with --enable-actions (demo mode)."}), "application/json")
+            return
+        if u.path == "/action/approve":
+            folder = parse_qs(u.query).get("folder", [""])[0]
+            tdir = (self.vault / "02-Tasks" / folder).resolve()
+            if (not str(tdir).startswith(str(self.vault / "02-Tasks") + "/")
+                    or not (tdir / "07-decision-report.md").is_file()):
+                self._send(404, json.dumps({"error": "Task not ready — no decision report to approve."}), "application/json")
+                return
+            bdos = self.vault / ".venv" / "bin" / "bd-os"
+            base = [str(bdos)] if bdos.exists() else [sys.executable, "-m", "core.cli"]
+            # Pre-staged tasks already have a valid plan -> render deterministically (no LLM).
+            cmds = ("execute",) if plan_is_valid(self.vault, tdir) else ("approve", "execute")
+            steps = []
+            for cmd in cmds:
+                try:
+                    r = subprocess.run(base + [cmd, str(tdir)], cwd=str(self.vault),
+                                       capture_output=True, text=True, timeout=240)
+                    steps.append({"cmd": cmd, "ok": r.returncode == 0,
+                                  "out": (r.stdout or r.stderr or "")[-400:]})
+                    if r.returncode != 0:
+                        break
+                except Exception as e:  # noqa: BLE001
+                    steps.append({"cmd": cmd, "ok": False, "out": str(e)})
+                    break
+            outdir = self.vault / "03-Outputs" / folder
+            outs = sorted(f.name for f in outdir.glob("*.docx")) if outdir.exists() else []
+            plan = f"02-Tasks/{folder}/08-execution-plan.md"
+            self._send(200, json.dumps({"steps": steps, "outputs": outs,
+                                        "plan": plan if (self.vault / plan).is_file() else ""}), "application/json")
+        elif u.path == "/action/reveal":
+            folder = parse_qs(u.query).get("folder", [""])[0]
+            outdir = (self.vault / "03-Outputs" / folder).resolve()
+            if str(outdir).startswith(str(self.vault / "03-Outputs") + "/") and outdir.is_dir():
+                try:
+                    subprocess.Popen(["open", str(outdir)])
+                except Exception:  # noqa: BLE001
+                    pass
+                self._send(200, json.dumps({"ok": True}), "application/json")
+            else:
+                self._send(404, json.dumps({"error": "No outputs to reveal yet."}), "application/json")
         else:
             self._send(404, "not found", "text/plain")
 
@@ -560,24 +1009,45 @@ class Handler(BaseHTTPRequestHandler):
 def main():
     here = Path(__file__).resolve()
     repo_root = here.parents[2]
-    ap = argparse.ArgumentParser(description="Live read-only dashboard for 00-Dashboard.md")
-    ap.add_argument("--vault", type=Path, default=repo_root, help="Vault root (default: repo root)")
-    ap.add_argument("--file", type=Path, default=None, help="Explicit path to the dashboard .md")
+    ap = argparse.ArgumentParser(description="Live interactive morning dashboard (demo edition)")
+    ap.add_argument("--vault", type=Path, default=repo_root)
+    ap.add_argument("--file", type=Path, default=None)
+    ap.add_argument("--owner", default="Brian")
+    ap.add_argument("--division", default="Hardware engineering & supply chain division")
+    ap.add_argument("--company", default="")
+    ap.add_argument("--logo", default="", help="Path to a logo image (inlined as data URI)")
+    ap.add_argument("--analyst-rate", type=float, default=75.0, help="Loaded $/hr for the ROI banner")
+    ap.add_argument("--hours-per-task", type=float, default=6.0, help="Analyst-hours equivalent per decision")
+    ap.add_argument("--enable-actions", action="store_true", help="Enable the live Approve→execute action (demo)")
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=8787)
-    ap.add_argument("--poll", type=int, default=8, help="Browser auto-refresh interval (seconds)")
+    ap.add_argument("--poll", type=int, default=8)
     args = ap.parse_args()
 
-    dash_file = (args.file or (args.vault / "00-Dashboard.md")).resolve()
-    Handler.dash_file = dash_file
+    Handler.vault = args.vault.resolve()
+    Handler.dash_file = (args.file or (args.vault / "00-Dashboard.md")).resolve()
+    Handler.owner = args.owner
+    Handler.division = args.division
+    Handler.company = args.company
+    Handler.rate = args.analyst_rate
+    Handler.hours = args.hours_per_task
+    Handler.actions = args.enable_actions
     Handler.poll_ms = max(2, args.poll) * 1000
+
+    if args.logo:
+        lp = Path(args.logo)
+        if not lp.is_absolute():
+            lp = Handler.vault / args.logo
+        if lp.is_file():
+            mime = "image/png" if lp.suffix.lower() == ".png" else "image/jpeg" if lp.suffix.lower() in (".jpg", ".jpeg") else "image/svg+xml" if lp.suffix.lower() == ".svg" else "image/png"
+            Handler.logo = f"data:{mime};base64," + base64.b64encode(lp.read_bytes()).decode()
 
     httpd = ThreadingHTTPServer((args.host, args.port), Handler)
     url = f"http://{args.host}:{args.port}/"
-    print("Live dashboard (read-only) serving:")
-    print(f"  source : {dash_file}  {'(found)' if dash_file.exists() else '(MISSING)'}")
-    print(f"  url    : {url}")
-    print(f"  refresh: every {args.poll}s · the source file is never modified")
+    print("Morning dashboard (demo edition):")
+    print(f"  source : {Handler.dash_file}  {'(found)' if Handler.dash_file.exists() else '(MISSING — run agent_dashboard.py)'}")
+    print(f"  url    : {url}   (present mode: {url}?present=1)")
+    print(f"  actions: {'ENABLED (live approve)' if Handler.actions else 'disabled (read-only)'}")
     print("Press Ctrl+C to stop.")
     try:
         httpd.serve_forever()

@@ -84,3 +84,79 @@ class DocWriter:
                 if f"{{{{{k}}}}}" in para.text:
                     for run in para.runs:
                         run.text = run.text.replace(f"{{{{{k}}}}}", str(v))
+
+    def write_docx_text(self, text: str, output_rel: str, substitutions: dict | None = None) -> Path:
+        """Render generated markdown TEXT (not a template path) into a .docx with
+        real headings, tables, bullets and bold runs."""
+        from docx import Document
+
+        out_path = self.output_root / output_rel
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        if substitutions:
+            text = self._substitute(text, substitutions)
+        doc = Document()
+        self._render_markdown(doc, text)
+        doc.save(str(out_path))
+        return out_path
+
+    @staticmethod
+    def _add_runs(paragraph, s: str):
+        import re
+        for part in re.split(r"(\*\*.+?\*\*)", s):
+            if part.startswith("**") and part.endswith("**"):
+                paragraph.add_run(part[2:-2]).bold = True
+            elif part:
+                paragraph.add_run(part)
+
+    @classmethod
+    def _render_markdown(cls, doc, text: str):
+        import re
+
+        def clean(v):
+            return re.sub(r"\*\*(.+?)\*\*", r"\1", v).strip()
+
+        lines = text.split("\n")
+        i, n = 0, len(lines)
+        while i < n:
+            s = lines[i].strip()
+            if not s:
+                i += 1
+                continue
+            if s.startswith("|") and i + 1 < n and set(lines[i + 1].strip()) <= set("|-: "):
+                rows = []
+                while i < n and lines[i].strip().startswith("|"):
+                    cells = [c.strip() for c in lines[i].strip().strip("|").split("|")]
+                    if set("".join(cells).replace(" ", "")) <= set("-:"):
+                        i += 1
+                        continue
+                    rows.append(cells)
+                    i += 1
+                if rows:
+                    ncol = max(len(r) for r in rows)
+                    table = doc.add_table(rows=len(rows), cols=ncol)
+                    try:
+                        table.style = "Light Grid Accent 1"
+                    except Exception:  # noqa: BLE001
+                        try:
+                            table.style = "Table Grid"
+                        except Exception:  # noqa: BLE001
+                            pass
+                    for ri, r in enumerate(rows):
+                        for ci in range(ncol):
+                            table.cell(ri, ci).text = clean(r[ci]) if ci < len(r) else ""
+                continue
+            h = re.match(r"^(#{1,6})\s+(.*)$", s)
+            if h:
+                doc.add_heading(clean(h.group(2)), level=min(len(h.group(1)), 4))
+                i += 1
+                continue
+            if re.match(r"^[-*]\s+", s):
+                doc.add_paragraph(clean(re.sub(r"^[-*]\s+", "", s)), style="List Bullet")
+                i += 1
+                continue
+            if re.match(r"^\d+\.\s+", s):
+                doc.add_paragraph(clean(re.sub(r"^\d+\.\s+", "", s)), style="List Number")
+                i += 1
+                continue
+            cls._add_runs(doc.add_paragraph(), s)
+            i += 1

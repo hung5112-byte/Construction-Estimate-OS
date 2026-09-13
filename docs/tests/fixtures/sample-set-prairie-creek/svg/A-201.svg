@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36in" height="24in" viewBox="0 0 3600 2400" font-family="Helvetica, Arial, sans-serif">
+<rect x="0" y="0" width="3600" height="2400" fill="white"/>
+<rect x="40" y="40" width="3520" height="2320" fill="none" stroke="black" stroke-width="4"/>
+<text x="300.0" y="280.0" font-size="24" font-weight="bold" text-anchor="start">NORTH ELEVATION (SCALE 1/8" = 1'-0")</text>
+<rect x="300" y="300" width="1500.0" height="300.0" fill="none" stroke="black" stroke-width="4"/>
+<line x1="260.0" y1="600.0" x2="1840.0" y2="600.0" stroke="black" stroke-width="3"/>
+<text x="1850.0" y="608.0" font-size="16" font-weight="normal" text-anchor="start">T.O. SLAB 0'-0"</text>
+<text x="1850.0" y="308.0" font-size="16" font-weight="normal" text-anchor="start">T.O. WALL +24'-0"</text>
+<rect x="337.5" y="500.0" width="50.0" height="62.5" fill="none" stroke="black" stroke-width="2"/>
+<text x="362.5" y="494.0" font-size="14" font-weight="normal" text-anchor="middle">W1</text>
+<rect x="500.0" y="500.0" width="50.0" height="62.5" fill="none" stroke="black" stroke-width="2"/>
+<text x="525.0" y="494.0" font-size="14" font-weight="normal" text-anchor="middle">W1</text>
+<rect x="625.0" y="500.0" width="50.0" height="62.5" fill="none" stroke="black" stroke-width="2"/>
+<text x="650.0" y="494.0" font-size="14" font-weight="normal" text-anchor="middle">W1</text>
+<rect x="725.0" y="500.0" width="50.0" height="62.5" fill="none" stroke="black" stroke-width="2"/>
+<text x="750.0" y="494.0" font-size="14" font-weight="normal" text-anchor="middle">W1</text>
+<rect x="425.0" y="512.5" width="75.0" height="87.5" fill="none" stroke="black" stroke-width="2"/>
+<text x="462.5" y="506.5" font-size="14" font-weight="normal" text-anchor="middle">101</text>
+<text x="300.0" y="780.0" font-size="24" font-weight="bold" text-anchor="start">SOUTH ELEVATION</text>
+<rect x="300" y="800" width="1500.0" height="300.0" fill="none" stroke="black" stroke-width="4"/>
+<line x1="260.0" y1="1100.0" x2="1840.0" y2="1100.0" stroke="black" stroke-width="3"/>
+<text x="1850.0" y="1108.0" font-size="16" font-weight="normal" text-anchor="start">T.O. SLAB 0'-0"</text>
+<text x="1850.0" y="808.0" font-size="16" font-weight="normal" text-anchor="start">T.O. WALL +24'-0"</text>
+<rect x="1300.0" y="1012.5" width="37.5" height="87.5" fill="none" stroke="black" stroke-width="2"/>
+<text x="1318.8" y="1006.5" font-size="14" font-weight="normal" text-anchor="middle">200A</text>
+<text x="300.0" y="1280.0" font-size="24" font-weight="bold" text-anchor="start">EAST ELEVATION</text>
+<rect x="300" y="1300" width="1250.0" height="300.0" fill="none" stroke="black" stroke-width="4"/>
+<line x1="260.0" y1="1600.0" x2="1590.0" y2="1600.0" stroke="black" stroke-width="3"/>
+<text x="1600.0" y="1608.0" font-size="16" font-weight="normal" text-anchor="start">T.O. SLAB 0'-0"</text>
+<text x="1600.0" y="1308.0" font-size="16" font-weight="normal" text-anchor="start">T.O. WALL +24'-0"</text>
+<rect x="550.0" y="1425.0" width="150.0" height="175.0" fill="none" stroke="black" stroke-width="2"/>
+<text x="625.0" y="1419.0" font-size="14" font-weight="normal" text-anchor="middle">OH-1</text>
+<rect x="1362.5" y="1425.0" width="150.0" height="175.0" fill="none" stroke="black" stroke-width="2"/>
+<text x="1437.5" y="1419.0" font-size="14" font-weight="normal" text-anchor="middle">OH-2</text>
+<rect x="1050.0" y="1512.5" width="37.5" height="87.5" fill="none" stroke="black" stroke-width="2"/>
+<text x="1068.8" y="1506.5" font-size="14" font-weight="normal" text-anchor="middle">200B</text>
+<text x="1900.0" y="1280.0" font-size="24" font-weight="bold" text-anchor="start">WEST ELEVATION</text>
+<rect x="1900" y="1300" width="1250.0" height="175.0" fill="none" stroke="black" stroke-width="4"/>
+<line x1="1860.0" y1="1475.0" x2="3190.0" y2="1475.0" stroke="black" stroke-width="3"/>
+<text x="3200.0" y="1483.0" font-size="16" font-weight="normal" text-anchor="start">T.O. SLAB 0'-0"</text>
+<text x="3200.0" y="1308.0" font-size="16" font-weight="normal" text-anchor="start">T.O. WALL +14'-0"</text>
+<rect x="1975.0" y="1375.0" width="50.0" height="62.5" fill="none" stroke="black" stroke-width="2"/>
+<text x="2000.0" y="1369.0" font-size="14" font-weight="normal" text-anchor="middle">W1</text>
+<rect x="2075.0" y="1375.0" width="50.0" height="62.5" fill="none" stroke="black" stroke-width="2"/>
+<text x="2100.0" y="1369.0" font-size="14" font-weight="normal" text-anchor="middle">W1</text>
+<rect x="2287.5" y="1375.0" width="50.0" height="62.5" fill="none" stroke="black" stroke-width="2"/>
+<text x="2312.5" y="1369.0" font-size="14" font-weight="normal" text-anchor="middle">W1</text>
+<rect x="2387.5" y="1375.0" width="50.0" height="62.5" fill="none" stroke="black" stroke-width="2"/>
+<text x="2412.5" y="1369.0" font-size="14" font-weight="normal" text-anchor="middle">W1</text>
+<rect x="2600.0" y="1375.0" width="50.0" height="62.5" fill="none" stroke="black" stroke-width="2"/>
+<text x="2625.0" y="1369.0" font-size="14" font-weight="normal" text-anchor="middle">W1</text>
+<rect x="2700.0" y="1375.0" width="50.0" height="62.5" fill="none" stroke="black" stroke-width="2"/>
+<text x="2725.0" y="1369.0" font-size="14" font-weight="normal" text-anchor="middle">W1</text>
+<text x="1900.0" y="300.0" font-size="24" font-weight="bold" text-anchor="start">ELEVATION NOTES</text>
+<text x="1900.0" y="344.0" font-size="18" font-weight="normal" text-anchor="start">1. EXTERIOR WALLS: 8" CMU, GROUTED SOLID; BRICK VENEER ON OFFICE (WEST 100 LF + NORTH 40 LF x 14'-0").</text>
+<text x="1900.0" y="376.0" font-size="18" font-weight="normal" text-anchor="start">2. WAREHOUSE CMU EXPOSED, PAINTED; PARAPET COPING PREFINISHED ALUMINUM 440 LF.</text>
+<text x="1900.0" y="408.0" font-size="18" font-weight="normal" text-anchor="start">3. STOREFRONT: CLEAR ANODIZED ALUMINUM, 1" INSULATED LOW-E GLASS; ENTRANCE 101 PAIR 6'-0" x 7'-0".</text>
+<text x="1900.0" y="440.0" font-size="18" font-weight="normal" text-anchor="start">4. WINDOWS W1: 4'-0" x 5'-0" FIXED ALUMINUM, SILL AT 3'-0" AFF, QTY 10.</text>
+<text x="1900.0" y="472.0" font-size="18" font-weight="normal" text-anchor="start">5. OVERHEAD DOORS OH-1, OH-2: 12'-0" x 14'-0" INSULATED SECTIONAL, MOTOR OPERATED.</text>
+<text x="1900.0" y="504.0" font-size="18" font-weight="normal" text-anchor="start">6. ROOF: TPO, 1/4" PER FT SLOPE TO INTERNAL DRAINS (4) WITH OVERFLOWS (4).</text>
+<g id="titleblock" font-size="22">
+<rect x="2960" y="1980" width="600" height="380" fill="none" stroke="black" stroke-width="3"/>
+<line x1="2960" y1="2080" x2="3560" y2="2080" stroke="black" stroke-width="2"/>
+<line x1="2960" y1="2180" x2="3560" y2="2180" stroke="black" stroke-width="2"/>
+<line x1="2960" y1="2270" x2="3560" y2="2270" stroke="black" stroke-width="2"/>
+<text x="2980" y="2015" font-size="24" font-weight="bold">BLACKLAND COMMERCIAL BUILDERS (SYNTHETIC DEMO)</text>
+<text x="2980" y="2050" font-size="20">PRAIRIE CREEK OFFICE/WAREHOUSE — BUILDING 2</text>
+<text x="2980" y="2110" font-size="18">SHEET TITLE</text>
+<text x="2980" y="2150" font-size="28" font-weight="bold">EXTERIOR ELEVATIONS</text>
+<text x="2980" y="2210" font-size="20">SCALE: 1/8" = 1'-0"</text>
+<text x="3300" y="2210" font-size="20">DATE: 09/12/2026</text>
+<text x="2980" y="2250" font-size="20">REV: 2   ADDENDUM 1: 09/19/2026</text>
+<text x="2980" y="2305" font-size="18">SHEET NUMBER</text>
+<text x="3300" y="2330" font-size="44" font-weight="bold">A-201</text>
+</g>
+</svg>

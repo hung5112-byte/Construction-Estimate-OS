@@ -1,37 +1,37 @@
 ---
 type: brain
 section: budget
-aliases: ["Budget", "Annual Budget"]
-last_updated: 06/15/2026
+aliases: ["Budget", "Annual Budget", "Precon Budget"]
+last_updated: 09/12/2026
+label: internal
+trust_tier: brain
 ---
 # Budget
 
-> ⚠️ **SYNTHETIC DEMO DATA** — fictional figures, Lone Star Interactive Systems (LSI).
+> ⚠️ **SYNTHETIC DEMO DATA** — fictional figures, Blackland Commercial Builders (BCB).
 
-## Yearly Overview (Division FY2026)
-- Total budget: $6,800,000 (division OPEX + program NRE)
-- Spent: $2.94M (through 06/10/2026 — 43.2%)
-- Remaining: $3.86M
+## Yearly Overview (Preconstruction department, FY2026)
+- Total budget: $1,150,000 (precon salaries, bid costs, software, cost data, outsourced MEP estimating)
+- Spent: $790k (through 09/12/2026 — 68.7%)
+- Remaining: $360k
 
-## Program Budgets
-| Program | Budget | Spent | % | Status |
-|---|---|---|---|---|
-| **Project AMG (AMG-100 + D10 dock)** | **$2,000k** | $872k | 43.6% | 🟢 on plan → [[budget-tracker\|AMG budget tracker]] |
-| TS-90 sustaining + EOL | $450k | $205k | 45.6% | 🟢 |
-| RMA / depot operations | $780k | $362k | 46.4% | 🟡 watch — TS-90 connector failures |
+## Bid cost guardrails
+- Average cost per hard bid: $3,800 (target ≤ $3,500)
+- Break-even hit rate at $70k average fee: 5.4%
+- Outsourced MEP takeoff: ≤ $2,500 per package; only when in-house MEP capacity is booked
+- Cost data subscriptions: $9,600/yr (line renews 01/2027 — decide whether to license an API instead)
 
-## Department Allocation (current quarter, Q2 FY26)
+## Department Allocation (FY2026)
 
-| Department                       | Allocated | Spent | Remaining |
-| -------------------------------- | --------- | ----- | --------- |
-| Hardware Engineering             | $410k     | $198k | $212k     |
-| NPI & Program Management         | $290k     | $131k | $159k     |
-| Quality & Reliability            | $245k     | $96k  | $149k     |
-| Manufacturing & Supplier Quality | $220k     | $88k  | $132k     |
-| Service Operations               | $335k     | $158k | $177k     |
-| Finance                          | $120k     | $0k   | $120k     |
+| Line | Allocated | Spent | Remaining |
+|---|---|---|---|
+| Estimating staff (6 FTE) | $780k | $560k | $220k |
+| Bid costs (reprographics, bonds, site visits) | $150k | $112k | $38k |
+| Software (takeoff, estimating, plan rooms) | $95k | $71k | $24k |
+| Cost data and benchmarks | $25k | $17k | $8k |
+| Outsourced takeoff / consultants | $100k | $30k | $70k |
 
 ## Guardrails
-- Any single PO > $50k → VP approval
-- Program contingency draw > $25k → change control board (CCB) + log in [[00-Brain/decisions-log]]
-- Tooling mods after T1 → charge to program contingency, not ME budget
+- Any bid > $20M or outside our building types → Chief Estimator + President sign the bid/no-bid
+- Contingency above the class band in `markup-policy.md` → written justification in the Basis of Estimate
+- Bond premium and insurance rates → verify with the surety/broker each bid; never reuse a stale rate

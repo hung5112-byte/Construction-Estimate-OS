@@ -154,7 +154,7 @@ The plugin is Brain-first → an empty Brain = very long clarification. Spend 30
 - `final_only` (default): fast, low cost, the Department Head sees an easy-to-read decision report
 - `all_intermediate`: 2-3x slower but every output (perspectives, debate) is Department-Head-friendly. Enable if the Department Head has no CTO/CMO to help read.
 
-Edit `<vault>/.vncoderc`:
+Edit `<vault>/.bd-os.yaml`:
 ```yaml
 translator_mode: all_intermediate
 ```
@@ -175,6 +175,6 @@ If `bd_status` reports `tools_skipped: [web_search, ...]` → the flow still run
 
 ## Next
 
-- [Configuration](configuration.md) — tune `.vncoderc`
+- [Configuration](configuration.md) — tune `.bd-os.yaml`
 - [Troubleshooting](troubleshooting.md) — debug when something breaks
 - [How to create a pack](how-to-create-pack.md) — add a new industry pack

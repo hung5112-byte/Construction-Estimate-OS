@@ -1,0 +1,20 @@
+{
+  "name": "Prairie Creek Office/Warehouse \u2014 Building 2 (synthetic)",
+  "client": "BLACKLAND COMMERCIAL BUILDERS (SYNTHETIC DEMO)",
+  "issued": "09/12/2026",
+  "drawings": [
+    "G-001.pdf",
+    "A-101.pdf",
+    "A-201.pdf",
+    "A-601.pdf",
+    "S-101.pdf",
+    "S-201.pdf",
+    "M-101.pdf",
+    "P-101.pdf",
+    "E-101.pdf"
+  ],
+  "specifications": [
+    "Project-Manual.pdf"
+  ],
+  "ground_truth": "ground_truth.json"
+}

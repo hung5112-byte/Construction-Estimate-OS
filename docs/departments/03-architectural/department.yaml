@@ -1,0 +1,71 @@
+code: 03-architectural
+name_local: Architectural Estimating
+tier: 1
+description: 'Takeoff and scope for the building envelope, interiors, openings and specialties from the A and I sheets and the schedules: roofing and insulation, storefront and cladding, partitions by wall type, ceilings, flooring, paint, doors/frames/hardware by mark, windows, toilet accessories, signage, elevators, equipment and casework. The lead speaks for the department.'
+agents:
+- architectural-lead
+- envelope-estimator
+- interiors-estimator
+- openings-estimator
+- specialties-equipment-estimator
+default_speaker: architectural-lead
+refs_folder: refs/
+depends_on:
+- 02-civil-structural
+- 04-mep
+debate_role:
+  default: pro
+routing_rules:
+- keywords:
+  - roof
+  - roofing
+  - insulation
+  - storefront
+  - curtain wall
+  - glazing
+  - cladding
+  - waterproofing
+  - envelope
+  - parapet
+  - sealant
+  agent: envelope-estimator
+- keywords:
+  - drywall
+  - partition
+  - ceiling
+  - acoustical
+  - flooring
+  - carpet
+  - tile
+  - paint
+  - finish
+  - wall type
+  agent: interiors-estimator
+- keywords:
+  - door
+  - frame
+  - hardware
+  - window
+  - opening
+  - door schedule
+  - hollow metal
+  agent: openings-estimator
+- keywords:
+  - specialt
+  - toilet accessor
+  - signage
+  - locker
+  - elevator
+  - equipment
+  - furnish
+  - casework
+  - millwork
+  - canopy
+  agent: specialties-equipment-estimator
+aliases_local:
+- Architectural Estimating
+- Architectural
+- Envelope & Interiors
+- Finishes
+- Openings
+author: Brian H. Doan

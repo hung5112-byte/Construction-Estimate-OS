@@ -12,7 +12,7 @@ class LLM(Protocol):
 
 @dataclass
 class BaseAgent:
-    name_vn: str
+    name_local: str
     role: str
     system_prompt: str
     llm: LLM
@@ -29,13 +29,23 @@ class BaseAgent:
         brain_context: dict,
         history: list[str],
         extra_context: str = "",
+        request: str | None = None,
     ) -> list[dict]:
         """Compose messages for an LLM call.
 
         P2.7: Filter the Brain context by `required_refs` to save tokens.
         E.g. CFO required_refs=["strategy","finance","laws"] → pass only 3 sections
         instead of dumping the full brain (8 sections). If required_refs is empty → full dump.
+
+        `request` overrides the default debate-agent REQUEST line — document
+        writers (e.g. the Synthesizer) need their own task framing, not "state
+        your perspective" (live-replay lesson 2026-07-05: the default line
+        nudged the Synthesizer away from machine-checked format tokens).
         """
+        # ADR-004 §5 (judge-only, anti-fabrication): episodic decisions never
+        # ride the Brain dump into debaters — Step 3 injects them into the
+        # Synthesizer alone via meeting state, bounded and scored.
+        brain_context = {k: v for k, v in brain_context.items() if k != "decisions"}
         filtered_brain = self._filter_brain(brain_context)
         sys_parts = [
             self.system_prompt,
@@ -50,7 +60,8 @@ class BaseAgent:
         if history:
             user_parts.append("\n## PRIOR TRANSCRIPT\n" + "\n".join(history))
         user_parts.append(
-            "\n## REQUEST\nState your perspective (in plain English, citing the Brain)."
+            "\n## REQUEST\n"
+            + (request or "State your perspective (in plain English, citing the Brain).")
         )
 
         return [
@@ -100,6 +111,9 @@ class BaseAgent:
         brain_context: dict,
         history: list[str],
         extra_context: str = "",
+        request: str | None = None,
     ) -> str:
-        messages = self.build_messages(brief, brain_context, history, extra_context)
+        messages = self.build_messages(
+            brief, brain_context, history, extra_context, request=request
+        )
         return self.llm.complete(messages, model=self.model_override)

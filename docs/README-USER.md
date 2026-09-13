@@ -44,7 +44,7 @@ Depending on your current state, follow the matching path:
 | You are... | Follow path |
 |---|---|
 | **🆕 Nothing installed** (no Obsidian, Python, Claude Desktop) | **Path A**: do all of PART 1 (Steps 1-9) |
-| **🟡 Obsidian + MCP-Obsidian already set up from a prior class** (existing vault, Local REST API enabled, already chatting with Claude via MCP-Obsidian) | **Path B**: skip Step 3, do Steps 1-2 + Steps 4-9 (install Python + repo + DeepSeek + add the `bd-business-os` MCP to the Claude Desktop config) |
+| **🟡 Obsidian + MCP-Obsidian already set up from a prior class** (existing vault, Local REST API enabled, already chatting with Claude via MCP-Obsidian) | **Path B**: skip Step 3, do Steps 1-2 + Steps 4-9 (install Python + repo + Anthropic API key + add the `bd-business-os` MCP to the Claude Desktop config) |
 | **🟢 Repo + vault for company 1 already there, now want a 2nd company** | **Path C**: only do PART 2 (create a new vault, apply a pack, fill the Brain) — no need to reinstall Python/repo |
 
 **Path B details** (most common — students already have Obsidian):
@@ -56,9 +56,9 @@ Depending on your current state, follow the matching path:
   - Step 2: Node.js 20+ (if not present)
   - Step 4: Clone the `bd-business-os` repo into `F:\.work\`
   - Step 5: pip install -e .
-  - Step 6: DeepSeek API key
+  - Step 6: Anthropic API key
   - Step 6.5: Tavily API key
-  - Step 7: Create .env in the vault + .vncoderc in $HOME
+  - Step 7: Create .env in the vault + .bd-os.yaml in $HOME
   - Step 8.2: Add the "bd-business-os" entry to claude_desktop_config.json (do NOT remove the old "mcp-obsidian" entry)
   - Step 8.3: Quit Claude Desktop from the tray + restart
 ```
@@ -74,7 +74,7 @@ Depending on your current state, follow the matching path:
 
 ### Accounts (free sign-up)
 - [ ] An **Anthropic Claude Pro** account (~$20/month) — sign up at https://claude.ai
-- [ ] A **DeepSeek** account (free, $5 credit on new sign-up — enough for hundreds of tasks)
+- [ ] An **Anthropic** account with API access (https://console.anthropic.com)
 - [ ] **Tavily** (free tier 1000 searches/month — RECOMMENDED, so the AI can look up law/competitors on the web)
 
 ### Software you'll install (in this guide)
@@ -287,22 +287,21 @@ This is the system's "engine" — it contains the code for 13 departments + 192 
 
 ---
 
-### Step 6: Sign up for DeepSeek + get the API key (5 min)
+### Step 6: Get your Anthropic API key (5 min)
 
-DeepSeek is an AI service that lets the departments "think." ~10x cheaper than the Claude API, with enough free credit for hundreds of tasks.
+The Anthropic API powers the AI departments. You need an API key to run tasks.
 
 **Actions:**
 
-1. Go to https://platform.deepseek.com → click **"Sign up"**
-2. Sign up with email or Google
-3. After logging in → go to **"API Keys"** (left menu)
-4. Click **"Create new API key"** → name it e.g. `bd-business-os`
-5. **COPY THE KEY NOW** (shown only once) → paste into `F:\setup-keys.txt` with the Obsidian key
-6. The key looks like `sk-xxxxxxxxxxxxxxxxxxxx`
+1. Go to https://console.anthropic.com → click **"Sign up"** (or log in)
+2. After logging in → go to **"API Keys"** (left menu)
+3. Click **"Create Key"** → name it e.g. `bd-business-os`
+4. **COPY THE KEY NOW** (shown only once) → paste into `F:\setup-keys.txt` with the Obsidian key
+5. The key looks like `sk-ant-api03-xxxxxxxxxxxxxxxxxxxx`
 
-> ⚠️ **Security:** this key lets anyone spend money on DeepSeek. **Don't share it.** If it leaks → go back to API Keys → Delete the old key → create a new one.
+> ⚠️ **Security:** this key lets anyone use your Anthropic account. **Don't share it.** If it leaks → go back to API Keys → Disable the old key → create a new one.
 
-> 💰 **Real cost:** DeepSeek's $5 free credit is enough for ~200-300 tasks. After that, top up about $5-10/month for an average company's usage.
+> 💰 **Real cost:** Anthropic charges per token. A typical task (full meeting debate + documents) costs ~$0.10–$0.50. Budget $10–20/month for regular use.
 
 ---
 
@@ -329,7 +328,7 @@ Two small files that tell the system where your company is + which AI to use.
 
 **7.1 — The `.env` file in the vault:**
 
-> 🚨 **VERY IMPORTANT:** `DEEPSEEK_API_KEY` is the main LLM provider. Without it → every `bd_draft`/`bd_run`/`bd_meeting` task errors with `Method not found` (because the code falls back to MCP sampling, which the Claude Code tab doesn't support).
+> 🚨 **VERY IMPORTANT:** `ANTHROPIC_API_KEY` is the main LLM provider. Without it → every `bd_draft`/`bd_run`/`bd_meeting` task errors with `Method not found` (because the code falls back to MCP sampling, which the Claude Code tab doesn't support).
 
 In PowerShell, type (change `LoneStarCoffee` to your vault name):
 
@@ -340,7 +339,7 @@ notepad "F:\vaults\LoneStarCoffee\.env"
 Notepad opens an empty file. Paste:
 
 ```
-DEEPSEEK_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxx
+ANTHROPIC_API_KEY=sk-ant-api03-xxxxxxxxxxxxxxxxxxxxx
 TAVILY_API_KEY=tvly-xxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
@@ -358,15 +357,15 @@ Get-Content "F:\vaults\LoneStarCoffee\.env"
 
 → You should see 2 key lines (no BOM, no trailing spaces).
 
-**7.2 — The `.vncoderc` file in your home folder:**
+**7.2 — The `.bd-os.yaml` file in your home folder:**
 
 In PowerShell, paste this whole block (everything from `@"` to `"@`):
 
 ```powershell
 @"
 llm:
-  primary: deepseek-v4-pro
-  secondary: deepseek-v4-flash
+  primary: claude-sonnet-4-6
+  secondary: claude-haiku-4-5-20251001
   max_retries: 3
   max_tokens_per_task: 100000
 
@@ -375,7 +374,7 @@ meeting:
   total_max: 3
 
 translator_mode: final_only
-"@ | Out-File -FilePath "$HOME\.vncoderc" -Encoding utf8
+"@ | Out-File -FilePath "$HOME\.bd-os.yaml" -Encoding utf8
 ```
 
 Press Enter. No output — that means it worked.
@@ -524,9 +523,9 @@ By now you have:
 | Python 3.12 + Node.js 20 | ✅ |
 | Obsidian + Local REST API plugin | ✅ |
 | The bd-business-os repo + Python libraries | ✅ |
-| DeepSeek API key in `.env` | ✅ |
+| Anthropic API key in `.env` | ✅ |
 | Tavily API key in `.env` (recommended) | ✅ |
-| `.vncoderc` config for the model | ✅ |
+| `.bd-os.yaml` config for the model | ✅ |
 | Claude Desktop + 2 MCP servers | ✅ |
 | Know to use the **"</> Code"** tab in Claude Desktop | ✅ |
 
@@ -1275,7 +1274,7 @@ A. ...  B. ...  C. ...  D. ...
 | `bd_run` (1 SIMPLE task) | 20-50 seconds |
 | `bd_run` (needs clarification) | 20-50 seconds + your answer time |
 | `bd_resume` | <10 seconds |
-| `bd_meeting` (DeepSeek v4-pro) | 1-3 minutes |
+| `bd_meeting` (Claude Sonnet) | 1-3 minutes |
 | `bd_approve` | 10-30 seconds |
 | `bd_execute` (render docx) | 10-30 seconds |
 | **Total pipeline, 1 SIMPLE task** | **3-5 minutes** |
@@ -1314,7 +1313,7 @@ This is the pattern you'll do daily once you're used to it — **all in one Code
 Open **PowerShell**, paste this whole block:
 
 ```powershell
-Write-Host "`n=== VN OS Health Check ===" -ForegroundColor Cyan
+Write-Host "`n=== Hardware Division OS Health Check ===" -ForegroundColor Cyan
 
 Write-Host "`n[1/5] Python version:" -ForegroundColor Yellow
 python --version
@@ -1331,7 +1330,7 @@ Write-Host "`n[4/5] bd-os-mcp processes:" -ForegroundColor Yellow
 Write-Host "`n[5/5] Vault .env file:" -ForegroundColor Yellow
 $envFile = Read-Host "  Enter the vault path (e.g. F:\vaults\LoneStarCoffee)"
 if (Test-Path "$envFile\.env") {
-    Get-Content "$envFile\.env" | ForEach-Object { if ($_ -match "^DEEPSEEK|^TAVILY") { ($_ -split "=")[0] + "=" + (($_ -split "=")[1].Substring(0,[Math]::Min(8,($_ -split "=")[1].Length))) + "..." } }
+    Get-Content "$envFile\.env" | ForEach-Object { if ($_ -match "^ANTHROPIC|^TAVILY") { ($_ -split "=")[0] + "=" + (($_ -split "=")[1].Substring(0,[Math]::Min(8,($_ -split "=")[1].Length))) + "..." } }
 } else { Write-Host "  ❌ .env not found!" -ForegroundColor Red }
 ```
 
@@ -1340,7 +1339,7 @@ if (Test-Path "$envFile\.env") {
 - [2/5] `file:///F:/.work/bd-business-os` (the real repo path)
 - [3/5] 1-12 (Claude Desktop running)
 - [4/5] 1-3 (MCP running — multiple processes are normal with multiple sessions)
-- [5/5] `DEEPSEEK_API_KEY=sk-xxxxx...` (a key, not blank)
+- [5/5] `ANTHROPIC_API_KEY=sk-ant-api03-xxxxx...` (a key, not blank)
 
 If any is wrong → find the matching "Error" below.
 
@@ -1396,16 +1395,16 @@ There are **2 different causes** for the same error message:
 2. Is the `bd-os-mcp.exe` path correct: `F:\\.work\\bd-business-os\\.venv\\Scripts\\bd-os-mcp.exe` (escape `\` as `\\`).
 3. **Quit Claude Desktop THE RIGHT WAY** from the tray (see Step 8.3) — NOT just close the window.
 
-#### 4.B — Missing DEEPSEEK_API_KEY (LLM sampling unavailable)
+#### 4.B — Missing ANTHROPIC_API_KEY (LLM sampling unavailable)
 
 **Symptom:** `bd_status` runs OK, but `bd_draft` / `bd_run` / `bd_meeting` reports `Method not found`.
 
-**Root cause:** the code falls back to MCP sampling when there's no `DEEPSEEK_API_KEY` / `ANTHROPIC_API_KEY`. But the Claude Code tab doesn't implement the MCP sampling protocol → `Method not found`.
+**Root cause:** the code falls back to MCP sampling when there's no `ANTHROPIC_API_KEY`. But the Claude Code tab doesn't implement the MCP sampling protocol → `Method not found`.
 
 **Fix:**
 1. Open `F:\vaults\<Company>\.env`, make sure it has:
    ```
-   DEEPSEEK_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxx
+   ANTHROPIC_API_KEY=sk-ant-api03-xxxxxxxxxxxxxxxxxxxxx
    ```
 2. **Verify the key loads**: in Claude Code chat:
    > Run bd_status with vault F:\vaults\<Company>
@@ -1458,13 +1457,13 @@ pip install -e .
 # Quit + restart Claude Desktop from the tray
 ```
 
-### Error 5: DeepSeek `API key invalid`
+### Error 5: Anthropic `API key invalid`
 
 **Symptom:** `bd_run` / `bd_draft` reports `Authentication failed`.
 
 **Fix:**
-1. Open `F:\vaults\<Company>\.env`, check `DEEPSEEK_API_KEY=sk-...` is the right key.
-2. Go to https://platform.deepseek.com → API Keys → check the key is still active and has credit.
+1. Open `F:\vaults\<Company>\.env`, check `ANTHROPIC_API_KEY=sk-ant-api03-...` is the right key.
+2. Go to https://console.anthropic.com → API Keys → check the key is still active and has credit.
 3. Fix the key → save .env → restart Claude Desktop.
 
 ### Error 6: Obsidian MCP `connection refused`
@@ -1491,7 +1490,7 @@ pip install -e .
 
 ### Tip 1: The fuller the Brain, the better the decisions
 
-Every line you fill in the Brain → Claude/DeepSeek uses it to debate. An empty Brain = the AI "guesses" → generic output. Investing 30 minutes filling the Brain well = saving hours fixing wrong decision reports later.
+Every line you fill in the Brain → Claude uses it to debate. An empty Brain = the AI "guesses" → generic output. Investing 30 minutes filling the Brain well = saving hours fixing wrong decision reports later.
 
 ### Tip 2: Update the Brain every month
 
@@ -1584,14 +1583,14 @@ bd-os-mcp
 
 Logs print directly to the console → you can debug tool calls.
 
-### Override config via `.vncoderc`
+### Override config via `.bd-os.yaml`
 
-The file `$HOME\.vncoderc` (created in Step 7.2), edit:
+The file `$HOME\.bd-os.yaml` (created in Step 7.2), edit:
 
 ```yaml
 llm:
-  primary: deepseek-v4-pro          # or claude-sonnet-4-6
-  secondary: deepseek-v4-flash
+  primary: claude-sonnet-4-6
+  secondary: claude-haiku-4-5-20251001
   max_retries: 3
   max_tokens_per_task: 100000
 

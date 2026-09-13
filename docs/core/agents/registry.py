@@ -1,4 +1,4 @@
-"""Central registry: load 12 core dept + N pack-specific dept + agents."""
+"""Central registry: load the 6 core estimating departments + N pack-specific departments + agents."""
 from __future__ import annotations
 from pathlib import Path
 from core.agents.department import Department, DepartmentLoader
@@ -17,8 +17,8 @@ class DepartmentWithAgents:
         return self.dept.code
 
     @property
-    def name_vn(self) -> str:
-        return self.dept.name_vn
+    def name_local(self) -> str:
+        return self.dept.name_local
 
     def get_agent(self, agent_id: str) -> AgentDefinition:
         if agent_id not in self.agents_by_id:

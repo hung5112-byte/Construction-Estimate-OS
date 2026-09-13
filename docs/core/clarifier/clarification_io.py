@@ -24,6 +24,10 @@ def write_clarification(path: Path, questions: list[Question]) -> None:
     for i, q in enumerate(questions, 1):
         parts.append(f"## Q{i} [{q.severity.value}]")
         parts.append(f"_Cite: {q.citation}_")
+        # ADR-003 Addendum A: optional tag line feeds the critic's
+        # regulatory-unknowns-promoted hard gate.
+        if getattr(q, "tags", None):
+            parts.append(f"_Tags: {', '.join(q.tags)}_")
         parts.append("")
         parts.append(q.text)
         parts.append("")

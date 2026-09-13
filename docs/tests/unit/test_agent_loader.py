@@ -6,7 +6,7 @@ def test_load_agent_from_md(tmp_path):
     agent_path = tmp_path / "ads-specialist.md"
     agent_path.write_text("""---
 id: ads-specialist
-name_vn: "Ad Specialist"
+name_local: "Ad Specialist"
 department: 05-service-operations
 expertise: ["FB Ads", "Google Ads"]
 required_tools: [us_law_search]
@@ -21,7 +21,7 @@ You are a US digital advertising specialist.
     agent = loader.load(agent_path)
 
     assert agent.id == "ads-specialist"
-    assert agent.name_vn == "Ad Specialist"
+    assert agent.name_local == "Ad Specialist"
     assert "FB Ads" in agent.expertise
     assert "us_law_search" in agent.required_tools
     assert agent.temperature == 0.3

@@ -13,6 +13,8 @@ import time
 from pathlib import Path
 
 USAGE_FILENAME = ".bd-usage.jsonl"
+EVENTS_FILENAME = ".bd-llm-events.jsonl"  # provider events (retries, ...) — kept in a
+# separate file so the dashboard's usage parser never sees non-usage records.
 
 
 def _log_path() -> Path | None:
@@ -33,8 +35,14 @@ def log_usage(
     prompt_tokens: int,
     completion_tokens: int,
     estimated: bool = False,
+    extra: dict | None = None,
 ) -> None:
-    """Append one usage record. estimated=True → counts derived from char/4, not API."""
+    """Append one usage record. estimated=True → counts derived from char/4, not API.
+
+    extra: additional per-call fields merged into the record (e.g. the claude-cli
+    provider's duration_ms / duration_api_ms / wall_seconds / prompt_chars — pass 6
+    needs the subscription's real latency profile, p50/p95 by call type).
+    """
     try:
         path = _log_path()
         if path is None:
@@ -47,9 +55,37 @@ def log_usage(
             "completion_tokens": int(completion_tokens),
             "estimated": bool(estimated),
         }
+        if extra:
+            record.update(extra)
         with path.open("a", encoding="utf-8") as f:
             f.write(json.dumps(record) + "\n")
     except Exception:  # noqa: BLE001 — never fail a completion over bookkeeping
+        pass
+
+
+def log_llm_event(provider: str, event: str, **fields) -> None:
+    """Append one provider event (e.g. event="llm:retry") to .bd-llm-events.jsonl.
+
+    Loud by design: also mirrored to stderr so an unattended run's log shows
+    retries as they happen. Best-effort like every logger here.
+    """
+    import sys
+
+    try:
+        payload = {
+            "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            "provider": provider,
+            "event": event,
+            **fields,
+        }
+        print(f"[bd-os] {event}: {json.dumps(fields)}", file=sys.stderr)
+        path = _log_path()
+        if path is None:
+            return
+        events_path = path.parent / EVENTS_FILENAME
+        with events_path.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(payload) + "\n")
+    except Exception:  # noqa: BLE001
         pass
 
 

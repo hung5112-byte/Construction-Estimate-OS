@@ -21,4 +21,4 @@ packs/<code>/
 ```
 
 See `docs/how-to-create-pack.md` for field documentation. Enable a pack per vault
-via `.vncoderc` (`packs: [<code>]`) or `bd_onboard(packs=["<code>"])`.
+via `.bd-os.yaml` (`packs: [<code>]`) or `bd_onboard(packs=["<code>"])`.

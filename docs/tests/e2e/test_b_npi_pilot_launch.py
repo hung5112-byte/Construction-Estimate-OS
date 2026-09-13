@@ -60,23 +60,25 @@ def llm_mock():
         "growth": "GO bold - 18-month runway and an anchor customer justify the pilot.",
         "cautious": "GO with gates - week 1 DOA > 1% means pause shipments.",
         "balanced": "Pilot 500 units in 2 waves + 3% spares pool + acceptance sign-off per site.",
+        # Critic-era report: canonical verdict + resolving citations (the
+        # Synthesizer template now enforces both — see synthesizer.py).
         "synthesizer": """## 📌 Bottom line (30-second read)
 - GO with revisions: 500-unit pilot in 2 waves
 - 4 BLOCKERS must be done before wave 1 ships
-- KPI: DOA < 1% in week 1, 100% install acceptance
+- KPI: DOA < 1% in week 1, 100% install acceptance [state.md]
 
 ## Recommendation
-GO with revisions
+PROCEED-WITH-REVISIONS
 
 ## To do before launch
-1. [ ] Confirm PT500 certification validity in writing
-2. [ ] Build the 3% spares pool
+1. [ ] Confirm PT500 certification validity in writing (ref: Q1)
+2. [ ] Build the 3% spares pool (ref: Q2)
 3. [ ] Publish IQC criteria for the pilot lot
 4. [ ] Finalize the field-deployment checklist
 
 ## KPI gates
 - Week 1: DOA < 1%
-- Week 4: 100% site acceptance sign-offs
+- Week 4: 100% site acceptance sign-offs [state.md]
 
 ## Decisions the Department Head must make
 A. Approve this plan
@@ -84,6 +86,16 @@ B. Approve but skip the blockers
 C. Reject
 D. Revise
 """,
+        # Critic judge (5 samples per round, majority vote) — all rubrics PASS.
+        "critic_judge": json.dumps({
+            "rubric_verdicts": {
+                "numbers-reconcile": "PASS",
+                "both-debate-sides-represented": "PASS",
+                "factual-consistency-report-vs-plan": "PASS",
+            },
+            "overall_score": 0.95,
+            "issues": [],
+        }),
         # P0.2: execution planner LLM response (structured plan with template table)
         "execution_plan": """---
 type: execution_plan
@@ -101,7 +113,7 @@ stop: 2
 
 ## Resources
 
-- **Estimated budget:** $20,000
+- **Estimated budget:** $20,000 [budget.md]
 - **Additional headcount:** none (spares planning covered by Operations)
 
 ## Risks and mitigations
@@ -130,6 +142,9 @@ stop: 2
         sys_text = messages[0]["content"]
 
         # Order matters - check most-specific first
+        # (critic first: its prompt mentions "clarification questions" too)
+        if "You are the CRITIC" in sys_text:
+            return responses["critic_judge"]
         if "router that classifies" in sys_text:
             return responses["router_classify"]
         if "Gap Analyzer" in sys_text:

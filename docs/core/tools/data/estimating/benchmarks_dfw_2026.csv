@@ -1,0 +1,12 @@
+building_type,low_per_sf,high_per_sf,source,note
+office-warehouse,140,260,"Maxx Builders 2026 (industrial 140–230) blended with office 190–320 by area share","[UNCERTAIN] blended synthetic band"
+tilt-wall industrial,140,230,"Maxx Builders / EB3 2026 (DFW Class A)","[UNCERTAIN]"
+warehouse shell,90,130,"Maxx Builders 2026 (Texas shell-only)","[UNCERTAIN]"
+office low-rise,190,320,"Maxx Builders 2026 (DFW)","[UNCERTAIN]"
+office prime,260,435,"RLB Q2 2026 Dallas","[UNCERTAIN]"
+retail strip,195,265,"RLB Q2 2026 Dallas (strip)","[UNCERTAIN]"
+retail restaurant,220,360,"Maxx Builders 2026 (DFW)","[UNCERTAIN]"
+medical office,270,430,"Maxx Builders 2026 (DFW)","[UNCERTAIN]"
+hotel 3-star,310,455,"RLB Q2 2026 Dallas","[UNCERTAIN]"
+k-12 school,320,650,"Terrapin 2026 national (DFW 10–20% lower)","[UNCERTAIN]"
+tenant improvement office,50,150,"Mercator 2026 (Texas)","[UNCERTAIN]"

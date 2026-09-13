@@ -24,7 +24,12 @@ class BrainReader:
         self.vault = Path(vault_root)
         self.brain_dir = self.vault / "00-Brain"
 
-    def load(self) -> BrainContext:
+    def load(self, include_decisions: bool = False) -> BrainContext:
+        """include_decisions defaults to False — ADR-004 §5 (judge-only):
+        BrainContext flows into MANY non-judge LLM prompts (gap analyzer,
+        document executor, every debater), so episodic ledger entries must be
+        opted into explicitly. Step 3's Synthesizer injection reads the ledger
+        directly via DecisionLedger, not through this dump."""
         if not self.brain_dir.exists():
             raise FileNotFoundError(f"Brain dir not found: {self.brain_dir}")
         return BrainContext(
@@ -33,7 +38,7 @@ class BrainReader:
             budget=self._read_budget(),
             headcount=self._read_headcount(),
             laws=self._read_laws(),
-            decisions=self._read_decisions(),
+            decisions=self._read_decisions() if include_decisions else [],
             state=self._read_state(),
             glossary=self._read_glossary(),
         )
@@ -97,8 +102,11 @@ class BrainReader:
         return [LawReference(name=r[0], code=r[1]) for r in rows]
 
     def _read_decisions(self) -> list[DecisionEntry]:
-        # TODO Phase 3: parse DecisionEntry blocks from decisions-log.md
-        return []
+        # Structured entries come from decision-ledger.md (ADR-004 §1); the
+        # prose decisions-log.md is frozen history and stays unparsed.
+        from core.brain.ledger import DecisionLedger, LEDGER_FILENAME
+
+        return DecisionLedger(self.brain_dir / LEDGER_FILENAME).entries()
 
     def _read_state(self) -> str:
         _, body = self._read_file("state.md")

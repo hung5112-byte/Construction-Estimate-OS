@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36in" height="24in" viewBox="0 0 3600 2400" font-family="Helvetica, Arial, sans-serif">
+<rect x="0" y="0" width="3600" height="2400" fill="white"/>
+<rect x="40" y="40" width="3520" height="2320" fill="none" stroke="black" stroke-width="4"/>
+<rect x="520.0" y="460.0" width="1500.0" height="1250.0" fill="none" stroke="black" stroke-width="12"/>
+<line x1="1020.0" y1="460.0" x2="1020.0" y2="1710.0" stroke="black" stroke-width="10"/>
+<line x1="770.0" y1="460.0" x2="770.0" y2="1710.0" stroke="black" stroke-width="5"/>
+<line x1="520.0" y1="772.5" x2="1020.0" y2="772.5" stroke="black" stroke-width="5"/>
+<line x1="520.0" y1="1085.0" x2="1020.0" y2="1085.0" stroke="black" stroke-width="5"/>
+<line x1="520.0" y1="1397.5" x2="1020.0" y2="1397.5" stroke="black" stroke-width="5"/>
+<line x1="520.0" y1="1553.8" x2="770.0" y2="1553.8" stroke="black" stroke-width="5"/>
+<text x="645.0" y="602.2" font-size="16" font-weight="bold" text-anchor="middle">101 LOBBY</text>
+<text x="645.0" y="632.2" font-size="14" font-weight="normal" text-anchor="middle">500 SF</text>
+<text x="895.0" y="602.2" font-size="16" font-weight="bold" text-anchor="middle">102 CONFERENCE</text>
+<text x="895.0" y="632.2" font-size="14" font-weight="normal" text-anchor="middle">500 SF</text>
+<text x="645.0" y="914.8" font-size="16" font-weight="bold" text-anchor="middle">103 OFFICE</text>
+<text x="645.0" y="944.8" font-size="14" font-weight="normal" text-anchor="middle">500 SF</text>
+<text x="895.0" y="914.8" font-size="16" font-weight="bold" text-anchor="middle">104 OFFICE</text>
+<text x="895.0" y="944.8" font-size="14" font-weight="normal" text-anchor="middle">500 SF</text>
+<text x="645.0" y="1227.2" font-size="16" font-weight="bold" text-anchor="middle">105 BREAK ROOM</text>
+<text x="645.0" y="1257.2" font-size="14" font-weight="normal" text-anchor="middle">500 SF</text>
+<text x="895.0" y="1227.2" font-size="16" font-weight="bold" text-anchor="middle">108 OFFICE</text>
+<text x="895.0" y="1257.2" font-size="14" font-weight="normal" text-anchor="middle">500 SF</text>
+<text x="645.0" y="1461.6" font-size="16" font-weight="bold" text-anchor="middle">106 RESTROOM M</text>
+<text x="645.0" y="1491.6" font-size="14" font-weight="normal" text-anchor="middle">250 SF</text>
+<text x="645.0" y="1617.9" font-size="16" font-weight="bold" text-anchor="middle">107 RESTROOM W</text>
+<text x="645.0" y="1647.9" font-size="14" font-weight="normal" text-anchor="middle">250 SF</text>
+<text x="895.0" y="1539.8" font-size="16" font-weight="bold" text-anchor="middle">109 IT / STORAGE</text>
+<text x="895.0" y="1569.8" font-size="14" font-weight="normal" text-anchor="middle">500 SF</text>
+<text x="1520.0" y="1071.0" font-size="16" font-weight="bold" text-anchor="middle">200 WAREHOUSE</text>
+<text x="1520.0" y="1101.0" font-size="14" font-weight="normal" text-anchor="middle">8,000 SF</text>
+<rect x="850.0" y="892.5" width="90" height="60" fill="none" stroke="black" stroke-width="3" stroke-dasharray="8,6"/>
+<text x="895.0" y="928.5" font-size="16" font-weight="bold" text-anchor="middle">RTU-1</text>
+<rect x="600.0" y="892.5" width="90" height="60" fill="none" stroke="black" stroke-width="3" stroke-dasharray="8,6"/>
+<text x="645.0" y="928.5" font-size="16" font-weight="bold" text-anchor="middle">RTU-2</text>
+<rect x="589.3" y="521.0" width="28" height="28" fill="none" stroke="black" stroke-width="2" class="diffuser"/>
+<line x1="589.3" y1="521.0" x2="617.3" y2="549.0" stroke="black" stroke-width="1"/>
+<line x1="617.3" y1="521.0" x2="589.3" y2="549.0" stroke="black" stroke-width="1"/>
+<rect x="672.7" y="521.0" width="28" height="28" fill="none" stroke="black" stroke-width="2" class="diffuser"/>
+<line x1="672.7" y1="521.0" x2="700.7" y2="549.0" stroke="black" stroke-width="1"/>
+<line x1="700.7" y1="521.0" x2="672.7" y2="549.0" stroke="black" stroke-width="1"/>
+<rect x="839.3" y="521.0" width="28" height="28" fill="none" stroke="black" stroke-width="2" class="diffuser"/>
+<line x1="839.3" y1="521.0" x2="867.3" y2="549.0" stroke="black" stroke-width="1"/>
+<line x1="867.3" y1="521.0" x2="839.3" y2="549.0" stroke="black" stroke-width="1"/>
+<rect x="922.7" y="521.0" width="28" height="28" fill="none" stroke="black" stroke-width="2" class="diffuser"/>
+<line x1="922.7" y1="521.0" x2="950.7" y2="549.0" stroke="black" stroke-width="1"/>
+<line x1="950.7" y1="521.0" x2="922.7" y2="549.0" stroke="black" stroke-width="1"/>
+<rect x="589.3" y="833.5" width="28" height="28" fill="none" stroke="black" stroke-width="2" class="diffuser"/>
+<line x1="589.3" y1="833.5" x2="617.3" y2="861.5" stroke="black" stroke-width="1"/>
+<line x1="617.3" y1="833.5" x2="589.3" y2="861.5" stroke="black" stroke-width="1"/>
+<rect x="672.7" y="833.5" width="28" height="28" fill="none" stroke="black" stroke-width="2" class="diffuser"/>
+<line x1="672.7" y1="833.5" x2="700.7" y2="861.5" stroke="black" stroke-width="1"/>
+<line x1="700.7" y1="833.5" x2="672.7" y2="861.5" stroke="black" stroke-width="1"/>
+<rect x="839.3" y="833.5" width="28" height="28" fill="none" stroke="black" stroke-width="2" class="diffuser"/>
+<line x1="839.3" y1="833.5" x2="867.3" y2="861.5" stroke="black" stroke-width="1"/>
+<line x1="867.3" y1="833.5" x2="839.3" y2="861.5" stroke="black" stroke-width="1"/>
+<rect x="922.7" y="833.5" width="28" height="28" fill="none" stroke="black" stroke-width="2" class="diffuser"/>
+<line x1="922.7" y1="833.5" x2="950.7" y2="861.5" stroke="black" stroke-width="1"/>
+<line x1="950.7" y1="833.5" x2="922.7" y2="861.5" stroke="black" stroke-width="1"/>
+<rect x="589.3" y="1146.0" width="28" height="28" fill="none" stroke="black" stroke-width="2" class="diffuser"/>
+<line x1="589.3" y1="1146.0" x2="617.3" y2="1174.0" stroke="black" stroke-width="1"/>
+<line x1="617.3" y1="1146.0" x2="589.3" y2="1174.0" stroke="black" stroke-width="1"/>
+<rect x="672.7" y="1146.0" width="28" height="28" fill="none" stroke="black" stroke-width="2" class="diffuser"/>
+<line x1="672.7" y1="1146.0" x2="700.7" y2="1174.0" stroke="black" stroke-width="1"/>
+<line x1="700.7" y1="1146.0" x2="672.7" y2="1174.0" stroke="black" stroke-width="1"/>
+<rect x="839.3" y="1146.0" width="28" height="28" fill="none" stroke="black" stroke-width="2" class="diffuser"/>
+<line x1="839.3" y1="1146.0" x2="867.3" y2="1174.0" stroke="black" stroke-width="1"/>
+<line x1="867.3" y1="1146.0" x2="839.3" y2="1174.0" stroke="black" stroke-width="1"/>
+<rect x="922.7" y="1146.0" width="28" height="28" fill="none" stroke="black" stroke-width="2" class="diffuser"/>
+<line x1="922.7" y1="1146.0" x2="950.7" y2="1174.0" stroke="black" stroke-width="1"/>
+<line x1="950.7" y1="1146.0" x2="922.7" y2="1174.0" stroke="black" stroke-width="1"/>
+<line x1="645.0" y1="922.5" x2="645.0" y2="1585.0" stroke="black" stroke-width="4" stroke-dasharray="20,8"/>
+<line x1="895.0" y1="922.5" x2="895.0" y2="1585.0" stroke="black" stroke-width="4" stroke-dasharray="20,8"/>
+<text x="655.0" y="1210.0" font-size="14" font-weight="normal" text-anchor="start">24x12 SUPPLY</text>
+<text x="905.0" y="1210.0" font-size="14" font-weight="normal" text-anchor="start">24x12 SUPPLY</text>
+<circle cx="1270.0" cy="585.0" r="26" fill="none" stroke="black" stroke-width="3"/>
+<text x="1270.0" y="591.0" font-size="14" font-weight="bold" text-anchor="middle">UH-1</text>
+<circle cx="1770.0" cy="1585.0" r="26" fill="none" stroke="black" stroke-width="3"/>
+<text x="1770.0" y="1591.0" font-size="14" font-weight="bold" text-anchor="middle">UH-2</text>
+<circle cx="645.0" cy="1472.5" r="16" fill="none" stroke="black" stroke-width="2"/>
+<text x="667.0" y="1477.5" font-size="13" font-weight="bold" text-anchor="start">EF-1</text>
+<circle cx="645.0" cy="1635.0" r="16" fill="none" stroke="black" stroke-width="2"/>
+<text x="667.0" y="1640.0" font-size="13" font-weight="bold" text-anchor="start">EF-2</text>
+<text x="2140.0" y="288.0" font-size="24" font-weight="bold" text-anchor="start">HVAC EQUIPMENT SCHEDULE</text>
+<rect x="2140" y="300" width="970" height="238" fill="none" stroke="black" stroke-width="2"/>
+<line x1="2140.0" y1="334.0" x2="3110.0" y2="334.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="368.0" x2="3110.0" y2="368.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="402.0" x2="3110.0" y2="402.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="436.0" x2="3110.0" y2="436.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="470.0" x2="3110.0" y2="470.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="504.0" x2="3110.0" y2="504.0" stroke="black" stroke-width="1"/>
+<line x1="2230.0" y1="300.0" x2="2230.0" y2="538.0" stroke="black" stroke-width="1"/>
+<line x1="2530.0" y1="300.0" x2="2530.0" y2="538.0" stroke="black" stroke-width="1"/>
+<line x1="2770.0" y1="300.0" x2="2770.0" y2="538.0" stroke="black" stroke-width="1"/>
+<line x1="2910.0" y1="300.0" x2="2910.0" y2="538.0" stroke="black" stroke-width="1"/>
+<text x="2148.0" y="324.0" font-size="15" font-weight="bold" text-anchor="start">TAG</text>
+<text x="2238.0" y="324.0" font-size="15" font-weight="bold" text-anchor="start">TYPE</text>
+<text x="2538.0" y="324.0" font-size="15" font-weight="bold" text-anchor="start">CAPACITY</text>
+<text x="2778.0" y="324.0" font-size="15" font-weight="bold" text-anchor="start">ELECTRICAL</text>
+<text x="2918.0" y="324.0" font-size="15" font-weight="bold" text-anchor="start">LOCATION</text>
+<text x="2148.0" y="358.0" font-size="15" font-weight="normal" text-anchor="start">RTU-1</text>
+<text x="2238.0" y="358.0" font-size="15" font-weight="normal" text-anchor="start">PACKAGED ROOFTOP UNIT</text>
+<text x="2538.0" y="358.0" font-size="15" font-weight="normal" text-anchor="start">7.5 TON / 3000 CFM</text>
+<text x="2778.0" y="358.0" font-size="15" font-weight="normal" text-anchor="start">460V/3PH</text>
+<text x="2918.0" y="358.0" font-size="15" font-weight="normal" text-anchor="start">OFFICE EAST</text>
+<text x="2148.0" y="392.0" font-size="15" font-weight="normal" text-anchor="start">RTU-2</text>
+<text x="2238.0" y="392.0" font-size="15" font-weight="normal" text-anchor="start">PACKAGED ROOFTOP UNIT</text>
+<text x="2538.0" y="392.0" font-size="15" font-weight="normal" text-anchor="start">7.5 TON / 3000 CFM</text>
+<text x="2778.0" y="392.0" font-size="15" font-weight="normal" text-anchor="start">460V/3PH</text>
+<text x="2918.0" y="392.0" font-size="15" font-weight="normal" text-anchor="start">OFFICE WEST</text>
+<text x="2148.0" y="426.0" font-size="15" font-weight="normal" text-anchor="start">UH-1</text>
+<text x="2238.0" y="426.0" font-size="15" font-weight="normal" text-anchor="start">GAS UNIT HEATER</text>
+<text x="2538.0" y="426.0" font-size="15" font-weight="normal" text-anchor="start">150 MBH</text>
+<text x="2778.0" y="426.0" font-size="15" font-weight="normal" text-anchor="start">120V/1PH</text>
+<text x="2918.0" y="426.0" font-size="15" font-weight="normal" text-anchor="start">WAREHOUSE</text>
+<text x="2148.0" y="460.0" font-size="15" font-weight="normal" text-anchor="start">UH-2</text>
+<text x="2238.0" y="460.0" font-size="15" font-weight="normal" text-anchor="start">GAS UNIT HEATER</text>
+<text x="2538.0" y="460.0" font-size="15" font-weight="normal" text-anchor="start">150 MBH</text>
+<text x="2778.0" y="460.0" font-size="15" font-weight="normal" text-anchor="start">120V/1PH</text>
+<text x="2918.0" y="460.0" font-size="15" font-weight="normal" text-anchor="start">WAREHOUSE</text>
+<text x="2148.0" y="494.0" font-size="15" font-weight="normal" text-anchor="start">EF-1</text>
+<text x="2238.0" y="494.0" font-size="15" font-weight="normal" text-anchor="start">CEILING EXHAUST FAN</text>
+<text x="2538.0" y="494.0" font-size="15" font-weight="normal" text-anchor="start">150 CFM</text>
+<text x="2778.0" y="494.0" font-size="15" font-weight="normal" text-anchor="start">120V/1PH</text>
+<text x="2918.0" y="494.0" font-size="15" font-weight="normal" text-anchor="start">RESTROOM 106</text>
+<text x="2148.0" y="528.0" font-size="15" font-weight="normal" text-anchor="start">EF-2</text>
+<text x="2238.0" y="528.0" font-size="15" font-weight="normal" text-anchor="start">CEILING EXHAUST FAN</text>
+<text x="2538.0" y="528.0" font-size="15" font-weight="normal" text-anchor="start">150 CFM</text>
+<text x="2778.0" y="528.0" font-size="15" font-weight="normal" text-anchor="start">120V/1PH</text>
+<text x="2918.0" y="528.0" font-size="15" font-weight="normal" text-anchor="start">RESTROOM 107</text>
+<text x="2140.0" y="700.0" font-size="24" font-weight="bold" text-anchor="start">MECHANICAL NOTES</text>
+<text x="2140.0" y="742.0" font-size="16" font-weight="normal" text-anchor="start">1. SUPPLY DIFFUSERS: 24x24 LAY-IN, QTY 12; RETURN GRILLES 24x24 QTY 6 (NOT SHOWN).</text>
+<text x="2140.0" y="772.0" font-size="16" font-weight="normal" text-anchor="start">2. DUCTWORK: GALVANIZED, SMACNA 2" WG; LINED 10' FROM RTUs; APPROX. 640 LF TRUNK/BRANCH.</text>
+<text x="2140.0" y="802.0" font-size="16" font-weight="normal" text-anchor="start">3. GAS PIPING TO UH-1, UH-2 AND WH-1 BY PLUMBING CONTRACTOR; SEE P-101.</text>
+<text x="2140.0" y="832.0" font-size="16" font-weight="normal" text-anchor="start">4. CONTROLS: PROGRAMMABLE THERMOSTATS; NO BMS. TAB PER 23 05 93.</text>
+<text x="2140.0" y="862.0" font-size="16" font-weight="normal" text-anchor="start">5. ROOF CURBS 14" BY MECHANICAL CONTRACTOR; STRUCTURAL FRAMES BY STEEL FABRICATOR (S-201).</text>
+<g id="north" stroke="black" fill="none" stroke-width="2">
+<circle cx="3300" cy="300" r="60"/>
+<path d="M3300,250 L3320,330 L3300,310 L3280,330 Z" fill="black"/>
+<text x="3285" y="400" font-size="26" stroke="none" fill="black">N</text>
+</g>
+<g id="titleblock" font-size="22">
+<rect x="2960" y="1980" width="600" height="380" fill="none" stroke="black" stroke-width="3"/>
+<line x1="2960" y1="2080" x2="3560" y2="2080" stroke="black" stroke-width="2"/>
+<line x1="2960" y1="2180" x2="3560" y2="2180" stroke="black" stroke-width="2"/>
+<line x1="2960" y1="2270" x2="3560" y2="2270" stroke="black" stroke-width="2"/>
+<text x="2980" y="2015" font-size="24" font-weight="bold">BLACKLAND COMMERCIAL BUILDERS (SYNTHETIC DEMO)</text>
+<text x="2980" y="2050" font-size="20">PRAIRIE CREEK OFFICE/WAREHOUSE — BUILDING 2</text>
+<text x="2980" y="2110" font-size="18">SHEET TITLE</text>
+<text x="2980" y="2150" font-size="28" font-weight="bold">HVAC PLAN & SCHEDULES</text>
+<text x="2980" y="2210" font-size="20">SCALE: 1/8" = 1'-0"</text>
+<text x="3300" y="2210" font-size="20">DATE: 09/12/2026</text>
+<text x="2980" y="2250" font-size="20">REV: 2   ADDENDUM 1: 09/19/2026</text>
+<text x="2980" y="2305" font-size="18">SHEET NUMBER</text>
+<text x="3300" y="2330" font-size="44" font-weight="bold">M-101</text>
+</g>
+</svg>

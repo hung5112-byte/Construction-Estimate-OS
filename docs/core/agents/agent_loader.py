@@ -9,7 +9,7 @@ from core.obsidian.frontmatter import parse as parse_frontmatter
 @dataclass
 class AgentDefinition:
     id: str
-    name_vn: str
+    name_local: str
     department: str
     system_prompt: str
     name_en: Optional[str] = None
@@ -36,7 +36,7 @@ class AgentLoader:
 
         return AgentDefinition(
             id=fm["id"],
-            name_vn=fm.get("name_vn", fm["id"]),
+            name_local=fm.get("name_local", fm["id"]),
             name_en=fm.get("name_en"),
             department=fm.get("department", ""),
             seniority=fm.get("seniority", "mid"),

@@ -36,7 +36,7 @@ class TestEnrichedPromptLoading:
         dept_dir = tmp_path / "05-service-operations"
         dept_dir.mkdir()
         (dept_dir / "department.yaml").write_text(
-            "code: 05-service-operations\nname_vn: Operations\ntier: 2\n"
+            "code: 05-service-operations\nname_local: Operations\ntier: 2\n"
             "description: Operations\nagents: []\ndefault_speaker: ops-manager\n",
             encoding="utf-8",
         )
@@ -61,12 +61,12 @@ class TestEnrichedPromptLoading:
         agents_dir = dept_dir / "agents"
         agents_dir.mkdir(parents=True)
         (dept_dir / "department.yaml").write_text(
-            "code: 02-npi-program-management\nname_vn: Supply Chain\ntier: 2\n"
+            "code: 02-npi-program-management\nname_local: Supply Chain\ntier: 2\n"
             "description: Supply Chain\nagents: [buyer]\ndefault_speaker: buyer\n",
             encoding="utf-8",
         )
         (agents_dir / "buyer.md").write_text(
-            "---\nid: buyer\nname_vn: Buyer\ndepartment: 02-npi-program-management\n---\n"
+            "---\nid: buyer\nname_local: Buyer\ndepartment: 02-npi-program-management\n---\n"
             "You are a professional Buyer with expertise in P&L and cash flow.",
             encoding="utf-8",
         )
@@ -91,13 +91,13 @@ class TestEnrichedPromptLoading:
         agents_dir = dept_dir / "agents"
         agents_dir.mkdir(parents=True)
         (dept_dir / "department.yaml").write_text(
-            "code: 02-npi-program-management\nname_vn: Supply Chain\ntier: 2\n"
+            "code: 02-npi-program-management\nname_local: Supply Chain\ntier: 2\n"
             "description: Supply Chain\nagents: [buyer]\ndefault_speaker: buyer\n",
             encoding="utf-8",
         )
         # .md with frontmatter but empty body
         (agents_dir / "buyer.md").write_text(
-            "---\nid: buyer\nname_vn: Buyer\ndepartment: 02-npi-program-management\n---\n",
+            "---\nid: buyer\nname_local: Buyer\ndepartment: 02-npi-program-management\n---\n",
             encoding="utf-8",
         )
 
@@ -119,13 +119,13 @@ class TestEnrichedPromptLoading:
         agents_dir = dept_dir / "agents"
         agents_dir.mkdir(parents=True)
         (dept_dir / "department.yaml").write_text(
-            "code: 02-npi-program-management\nname_vn: Supply Chain\ntier: 2\n"
+            "code: 02-npi-program-management\nname_local: Supply Chain\ntier: 2\n"
             "description: Supply Chain\nagents: [buyer]\ndefault_speaker: buyer\n",
             encoding="utf-8",
         )
         # Missing 'id' field — AgentLoader raises ValueError
         (agents_dir / "buyer.md").write_text(
-            "---\nname_vn: Buyer\ndepartment: 02-npi-program-management\n---\nSome body text.",
+            "---\nname_local: Buyer\ndepartment: 02-npi-program-management\n---\nSome body text.",
             encoding="utf-8",
         )
 
@@ -153,7 +153,7 @@ class TestEnrichedPromptLoading:
         dept_dir = repo_depts / "02-npi-program-management"
         dept_dir.mkdir(parents=True)
         (dept_dir / "department.yaml").write_text(
-            "code: 02-npi-program-management\nname_vn: Supply Chain\ntier: 2\n"
+            "code: 02-npi-program-management\nname_local: Supply Chain\ntier: 2\n"
             "description: Supply Chain\nagents: [buyer]\ndefault_speaker: buyer\n",
             encoding="utf-8",
         )
@@ -162,7 +162,7 @@ class TestEnrichedPromptLoading:
         vault_agents_dir = vault_root / "01-Departments" / "02-npi-program-management" / "agents"
         vault_agents_dir.mkdir(parents=True)
         (vault_agents_dir / "buyer.md").write_text(
-            "---\nid: buyer\nname_vn: Buyer\ndepartment: 02-npi-program-management\n---\n"
+            "---\nid: buyer\nname_local: Buyer\ndepartment: 02-npi-program-management\n---\n"
             "Buyer from vault with enriched prompt.",
             encoding="utf-8",
         )
@@ -180,12 +180,12 @@ class TestEnrichedPromptLoading:
 
     def test_multiple_departments_parallel(self, tmp_path):
         """Collector handles multiple departments in parallel correctly."""
-        for code, name in [("03-quality-reliability", "Quality"), ("05-service-operations", "Operations")]:
+        for code, name in [("03-architectural", "Quality"), ("05-service-operations", "Operations")]:
             d = tmp_path / code
             d.mkdir()
             # default_speaker must be a non-null string in Department model
             (d / "department.yaml").write_text(
-                f'code: {code}\nname_vn: "{name}"\ntier: 1\n'
+                f'code: {code}\nname_local: "{name}"\ntier: 1\n'
                 f'description: "{name}"\nagents: []\ndefault_speaker: ""\n',
                 encoding="utf-8",
             )
@@ -193,11 +193,11 @@ class TestEnrichedPromptLoading:
         llm = _make_llm("dept response")
         collector = PerspectivesCollector(departments_root=tmp_path, llm=llm)
         state = new_meeting_state(
-            brief="brief", departments=["03-quality-reliability", "05-service-operations"]
+            brief="brief", departments=["03-architectural", "05-service-operations"]
         )
         result = collector.collect(state)
 
-        assert "03-quality-reliability" in result["perspectives"]
+        assert "03-architectural" in result["perspectives"]
         assert "05-service-operations" in result["perspectives"]
         assert llm.complete.call_count == 2
 
@@ -207,10 +207,10 @@ class TestEnrichedPromptLoading:
         collector = PerspectivesCollector(
             departments_root=REPO_ROOT / "departments", llm=llm
         )
-        state = new_meeting_state(brief="expand the product line", departments=["03-quality-reliability"])
+        state = new_meeting_state(brief="expand the product line", departments=["03-architectural"])
         result = collector.collect(state)
 
-        assert "03-quality-reliability" in result["perspectives"]
+        assert "03-architectural" in result["perspectives"]
         assert llm.complete.call_count == 1
         # Verify messages were actually passed
         messages = llm.complete.call_args[0][0]

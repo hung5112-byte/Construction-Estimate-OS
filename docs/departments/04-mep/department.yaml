@@ -1,0 +1,63 @@
+code: 04-mep
+name_local: MEP Estimating
+tier: 1
+description: 'Takeoff and scope for mechanical, plumbing, fire protection, electrical and low voltage from the M, P, FP, E, T and FA sheets — schedules first (equipment, fixture, panel, one-line), plans second: equipment by tag, ductwork by weight, pipe by size, sprinkler heads by hazard, fixtures and devices each, conduit and wire by size, gear by kVA. The lead speaks for the department.'
+agents:
+- mep-lead
+- hvac-estimator
+- plumbing-fire-estimator
+- electrical-lv-estimator
+default_speaker: mep-lead
+refs_folder: refs/
+depends_on:
+- 03-architectural
+- 05-cost-engineering
+debate_role:
+  default: pro
+routing_rules:
+- keywords:
+  - hvac
+  - duct
+  - rtu
+  - ahu
+  - vav
+  - mechanical
+  - controls
+  - tab
+  - chiller
+  - boiler
+  - exhaust
+  agent: hvac-estimator
+- keywords:
+  - plumbing
+  - fixture
+  - pipe
+  - sprinkler
+  - fire protection
+  - gas
+  - dwv
+  - water heater
+  - backflow
+  agent: plumbing-fire-estimator
+- keywords:
+  - electrical
+  - panel
+  - switchgear
+  - lighting
+  - receptacle
+  - conduit
+  - one-line
+  - fire alarm
+  - low voltage
+  - data
+  - security
+  - transformer
+  - generator
+  agent: electrical-lv-estimator
+aliases_local:
+- MEP Estimating
+- MEP
+- Mechanical Electrical Plumbing
+- MEP Estimating
+- Fire Protection
+author: Brian H. Doan

@@ -196,6 +196,6 @@ The plugin runs the 5 stages automatically:
 ## Next
 
 - [User Guide](user-guide.md) — each stage in detail + other task examples
-- [Configuration](configuration.md) — `.vncoderc`, packs, BYOT
+- [Configuration](configuration.md) — `.bd-os.yaml`, packs, BYOT
 - [Troubleshooting](troubleshooting.md) — common errors
 - [Architecture](architecture.md) — architecture + 6 RULES

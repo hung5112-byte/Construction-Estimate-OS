@@ -57,6 +57,10 @@ class MeetingState(TypedDict):
     max_debate_rounds: int
     max_perspective_debate_rounds: int
 
+    # Judge-only episodic memory (ADR-004 §5): rendered "PAST DECISIONS" block,
+    # consumed EXCLUSIVELY by the Synthesizer — debaters must never read it.
+    memory_context: str
+
     # Output
     final_report: Optional[str]
 
@@ -91,6 +95,7 @@ def new_meeting_state(
         max_perspective_rounds=1,
         max_debate_rounds=max_rounds,
         max_perspective_debate_rounds=1,
+        memory_context="",
         final_report=None,
         task_id=task_id,
         timestamp=datetime.now().isoformat(),

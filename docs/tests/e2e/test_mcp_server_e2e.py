@@ -1,6 +1,6 @@
 """E2E test: MCP server tools flow with mocked sampling.
 
-Verifies user can run bd-business-os entirely qua MCP (not subprocess CLI),
+Verifies user can run construction-estimate-os entirely qua MCP (not subprocess CLI),
 proving v0.2.0 architecture works.
 """
 import asyncio
@@ -155,14 +155,14 @@ def test_install_mcp_then_uninstall_roundtrip(tmp_path):
     install_result = install(config_path=cfg)
     assert install_result["ok"] is True
 
-    # Read config — bd-business-os entry exists
+    # Read config — construction-estimate-os entry exists
     config = json.loads(cfg.read_text(encoding="utf-8"))
-    assert "bd-business-os" in config["mcpServers"]
+    assert "construction-estimate-os" in config["mcpServers"]
 
     # Uninstall
     uninstall_result = uninstall(config_path=cfg)
     assert uninstall_result["removed"] is True
 
-    # Config still valid JSON, bd-business-os removed
+    # Config still valid JSON, construction-estimate-os removed
     config_after = json.loads(cfg.read_text(encoding="utf-8"))
-    assert "bd-business-os" not in config_after.get("mcpServers", {})
+    assert "construction-estimate-os" not in config_after.get("mcpServers", {})

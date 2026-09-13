@@ -14,6 +14,21 @@ SIMPLIFIER_PROMPT = """You are a business editor. Rewrite the text below so a no
 - Do NOT change meaning, do not add or remove information
 - Plain English
 
+## PRESERVE MACHINE MARKERS — MANDATORY, ZERO EXCEPTIONS
+The text contains markers that are parsed by a deterministic scanner AFTER your
+rewrite. Copy each of these through VERBATIM — never reword, translate, expand,
+drop, or "simplify" them (a live run failed 3 review rounds because an editor
+rewrote them):
+- The `## Recommendation` heading and the verdict token on the line under it
+  (one of GO | GO-WITH-CONDITIONS | PROCEED-WITH-REVISIONS | NEED-MORE-INFO |
+  NO-GO). Never turn `GO-WITH-CONDITIONS` into "Approved — with conditions".
+- Citation markers: `[[...]]` wikilinks, `(ref: Q<n>)` / `(Q<n>)` references,
+  any `<file>.md` mention, any URL.
+- Lines starting with `ASSUMPTION:` including their `(uncitable: ...)` reason.
+- Blocker checklist lines: keep `(ref: Q<n>)`, `Owner:`, and `Deadline:` intact.
+- Do not rename section headings of the report format.
+You may simplify the prose AROUND these markers, never the markers themselves.
+
 ## Existing glossary (use as reference)
 {glossary_subset}
 """

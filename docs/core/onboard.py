@@ -124,7 +124,7 @@ def onboard_vault(
     )
 
     # Step 8: Save config
-    config_path = vault / ".vncoderc"
+    config_path = vault / ".bd-os.yaml"
     config_path.write_text(
         yaml.safe_dump(
             {
@@ -136,7 +136,7 @@ def onboard_vault(
         ),
         encoding="utf-8",
     )
-    result["steps"].append("Saved .vncoderc")
+    result["steps"].append("Saved .bd-os.yaml")
 
     result["next_steps"] = [
         f"Open {vault}/00-Brain/ and fill strategy.md, products.md, budget.md, headcount.md, state.md",
@@ -171,15 +171,12 @@ def _import_byot(src: Path, dst: Path) -> int:
     dst.mkdir(parents=True, exist_ok=True)
 
     classify_keywords = {
-        "01-hardware-engineering": ["schematic", "design", "firmware", "mechanical", "architecture"],
-        "02-npi-program-management": ["bom", "eco", "plm", "certification", "launch", "po",
-                                      "purchase-order", "sourcing", "odm", "program", "npi"],
-        "03-quality-reliability": ["quality", "inspection", "audit", "qms", "aql", "dvt",
-                                   "validation", "8d", "failure", "capa"],
-        "04-mfg-supplier-quality": ["supplier", "scar", "vendor", "yield", "process", "fixture", "dfm"],
-        "05-service-operations": ["rma", "repair", "refurb", "warranty", "sop", "inventory",
-                                  "shipping", "receiving", "deployment", "freight", "customs",
-                                  "minutes", "report"],
+        "01-bid-coordination": ["bid", "rfi", "register", "addend", "scope", "proposal", "basis-of-estimate", "profile"],
+        "02-civil-structural": ["concrete", "footing", "slab", "steel", "masonry", "earthwork", "site", "structural"],
+        "03-architectural": ["roof", "envelope", "interior", "finish", "door", "window", "partition", "specialt"],
+        "04-mep": ["hvac", "plumbing", "sprinkler", "fire", "electrical", "lighting", "panel", "mep"],
+        "05-cost-engineering": ["estimate", "pricing", "unit-cost", "general-conditions", "markup", "leveling", "risk", "contingency"],
+        "06-estimate-review": ["review", "checklist", "turnover", "benchmark", "audit", "constructab"],
     }
 
     count = 0

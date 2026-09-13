@@ -2,37 +2,36 @@
 type: brain
 section: strategy
 aliases: ["Strategy", "Business Strategy", "Vision"]
-last_updated: 06/10/2026
+last_updated: 09/12/2026
+label: internal
+trust_tier: brain
 ---
 # Business Strategy
 
-> ⚠️ **SYNTHETIC DEMO DATA** — Lone Star Interactive Systems (LSI) is a fictional Texas company. No real company information.
+> ⚠️ **SYNTHETIC DEMO DATA** — fictional company: Blackland Commercial Builders, LLC (BCB), a Dallas–Fort Worth commercial general contractor. Replace with the real firm's data before live use.
 
 ## Vision
-By 2030, be the #1 hardware platform for in-venue guest engagement in US casual dining — every table running an LSI device with >99.5% fleet uptime.
+Be the DFW general contractor whose estimates are trusted by owners because every number can be traced to a sheet, a spec section, or a quote — and whose preconstruction team turns a bid package into a bid-ready estimate in three days, not ten.
 
 ## Mission
-Design, build, and support rugged tabletop tablets that let restaurant guests order, play, and pay without waiting — and let operators turn tables faster.
+Win the right work at the right margin: bid selectively, take off completely, price from our own history first, review every estimate like a chief estimator, and hand operations an estimate they can build from.
 
 ## Target Customer (ICP)
-- Segment: US casual-dining restaurant chains, 50–1,200 locations, deploying 20–60 tabletop devices per site
-- Profile: VP of Operations / CIO buyer. Values fleet uptime, payment security (PCI), fast RMA turnaround, predictable supply
-- Pain points:
-  1. Labor shortage — servers cover more tables, guests wait to pay
-  2. Device downtime kills revenue at the table (games + upsell + payment)
-  3. Harsh environment: spills, sanitizer chemicals, 24/7 duty cycle destroy consumer tablets
+- Segment: private owners and developers of ground-up commercial buildings in DFW (office 20k–120k SF, tilt-wall industrial 50k–400k SF, retail/restaurant pads, medical office), plus K-12 additions and tenant improvements $0.5M–$25M
+- Profile: owner's reps, developers and architects who value a complete scope letter, fast RFI turnaround and a GC that self-performs concrete and carpentry
+- Pain points: bids that miss scope and come back as change orders; slow precon that delays financing; estimates nobody can trace or defend to a lender
 
 ## Yearly Goals (FY2026)
-- Units shipped: 25,000 (AMG-100 ramp from Nov 2026) + 18,000 legacy TS-90
-- Field return rate: ≤ 2.0% AFR on AMG-100 (TS-90 baseline: 3.1%)
-- On-time delivery: ≥ 95% to deployment schedule
-- [[Project-AMG-Hub|Project AMG]]: hit MP gate 11/09/2026 within the $2.0M program budget
+- Bids submitted: 60 (≥ 45 Class 2 hard bids, ≥ 15 negotiated/GMP)
+- Hit rate: 22% hard bid, 45% negotiated
+- Estimating throughput: median 4 business days per mid-size commercial estimate
+- Estimate accuracy: buyout within −3%/+5% of bid direct cost on awarded work
+- Zero bids submitted without a documented second-person review
 
 ## Brand Positioning
-"The tabletop tablet that survives the dinner rush — restaurant-grade hardware, payment-secure, serviced in 48 hours."
+"The traceable estimate": every quantity has a sheet number and revision, every price has a source, and every open question is on the RFI log before bid day.
 
-## Division Strategy Pillars
-1. **Vietnam-first manufacturing** — primary ODM in Bac Ninh, VN (tariff hedge vs §301); China line as surge backup
-2. **Dual-source every A-risk component** — battery, eMMC, display already dual-sourced on [[Project-AMG-Hub|AMG]]
-3. **Design for serviceability** — < 12 min depot repair time, top-5 FRUs replaceable without solder
-4. **Payment-grade quality system** — PCI PTS + EMV recertification discipline drives the whole QMS
+## Delivery methods we bid
+- Hard bid (Design-Bid-Build) — primary, public and private
+- CM-at-Risk / GMP — conceptual (Class 5/4) through GMP (Class 2)
+- Design-Build — with partner architects, pricing at SD/DD milestones

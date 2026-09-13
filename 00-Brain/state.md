@@ -1,28 +1,27 @@
 ---
 type: brain
 section: state
-aliases: ["State", "Stage", "Business State"]
-last_updated: 06/10/2026
+aliases: ["State", "Stage", "Business State", "Bid Pipeline"]
+last_updated: 09/12/2026
+label: internal
+trust_tier: brain
 ---
 # Current Business State
 
-> ⚠️ **SYNTHETIC DEMO DATA** — fictional state of Lone Star Interactive Systems (LSI).
+> ⚠️ **SYNTHETIC DEMO DATA** — fictional state of Blackland Commercial Builders (BCB).
 
 ## Stage
-[growth] — Gen-2 (TS-90) installed base cash-flowing; Gen-3 (Project AMG) mid-development, the division's #1 priority → [[Project-AMG-Hub]]
+[growth] — $85M annual volume, 6-person preconstruction team, 41 bids submitted YTD; building the traceable-estimate system is the department's #1 priority
 
-## Current Quarter (Q2 FY2026, as of 06/10/2026)
-- Units shipped: 4,150 TS-90 (QTD); AMG-100 pre-MP (0 revenue units)
-- Installed fleet: 41,300 TS-90 across 612 restaurant sites
-- Key KPIs: TS-90 AFR 3.1% | depot TAT 2.1 days | OTD 96.2% | TS-90 line FPY 94.8%
-- **Project AMG state: EVT exited 05/08 with 2 waivers → DVT build starts 06/22 at BrightPath (Bac Ninh).**
-- Hot issues (see [[open-issues|AMG issue tracker]]):
-  - ISS-014 Wi-Fi antenna detune (-18% throughput) — fix must land in DVT build
-  - ISS-021 battery lot swelling (Veltron VE2605A) — 8D in containment → [[capa-8d-AMG-26-004]]
-  - ISS-025 EMC 5.8 GHz harmonic, 1.2 dB margin fail at pre-scan — shield-can + ferrite fix in DVT
-  - ISS-030 eMMC allocation risk Q4 — second source qualification in flight
+## Current Quarter (Q3 FY2026, as of 09/12/2026)
+- Bids YTD: 41 submitted, 9 awarded (22%), 2 pending
+- Active packages this week: Prairie Creek Business Park Bldg 2 (tilt-wall, 148k SF, bid 09/26) · Cedar Springs Medical Office (32k SF, GMP 10/10) · Frisco ISD wing addition (public, bid 10/02)
+- Key KPIs: median estimate cycle 4.5 days | RFI turnaround 1.2 days | buyout variance on awarded work +2.1% | second-person review compliance 100%
+- Hot issues:
+  - Electrical gear lead times 40–60 weeks — carry escalation and a named allowance on every switchgear line
+  - Tilt panel sub capacity tight through Q1 2027 — two panel subs minimum per bid
+  - Cost library import: 60% of FY2024–2026 buyout data loaded into `03-Cost-Library/`
 
 ## Runway / Financial Health
-- Division budget remaining FY26: $3.86M of $6.8M
-- AMG program: $1,128k remaining of $2.0M — burn ~$145k/month, peak in DVT/PVT builds
-- No-go risk: if PCI PTS pre-assessment (July) finds hardware change, PVT slips 4–6 weeks
+- Precon budget remaining FY26: $360k of $1.15M
+- Bid cost per pursuit trending $3,800 vs $3,500 target — reduce reprographics and outsourced takeoff

@@ -69,7 +69,7 @@ def _write_brain_hub(
     lines += ["", "## Departments", ""]
     for d in dept_dirs:
         meta = _read_dept_meta(d)
-        label = meta.get("name_vn", d.name) if meta else d.name
+        label = meta.get("name_local", d.name) if meta else d.name
         lines.append(f"- [[01-Departments/{d.name}/index|🏢 {label} ({d.name})]]")
     target.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return True
@@ -79,13 +79,13 @@ def _write_dept_hub(d: Path, meta: dict, brain_stems: list[str]) -> bool:
     target = d / "index.md"
     if target.exists():
         return False
-    name_vn = meta.get("name_vn", d.name)
+    name_local = meta.get("name_local", d.name)
     agents = meta.get("agents", []) or []
     manager = meta.get("default_speaker", "") or ""
     depends_on = meta.get("depends_on", []) or []
-    aliases_extra = meta.get("aliases_vn", []) or []
+    aliases_extra = meta.get("aliases_local", []) or []
 
-    aliases = [name_vn] + [a for a in aliases_extra if a != name_vn]
+    aliases = [name_local] + [a for a in aliases_extra if a != name_local]
     aliases_inline = "[" + ", ".join(f'"{a}"' for a in aliases) + "]"
 
     lines = [
@@ -93,7 +93,7 @@ def _write_dept_hub(d: Path, meta: dict, brain_stems: list[str]) -> bool:
         "type: hub",
         f"aliases: {aliases_inline}",
         "---",
-        f"# 🏢 {name_vn}",
+        f"# 🏢 {name_local}",
         f"_Department code: `{d.name}`_",
         "",
         "← [[../../00-Brain/index|🧠 Brain Hub]]",
@@ -113,7 +113,7 @@ def _write_dept_hub(d: Path, meta: dict, brain_stems: list[str]) -> bool:
         lines += ["", "## Works with", ""]
         for dep in depends_on:
             dep_meta = _read_dept_meta(d.parent / dep)
-            label = dep_meta.get("name_vn", dep) if dep_meta else dep
+            label = dep_meta.get("name_local", dep) if dep_meta else dep
             lines.append(f"- [[../{dep}/index|{label}]] (`{dep}`)")
 
     target.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -124,7 +124,7 @@ def _link_agents(d: Path, meta: dict, brain_stems: list[str]) -> int:
     agents_dir = d / "agents"
     if not agents_dir.exists():
         return 0
-    name_vn = meta.get("name_vn", d.name)
+    name_local = meta.get("name_local", d.name)
     manager = meta.get("default_speaker", "") or ""
     key_refs = [s for s in ("strategy", "laws", "state") if s in brain_stems]
 
@@ -137,7 +137,7 @@ def _link_agents(d: Path, meta: dict, brain_stems: list[str]) -> int:
             "",
             LINK_MARKER,
             "",
-            f"- Department: [[../index|🏢 {name_vn}]]",
+            f"- Department: [[../index|🏢 {name_local}]]",
             "- Brain Hub: [[../../../00-Brain/index|🧠 Brain]]",
         ]
         # Team agents get a link to their manager (the department's speaker)

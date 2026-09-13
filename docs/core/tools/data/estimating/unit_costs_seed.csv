@@ -1,0 +1,94 @@
+item_code,description,unit,labor,material,equipment,sub,source,quote_date,valid_until,location,notes
+31-earthwork-cut-fill,Building pad cut/fill (bank measure),BCY,0,0,0,9.50,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] sub rate incl. equipment
+31-select-fill-import,Imported select fill placed and compacted,CY,0,0,0,32.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+31-rock-excavation,Rock excavation (unit price basis),CY,0,0,0,95.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+32-asphalt-paving,Asphalt paving 3in over 8in base,SF,0,0,0,6.25,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+32-concrete-curb,Concrete curb and gutter,LF,0,0,0,28.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+33-sanitary-pvc-4in,4in PVC sanitary sewer to 5ft outside,LF,14.00,9.50,4.00,0,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+33-water-service-2in,2in domestic water service,LF,12.00,11.00,3.00,0,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+03-footing-spread,Spread footing concrete (excavate form pour),CY,165.00,190.00,25.00,0,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] self-perform
+03-footing-continuous,Continuous wall footing concrete,CY,150.00,190.00,22.00,0,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] self-perform
+03-forms-footing,Footing formwork,SFCA,6.50,2.40,0.30,0,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+03-rebar,Reinforcing steel placed,LB,0.55,0.85,0.05,0,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+03-sog-4in,4in slab on grade with WWM and vapor barrier,SF,2.10,2.45,0.30,0,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] self-perform
+03-sog-6in,6in slab on grade with #4 @ 18in EW and vapor barrier,SF,2.60,3.75,0.35,0,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] self-perform
+03-slab-sawcut-joints,Slab control joints saw cut and sealed,LF,1.10,0.60,0.25,0,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+03-concrete-sealer,Concrete floor sealer (warehouse),SF,0,0,0,0.65,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+04-cmu-8in-grouted,8in CMU grouted solid with reinforcing,SF,0,0,0,24.50,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] mason sub
+04-brick-veneer,Modular brick veneer with ties and flashing,SF,0,0,0,32.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] mason sub
+05-structural-steel,Structural steel furnished and erected (beams columns),TON,0,0,0,5800.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] fabricator/erector
+05-steel-joists,Steel joists furnished and erected,TON,0,0,0,4900.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+05-metal-deck,1-1/2in Type B 22 ga roof deck,SF,0,0,0,4.10,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+05-misc-metals,Miscellaneous metals (lintels bollards frames),LS,0,0,0,18000.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] allowance-type line
+06-rough-carpentry-blocking,Rough carpentry and blocking,SF,0.55,0.35,0.02,0,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] per SF of building; self-perform
+07-tpo-roof-system,60-mil TPO mechanically fastened over R-30 polyiso and cover board,SQ,0,0,0,1150.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] roofing sub
+07-tapered-insulation-crickets,Tapered polyiso crickets,SF,0,0,0,2.40,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+07-coping-aluminum,Prefinished aluminum coping,LF,0,0,0,38.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+07-roof-drain,Roof drain or overflow drain with leader connection,EA,0,0,0,1450.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+07-sealants-joints,Exterior sealants and expansion joints,LF,0,0,0,6.50,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+08-hm-door-single,HM door and frame single 3070 with hardware set,EA,0,0,0,1650.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] incl. HW-2 type set
+08-hm-door-single-rated,HM door and frame single 3070 90-min rated with closer,EA,0,0,0,2250.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+08-hm-door-single-exterior,HM insulated exterior door and frame with hardware,EA,0,0,0,2600.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+08-storefront-entrance-pair,Aluminum storefront entrance pair 6070 with panic hardware and closers,EA,0,0,0,9800.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] glazing sub
+08-overhead-door-12x14,Insulated sectional overhead door 12x14 with motor operator,EA,0,0,0,9500.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+08-window-fixed-aluminum,Fixed aluminum window 4x5 with 1in IGU,EA,0,0,0,1350.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] glazing sub
+09-partition-p1,Partition type P1 3-5/8 stud 5/8 GWB each side to deck with batt (per SF of wall one side),SF,0,0,0,13.50,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] drywall sub; both faces included
+09-partition-p2-rated,Partition type P2 1-hr rated (per SF of wall one side),SF,0,0,0,16.50,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+09-act-ceiling-2x2,2x2 acoustical ceiling and grid,SF,0,0,0,5.25,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+09-gwb-ceiling,Gypsum board ceiling framed and finished,SF,0,0,0,11.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+09-carpet-tile,Carpet tile,SF,0,0,0,5.75,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+09-lvt-flooring,Luxury vinyl tile,SF,0,0,0,6.50,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+09-porcelain-tile-floor,Porcelain tile floor with thinset,SF,0,0,0,16.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+09-tile-wainscot,Porcelain tile wainscot,SF,0,0,0,18.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+09-rubber-base,4in rubber base,LF,0,0,0,3.10,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+09-tile-base,6in tile base,LF,0,0,0,9.50,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+09-paint-gwb,Paint gypsum board primer plus two coats,SF,0,0,0,1.35,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+09-paint-cmu,Block filler plus two coats on CMU,SF,0,0,0,2.10,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+09-paint-door-frame,Paint HM door and frame,EA,0,0,0,95.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+09-epoxy-floor-coating,100% solids epoxy floor coating 20 mils (alternate),SF,0,0,0,4.25,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+10-toilet-accessories-per-fixture,Toilet accessories and partitions per plumbing fixture,EA,0,0,0,650.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+10-fire-extinguisher-cabinet,Fire extinguisher and cabinet,EA,0,0,0,420.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+10-signage-allowance,Signage allowance (per spec 01 21 00),LS,0,0,0,25000.00,spec-allowance,2026-09-12,,project,carried verbatim from Division 01
+21-sprinkler-design-build,Wet-pipe sprinkler design-build per head (incl. riser and FDC share),EA,0,0,0,285.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] FP sub
+22-water-closet,Water closet floor mount 1.28 gpf with rough-in,EA,0,0,0,1650.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] plumbing sub
+22-urinal,Urinal wall hung with rough-in,EA,0,0,0,1850.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+22-lavatory,Lavatory wall hung with sensor faucet and rough-in,EA,0,0,0,1750.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+22-sink,Break room sink double bowl with rough-in,EA,0,0,0,1450.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+22-mop-sink,Mop sink with rough-in,EA,0,0,0,1600.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+22-water-cooler,Electric water cooler bi-level with rough-in,EA,0,0,0,3200.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+22-water-heater-40gal,Electric water heater 40 gal with connections,EA,0,0,0,2400.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+22-hose-bibb,Hose bibb with backflow,EA,0,0,0,420.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+22-pipe-domestic-per-sf,Domestic water and sanitary piping per SF of office (distribution),SF,0,0,0,3.10,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] plumbing sub
+22-gas-piping,Gas piping to equipment,LF,0,0,0,32.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+23-rtu-7-5-ton,Packaged rooftop unit 7.5 ton with curb set and connected,EA,0,0,0,19500.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] mechanical sub
+23-unit-heater-gas,Gas unit heater 150 MBH hung and vented,EA,0,0,0,3900.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+23-exhaust-fan,Ceiling exhaust fan with duct and cap,EA,0,0,0,1150.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+23-diffuser-grille,Supply diffuser or return grille 24x24 with flex,EA,0,0,0,385.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+23-ductwork,Galvanized ductwork fabricated and installed (with fittings),LB,0,0,0,9.80,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+23-controls-thermostats,Programmable thermostats and controls (per RTU),EA,0,0,0,1800.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+23-tab,Testing adjusting and balancing per air outlet,EA,0,0,0,95.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+26-service-400a-mdp,400A 480Y/277V service entrance and main distribution panel,EA,0,0,0,32000.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN] electrical sub; long lead
+26-transformer-45kva,45 kVA dry-type transformer,EA,0,0,0,8500.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+26-panelboard,Panelboard 30-42 circuit with breakers,EA,0,0,0,7200.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+26-feeders-per-panel,Feeder conduit and wire per panel or transformer,EA,0,0,0,4200.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+26-troffer-led-2x4,2x4 LED troffer with occupancy control share,EA,0,0,0,385.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+26-high-bay-led,LED high bay,EA,0,0,0,620.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+26-wall-pack-led,LED exterior wall pack with photocell share,EA,0,0,0,540.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+26-exit-sign,LED exit sign with battery,EA,0,0,0,260.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+26-receptacle-duplex,Duplex receptacle with branch circuit share,EA,0,0,0,215.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+26-mechanical-connection,Power connection to mechanical or plumbing equipment,EA,0,0,0,650.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+27-data-outlet-raceway,Data outlet box and raceway (cabling by owner),EA,0,0,0,145.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+28-facp,Addressable fire alarm control panel with monitoring connection,EA,0,0,0,6500.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+28-fa-device,Fire alarm device (pull station horn/strobe detector) installed and wired,EA,0,0,0,420.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+01-project-manager,Project manager (burdened monthly),MO,14500.00,0,0,0,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+01-superintendent,Superintendent (burdened monthly),MO,15500.00,0,0,0,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+01-project-engineer,Project engineer (burdened monthly),MO,9200.00,0,0,0,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+01-safety-share,Safety manager shared (monthly),MO,2800.00,0,0,0,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+01-job-trailer,Job trailer 12x40 rental (monthly),MO,0,0,1250.00,0,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+01-temp-fence,Temporary chain-link fence (per LF installed for duration),LF,0,0,0,9.50,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+01-temp-toilets,Portable toilets (each per month),MO,0,0,0,210.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+01-dumpsters,Dumpster pulls (each),EA,0,0,0,650.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+01-temp-power-water,Temporary power and water incl. utility charges (monthly),MO,0,0,0,1400.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+01-cleaning,Progress and final cleaning per SF,SF,0,0,0,0.45,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+01-surveying-layout,Surveying and layout (lump sum),LS,0,0,0,9500.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]
+01-concrete-testing,Contractor-paid concrete testing per set,EA,0,0,0,180.00,seed-placeholder-2026,2026-09-01,,national,[UNCERTAIN]

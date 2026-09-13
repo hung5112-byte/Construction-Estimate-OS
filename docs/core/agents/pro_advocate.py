@@ -25,7 +25,7 @@ PRO_SYSTEM_PROMPT = """You are the Pro Advocate (the side that pushes to act) in
 class ProAdvocate:
     def __init__(self, llm):
         self.agent = BaseAgent(
-            name_vn="Pro Advocate",
+            name_local="Pro Advocate",
             role="pro_advocate",
             system_prompt=PRO_SYSTEM_PROMPT,
             llm=llm,

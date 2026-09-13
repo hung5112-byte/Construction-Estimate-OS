@@ -88,7 +88,7 @@ must know QuickBooks and US GAAP. Vault: F:\work\xyz-vault.
 (Claude Desktop will pick `bd_draft` instead of `bd_run` if the prompt is clearly about drafting a
 specific document. Otherwise call it explicitly: "Use bd_draft to draft ...")
 
-#### 2. Reduce rounds in `.vncoderc`
+#### 2. Reduce rounds in `.bd-os.yaml`
 The new default (v0.1.0+) is already lite — `0/1/3`. If still slow, reduce further:
 ```yaml
 meeting:

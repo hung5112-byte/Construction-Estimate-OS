@@ -1,0 +1,219 @@
+{
+  "project": "PRAIRIE CREEK OFFICE/WAREHOUSE \u2014 BUILDING 2",
+  "gross_sf": 12000,
+  "office_sf": 4000,
+  "warehouse_sf": 8000,
+  "stories": 1,
+  "scale": "1/8\" = 1'-0\"",
+  "sheet_size_in": [
+    36,
+    24
+  ],
+  "sheets": [
+    "G-001",
+    "A-101",
+    "A-201",
+    "A-601",
+    "S-101",
+    "S-201",
+    "M-101",
+    "P-101",
+    "E-101"
+  ],
+  "rooms": [
+    {
+      "number": "101",
+      "name": "LOBBY",
+      "area_sf": 500
+    },
+    {
+      "number": "102",
+      "name": "CONFERENCE",
+      "area_sf": 500
+    },
+    {
+      "number": "103",
+      "name": "OFFICE",
+      "area_sf": 500
+    },
+    {
+      "number": "104",
+      "name": "OFFICE",
+      "area_sf": 500
+    },
+    {
+      "number": "105",
+      "name": "BREAK ROOM",
+      "area_sf": 500
+    },
+    {
+      "number": "108",
+      "name": "OFFICE",
+      "area_sf": 500
+    },
+    {
+      "number": "106",
+      "name": "RESTROOM M",
+      "area_sf": 250
+    },
+    {
+      "number": "107",
+      "name": "RESTROOM W",
+      "area_sf": 250
+    },
+    {
+      "number": "109",
+      "name": "IT / STORAGE",
+      "area_sf": 500
+    },
+    {
+      "number": "200",
+      "name": "WAREHOUSE",
+      "area_sf": 8000
+    }
+  ],
+  "door_marks": [
+    "101",
+    "102",
+    "103",
+    "104",
+    "105",
+    "106",
+    "107",
+    "108",
+    "109",
+    "110",
+    "200A",
+    "200B"
+  ],
+  "door_count": 12,
+  "door_leaves": 13,
+  "overhead_doors": [
+    "OH-1",
+    "OH-2"
+  ],
+  "window_count": 10,
+  "window_marks": [
+    "W1"
+  ],
+  "exterior_wall_lf": 440.0,
+  "demising_wall_lf": 100.0,
+  "interior_partition_lf": 240,
+  "footings": {
+    "F1_count": 9,
+    "F1_cy_each": 0.889,
+    "F2_lf": 440,
+    "F2_cy": 32.6
+  },
+  "slabs": [
+    {
+      "area": "OFFICE",
+      "thickness_in": 4,
+      "sf": 4000,
+      "cy": 49.4
+    },
+    {
+      "area": "WAREHOUSE",
+      "thickness_in": 6,
+      "sf": 8000,
+      "cy": 148.1
+    }
+  ],
+  "steel": [
+    {
+      "mark": "B1",
+      "section": "W16x31",
+      "length_ft": 40.0,
+      "qty": 6,
+      "plf": 31.0,
+      "total_lb": 7440.0
+    },
+    {
+      "mark": "J1",
+      "section": "24K4",
+      "length_ft": 50.0,
+      "qty": 32,
+      "plf": 8.4,
+      "total_lb": 13440.0
+    },
+    {
+      "mark": "J2",
+      "section": "18K3",
+      "length_ft": 40.0,
+      "qty": 21,
+      "plf": 6.6,
+      "total_lb": 5544.0
+    },
+    {
+      "mark": "C1",
+      "section": "HSS8x8x1/4",
+      "length_ft": 24.0,
+      "qty": 9,
+      "plf": 25.8,
+      "total_lb": 5572.8
+    },
+    {
+      "mark": "C2",
+      "section": "HSS6x6x1/4",
+      "length_ft": 14.0,
+      "qty": 5,
+      "plf": 19.0,
+      "total_lb": 1330.0
+    }
+  ],
+  "steel_total_tons": 16.66,
+  "deck_sf": 12000,
+  "hvac_equipment": [
+    "RTU-1",
+    "RTU-2",
+    "UH-1",
+    "UH-2",
+    "EF-1",
+    "EF-2"
+  ],
+  "diffusers": 12,
+  "plumbing_fixtures": {
+    "WC-1": 4,
+    "UR-1": 1,
+    "LAV-1": 4,
+    "SK-1": 1,
+    "MS-1": 1,
+    "EWC-1": 1,
+    "WH-1": 1,
+    "HB-1": 4
+  },
+  "sprinkler_heads": 82,
+  "electrical": {
+    "service": "400A, 480Y/277V, 3PH, 4W",
+    "fixtures": {
+      "A": 40,
+      "B": 24,
+      "C": 8,
+      "X": 6
+    },
+    "receptacles": 48,
+    "data_outlets": 24,
+    "fire_alarm": {
+      "FACP": 1,
+      "PULL STATION": 4,
+      "HORN/STROBE": 10,
+      "SMOKE DETECTOR": 6
+    }
+  },
+  "spec": {
+    "bid_due": "09/26/2026",
+    "rfi_cutoff": "09/19/2026",
+    "duration_days": 240,
+    "bid_bond_pct": 5,
+    "ld_per_day": 750,
+    "allowances": {
+      "signage": 25000,
+      "contingency": 15000
+    },
+    "alternates": 2,
+    "unit_prices": 2,
+    "addenda": [
+      "Addendum No. 1 dated 09/19/2026"
+    ]
+  }
+}

@@ -9,6 +9,10 @@ TLDR_PROMPT = """Summarize the report below into 3-5 plain-language lines a Depa
 - Bullet points (- ...)
 - Each line: one key fact the Department Head needs to know
 - Plain English, NO jargon
+- CITATIONS: when a bullet repeats a figure ($, %, weeks, ...) from the body,
+  carry the body's citation marker (`[[...]]`, `(ref: Q<n>)`, `<file>.md`, URL)
+  onto the bullet verbatim. Never introduce a figure the body does not state —
+  a scanner rejects uncited figures.
 - Format:
 ```
 ## 📌 Bottom line (30-second read)

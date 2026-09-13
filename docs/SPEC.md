@@ -1,4 +1,4 @@
-# VN Business OS — Design Spec
+# Hardware Division OS — Design Spec
 
 **Date:** 2026-05-06
 **Author:** Brainstorming session with the Department Head
@@ -54,7 +54,7 @@ Works for any industry (F&B, retail, tech, edu, healthcare...). Not a trading sy
 | Stack | Python + LangGraph + SQLite + Obsidian Markdown + Git private |
 | Storage | Company self-hosts: local + private Git repo (Github/Gitea) |
 | Setup | Hybrid: clone manually or wizard onboarding |
-| Departments | 13 core (from business-builder.plugin) + industry packs + on-demand creator |
+| Departments | 13 core + industry packs + on-demand creator |
 | MVP packs v1 | F&B + Retail + Tech-SaaS |
 | Auto level | Semi-auto (2 stops) + context-aware clarification |
 | Test case v1 | B — a marketing campaign targeting $80k+ income customers |
@@ -172,7 +172,7 @@ Cost: ~$0.5-1.5/task (Claude Sonnet 4.6).
 ### Department (`docs/departments/<code>/department.yaml`)
 ```yaml
 code: "07-marketing"
-name_vn: "Marketing & Brand"
+name_local: "Marketing & Brand"
 tier: 3
 agents: [brand-manager, content-creator, ads-specialist, seo-specialist]
 default_speaker: brand-manager
@@ -186,7 +186,7 @@ debate_role: { default: pro, override: { cost_cutting: con } }
 ```yaml
 ---
 id: ads-specialist
-name_vn: "Advertising Specialist"
+name_local: "Advertising Specialist"
 department: 07-marketing
 expertise: [...]
 required_refs: [...]

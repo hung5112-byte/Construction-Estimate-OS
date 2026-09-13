@@ -58,8 +58,8 @@ class FlowController:
     def __init__(self, vault_root: Path, llm):
         self.vault = ObsidianVault(vault_root)
         self.llm = llm
-        # Vault-level .vncoderc takes priority; load_config falls back to ~/.vncoderc
-        self.config = load_config(self.vault.root / ".vncoderc")
+        # Vault-level .bd-os.yaml takes priority; load_config falls back to ~/.bd-os.yaml
+        self.config = load_config(self.vault.root / ".bd-os.yaml")
 
     def run(self, brief: str) -> FlowResult:
         """Stage 1: brief → router → gap → clarification (PAUSE)."""
@@ -275,7 +275,7 @@ class FlowController:
             collector_fn = collector.collect
 
         # P1.4: opt-in checkpointer. Default off due to SqliteSaver compat issues.
-        # When the user sets `meeting.use_checkpointer=true` in .vncoderc, try to init.
+        # When the user sets `meeting.use_checkpointer=true` in .bd-os.yaml, try to init.
         # If it fails (LangGraph version mismatch, SQLite locked, ...), log + fall back.
         use_cp = bool(getattr(self.config.meeting, "use_checkpointer", False))
         cp_setting: Any = False
@@ -302,6 +302,26 @@ class FlowController:
         )
         state["research_findings"] = findings
 
+        # Judge-only episodic memory (ADR-004 §5, Step 3): assemble the bounded
+        # "PAST DECISIONS" block from the ledger; consumed only by the
+        # Synthesizer node. Best-effort — memory must never block a meeting.
+        try:
+            from core.critic.telemetry import emit_memory_injection
+            from core.meeting.memory_injection import assemble_memory_context
+
+            mem = assemble_memory_context(self.vault.root, topic=brief)
+            if mem is not None:
+                state["memory_context"] = mem.block
+                # Persisted per-task so the critic judge and revision rounds see
+                # the same block (excluded from the vault_search index — this is
+                # ledger-derived, judge-only content).
+                (task_folder / "03c-memory-context.md").write_text(
+                    mem.block, encoding="utf-8"
+                )
+                emit_memory_injection(task_folder, mem.items, total_chars=len(mem.block))
+        except Exception as e:  # noqa: BLE001
+            self._log_warning(f"Memory injection skipped: {e}")
+
         final_state = graph.build().invoke(state)
 
         # 4. Write intermediate meeting outputs to vault
@@ -315,16 +335,68 @@ class FlowController:
         else:
             translated_report = translator.apply(final_state["final_report"])
 
+        report_text = f"---\ntype: decision_report\nstop: 1\n---\n{translated_report}"
         decision_path = task_folder / "07-decision-report.md"
-        decision_path.write_text(
-            f"---\ntype: decision_report\nstop: 1\n---\n{translated_report}",
-            encoding="utf-8",
-        )
 
-        # 6. P1.8: Citation validation post-synthesizer
-        validator = CitationValidator()
-        flags = validator.validate(decision_path)
-        flag_count = len(flags)
+        # 6. Critic loop (Pass A) — evaluator-optimizer gate before Stop 1.
+        # Tier awareness (ADR-003 Addendum B): mandatory at COMPLEX/STRATEGIC
+        # (≙ T2+), skippable at SIMPLE (≙ T0/T1) — read from 01-routing.md via
+        # the critic.apply_to_classes config knob. When the critic is skipped,
+        # the legacy P1.8 warning-section path is preserved unchanged.
+        from core.critic.loop import CriticLoop
+        from core.critic.models import CriticError
+
+        critic_cfg = getattr(self.config, "critic", None)
+        critic_loop = None
+        if critic_cfg is not None and critic_cfg.enabled:
+            critic_loop = CriticLoop(
+                llm=self.llm,
+                config=critic_cfg,
+                vault_root=self.vault.root,
+                primary_model=self.config.llm.primary,
+            )
+
+        flag_msg = ""
+        if critic_loop is not None and critic_loop.should_run(task_folder):
+            synthesizer = graph.synthesizer
+
+            def _revise(revision_md: str, prior_draft: str) -> str:
+                # Same PAST DECISIONS block as the drafting turn (ADR-004 §5):
+                # a repair round must see what memory-derived claims rest on.
+                revised = synthesizer.revise(
+                    prior_draft, revision_md,
+                    memory_block=state.get("memory_context") or "",
+                )
+                # The translator is deliberately SKIPPED on revision rounds
+                # (2026-07-05 ruling, replay 4): revisions edit already-
+                # simplified text, and the LLM editor is a structure hazard —
+                # even with preservation mandates it stripped machine markers
+                # live. The critic loop assembles the structural skeleton in
+                # code after this hook regardless.
+                if not revised.strip().startswith("---"):
+                    revised = f"---\ntype: decision_report\nstop: 1\n---\n{revised}"
+                return revised
+
+            try:
+                outcome = critic_loop.run_pass_a(task_folder, report_text, _revise)
+            except CriticError as e:
+                # Structural failure — OpenAI ladder `raise`: engine error, not a retry.
+                return FlowResult(
+                    stage=FlowStage.ERROR, task_folder=task_folder,
+                    error=f"Critic structural failure: {e}",
+                )
+            banner_msg = " THRESHOLD-NOT-MET banner attached —" if outcome.banner else ""
+            flag_msg = (
+                f" | Critic: {outcome.verdict} after {outcome.rounds_used} round(s)."
+                f"{banner_msg} Scorecard: {outcome.scorecard_path.name}."
+            )
+        else:
+            decision_path.write_text(report_text, encoding="utf-8")
+            # P1.8: legacy citation warning — only when the critic is skipped.
+            validator = CitationValidator()
+            flags = validator.validate(decision_path)
+            if flags:
+                flag_msg = f" | {len(flags)} claim(s) missing a citation were flagged."
 
         # 7. Auto-commit (best-effort, log on failure)
         try:
@@ -334,7 +406,6 @@ class FlowController:
         except Exception as e:
             self._log_warning(f"Git commit failed (Stop 1): {e}")
 
-        flag_msg = f" | {flag_count} claim(s) missing a citation were flagged." if flag_count else ""
         return FlowResult(
             stage=FlowStage.PAUSE_DECISION_REPORT,
             task_folder=task_folder,
@@ -397,8 +468,13 @@ class FlowController:
         from core.translator.pipeline import TranslatorPipeline
         from core.orchestrator.execution_planner import generate_execution_plan
 
-        glossary_path = self.vault.root / "00-Brain" / "glossary.md"
-        translator = TranslatorPipeline(self.llm, vault_glossary_path=glossary_path)
+        # translator_mode "off" applies to the plan path too — the simplify step
+        # sends the whole plan as one LLM call, same failure mode as the report
+        if getattr(self.config, "translator_mode", "final_only") == "off":
+            translator = None
+        else:
+            glossary_path = self.vault.root / "00-Brain" / "glossary.md"
+            translator = TranslatorPipeline(self.llm, vault_glossary_path=glossary_path)
 
         try:
             plan_path = generate_execution_plan(
@@ -420,10 +496,64 @@ class FlowController:
                 error=f"Error generating the execution plan: {exc}",
             )
 
+        # Critic Pass B — report↔plan consistency before Stop 2 (critic-draft
+        # §2 R6). Same tier awareness as Pass A; max 1 fix round by design.
+        from core.critic.loop import CriticLoop
+        from core.critic.models import CriticError
+
+        critic_cfg = getattr(self.config, "critic", None)
+        pass_b_msg = ""
+        if (
+            critic_cfg is not None
+            and critic_cfg.enabled
+            and critic_cfg.plan_pass.enabled
+        ):
+            critic_loop = CriticLoop(
+                llm=self.llm,
+                config=critic_cfg,
+                vault_root=self.vault.root,
+                primary_model=self.config.llm.primary,
+            )
+            if critic_loop.should_run(task_folder):
+                from core.critic.pass_b import run_pass_b
+
+                def _replan(revision_md: str, prior_plan: str) -> str:
+                    new_path = generate_execution_plan(
+                        task_folder=task_folder,
+                        llm=self.llm,
+                        translator=translator,
+                        templates_root=templates_root(),
+                        revision_context=(
+                            f"PREVIOUS PLAN (did not clear the critic):\n\n{prior_plan}\n\n"
+                            f"CRITIC REVISION INSTRUCTION:\n\n{revision_md}"
+                        ),
+                    )
+                    return new_path.read_text(encoding="utf-8")
+
+                try:
+                    outcome = run_pass_b(
+                        task_folder=task_folder,
+                        llm=self.llm,
+                        config=critic_cfg,
+                        vault_root=self.vault.root,
+                        replan_fn=_replan,
+                        primary_model=self.config.llm.primary,
+                    )
+                except CriticError as e:
+                    return FlowResult(
+                        stage=FlowStage.ERROR, task_folder=task_folder,
+                        error=f"Critic Pass B structural failure: {e}",
+                    )
+                banner_msg = " THRESHOLD-NOT-MET banner attached —" if outcome.banner else ""
+                pass_b_msg = (
+                    f" | Critic Pass B: {outcome.verdict}.{banner_msg} "
+                    "Scorecard: 08b-critic-scorecard.md."
+                )
+
         return FlowResult(
             stage=FlowStage.PAUSE_EXECUTE,
             task_folder=task_folder,
-            message=f"Execution plan ready at {plan_path.name}. Run 'execute' to generate documents.",
+            message=f"Execution plan ready at {plan_path.name}. Run 'execute' to generate documents.{pass_b_msg}",
         )
 
     def execute(self, task_folder: Path) -> FlowResult:
@@ -462,6 +592,17 @@ class FlowController:
                 error=f"Error rendering documents: {exc}",
             )
 
+        # ADR-004 §1: a successful execute IS the Stop-2 approval — append to
+        # the episodic ledger only now, after rendering succeeded (an execute
+        # on an unapproved/broken folder errors out above and records nothing).
+        # Idempotent; a ledger problem must never block the DONE result.
+        try:
+            from core.brain.ledger import record_approved_decision
+
+            record_approved_decision(self.vault.root, task_folder)
+        except Exception as e:  # noqa: BLE001
+            self._log_warning(f"Decision-ledger append failed: {e}")
+
         generated = result["generated"]
         skipped = result["skipped"]
 
@@ -482,7 +623,7 @@ def _make_translating_collector(collect_fn, translator) -> Callable:
     """Wrap the collector to translate each perspective output (P1.6 all_intermediate mode).
 
     Only used when translator_mode = 'all_intermediate'.
-    The translator calls the LLM, so it adds cost — the Department Head must opt in via .vncoderc:
+    The translator calls the LLM, so it adds cost — the Department Head must opt in via .bd-os.yaml:
         translator_mode: all_intermediate
     Avoid double-translation: the final report is still translated later by flow_controller,
     but perspective inputs into the Synthesizer will already be simplified → cleaner synthesis.

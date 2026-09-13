@@ -92,4 +92,4 @@ Open an issue on GitHub with the appropriate template.
 
 ## License
 
-Contributing means you agree your code is released under the **Apache License 2.0** (see [LICENSE](LICENSE) and [NOTICE](NOTICE)).
+Contributing means you agree your code is released under the **Apache License 2.0** (see [LICENSE](../LICENSE) and [NOTICE](../NOTICE)).

@@ -2,44 +2,27 @@
 type: brain
 section: decisions
 aliases: ["Decisions Log", "Decisions", "Decision History"]
-last_updated: 06/10/2026
+last_updated: 09/12/2026
+label: internal
+trust_tier: brain
 ---
 # Decisions log (append-only)
 
-> One entry per decision. Do NOT delete or edit old entries.
-> ⚠️ SYNTHETIC DEMO DATA — fictional decisions.
+> [!note] New decisions are recorded automatically in [[decision-ledger]] at Stop-2 approval. This prose log is history; do not add entries here.
+> ⚠️ SYNTHETIC DEMO DATA — fictional decisions of Blackland Commercial Builders (BCB).
 
-## Format
-```
-### MM/DD/YYYY — [Decision slug]
-- Owner: Brian / Dept X
-- Decision: ...
-- Reason: ...
-- Reference: task `02-Tasks/.../`
-```
+### 03/14/2026 — No bid without a documented second-person review
+- Owner: Chief Estimator
+- Decision: Every estimate goes through the 16-point bid-day gate by someone other than the lead estimator, at least 24 hours before the bid is due.
+- Reason: two FY2025 bids lost money on missed addenda and a transposed markup; both would have been caught by a reviewer.
+- Reference: `06-estimate-review` charter
 
----
+### 05/02/2026 — Pricing from our own buyout history first
+- Owner: Cost Engineering
+- Decision: Unit costs come from `03-Cost-Library/` (our buyouts and quotes) first; published cost data is a fallback and is marked as such on every line.
+- Reason: our DFW buyout data beat published national averages by 8–14% on concrete and drywall in FY2025; published data is for sanity checks.
 
-### 12/18/2025 — AMG ODM selection: BrightPath Electronics (Bac Ninh, Vietnam)
-- Owner: VP + 02-npi-program-management
-- Decision: Award AMG-100 to BrightPath (VN) as primary ODM; keep China line (Dongguan) as qualified surge backup only.
-- Reason: §301 tariff exposure on China-origin tablets; BrightPath quoted $4.10/unit lower landed cost at 25k/yr and has an existing EMV-capable line. Trade-off: longer ocean lead (32 days Haiphong→Dallas).
-- Reference: `04-Projects/Project-AMG/01-PM/charter`
-
-### 02/06/2026 — Payment module: buy (NovaPay SP-30), not build
-- Owner: VP + 01-hardware-engineering
-- Decision: Integrate NovaPay SP-30 certified payment module instead of in-house secure MCU design.
-- Reason: SP-30 carries its own EMV L1/L2 + PCI PTS pre-certs — cuts cert risk ~6 months and ~$220k NRE. Cost adder $11.80/unit accepted within the $142 MP BOM target.
-- Reference: [[cert-plan]]
-
-### 04/24/2026 — Battery dual-source mandate after Veltron swelling lot
-- Owner: 04-mfg-supplier-quality
-- Decision: Qualify DynaCell as second battery source by PVT; no MP gate without two qualified cell sources. Veltron lot VE2605A quarantined (1,200 cells scrapped, $18.4k contingency draw).
-- Reason: 8D root cause = electrolyte contamination at Veltron line 3; single-source A-risk unacceptable for 25k/yr ramp.
-- Reference: [[capa-8d-AMG-26-004]]
-
-### 05/08/2026 — EVT exit with 2 waivers
-- Owner: VP (gate review chair)
-- Decision: Exit EVT with waivers W-01 (drop crack at USB-C boss — fix verified at DVT, ISS-023) and W-02 (sanitizer wipe gloss change — cosmetic, spec relaxed from ΔGloss 5 to 8).
-- Reason: Both have verified fixes or accepted spec changes; holding EVT would slip DVT build past the BrightPath line slot (next slot +5 weeks).
-- Reference: [[schedule-milestones]], [[prt-results-evt]]
+### 07/21/2026 — Escalation and allowances on long-lead electrical gear
+- Owner: Cost Engineering + MEP
+- Decision: Every switchgear/transformer line carries a named allowance and an escalation line tied to the Turner Building Cost Index until a sub quote with a validity date replaces it.
+- Reason: 40–60 week lead times and 5%+ annual escalation; two bids in Q2 were under-carried.

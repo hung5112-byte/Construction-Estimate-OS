@@ -19,7 +19,7 @@ def test_onboard_creates_valid_vault(tmp_path):
     assert (vault / "00-Templates-Custom" / "README.md").exists()
     assert (vault / "01-Departments").exists()
     assert (vault / "02-Tasks").exists()
-    assert (vault / ".vncoderc").exists()
+    assert (vault / ".bd-os.yaml").exists()
     assert (vault / ".git").exists()
 
 
@@ -43,7 +43,7 @@ def test_onboard_with_pack_installs_dept(tmp_path):
         encoding="utf-8",
     )
     (dept_dir / "department.yaml").write_text(
-        "code: 06-test-dept\nname_vn: Test Dept\ntier: 3\nagents: []\ndefault_speaker: ''\n",
+        "code: 06-test-dept\nname_local: Test Dept\ntier: 3\nagents: []\ndefault_speaker: ''\n",
         encoding="utf-8",
     )
 

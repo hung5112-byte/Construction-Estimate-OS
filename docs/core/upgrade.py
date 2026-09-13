@@ -31,7 +31,7 @@ def upgrade_vault(
     Args:
         vault_path: Path to the vault
         refresh_agents: Overwrite agent .md files (pull the new enriched prompts)
-        refresh_dept_yaml: Overwrite department.yaml (new aliases_vn, routing_rules)
+        refresh_dept_yaml: Overwrite department.yaml (new aliases_local, routing_rules)
         refresh_brain_aliases: Add aliases to Brain files (keep the body content)
         regenerate_hubs: Delete old index.md + recreate (default NO, since the user
                         may have edited them manually)

@@ -14,7 +14,7 @@ def test_upgrade_refreshes_agents_keeps_brain_content(tmp_path):
     user_strategy = strategy_file.read_text(encoding="utf-8") + "\n\n## Department Head Notes\nMy data\n"
     strategy_file.write_text(user_strategy, encoding="utf-8")
 
-    agent_file = vault / "01-Departments" / "05-service-operations" / "agents" / "service-ops-manager.md"
+    agent_file = vault / "01-Departments" / "05-cost-engineering" / "agents" / "pricing-lead.md"
     agent_file.write_text("# Old stub\n", encoding="utf-8")
 
     result = upgrade_vault(vault_path=vault)
@@ -22,7 +22,7 @@ def test_upgrade_refreshes_agents_keeps_brain_content(tmp_path):
     assert result["ok"] is True
     assert result["agents_refreshed"] > 0
     assert "My data" in strategy_file.read_text(encoding="utf-8")
-    assert "Service Operations" in agent_file.read_text(encoding="utf-8")
+    assert "Pricing Lead" in agent_file.read_text(encoding="utf-8")
 
 
 def test_upgrade_injects_brain_aliases(tmp_path):
@@ -90,6 +90,6 @@ def test_onboarded_vault_has_aliases_in_brain(tmp_path):
 def test_onboarded_dept_hub_has_aliases(tmp_path):
     vault = tmp_path / "v"
     onboard_vault(vault_path=vault, packs=[], init_git=False)
-    hub = (vault / "01-Departments" / "02-npi-program-management" / "index.md").read_text(encoding="utf-8")
+    hub = (vault / "01-Departments" / "02-civil-structural" / "index.md").read_text(encoding="utf-8")
     assert "aliases:" in hub
-    assert "NPI" in hub
+    assert "Civil" in hub

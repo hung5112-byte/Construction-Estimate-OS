@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import inspect
 import os
+import shutil
 from typing import Any, Protocol, runtime_checkable
 
 
@@ -56,6 +57,271 @@ class ClaudeProvider:
     async def acomplete(self, messages: list[dict], model: str | None = None) -> str:
         import asyncio
         return await asyncio.to_thread(self.complete, messages, model)
+
+
+class ClaudeCLIProvider:
+    """LLM provider that shells out to headless Claude Code (`claude -p`).
+
+    Bills the user's Claude subscription (Max/Pro) instead of the Anthropic
+    API — the robust subscription path for CLI + MCP + any tab (MCP sampling
+    is Desktop-only; the Code tab doesn't support it).
+
+    Invocation contract (Claude Code CLI ≥2.1):
+    - prompt via STDIN (never argv — prompts exceed arg limits)
+    - `--system-prompt <text>` for the system message (replaces the CLI's
+      default agentic prompt — this is a pure LLM call); folded into stdin
+      when it exceeds _MAX_SYSTEM_ARG (argv safety)
+    - `--tools ""` disables every built-in tool; `--no-session-persistence`
+      keeps runs off disk; `--output-format json` yields result text + usage
+    - subprocess cwd is a temp dir so the CLI never loads a project's
+      CLAUDE.md or trips a folder-trust prompt
+    - the child env is SCRUBBED of ANTHROPIC_API_KEY / ANTHROPIC_AUTH_TOKEN —
+      otherwise the CLI itself may bill the API instead of the subscription,
+      the exact thing this provider eliminates
+
+    Temperature: accepted nowhere — the CLI does not expose a temperature
+    knob; BaseAgent temperatures are ignored on this provider (documented
+    engine-wide behavior: providers only ever receive messages + model).
+    """
+    name = "claude-cli"
+
+    #: env vars that would silently re-route billing to the API — always removed
+    SCRUBBED_ENV_VARS = ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN")
+    #: above this size the system prompt moves from argv into stdin
+    _MAX_SYSTEM_ARG = 100_000
+    #: pass-6 default (replay 5 crashed a heavy Synthesizer call at 300s —
+    #: subscription latency runs 60-85s on heavy calls and the Max plan
+    #: rate-limits across concurrent sessions, so full-context calls can queue)
+    DEFAULT_TIMEOUT_SECONDS = 900.0
+    #: short pause before the single timeout retry
+    RETRY_BACKOFF_SECONDS = 5.0
+
+    def __init__(
+        self,
+        default_model: str = "claude-sonnet-4-6",
+        timeout_seconds: float | None = None,
+        claude_bin: str | None = None,
+    ):
+        """
+        timeout_seconds: per-call cap. Resolution: explicit arg →
+            BD_OS_LLM_TIMEOUT_SECONDS env → 900s default (claude-cli only;
+            other providers keep their own defaults). One retry on timeout,
+            then a rich error (elapsed / model / prompt size).
+        claude_bin: explicit binary path; else env BD_OS_CLAUDE_BIN; else
+            `claude` on PATH. Missing binary fails loudly at startup.
+        """
+        self.default_model = default_model
+        if timeout_seconds is None:
+            env_timeout = os.getenv("BD_OS_LLM_TIMEOUT_SECONDS", "").strip()
+            timeout_seconds = (
+                float(env_timeout) if env_timeout else self.DEFAULT_TIMEOUT_SECONDS
+            )
+        self.timeout_seconds = float(timeout_seconds)
+        resolved = (
+            claude_bin
+            or os.getenv("BD_OS_CLAUDE_BIN")
+            or shutil.which("claude")
+        )
+        # Absolutize: complete() runs the subprocess from a temp-dir cwd, so a
+        # relative path (e.g. .tools/node_modules/.bin/claude) would not resolve.
+        resolved = os.path.abspath(resolved) if resolved else None
+        if not resolved or not os.path.exists(resolved):
+            raise RuntimeError(
+                "claude-cli provider selected but the `claude` binary was not "
+                "found. Install Claude Code (npm install -g "
+                "@anthropic-ai/claude-code) or point BD_OS_CLAUDE_BIN at the "
+                "binary, then log in once with `claude /login` so headless "
+                "runs can use the subscription."
+            )
+        self.claude_bin = resolved
+
+    # ── public API ───────────────────────────────────────────────────────────
+
+    def complete(self, messages: list[dict], model: str | None = None) -> str:
+        import subprocess
+        import tempfile
+        import time as _time
+
+        system_prompt, prompt = self._render(messages)
+        argv = [
+            self.claude_bin,
+            "-p",
+            "--output-format", "json",
+            "--tools", "",
+            "--no-session-persistence",
+            "--model", model or self.default_model,
+        ]
+        if system_prompt and len(system_prompt) <= self._MAX_SYSTEM_ARG:
+            argv += ["--system-prompt", system_prompt]
+        elif system_prompt:
+            prompt = (
+                f"## SYSTEM INSTRUCTIONS (follow these for this reply)\n"
+                f"{system_prompt}\n\n## REQUEST\n{prompt}"
+            )
+        prompt_chars = len(prompt) + len(system_prompt or "")
+
+        env = os.environ.copy()
+        for var in self.SCRUBBED_ENV_VARS:
+            env.pop(var, None)
+
+        # Retry ONCE on timeout with a short backoff (replay 5: a heavy
+        # Synthesizer call died on a single hard cap mid-meeting). Two
+        # consecutive timeouts raise with the full picture — no infinite patience.
+        proc = None
+        wall_seconds = 0.0
+        for attempt in (1, 2):
+            t0 = _time.monotonic()
+            try:
+                proc = subprocess.run(
+                    argv,
+                    input=prompt,
+                    capture_output=True,
+                    text=True,
+                    timeout=self.timeout_seconds,
+                    env=env,
+                    cwd=tempfile.gettempdir(),
+                )
+                wall_seconds = _time.monotonic() - t0
+                break
+            except subprocess.TimeoutExpired as e:
+                elapsed = _time.monotonic() - t0
+                from core.llm.usage_log import log_llm_event
+                if attempt == 1:
+                    log_llm_event(
+                        self.name, "llm:retry",
+                        reason="timeout",
+                        attempt=attempt,
+                        elapsed_seconds=round(elapsed, 1),
+                        timeout_seconds=self.timeout_seconds,
+                        model=model or self.default_model,
+                        prompt_chars=prompt_chars,
+                        backoff_seconds=self.RETRY_BACKOFF_SECONDS,
+                    )
+                    _time.sleep(self.RETRY_BACKOFF_SECONDS)
+                    continue
+                raise RuntimeError(
+                    f"claude -p timed out on both attempts: {elapsed:.0f}s "
+                    f"elapsed (cap {self.timeout_seconds:.0f}s per attempt) · "
+                    f"model={model or self.default_model} · "
+                    f"prompt={prompt_chars} chars (~{prompt_chars // 4} tokens). "
+                    "Raise BD_OS_LLM_TIMEOUT_SECONDS (or llm.timeout_seconds in "
+                    ".bd-os.yaml) or reduce the call's context."
+                ) from e
+
+        if proc.returncode != 0:
+            # The CLI exits nonzero for error results too — surface the JSON
+            # `result` field ("Not logged in · Please run /login", ...) rather
+            # than a raw payload tail.
+            detail = (proc.stderr or "").strip()
+            try:
+                import json as _json
+                data = _json.loads(proc.stdout)
+                detail = str(data.get("result", "")) or detail
+            except (ValueError, TypeError):
+                detail = detail or (proc.stdout or "").strip()[-500:]
+            raise RuntimeError(
+                f"claude -p exited {proc.returncode}: {detail[:500]}"
+            )
+        return self._parse_and_log(
+            proc.stdout, messages, model,
+            wall_seconds=wall_seconds, prompt_chars=prompt_chars,
+        )
+
+    async def acomplete(self, messages: list[dict], model: str | None = None) -> str:
+        return await asyncio.to_thread(self.complete, messages, model)
+
+    # ── internals ────────────────────────────────────────────────────────────
+
+    @staticmethod
+    def _render(messages: list[dict]) -> tuple[str, str]:
+        """(system_prompt, stdin_prompt). Single user turn → raw content;
+        multi-turn conversations are serialized with role headers."""
+        system_parts = [
+            str(m.get("content", "")) for m in messages if m.get("role") == "system"
+        ]
+        conv = [m for m in messages if m.get("role") != "system"]
+        if len(conv) == 1:
+            prompt = str(conv[0].get("content", ""))
+        else:
+            prompt = "\n\n".join(
+                f"{str(m.get('role', 'user')).capitalize()}: {m.get('content', '')}"
+                for m in conv
+            )
+        return "\n\n".join(system_parts), prompt
+
+    def _parse_and_log(
+        self,
+        stdout: str,
+        messages: list[dict],
+        model: str | None,
+        wall_seconds: float = 0.0,
+        prompt_chars: int = 0,
+    ) -> str:
+        """Extract result text + usage from `--output-format json`; fall back
+        to plain-text parsing if the JSON shape surprises.
+
+        Every call logs its latency profile (pass 6): wall_seconds measured
+        around the subprocess, duration_ms/duration_api_ms from the CLI's own
+        JSON, and prompt_chars — enough to compute the subscription's real
+        p50/p95 by call type from .bd-usage.jsonl.
+        """
+        import json as _json
+
+        from core.llm.usage_log import estimate_tokens, log_usage
+
+        text: str
+        input_tokens: int
+        output_tokens: int
+        estimated = False
+        extra: dict = {
+            "wall_seconds": round(wall_seconds, 2),
+            "prompt_chars": prompt_chars,
+        }
+        try:
+            data = _json.loads(stdout)
+            if not isinstance(data, dict):
+                raise ValueError("not a JSON object")
+            if data.get("is_error"):
+                # e.g. "Not logged in · Please run /login" — fail loudly, the
+                # run must never silently continue on an errored completion.
+                raise RuntimeError(
+                    f"claude -p returned an error result: "
+                    f"{str(data.get('result', ''))[:300]}"
+                )
+            text = str(data.get("result", ""))
+            usage = data.get("usage") or {}
+            input_tokens = int(usage.get("input_tokens", 0)) + int(
+                usage.get("cache_read_input_tokens", 0)
+            ) + int(usage.get("cache_creation_input_tokens", 0))
+            output_tokens = int(usage.get("output_tokens", 0))
+            if "duration_ms" in data:
+                extra["duration_ms"] = int(data["duration_ms"])
+            if "duration_api_ms" in data:
+                extra["duration_api_ms"] = int(data["duration_api_ms"])
+            if input_tokens == 0 and output_tokens == 0:
+                estimated = True
+                input_tokens = estimate_tokens(
+                    " ".join(str(m.get("content", "")) for m in messages)
+                )
+                output_tokens = estimate_tokens(text)
+        except (ValueError, _json.JSONDecodeError):
+            # plain-text fallback (--output-format surprises / older CLIs)
+            text = stdout.strip()
+            estimated = True
+            input_tokens = estimate_tokens(
+                " ".join(str(m.get("content", "")) for m in messages)
+            )
+            output_tokens = estimate_tokens(text)
+
+        log_usage(
+            self.name,
+            model or self.default_model,
+            input_tokens,
+            output_tokens,
+            estimated=estimated,
+            extra=extra,
+        )
+        return text
 
 
 class MCPSamplingProvider:
@@ -335,59 +601,30 @@ class MCPSamplingProvider:
         return str(content)
 
 
-class DeepSeekProvider:
-    """LLM provider for DeepSeek API (OpenAI-compatible).
-
-    Endpoint: https://api.deepseek.com (OpenAI-compat) or /anthropic
-    Models: deepseek-v4-pro (default, premium), deepseek-v4-flash (~6x cheaper).
-    ~10x cheaper than Claude, good for small businesses.
-    """
-    name = "deepseek"
-
-    def __init__(
-        self,
-        api_key: str | None = None,
-        default_model: str = "deepseek-v4-pro",
-        base_url: str = "https://api.deepseek.com",
-    ):
-        self.api_key = api_key or os.getenv("DEEPSEEK_API_KEY")
-        self.default_model = default_model
-        self.base_url = base_url
-
-    def complete(self, messages: list[dict], model: str | None = None) -> str:
-        from openai import OpenAI
-
-        from core.llm.usage_log import log_usage
-        client = OpenAI(api_key=self.api_key, base_url=self.base_url)
-        # DeepSeek v4-pro has thinking mode ON by default (slow + token-heavy).
-        # Turn it off via extra_body for 3-5x faster responses on meeting nodes.
-        resp = client.chat.completions.create(
-            model=model or self.default_model,
-            messages=messages,
-            max_tokens=4096,
-            extra_body={"thinking": {"type": "disabled"}},
-        )
-        usage = getattr(resp, "usage", None)
-        if usage is not None:
-            log_usage(
-                self.name,
-                model or self.default_model,
-                getattr(usage, "prompt_tokens", 0),
-                getattr(usage, "completion_tokens", 0),
-            )
-        return resp.choices[0].message.content or ""
-
-    async def acomplete(self, messages: list[dict], model: str | None = None) -> str:
-        return await asyncio.to_thread(self.complete, messages, model)
-
-
 def get_default_provider() -> LLMProvider:
-    """Pick provider based on env vars (priority: DeepSeek > Anthropic).
+    """Pick provider based on env vars.
 
-    DeepSeek is preferred because it's ~10x cheaper — good for small businesses.
-    Set DEEPSEEK_API_KEY in vault/.env or os.environ to use DeepSeek.
-    Falls back to Anthropic if only ANTHROPIC_API_KEY is set.
+    BD_OS_LLM_PROVIDER ∈ {claude-cli, anthropic-api, mcp-sampling} overrides
+    the key-presence heuristic (2026-07-05 ruling: runs move onto the Claude
+    subscription via headless `claude -p`). Unset → existing behavior
+    unchanged (ClaudeProvider / API).
     """
-    if os.getenv("DEEPSEEK_API_KEY"):
-        return DeepSeekProvider()
+    choice = os.getenv("BD_OS_LLM_PROVIDER", "").strip().lower()
+    if choice == "claude-cli":
+        from core.utils.config import load_config
+        return ClaudeCLIProvider(
+            timeout_seconds=load_config().llm.timeout_seconds,  # None → env → 900s
+        )
+    if choice == "anthropic-api":
+        return ClaudeProvider()
+    if choice == "mcp-sampling":
+        raise RuntimeError(
+            "BD_OS_LLM_PROVIDER=mcp-sampling requires a live MCP session — it "
+            "is only valid inside the MCP server (ce-os-mcp), not the CLI."
+        )
+    if choice:
+        raise RuntimeError(
+            f"Unknown BD_OS_LLM_PROVIDER '{choice}'. "
+            "Valid: claude-cli | anthropic-api | mcp-sampling."
+        )
     return ClaudeProvider()

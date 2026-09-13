@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36in" height="24in" viewBox="0 0 3600 2400" font-family="Helvetica, Arial, sans-serif">
+<rect x="0" y="0" width="3600" height="2400" fill="white"/>
+<rect x="40" y="40" width="3520" height="2320" fill="none" stroke="black" stroke-width="4"/>
+<text x="1800.0" y="300.0" font-size="60" font-weight="bold" text-anchor="middle">PRAIRIE CREEK OFFICE/WAREHOUSE — BUILDING 2</text>
+<text x="1800.0" y="370.0" font-size="26" font-weight="normal" text-anchor="middle">12,000 SF SINGLE-STORY OFFICE / WAREHOUSE — 2201 PRAIRIE CREEK PKWY, PLANO, TX 75074 (FICTIONAL)</text>
+<text x="1800.0" y="420.0" font-size="24" font-weight="normal" text-anchor="middle">BID SET — ISSUED FOR BID 09/12/2026 — SYNTHETIC DEMO DATA, NOT A REAL PROJECT</text>
+<text x="300.0" y="548.0" font-size="24" font-weight="bold" text-anchor="start">SHEET INDEX</text>
+<rect x="300" y="560" width="1180" height="340" fill="none" stroke="black" stroke-width="2"/>
+<line x1="300.0" y1="594.0" x2="1480.0" y2="594.0" stroke="black" stroke-width="1"/>
+<line x1="300.0" y1="628.0" x2="1480.0" y2="628.0" stroke="black" stroke-width="1"/>
+<line x1="300.0" y1="662.0" x2="1480.0" y2="662.0" stroke="black" stroke-width="1"/>
+<line x1="300.0" y1="696.0" x2="1480.0" y2="696.0" stroke="black" stroke-width="1"/>
+<line x1="300.0" y1="730.0" x2="1480.0" y2="730.0" stroke="black" stroke-width="1"/>
+<line x1="300.0" y1="764.0" x2="1480.0" y2="764.0" stroke="black" stroke-width="1"/>
+<line x1="300.0" y1="798.0" x2="1480.0" y2="798.0" stroke="black" stroke-width="1"/>
+<line x1="300.0" y1="832.0" x2="1480.0" y2="832.0" stroke="black" stroke-width="1"/>
+<line x1="300.0" y1="866.0" x2="1480.0" y2="866.0" stroke="black" stroke-width="1"/>
+<line x1="480.0" y1="560.0" x2="480.0" y2="900.0" stroke="black" stroke-width="1"/>
+<line x1="1380.0" y1="560.0" x2="1380.0" y2="900.0" stroke="black" stroke-width="1"/>
+<text x="308.0" y="584.0" font-size="18" font-weight="bold" text-anchor="start">SHEET</text>
+<text x="488.0" y="584.0" font-size="18" font-weight="bold" text-anchor="start">TITLE</text>
+<text x="1388.0" y="584.0" font-size="18" font-weight="bold" text-anchor="start">REV</text>
+<text x="308.0" y="618.0" font-size="18" font-weight="normal" text-anchor="start">G-001</text>
+<text x="488.0" y="618.0" font-size="18" font-weight="normal" text-anchor="start">COVER SHEET, INDEX, CODE SUMMARY</text>
+<text x="1388.0" y="618.0" font-size="18" font-weight="normal" text-anchor="start">2</text>
+<text x="308.0" y="652.0" font-size="18" font-weight="normal" text-anchor="start">A-101</text>
+<text x="488.0" y="652.0" font-size="18" font-weight="normal" text-anchor="start">FLOOR PLAN</text>
+<text x="1388.0" y="652.0" font-size="18" font-weight="normal" text-anchor="start">2</text>
+<text x="308.0" y="686.0" font-size="18" font-weight="normal" text-anchor="start">A-201</text>
+<text x="488.0" y="686.0" font-size="18" font-weight="normal" text-anchor="start">EXTERIOR ELEVATIONS</text>
+<text x="1388.0" y="686.0" font-size="18" font-weight="normal" text-anchor="start">2</text>
+<text x="308.0" y="720.0" font-size="18" font-weight="normal" text-anchor="start">A-601</text>
+<text x="488.0" y="720.0" font-size="18" font-weight="normal" text-anchor="start">DOOR, WINDOW & FINISH SCHEDULES</text>
+<text x="1388.0" y="720.0" font-size="18" font-weight="normal" text-anchor="start">2</text>
+<text x="308.0" y="754.0" font-size="18" font-weight="normal" text-anchor="start">S-101</text>
+<text x="488.0" y="754.0" font-size="18" font-weight="normal" text-anchor="start">FOUNDATION PLAN & GENERAL NOTES</text>
+<text x="1388.0" y="754.0" font-size="18" font-weight="normal" text-anchor="start">2</text>
+<text x="308.0" y="788.0" font-size="18" font-weight="normal" text-anchor="start">S-201</text>
+<text x="488.0" y="788.0" font-size="18" font-weight="normal" text-anchor="start">ROOF FRAMING PLAN</text>
+<text x="1388.0" y="788.0" font-size="18" font-weight="normal" text-anchor="start">2</text>
+<text x="308.0" y="822.0" font-size="18" font-weight="normal" text-anchor="start">M-101</text>
+<text x="488.0" y="822.0" font-size="18" font-weight="normal" text-anchor="start">HVAC PLAN & SCHEDULES</text>
+<text x="1388.0" y="822.0" font-size="18" font-weight="normal" text-anchor="start">2</text>
+<text x="308.0" y="856.0" font-size="18" font-weight="normal" text-anchor="start">P-101</text>
+<text x="488.0" y="856.0" font-size="18" font-weight="normal" text-anchor="start">PLUMBING PLAN & FIXTURE SCHEDULE</text>
+<text x="1388.0" y="856.0" font-size="18" font-weight="normal" text-anchor="start">2</text>
+<text x="308.0" y="890.0" font-size="18" font-weight="normal" text-anchor="start">E-101</text>
+<text x="488.0" y="890.0" font-size="18" font-weight="normal" text-anchor="start">POWER & LIGHTING PLAN, ONE-LINE, PANEL SCHEDULES</text>
+<text x="1388.0" y="890.0" font-size="18" font-weight="normal" text-anchor="start">2</text>
+<text x="1600.0" y="548.0" font-size="24" font-weight="bold" text-anchor="start">CODE SUMMARY</text>
+<rect x="1600" y="560" width="1220" height="374" fill="none" stroke="black" stroke-width="2"/>
+<line x1="1600.0" y1="594.0" x2="2820.0" y2="594.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="628.0" x2="2820.0" y2="628.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="662.0" x2="2820.0" y2="662.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="696.0" x2="2820.0" y2="696.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="730.0" x2="2820.0" y2="730.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="764.0" x2="2820.0" y2="764.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="798.0" x2="2820.0" y2="798.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="832.0" x2="2820.0" y2="832.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="866.0" x2="2820.0" y2="866.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="900.0" x2="2820.0" y2="900.0" stroke="black" stroke-width="1"/>
+<line x1="2020.0" y1="560.0" x2="2020.0" y2="934.0" stroke="black" stroke-width="1"/>
+<text x="1608.0" y="584.0" font-size="18" font-weight="bold" text-anchor="start">ITEM</text>
+<text x="2028.0" y="584.0" font-size="18" font-weight="bold" text-anchor="start">VALUE</text>
+<text x="1608.0" y="618.0" font-size="18" font-weight="normal" text-anchor="start">BUILDING TYPE</text>
+<text x="2028.0" y="618.0" font-size="18" font-weight="normal" text-anchor="start">OFFICE / WAREHOUSE (B / S-1)</text>
+<text x="1608.0" y="652.0" font-size="18" font-weight="normal" text-anchor="start">CONSTRUCTION TYPE</text>
+<text x="2028.0" y="652.0" font-size="18" font-weight="normal" text-anchor="start">II-B</text>
+<text x="1608.0" y="686.0" font-size="18" font-weight="normal" text-anchor="start">GROSS AREA</text>
+<text x="2028.0" y="686.0" font-size="18" font-weight="normal" text-anchor="start">12,000 SF</text>
+<text x="1608.0" y="720.0" font-size="18" font-weight="normal" text-anchor="start">OFFICE AREA</text>
+<text x="2028.0" y="720.0" font-size="18" font-weight="normal" text-anchor="start">4,000 SF</text>
+<text x="1608.0" y="754.0" font-size="18" font-weight="normal" text-anchor="start">WAREHOUSE AREA</text>
+<text x="2028.0" y="754.0" font-size="18" font-weight="normal" text-anchor="start">8,000 SF</text>
+<text x="1608.0" y="788.0" font-size="18" font-weight="normal" text-anchor="start">STORIES</text>
+<text x="2028.0" y="788.0" font-size="18" font-weight="normal" text-anchor="start">1</text>
+<text x="1608.0" y="822.0" font-size="18" font-weight="normal" text-anchor="start">HEIGHT</text>
+<text x="2028.0" y="822.0" font-size="18" font-weight="normal" text-anchor="start">OFFICE 14'-0" / WAREHOUSE 24'-0"</text>
+<text x="1608.0" y="856.0" font-size="18" font-weight="normal" text-anchor="start">SPRINKLERS</text>
+<text x="2028.0" y="856.0" font-size="18" font-weight="normal" text-anchor="start">YES — NFPA 13, DESIGN-BUILD</text>
+<text x="1608.0" y="890.0" font-size="18" font-weight="normal" text-anchor="start">OCCUPANT LOAD</text>
+<text x="2028.0" y="890.0" font-size="18" font-weight="normal" text-anchor="start">B: 40 / S-1: 16</text>
+<text x="1608.0" y="924.0" font-size="18" font-weight="normal" text-anchor="start">CODES</text>
+<text x="2028.0" y="924.0" font-size="18" font-weight="normal" text-anchor="start">IBC 2021, IECC 2021, NEC 2023, TAS 2012</text>
+<text x="300.0" y="1000.0" font-size="24" font-weight="bold" text-anchor="start">GENERAL NOTES</text>
+<text x="300.0" y="1046.0" font-size="20" font-weight="normal" text-anchor="start">1. DO NOT SCALE DRAWINGS. FIGURED DIMENSIONS GOVERN.</text>
+<text x="300.0" y="1080.0" font-size="20" font-weight="normal" text-anchor="start">2. SCHEDULES GOVERN OVER PLANS WHERE THEY DIFFER; NOTIFY THE ARCHITECT OF CONFLICTS BY PRE-BID RFI.</text>
+<text x="300.0" y="1114.0" font-size="20" font-weight="normal" text-anchor="start">3. ALL DIMENSIONS ARE TO FACE OF CMU OR FACE OF STUD UNLESS NOTED.</text>
+<text x="300.0" y="1148.0" font-size="20" font-weight="normal" text-anchor="start">4. EXTERIOR WALLS: 8" CMU, GROUTED SOLID, WITH BRICK VENEER AT OFFICE; SEE A-201 AND SPEC 04 22 00.</text>
+<text x="300.0" y="1182.0" font-size="20" font-weight="normal" text-anchor="start">5. INTERIOR PARTITIONS: TYPE P1 3-5/8" MTL STUD 16" OC, 5/8" GWB EACH SIDE TO DECK UNLESS NOTED.</text>
+<text x="300.0" y="1216.0" font-size="20" font-weight="normal" text-anchor="start">6. ROOF: MECHANICALLY FASTENED 60-MIL TPO OVER POLYISO (R-30 AVG), TAPERED CRICKETS; 20-YEAR NDL WARRANTY.</text>
+<text x="300.0" y="1250.0" font-size="20" font-weight="normal" text-anchor="start">7. SPRINKLER SYSTEM IS DESIGN-BUILD BY THE FIRE PROTECTION SUBCONTRACTOR PER NFPA 13.</text>
+<text x="300.0" y="1284.0" font-size="20" font-weight="normal" text-anchor="start">8. SIGNAGE ALLOWANCE $25,000 — SEE SPEC 01 21 00.</text>
+<text x="1600.0" y="988.0" font-size="24" font-weight="bold" text-anchor="start">ABBREVIATIONS</text>
+<rect x="1600" y="1000" width="860" height="374" fill="none" stroke="black" stroke-width="2"/>
+<line x1="1600.0" y1="1034.0" x2="2460.0" y2="1034.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="1068.0" x2="2460.0" y2="1068.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="1102.0" x2="2460.0" y2="1102.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="1136.0" x2="2460.0" y2="1136.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="1170.0" x2="2460.0" y2="1170.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="1204.0" x2="2460.0" y2="1204.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="1238.0" x2="2460.0" y2="1238.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="1272.0" x2="2460.0" y2="1272.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="1306.0" x2="2460.0" y2="1306.0" stroke="black" stroke-width="1"/>
+<line x1="1600.0" y1="1340.0" x2="2460.0" y2="1340.0" stroke="black" stroke-width="1"/>
+<line x1="1760.0" y1="1000.0" x2="1760.0" y2="1374.0" stroke="black" stroke-width="1"/>
+<text x="1608.0" y="1024.0" font-size="18" font-weight="bold" text-anchor="start">ABBR</text>
+<text x="1768.0" y="1024.0" font-size="18" font-weight="bold" text-anchor="start">MEANING</text>
+<text x="1608.0" y="1058.0" font-size="18" font-weight="normal" text-anchor="start">CMU</text>
+<text x="1768.0" y="1058.0" font-size="18" font-weight="normal" text-anchor="start">CONCRETE MASONRY UNIT</text>
+<text x="1608.0" y="1092.0" font-size="18" font-weight="normal" text-anchor="start">GWB</text>
+<text x="1768.0" y="1092.0" font-size="18" font-weight="normal" text-anchor="start">GYPSUM WALL BOARD</text>
+<text x="1608.0" y="1126.0" font-size="18" font-weight="normal" text-anchor="start">HM</text>
+<text x="1768.0" y="1126.0" font-size="18" font-weight="normal" text-anchor="start">HOLLOW METAL</text>
+<text x="1608.0" y="1160.0" font-size="18" font-weight="normal" text-anchor="start">NIC</text>
+<text x="1768.0" y="1160.0" font-size="18" font-weight="normal" text-anchor="start">NOT IN CONTRACT</text>
+<text x="1608.0" y="1194.0" font-size="18" font-weight="normal" text-anchor="start">OC</text>
+<text x="1768.0" y="1194.0" font-size="18" font-weight="normal" text-anchor="start">ON CENTER</text>
+<text x="1608.0" y="1228.0" font-size="18" font-weight="normal" text-anchor="start">TYP</text>
+<text x="1768.0" y="1228.0" font-size="18" font-weight="normal" text-anchor="start">TYPICAL</text>
+<text x="1608.0" y="1262.0" font-size="18" font-weight="normal" text-anchor="start">VIF</text>
+<text x="1768.0" y="1262.0" font-size="18" font-weight="normal" text-anchor="start">VERIFY IN FIELD</text>
+<text x="1608.0" y="1296.0" font-size="18" font-weight="normal" text-anchor="start">ACT</text>
+<text x="1768.0" y="1296.0" font-size="18" font-weight="normal" text-anchor="start">ACOUSTICAL CEILING TILE</text>
+<text x="1608.0" y="1330.0" font-size="18" font-weight="normal" text-anchor="start">SOG</text>
+<text x="1768.0" y="1330.0" font-size="18" font-weight="normal" text-anchor="start">SLAB ON GRADE</text>
+<text x="1608.0" y="1364.0" font-size="18" font-weight="normal" text-anchor="start">AFF</text>
+<text x="1768.0" y="1364.0" font-size="18" font-weight="normal" text-anchor="start">ABOVE FINISHED FLOOR</text>
+<g id="titleblock" font-size="22">
+<rect x="2960" y="1980" width="600" height="380" fill="none" stroke="black" stroke-width="3"/>
+<line x1="2960" y1="2080" x2="3560" y2="2080" stroke="black" stroke-width="2"/>
+<line x1="2960" y1="2180" x2="3560" y2="2180" stroke="black" stroke-width="2"/>
+<line x1="2960" y1="2270" x2="3560" y2="2270" stroke="black" stroke-width="2"/>
+<text x="2980" y="2015" font-size="24" font-weight="bold">BLACKLAND COMMERCIAL BUILDERS (SYNTHETIC DEMO)</text>
+<text x="2980" y="2050" font-size="20">PRAIRIE CREEK OFFICE/WAREHOUSE — BUILDING 2</text>
+<text x="2980" y="2110" font-size="18">SHEET TITLE</text>
+<text x="2980" y="2150" font-size="28" font-weight="bold">COVER SHEET, INDEX, CODE SUMMARY</text>
+<text x="2980" y="2210" font-size="20">SCALE: NONE</text>
+<text x="3300" y="2210" font-size="20">DATE: 09/12/2026</text>
+<text x="2980" y="2250" font-size="20">REV: 2   ADDENDUM 1: 09/19/2026</text>
+<text x="2980" y="2305" font-size="18">SHEET NUMBER</text>
+<text x="3300" y="2330" font-size="44" font-weight="bold">G-001</text>
+</g>
+</svg>

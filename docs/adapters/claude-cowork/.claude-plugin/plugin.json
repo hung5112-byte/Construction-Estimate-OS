@@ -6,7 +6,7 @@
     "email": "your-email@example.com"
   },
   "credits": {
-    "templates_us": "adapted from business-builder.plugin",
+    "templates_us": "192 US business templates (attribution in NOTICE)",
     "debate_engine_pattern": "TradingAgents (TauricResearch)"
   },
   "keywords": ["business", "usa", "texas", "agents", "debate", "langgraph"]

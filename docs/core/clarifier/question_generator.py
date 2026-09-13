@@ -17,6 +17,9 @@ class Question:
     severity: Severity
     choices: list[str] = field(default_factory=list)
     free_text: bool = False
+    # ADR-003 Addendum A: optional tags (regulatory / compliance / certification)
+    # drive the critic's regulatory-unknowns-promoted hard gate.
+    tags: list[str] = field(default_factory=list)
 
 
 QG_PROMPT = """You generate clarification questions for the Department Head.
@@ -35,10 +38,16 @@ QG_PROMPT = """You generate clarification questions for the Department Head.
     "citation": "00-Brain/<file>.md[:section]",
     "choices": ["A", "B", "C"],
     "severity": "CRITICAL|WARN",
-    "free_text": false
+    "free_text": false,
+    "tags": []
   }
 ]
 ```
+
+## Tags (optional)
+If a question concerns a regulatory gate, compliance requirement, or product
+certification (FCC/PCI/UL/PTCRB/...), tag it: "tags": ["regulatory"] or
+["compliance"] or ["certification"]. Otherwise omit tags or use [].
 
 CRITICAL gap → the question MUST be asked.
 WARN gap → the question SHOULD be asked (Department Head may skip).
@@ -82,6 +91,7 @@ class QuestionGenerator:
             severity=Severity(d["severity"]),
             choices=d.get("choices", []),
             free_text=d.get("free_text", False),
+            tags=[str(t).strip().lower() for t in d.get("tags", []) or []],
         ) for d in data]
 
     async def agenerate(self, gaps: list[Gap], brain: dict, brief: str) -> list[Question]:
@@ -111,4 +121,5 @@ class QuestionGenerator:
             severity=Severity(d["severity"]),
             choices=d.get("choices", []),
             free_text=d.get("free_text", False),
+            tags=[str(t).strip().lower() for t in d.get("tags", []) or []],
         ) for d in data]

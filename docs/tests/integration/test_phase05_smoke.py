@@ -21,17 +21,18 @@ def test_pack_mechanism_loadable():
     assert loader.list_available() == []
 
 
-def test_5_core_depts_have_agents():
+def test_6_core_depts_have_agents():
     from core.agents.registry import Registry
     repo = Path(__file__).parent.parent.parent
     reg = Registry(repo / "departments")
 
     expected = {
-        "01-hardware-engineering": 5,
-        "02-npi-program-management": 7,
-        "03-quality-reliability": 6,
-        "04-mfg-supplier-quality": 5,
-        "05-service-operations": 6,
+        "01-bid-coordination": 5,
+        "02-civil-structural": 4,
+        "03-architectural": 5,
+        "04-mep": 4,
+        "05-cost-engineering": 4,
+        "06-estimate-review": 4,
     }
     for code, n in expected.items():
         d = reg.get(code)
@@ -47,11 +48,11 @@ def test_template_resolver_finds_templates_us():
         repo_templates=repo / "templates-us",
     )
     # Verify ANY template exists in a dept folder (not specific filename)
-    dept_dir = repo / "templates-us" / "02-npi-program-management"
+    dept_dir = repo / "templates-us" / "01-bid-coordination"
     if dept_dir.exists():
         sample_files = [f for f in dept_dir.iterdir() if f.suffix == ".md"]
         if sample_files:
             sample_name = sample_files[0].stem
-            found = resolver.resolve(sample_name, "02-npi-program-management")
+            found = resolver.resolve(sample_name, "01-bid-coordination")
             assert found is not None
             assert found.exists()

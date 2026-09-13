@@ -8,13 +8,13 @@
 > The path from alpha (founder-only) to v1 public open-source (5-10 dev contributors) to a real SaaS (used by non-tech business owners).
 
 **Updated:** 2026-05-08
-**Current status:** Alpha — runs on the founder's machine with DeepSeek, but several blocker bugs for other devs.
+**Current status:** Alpha — runs on the founder's machine, but several blocker bugs for other devs.
 
 ---
 
 ## 🎯 Product goal
 
-**End goal:** an open-source tool for US freelancers + solo business owners to run a full set of "virtual" departments via AI agents debating, for only ~$10-25/month (DeepSeek API + Claude Pro subscription).
+**End goal:** an open-source tool for US freelancers + solo business owners to run a full set of "virtual" departments via AI agents debating, for only ~$10-25/month (Anthropic API + Claude Pro subscription).
 
 **Target users:**
 
@@ -35,14 +35,14 @@ Target: another dev clones the repo, follows the README, and uses it for their o
 
 | # | Item | Status | Effort | Owner |
 |---|---|---|---|---|
-| 1 | Official multi-LLM provider (DeepSeek/OpenAI/Gemini, not just Anthropic) | 🟡 Done 80% (DeepSeek) | 2h left | TBD |
+| 1 | Official multi-LLM provider (OpenAI/Gemini/etc., beyond Anthropic) | ❌ TODO | 4h | TBD |
 | 2 | CLI commands load `vault/.env` correctly | ✅ Done | - | - |
-| 3 | DeepSeek thinking-mode toggle (default OFF for meeting speed) | ✅ Done | - | - |
+| 3 | LLM thinking-mode toggle (default OFF for meeting speed) | ✅ Done | - | - |
 | 4 | Lenient Brain parser — accept `## Vision (3-5 years)`, not only `## Vision` | ❌ TODO | 2h | TBD |
 | 5 | English error messages instead of Python tracebacks | ❌ TODO | 4h | TBD |
-| 6 | `bd-os doctor` command — verify env, .vncoderc, .env, brain → checklist | ❌ TODO | 3h | TBD |
+| 6 | `bd-os doctor` command — verify env, .bd-os.yaml, .env, brain → checklist | ❌ TODO | 3h | TBD |
 | 7 | Pin LangGraph version (using 0.2.0+ — high version churn) | ❌ TODO | 1h | TBD |
-| 8 | Tests pass with the DeepSeek provider (currently 261 tests, may have hardcoded Anthropic) | ❌ TODO | 4h | TBD |
+| 8 | Verify tests pass with all supported providers | ❌ TODO | 4h | TBD |
 
 ### 🟡 P1 — CRITICAL (needed for other devs to use smoothly)
 
@@ -53,7 +53,7 @@ Target: another dev clones the repo, follows the README, and uses it for their o
 | 11 | Better progress indicator — "Calling 7 departments to meet... (3/7)" | ❌ TODO | 0.5 day |
 | 12 | Resumable tasks — a meeting that fails midway can resume | ❌ TODO | 1 day |
 | 13 | Per-task cost tracker — print cost in USD after finishing | ❌ TODO | 0.5 day |
-| 14 | README update (DeepSeek setup, examples, troubleshooting) | ❌ TODO | 0.5 day |
+| 14 | README update (Anthropic setup, examples, troubleshooting) | ❌ TODO | 0.5 day |
 | 15 | `examples/` folder with 3 sample vaults (F&B, Retail, Tech-SaaS) with the Brain filled | ❌ TODO | 1 day |
 | 16 | 5-minute demo video on YouTube (setup + run one task end-to-end) | ❌ TODO | 0.5 day |
 
@@ -75,9 +75,9 @@ Target: another dev clones the repo, follows the README, and uses it for their o
 | # | Bug | Severity | Repro | Fix |
 |---|---|---|---|---|
 | B1 | `bd_run`, `bd_draft` via MCP time out at 60s (Cowork client cap) | 🔴 Critical | Call bd_draft with any brief via Cowork | Document the limitation. Recommend the CLI for heavy tasks. |
-| B2 | CLI `run/resume/meeting/approve/execute` doesn't call `apply_vault_env_to_os` → DEEPSEEK_API_KEY not in env | 🔴 Critical | Create vault/.env, run bd-os run | ✅ Patched 2026-05-08 |
-| B3 | `docs/core/llm/providers.py` only has ClaudeProvider + MCPSamplingProvider, no OpenAI/Gemini/DeepSeek despite pyproject.toml deps | 🔴 Critical | Set OPENAI_API_KEY → still uses Anthropic | ✅ Patched (DeepSeek). OpenAI/Gemini TODO. |
-| B4 | DeepSeek v4-pro thinking mode default ON → meeting has 7 LLM calls × 30-90s = 5-10 min | 🟡 High | bd-os meeting with DeepSeek | ✅ Patched (extra_body disables thinking) |
+| B2 | CLI `run/resume/meeting/approve/execute` doesn't call `apply_vault_env_to_os` → API key not in env | 🔴 Critical | Create vault/.env, run bd-os run | ✅ Patched 2026-05-08 |
+| B3 | `docs/core/llm/providers.py` only has ClaudeProvider + MCPSamplingProvider, no OpenAI/Gemini despite pyproject.toml deps | 🔴 Critical | Set OPENAI_API_KEY → still uses Anthropic | TODO. |
+| B4 | Resolved — not applicable. | 🟢 Closed | — | ✅ Closed |
 | B5 | Brain parser requires the exact heading `## Vision`, fails with `## Vision (3-5 years)` | 🟡 High | Heading with a suffix | TODO P0-#4 |
 | B6 | `docs/vault-template/01-Departments/` not present — must clone from `repo/departments/` | 🟢 Medium | Onboard a new vault | TODO — fix `bd_onboard` |
 | B7 | `obsidian_delete_file` via the Obsidian REST API times out for a folder (only works for a file) | 🟢 Medium | MCP delete folder | Document — recommend deleting via the Obsidian app |
@@ -86,8 +86,8 @@ Target: another dev clones the repo, follows the README, and uses it for their o
 
 ## 📊 Decisions locked in the 2026-05-08 session
 
-1. **Default LLM:** DeepSeek v4-pro (instead of Claude Sonnet) — ~10x cheaper, good enough for operational tasks.
-2. **Fallback:** Anthropic API (needs ANTHROPIC_API_KEY in .env). MCP sampling is only for the dev experience via Claude Desktop.
+1. **Default LLM:** Claude Sonnet (Anthropic API) — production-grade, used for all department debates.
+2. **Fallback:** MCP sampling via Claude Desktop subscription (no separate key needed, last resort).
 3. **Main workflow:** CLI (bd-os) instead of MCP tool calls — avoids the Cowork 60s timeout for heavy tasks.
 4. **Thinking mode:** Default OFF for meetings (speed). User opt-in via config if they want deep reasoning.
 
@@ -150,7 +150,7 @@ Discord community: TBD (if needed)
 ✅ **Working:**
 - Brain reader/parser (with a strict format)
 - 13 core departments + F&B pack scaffold
-- DeepSeek provider (after the 2026-05-08 session patch)
+- Anthropic Claude provider (ClaudeProvider, active default)
 - CLI run stage 1 (router + gap analyzer)
 - Obsidian MCP integration for doc viewing/editing
 
@@ -166,4 +166,4 @@ Discord community: TBD (if needed)
 
 ---
 
-**Next step now:** Verify the meeting stage runs with DeepSeek + thinking mode disabled. If it fails → debug LangGraph compatibility with a non-Anthropic provider.
+**Next step now:** Verify the meeting stage runs end-to-end with the Anthropic provider. If it fails → debug LangGraph compatibility.

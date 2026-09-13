@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36in" height="24in" viewBox="0 0 3600 2400" font-family="Helvetica, Arial, sans-serif">
+<rect x="0" y="0" width="3600" height="2400" fill="white"/>
+<rect x="40" y="40" width="3520" height="2320" fill="none" stroke="black" stroke-width="4"/>
+<g id="grid" font-size="22">
+<line x1="520.0" y1="122.5" x2="520.0" y2="1785.0" stroke="black" stroke-width="1" stroke-dasharray="14,10"/>
+<circle cx="520.0" cy="72.5" r="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="520.0" y="80.5" font-size="22" font-weight="bold" text-anchor="middle">A</text>
+<line x1="1020.0" y1="122.5" x2="1020.0" y2="1785.0" stroke="black" stroke-width="1" stroke-dasharray="14,10"/>
+<circle cx="1020.0" cy="72.5" r="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1020.0" y="80.5" font-size="22" font-weight="bold" text-anchor="middle">B</text>
+<line x1="1520.0" y1="122.5" x2="1520.0" y2="1785.0" stroke="black" stroke-width="1" stroke-dasharray="14,10"/>
+<circle cx="1520.0" cy="72.5" r="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1520.0" y="80.5" font-size="22" font-weight="bold" text-anchor="middle">C</text>
+<line x1="2020.0" y1="122.5" x2="2020.0" y2="1785.0" stroke="black" stroke-width="1" stroke-dasharray="14,10"/>
+<circle cx="2020.0" cy="72.5" r="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2020.0" y="80.5" font-size="22" font-weight="bold" text-anchor="middle">D</text>
+<line x1="145.0" y1="460.0" x2="2095.0" y2="460.0" stroke="black" stroke-width="1" stroke-dasharray="14,10"/>
+<circle cx="95.0" cy="460.0" r="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="95.0" y="468.0" font-size="22" font-weight="bold" text-anchor="middle">1</text>
+<line x1="145.0" y1="1085.0" x2="2095.0" y2="1085.0" stroke="black" stroke-width="1" stroke-dasharray="14,10"/>
+<circle cx="95.0" cy="1085.0" r="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="95.0" y="1093.0" font-size="22" font-weight="bold" text-anchor="middle">2</text>
+<line x1="145.0" y1="1710.0" x2="2095.0" y2="1710.0" stroke="black" stroke-width="1" stroke-dasharray="14,10"/>
+<circle cx="95.0" cy="1710.0" r="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="95.0" y="1718.0" font-size="22" font-weight="bold" text-anchor="middle">3</text>
+</g>
+<rect x="520.0" y="460.0" width="1500.0" height="1250.0" fill="none" stroke="black" stroke-width="8"/>
+<line x1="1020.0" y1="460.0" x2="1020.0" y2="1710.0" stroke="black" stroke-width="6"/>
+<line x1="1020.0" y1="460.0" x2="2020.0" y2="460.0" stroke="black" stroke-width="6"/>
+<text x="1270.0" y="448.0" font-size="16" font-weight="bold" text-anchor="middle">B1 W16x31</text>
+<text x="1770.0" y="448.0" font-size="16" font-weight="bold" text-anchor="middle">B1 W16x31</text>
+<line x1="1020.0" y1="1085.0" x2="2020.0" y2="1085.0" stroke="black" stroke-width="6"/>
+<text x="1270.0" y="1073.0" font-size="16" font-weight="bold" text-anchor="middle">B1 W16x31</text>
+<text x="1770.0" y="1073.0" font-size="16" font-weight="bold" text-anchor="middle">B1 W16x31</text>
+<line x1="1020.0" y1="1710.0" x2="2020.0" y2="1710.0" stroke="black" stroke-width="6"/>
+<text x="1270.0" y="1698.0" font-size="16" font-weight="bold" text-anchor="middle">B1 W16x31</text>
+<text x="1770.0" y="1698.0" font-size="16" font-weight="bold" text-anchor="middle">B1 W16x31</text>
+<line x1="1082.5" y1="460.0" x2="1082.5" y2="1710.0" stroke="black" stroke-width="2"/>
+<line x1="1145.0" y1="460.0" x2="1145.0" y2="1710.0" stroke="black" stroke-width="2"/>
+<line x1="1207.5" y1="460.0" x2="1207.5" y2="1710.0" stroke="black" stroke-width="2"/>
+<line x1="1270.0" y1="460.0" x2="1270.0" y2="1710.0" stroke="black" stroke-width="2"/>
+<line x1="1332.5" y1="460.0" x2="1332.5" y2="1710.0" stroke="black" stroke-width="2"/>
+<line x1="1395.0" y1="460.0" x2="1395.0" y2="1710.0" stroke="black" stroke-width="2"/>
+<line x1="1457.5" y1="460.0" x2="1457.5" y2="1710.0" stroke="black" stroke-width="2"/>
+<line x1="1520.0" y1="460.0" x2="1520.0" y2="1710.0" stroke="black" stroke-width="2"/>
+<line x1="1582.5" y1="460.0" x2="1582.5" y2="1710.0" stroke="black" stroke-width="2"/>
+<line x1="1645.0" y1="460.0" x2="1645.0" y2="1710.0" stroke="black" stroke-width="2"/>
+<line x1="1707.5" y1="460.0" x2="1707.5" y2="1710.0" stroke="black" stroke-width="2"/>
+<line x1="1770.0" y1="460.0" x2="1770.0" y2="1710.0" stroke="black" stroke-width="2"/>
+<line x1="1832.5" y1="460.0" x2="1832.5" y2="1710.0" stroke="black" stroke-width="2"/>
+<line x1="1895.0" y1="460.0" x2="1895.0" y2="1710.0" stroke="black" stroke-width="2"/>
+<line x1="1957.5" y1="460.0" x2="1957.5" y2="1710.0" stroke="black" stroke-width="2"/>
+<text x="1520.0" y="772.5" font-size="18" font-weight="bold" text-anchor="middle">24K4 @ 5'-0" OC (TYP)</text>
+<text x="1520.0" y="1397.5" font-size="18" font-weight="bold" text-anchor="middle">24K4 @ 5'-0" OC (TYP)</text>
+<line x1="520.0" y1="460.0" x2="1020.0" y2="460.0" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="522.5" x2="1020.0" y2="522.5" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="585.0" x2="1020.0" y2="585.0" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="647.5" x2="1020.0" y2="647.5" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="710.0" x2="1020.0" y2="710.0" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="772.5" x2="1020.0" y2="772.5" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="835.0" x2="1020.0" y2="835.0" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="897.5" x2="1020.0" y2="897.5" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="960.0" x2="1020.0" y2="960.0" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="1022.5" x2="1020.0" y2="1022.5" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="1085.0" x2="1020.0" y2="1085.0" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="1147.5" x2="1020.0" y2="1147.5" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="1210.0" x2="1020.0" y2="1210.0" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="1272.5" x2="1020.0" y2="1272.5" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="1335.0" x2="1020.0" y2="1335.0" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="1397.5" x2="1020.0" y2="1397.5" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="1460.0" x2="1020.0" y2="1460.0" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="1522.5" x2="1020.0" y2="1522.5" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="1585.0" x2="1020.0" y2="1585.0" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="1647.5" x2="1020.0" y2="1647.5" stroke="black" stroke-width="2"/>
+<line x1="520.0" y1="1710.0" x2="1020.0" y2="1710.0" stroke="black" stroke-width="2"/>
+<text x="770.0" y="1115.0" font-size="18" font-weight="bold" text-anchor="middle">18K3 @ 5'-0" OC</text>
+<rect x="1012.0" y="452.0" width="16" height="16" fill="black"/>
+<text x="1040.0" y="490.0" font-size="15" font-weight="bold" text-anchor="start">C1</text>
+<rect x="1012.0" y="1077.0" width="16" height="16" fill="black"/>
+<text x="1040.0" y="1115.0" font-size="15" font-weight="bold" text-anchor="start">C1</text>
+<rect x="1012.0" y="1702.0" width="16" height="16" fill="black"/>
+<text x="1040.0" y="1740.0" font-size="15" font-weight="bold" text-anchor="start">C1</text>
+<rect x="1512.0" y="452.0" width="16" height="16" fill="black"/>
+<text x="1540.0" y="490.0" font-size="15" font-weight="bold" text-anchor="start">C1</text>
+<rect x="1512.0" y="1077.0" width="16" height="16" fill="black"/>
+<text x="1540.0" y="1115.0" font-size="15" font-weight="bold" text-anchor="start">C1</text>
+<rect x="1512.0" y="1702.0" width="16" height="16" fill="black"/>
+<text x="1540.0" y="1740.0" font-size="15" font-weight="bold" text-anchor="start">C1</text>
+<rect x="2012.0" y="452.0" width="16" height="16" fill="black"/>
+<text x="2040.0" y="490.0" font-size="15" font-weight="bold" text-anchor="start">C1</text>
+<rect x="2012.0" y="1077.0" width="16" height="16" fill="black"/>
+<text x="2040.0" y="1115.0" font-size="15" font-weight="bold" text-anchor="start">C1</text>
+<rect x="2012.0" y="1702.0" width="16" height="16" fill="black"/>
+<text x="2040.0" y="1740.0" font-size="15" font-weight="bold" text-anchor="start">C1</text>
+<text x="980.0" y="440.0" font-size="15" font-weight="bold" text-anchor="start">C2</text>
+<text x="980.0" y="752.5" font-size="15" font-weight="bold" text-anchor="start">C2</text>
+<text x="980.0" y="1065.0" font-size="15" font-weight="bold" text-anchor="start">C2</text>
+<text x="980.0" y="1377.5" font-size="15" font-weight="bold" text-anchor="start">C2</text>
+<text x="980.0" y="1690.0" font-size="15" font-weight="bold" text-anchor="start">C2</text>
+<text x="2140.0" y="1488.0" font-size="24" font-weight="bold" text-anchor="start">STEEL SCHEDULE</text>
+<rect x="2140" y="1500" width="640" height="204" fill="none" stroke="black" stroke-width="2"/>
+<line x1="2140.0" y1="1534.0" x2="2780.0" y2="1534.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="1568.0" x2="2780.0" y2="1568.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="1602.0" x2="2780.0" y2="1602.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="1636.0" x2="2780.0" y2="1636.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="1670.0" x2="2780.0" y2="1670.0" stroke="black" stroke-width="1"/>
+<line x1="2240.0" y1="1500.0" x2="2240.0" y2="1704.0" stroke="black" stroke-width="1"/>
+<line x1="2460.0" y1="1500.0" x2="2460.0" y2="1704.0" stroke="black" stroke-width="1"/>
+<line x1="2600.0" y1="1500.0" x2="2600.0" y2="1704.0" stroke="black" stroke-width="1"/>
+<line x1="2690.0" y1="1500.0" x2="2690.0" y2="1704.0" stroke="black" stroke-width="1"/>
+<text x="2148.0" y="1524.0" font-size="17" font-weight="bold" text-anchor="start">MARK</text>
+<text x="2248.0" y="1524.0" font-size="17" font-weight="bold" text-anchor="start">SECTION</text>
+<text x="2468.0" y="1524.0" font-size="17" font-weight="bold" text-anchor="start">LENGTH</text>
+<text x="2608.0" y="1524.0" font-size="17" font-weight="bold" text-anchor="start">QTY</text>
+<text x="2698.0" y="1524.0" font-size="17" font-weight="bold" text-anchor="start">PLF</text>
+<text x="2148.0" y="1558.0" font-size="17" font-weight="normal" text-anchor="start">B1</text>
+<text x="2248.0" y="1558.0" font-size="17" font-weight="normal" text-anchor="start">W16x31</text>
+<text x="2468.0" y="1558.0" font-size="17" font-weight="normal" text-anchor="start">40'-0"</text>
+<text x="2608.0" y="1558.0" font-size="17" font-weight="normal" text-anchor="start">6</text>
+<text x="2698.0" y="1558.0" font-size="17" font-weight="normal" text-anchor="start">31.0</text>
+<text x="2148.0" y="1592.0" font-size="17" font-weight="normal" text-anchor="start">J1</text>
+<text x="2248.0" y="1592.0" font-size="17" font-weight="normal" text-anchor="start">24K4</text>
+<text x="2468.0" y="1592.0" font-size="17" font-weight="normal" text-anchor="start">50'-0"</text>
+<text x="2608.0" y="1592.0" font-size="17" font-weight="normal" text-anchor="start">32</text>
+<text x="2698.0" y="1592.0" font-size="17" font-weight="normal" text-anchor="start">8.4</text>
+<text x="2148.0" y="1626.0" font-size="17" font-weight="normal" text-anchor="start">J2</text>
+<text x="2248.0" y="1626.0" font-size="17" font-weight="normal" text-anchor="start">18K3</text>
+<text x="2468.0" y="1626.0" font-size="17" font-weight="normal" text-anchor="start">40'-0"</text>
+<text x="2608.0" y="1626.0" font-size="17" font-weight="normal" text-anchor="start">21</text>
+<text x="2698.0" y="1626.0" font-size="17" font-weight="normal" text-anchor="start">6.6</text>
+<text x="2148.0" y="1660.0" font-size="17" font-weight="normal" text-anchor="start">C1</text>
+<text x="2248.0" y="1660.0" font-size="17" font-weight="normal" text-anchor="start">HSS8x8x1/4</text>
+<text x="2468.0" y="1660.0" font-size="17" font-weight="normal" text-anchor="start">24'-0"</text>
+<text x="2608.0" y="1660.0" font-size="17" font-weight="normal" text-anchor="start">9</text>
+<text x="2698.0" y="1660.0" font-size="17" font-weight="normal" text-anchor="start">25.8</text>
+<text x="2148.0" y="1694.0" font-size="17" font-weight="normal" text-anchor="start">C2</text>
+<text x="2248.0" y="1694.0" font-size="17" font-weight="normal" text-anchor="start">HSS6x6x1/4</text>
+<text x="2468.0" y="1694.0" font-size="17" font-weight="normal" text-anchor="start">14'-0"</text>
+<text x="2608.0" y="1694.0" font-size="17" font-weight="normal" text-anchor="start">5</text>
+<text x="2698.0" y="1694.0" font-size="17" font-weight="normal" text-anchor="start">19.0</text>
+<text x="2140.0" y="1758.0" font-size="24" font-weight="bold" text-anchor="start">ROOF DECK</text>
+<rect x="2140" y="1770" width="640" height="102" fill="none" stroke="black" stroke-width="2"/>
+<line x1="2140.0" y1="1804.0" x2="2780.0" y2="1804.0" stroke="black" stroke-width="1"/>
+<line x1="2140.0" y1="1838.0" x2="2780.0" y2="1838.0" stroke="black" stroke-width="1"/>
+<line x1="2340.0" y1="1770.0" x2="2340.0" y2="1872.0" stroke="black" stroke-width="1"/>
+<line x1="2660.0" y1="1770.0" x2="2660.0" y2="1872.0" stroke="black" stroke-width="1"/>
+<text x="2148.0" y="1794.0" font-size="17" font-weight="bold" text-anchor="start">AREA</text>
+<text x="2348.0" y="1794.0" font-size="17" font-weight="bold" text-anchor="start">DECK</text>
+<text x="2668.0" y="1794.0" font-size="17" font-weight="bold" text-anchor="start">SF</text>
+<text x="2148.0" y="1828.0" font-size="17" font-weight="normal" text-anchor="start">WAREHOUSE</text>
+<text x="2348.0" y="1828.0" font-size="17" font-weight="normal" text-anchor="start">1-1/2" TYPE B 22 GA</text>
+<text x="2668.0" y="1828.0" font-size="17" font-weight="normal" text-anchor="start">8,000</text>
+<text x="2148.0" y="1862.0" font-size="17" font-weight="normal" text-anchor="start">OFFICE</text>
+<text x="2348.0" y="1862.0" font-size="17" font-weight="normal" text-anchor="start">1-1/2" TYPE B 22 GA</text>
+<text x="2668.0" y="1862.0" font-size="17" font-weight="normal" text-anchor="start">4,000</text>
+<text x="2140.0" y="300.0" font-size="24" font-weight="bold" text-anchor="start">FRAMING NOTES</text>
+<text x="2140.0" y="344.0" font-size="17" font-weight="normal" text-anchor="start">1. ROOF DECK 1-1/2" TYPE B 22 GA GALVANIZED, 36/4 PATTERN, WELDED; 12,000 SF TOTAL.</text>
+<text x="2140.0" y="376.0" font-size="17" font-weight="normal" text-anchor="start">2. JOIST BRIDGING PER SJI; BEARING PLATES AT CMU WALLS.</text>
+<text x="2140.0" y="408.0" font-size="17" font-weight="normal" text-anchor="start">3. BEAMS B1 SIMPLE SHEAR CONNECTIONS, 3/4" A325 BOLTS; CONNECTION DESIGN BY FABRICATOR.</text>
+<text x="2140.0" y="440.0" font-size="17" font-weight="normal" text-anchor="start">4. COLUMNS C1 HSS8x8x1/4 x 24'-0" (9); C2 HSS6x6x1/4 x 14'-0" (5) AT GRID B.</text>
+<text x="2140.0" y="472.0" font-size="17" font-weight="normal" text-anchor="start">5. ROOF SCREENS AND RTU FRAMES: PROVIDE ANGLE FRAMES AT RTU-1 AND RTU-2 CURBS.</text>
+<g id="north" stroke="black" fill="none" stroke-width="2">
+<circle cx="3300" cy="300" r="60"/>
+<path d="M3300,250 L3320,330 L3300,310 L3280,330 Z" fill="black"/>
+<text x="3285" y="400" font-size="26" stroke="none" fill="black">N</text>
+</g>
+<g id="titleblock" font-size="22">
+<rect x="2960" y="1980" width="600" height="380" fill="none" stroke="black" stroke-width="3"/>
+<line x1="2960" y1="2080" x2="3560" y2="2080" stroke="black" stroke-width="2"/>
+<line x1="2960" y1="2180" x2="3560" y2="2180" stroke="black" stroke-width="2"/>
+<line x1="2960" y1="2270" x2="3560" y2="2270" stroke="black" stroke-width="2"/>
+<text x="2980" y="2015" font-size="24" font-weight="bold">BLACKLAND COMMERCIAL BUILDERS (SYNTHETIC DEMO)</text>
+<text x="2980" y="2050" font-size="20">PRAIRIE CREEK OFFICE/WAREHOUSE — BUILDING 2</text>
+<text x="2980" y="2110" font-size="18">SHEET TITLE</text>
+<text x="2980" y="2150" font-size="28" font-weight="bold">ROOF FRAMING PLAN</text>
+<text x="2980" y="2210" font-size="20">SCALE: 1/8" = 1'-0"</text>
+<text x="3300" y="2210" font-size="20">DATE: 09/12/2026</text>
+<text x="2980" y="2250" font-size="20">REV: 2   ADDENDUM 1: 09/19/2026</text>
+<text x="2980" y="2305" font-size="18">SHEET NUMBER</text>
+<text x="3300" y="2330" font-size="44" font-weight="bold">S-201</text>
+</g>
+</svg>

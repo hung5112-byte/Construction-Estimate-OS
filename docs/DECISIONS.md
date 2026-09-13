@@ -1,4 +1,4 @@
-# Decisions + Rules — VN Business OS
+# Decisions + Rules — Hardware Division OS
 
 > All decisions + principles locked in the brainstorming session 2026-05-05 → 2026-05-06.
 >
@@ -19,7 +19,7 @@
 
 ### Decision 2 — Department set
 **A + B + D (Core + Industry packs + On-demand creator)**
-- 13 core departments (per business-builder.plugin)
+- 13 core departments
 - Industry packs for specialized industries
 - A "hire a new agent" mechanism at runtime when missing expertise is detected
 

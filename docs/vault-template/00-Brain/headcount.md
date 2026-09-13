@@ -3,6 +3,8 @@ type: brain
 section: headcount
 aliases: ["Headcount", "People", "Staff"]
 last_updated: MM/DD/YYYY
+label: internal
+trust_tier: brain
 ---
 # Headcount / Agents
 

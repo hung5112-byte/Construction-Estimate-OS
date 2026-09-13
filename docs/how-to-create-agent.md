@@ -14,7 +14,7 @@ Each agent is one `.md` file with YAML frontmatter + a system-prompt body.
 | Field | Required | Type | Description |
 |---|---|---|---|
 | id | Y | str | Unique agent slug (kebab-case) |
-| name_vn | Y | str | Display name |
+| name_local | Y | str | Display name |
 | department | Y | str | Dept code (e.g. 05-service-operations) |
 | seniority | N | str | junior/mid/senior |
 | emoji | N | str | Optional |
@@ -25,7 +25,7 @@ Each agent is one `.md` file with YAML frontmatter + a system-prompt body.
 | temperature | N | float | LLM temp (0.0-1.0) |
 | model_override | N | str | Override the default model |
 
-> Note: `name_vn` is a schema key kept for backward compatibility; its value is now the English display name.
+> Note: `name_local` is a schema key kept for backward compatibility; its value is now the English display name.
 
 ## Body
 
@@ -37,7 +37,7 @@ The system prompt, in English — defines the role, the way of working, and the 
 ```markdown
 ---
 id: spares-planner
-name_vn: "Spares Planner"
+name_local: "Spares Planner"
 department: 05-service-operations
 seniority: mid
 expertise:

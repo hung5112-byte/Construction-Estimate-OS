@@ -18,7 +18,7 @@ class RoutingRule(BaseModel):
 
 class Department(BaseModel):
     code: str
-    name_vn: str
+    name_local: str
     name_en: Optional[str] = None
     tier: int
     description: str = ""

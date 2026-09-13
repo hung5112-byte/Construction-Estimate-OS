@@ -1,0 +1,273 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36in" height="24in" viewBox="0 0 3600 2400" font-family="Helvetica, Arial, sans-serif">
+<rect x="0" y="0" width="3600" height="2400" fill="white"/>
+<rect x="40" y="40" width="3520" height="2320" fill="none" stroke="black" stroke-width="4"/>
+<text x="200.0" y="188.0" font-size="24" font-weight="bold" text-anchor="start">DOOR SCHEDULE</text>
+<rect x="200" y="200" width="1320" height="510" fill="none" stroke="black" stroke-width="2"/>
+<line x1="200.0" y1="234.0" x2="1520.0" y2="234.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="268.0" x2="1520.0" y2="268.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="302.0" x2="1520.0" y2="302.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="336.0" x2="1520.0" y2="336.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="370.0" x2="1520.0" y2="370.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="404.0" x2="1520.0" y2="404.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="438.0" x2="1520.0" y2="438.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="472.0" x2="1520.0" y2="472.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="506.0" x2="1520.0" y2="506.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="540.0" x2="1520.0" y2="540.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="574.0" x2="1520.0" y2="574.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="608.0" x2="1520.0" y2="608.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="642.0" x2="1520.0" y2="642.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="676.0" x2="1520.0" y2="676.0" stroke="black" stroke-width="1"/>
+<line x1="320.0" y1="200.0" x2="320.0" y2="710.0" stroke="black" stroke-width="1"/>
+<line x1="560.0" y1="200.0" x2="560.0" y2="710.0" stroke="black" stroke-width="1"/>
+<line x1="920.0" y1="200.0" x2="920.0" y2="710.0" stroke="black" stroke-width="1"/>
+<line x1="1080.0" y1="200.0" x2="1080.0" y2="710.0" stroke="black" stroke-width="1"/>
+<line x1="1220.0" y1="200.0" x2="1220.0" y2="710.0" stroke="black" stroke-width="1"/>
+<text x="208.0" y="224.0" font-size="17" font-weight="bold" text-anchor="start">MARK</text>
+<text x="328.0" y="224.0" font-size="17" font-weight="bold" text-anchor="start">SIZE</text>
+<text x="568.0" y="224.0" font-size="17" font-weight="bold" text-anchor="start">TYPE</text>
+<text x="928.0" y="224.0" font-size="17" font-weight="bold" text-anchor="start">FRAME</text>
+<text x="1088.0" y="224.0" font-size="17" font-weight="bold" text-anchor="start">RATING</text>
+<text x="1228.0" y="224.0" font-size="17" font-weight="bold" text-anchor="start">HARDWARE SET</text>
+<text x="208.0" y="258.0" font-size="17" font-weight="normal" text-anchor="start">101</text>
+<text x="328.0" y="258.0" font-size="17" font-weight="normal" text-anchor="start">PR 3'-0" x 7'-0"</text>
+<text x="568.0" y="258.0" font-size="17" font-weight="normal" text-anchor="start">STOREFRONT PAIR</text>
+<text x="928.0" y="258.0" font-size="17" font-weight="normal" text-anchor="start">ALUM</text>
+<text x="1088.0" y="258.0" font-size="17" font-weight="normal" text-anchor="start">-</text>
+<text x="1228.0" y="258.0" font-size="17" font-weight="normal" text-anchor="start">HW-1 ENTRANCE</text>
+<text x="208.0" y="292.0" font-size="17" font-weight="normal" text-anchor="start">102</text>
+<text x="328.0" y="292.0" font-size="17" font-weight="normal" text-anchor="start">3'-0" x 7'-0"</text>
+<text x="568.0" y="292.0" font-size="17" font-weight="normal" text-anchor="start">HM/WOOD</text>
+<text x="928.0" y="292.0" font-size="17" font-weight="normal" text-anchor="start">HM</text>
+<text x="1088.0" y="292.0" font-size="17" font-weight="normal" text-anchor="start">-</text>
+<text x="1228.0" y="292.0" font-size="17" font-weight="normal" text-anchor="start">HW-2 OFFICE</text>
+<text x="208.0" y="326.0" font-size="17" font-weight="normal" text-anchor="start">103</text>
+<text x="328.0" y="326.0" font-size="17" font-weight="normal" text-anchor="start">3'-0" x 7'-0"</text>
+<text x="568.0" y="326.0" font-size="17" font-weight="normal" text-anchor="start">HM/WOOD</text>
+<text x="928.0" y="326.0" font-size="17" font-weight="normal" text-anchor="start">HM</text>
+<text x="1088.0" y="326.0" font-size="17" font-weight="normal" text-anchor="start">-</text>
+<text x="1228.0" y="326.0" font-size="17" font-weight="normal" text-anchor="start">HW-2 OFFICE</text>
+<text x="208.0" y="360.0" font-size="17" font-weight="normal" text-anchor="start">104</text>
+<text x="328.0" y="360.0" font-size="17" font-weight="normal" text-anchor="start">3'-0" x 7'-0"</text>
+<text x="568.0" y="360.0" font-size="17" font-weight="normal" text-anchor="start">HM/WOOD</text>
+<text x="928.0" y="360.0" font-size="17" font-weight="normal" text-anchor="start">HM</text>
+<text x="1088.0" y="360.0" font-size="17" font-weight="normal" text-anchor="start">-</text>
+<text x="1228.0" y="360.0" font-size="17" font-weight="normal" text-anchor="start">HW-2 OFFICE</text>
+<text x="208.0" y="394.0" font-size="17" font-weight="normal" text-anchor="start">105</text>
+<text x="328.0" y="394.0" font-size="17" font-weight="normal" text-anchor="start">3'-0" x 7'-0"</text>
+<text x="568.0" y="394.0" font-size="17" font-weight="normal" text-anchor="start">HM/WOOD</text>
+<text x="928.0" y="394.0" font-size="17" font-weight="normal" text-anchor="start">HM</text>
+<text x="1088.0" y="394.0" font-size="17" font-weight="normal" text-anchor="start">-</text>
+<text x="1228.0" y="394.0" font-size="17" font-weight="normal" text-anchor="start">HW-2 OFFICE</text>
+<text x="208.0" y="428.0" font-size="17" font-weight="normal" text-anchor="start">106</text>
+<text x="328.0" y="428.0" font-size="17" font-weight="normal" text-anchor="start">3'-0" x 7'-0"</text>
+<text x="568.0" y="428.0" font-size="17" font-weight="normal" text-anchor="start">HM/WOOD</text>
+<text x="928.0" y="428.0" font-size="17" font-weight="normal" text-anchor="start">HM</text>
+<text x="1088.0" y="428.0" font-size="17" font-weight="normal" text-anchor="start">-</text>
+<text x="1228.0" y="428.0" font-size="17" font-weight="normal" text-anchor="start">HW-2 OFFICE</text>
+<text x="208.0" y="462.0" font-size="17" font-weight="normal" text-anchor="start">107</text>
+<text x="328.0" y="462.0" font-size="17" font-weight="normal" text-anchor="start">3'-0" x 7'-0"</text>
+<text x="568.0" y="462.0" font-size="17" font-weight="normal" text-anchor="start">HM/WOOD</text>
+<text x="928.0" y="462.0" font-size="17" font-weight="normal" text-anchor="start">HM</text>
+<text x="1088.0" y="462.0" font-size="17" font-weight="normal" text-anchor="start">-</text>
+<text x="1228.0" y="462.0" font-size="17" font-weight="normal" text-anchor="start">HW-2 OFFICE</text>
+<text x="208.0" y="496.0" font-size="17" font-weight="normal" text-anchor="start">108</text>
+<text x="328.0" y="496.0" font-size="17" font-weight="normal" text-anchor="start">3'-0" x 7'-0"</text>
+<text x="568.0" y="496.0" font-size="17" font-weight="normal" text-anchor="start">HM/WOOD</text>
+<text x="928.0" y="496.0" font-size="17" font-weight="normal" text-anchor="start">HM</text>
+<text x="1088.0" y="496.0" font-size="17" font-weight="normal" text-anchor="start">-</text>
+<text x="1228.0" y="496.0" font-size="17" font-weight="normal" text-anchor="start">HW-2 OFFICE</text>
+<text x="208.0" y="530.0" font-size="17" font-weight="normal" text-anchor="start">109</text>
+<text x="328.0" y="530.0" font-size="17" font-weight="normal" text-anchor="start">3'-0" x 7'-0"</text>
+<text x="568.0" y="530.0" font-size="17" font-weight="normal" text-anchor="start">HM/WOOD</text>
+<text x="928.0" y="530.0" font-size="17" font-weight="normal" text-anchor="start">HM</text>
+<text x="1088.0" y="530.0" font-size="17" font-weight="normal" text-anchor="start">-</text>
+<text x="1228.0" y="530.0" font-size="17" font-weight="normal" text-anchor="start">HW-2 OFFICE</text>
+<text x="208.0" y="564.0" font-size="17" font-weight="normal" text-anchor="start">110</text>
+<text x="328.0" y="564.0" font-size="17" font-weight="normal" text-anchor="start">3'-0" x 7'-0"</text>
+<text x="568.0" y="564.0" font-size="17" font-weight="normal" text-anchor="start">HM RATED 90 MIN</text>
+<text x="928.0" y="564.0" font-size="17" font-weight="normal" text-anchor="start">HM</text>
+<text x="1088.0" y="564.0" font-size="17" font-weight="normal" text-anchor="start">90 MIN</text>
+<text x="1228.0" y="564.0" font-size="17" font-weight="normal" text-anchor="start">HW-3 RATED/CLOSER</text>
+<text x="208.0" y="598.0" font-size="17" font-weight="normal" text-anchor="start">200A</text>
+<text x="328.0" y="598.0" font-size="17" font-weight="normal" text-anchor="start">3'-0" x 7'-0"</text>
+<text x="568.0" y="598.0" font-size="17" font-weight="normal" text-anchor="start">HM EXTERIOR</text>
+<text x="928.0" y="598.0" font-size="17" font-weight="normal" text-anchor="start">HM</text>
+<text x="1088.0" y="598.0" font-size="17" font-weight="normal" text-anchor="start">-</text>
+<text x="1228.0" y="598.0" font-size="17" font-weight="normal" text-anchor="start">HW-4 EXTERIOR</text>
+<text x="208.0" y="632.0" font-size="17" font-weight="normal" text-anchor="start">200B</text>
+<text x="328.0" y="632.0" font-size="17" font-weight="normal" text-anchor="start">3'-0" x 7'-0"</text>
+<text x="568.0" y="632.0" font-size="17" font-weight="normal" text-anchor="start">HM EXTERIOR</text>
+<text x="928.0" y="632.0" font-size="17" font-weight="normal" text-anchor="start">HM</text>
+<text x="1088.0" y="632.0" font-size="17" font-weight="normal" text-anchor="start">-</text>
+<text x="1228.0" y="632.0" font-size="17" font-weight="normal" text-anchor="start">HW-4 EXTERIOR</text>
+<text x="208.0" y="666.0" font-size="17" font-weight="normal" text-anchor="start">OH-1</text>
+<text x="328.0" y="666.0" font-size="17" font-weight="normal" text-anchor="start">12'-0" x 14'-0"</text>
+<text x="568.0" y="666.0" font-size="17" font-weight="normal" text-anchor="start">INSULATED SECTIONAL OH</text>
+<text x="928.0" y="666.0" font-size="17" font-weight="normal" text-anchor="start">STEEL JAMB</text>
+<text x="1088.0" y="666.0" font-size="17" font-weight="normal" text-anchor="start">-</text>
+<text x="1228.0" y="666.0" font-size="17" font-weight="normal" text-anchor="start">MOTOR OPERATOR</text>
+<text x="208.0" y="700.0" font-size="17" font-weight="normal" text-anchor="start">OH-2</text>
+<text x="328.0" y="700.0" font-size="17" font-weight="normal" text-anchor="start">12'-0" x 14'-0"</text>
+<text x="568.0" y="700.0" font-size="17" font-weight="normal" text-anchor="start">INSULATED SECTIONAL OH</text>
+<text x="928.0" y="700.0" font-size="17" font-weight="normal" text-anchor="start">STEEL JAMB</text>
+<text x="1088.0" y="700.0" font-size="17" font-weight="normal" text-anchor="start">-</text>
+<text x="1228.0" y="700.0" font-size="17" font-weight="normal" text-anchor="start">MOTOR OPERATOR</text>
+<text x="1650.0" y="188.0" font-size="24" font-weight="bold" text-anchor="start">WINDOW SCHEDULE</text>
+<rect x="1650" y="200" width="1020" height="68" fill="none" stroke="black" stroke-width="2"/>
+<line x1="1650.0" y1="234.0" x2="2670.0" y2="234.0" stroke="black" stroke-width="1"/>
+<line x1="1770.0" y1="200.0" x2="1770.0" y2="268.0" stroke="black" stroke-width="1"/>
+<line x1="2010.0" y1="200.0" x2="2010.0" y2="268.0" stroke="black" stroke-width="1"/>
+<line x1="2310.0" y1="200.0" x2="2310.0" y2="268.0" stroke="black" stroke-width="1"/>
+<line x1="2570.0" y1="200.0" x2="2570.0" y2="268.0" stroke="black" stroke-width="1"/>
+<text x="1658.0" y="224.0" font-size="17" font-weight="bold" text-anchor="start">MARK</text>
+<text x="1778.0" y="224.0" font-size="17" font-weight="bold" text-anchor="start">SIZE</text>
+<text x="2018.0" y="224.0" font-size="17" font-weight="bold" text-anchor="start">TYPE</text>
+<text x="2318.0" y="224.0" font-size="17" font-weight="bold" text-anchor="start">GLAZING</text>
+<text x="2578.0" y="224.0" font-size="17" font-weight="bold" text-anchor="start">QTY</text>
+<text x="1658.0" y="258.0" font-size="17" font-weight="normal" text-anchor="start">W1</text>
+<text x="1778.0" y="258.0" font-size="17" font-weight="normal" text-anchor="start">4'-0" x 5'-0"</text>
+<text x="2018.0" y="258.0" font-size="17" font-weight="normal" text-anchor="start">FIXED ALUMINUM</text>
+<text x="2318.0" y="258.0" font-size="17" font-weight="normal" text-anchor="start">1" IGU LOW-E</text>
+<text x="2578.0" y="258.0" font-size="17" font-weight="normal" text-anchor="start">10</text>
+<text x="200.0" y="788.0" font-size="24" font-weight="bold" text-anchor="start">ROOM FINISH SCHEDULE</text>
+<rect x="200" y="800" width="1390" height="374" fill="none" stroke="black" stroke-width="2"/>
+<line x1="200.0" y1="834.0" x2="1590.0" y2="834.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="868.0" x2="1590.0" y2="868.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="902.0" x2="1590.0" y2="902.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="936.0" x2="1590.0" y2="936.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="970.0" x2="1590.0" y2="970.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="1004.0" x2="1590.0" y2="1004.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="1038.0" x2="1590.0" y2="1038.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="1072.0" x2="1590.0" y2="1072.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="1106.0" x2="1590.0" y2="1106.0" stroke="black" stroke-width="1"/>
+<line x1="200.0" y1="1140.0" x2="1590.0" y2="1140.0" stroke="black" stroke-width="1"/>
+<line x1="290.0" y1="800.0" x2="290.0" y2="1174.0" stroke="black" stroke-width="1"/>
+<line x1="530.0" y1="800.0" x2="530.0" y2="1174.0" stroke="black" stroke-width="1"/>
+<line x1="750.0" y1="800.0" x2="750.0" y2="1174.0" stroke="black" stroke-width="1"/>
+<line x1="930.0" y1="800.0" x2="930.0" y2="1174.0" stroke="black" stroke-width="1"/>
+<line x1="1230.0" y1="800.0" x2="1230.0" y2="1174.0" stroke="black" stroke-width="1"/>
+<line x1="1450.0" y1="800.0" x2="1450.0" y2="1174.0" stroke="black" stroke-width="1"/>
+<text x="208.0" y="824.0" font-size="17" font-weight="bold" text-anchor="start">NO.</text>
+<text x="298.0" y="824.0" font-size="17" font-weight="bold" text-anchor="start">NAME</text>
+<text x="538.0" y="824.0" font-size="17" font-weight="bold" text-anchor="start">FLOOR</text>
+<text x="758.0" y="824.0" font-size="17" font-weight="bold" text-anchor="start">BASE</text>
+<text x="938.0" y="824.0" font-size="17" font-weight="bold" text-anchor="start">WALLS</text>
+<text x="1238.0" y="824.0" font-size="17" font-weight="bold" text-anchor="start">CEILING</text>
+<text x="1458.0" y="824.0" font-size="17" font-weight="bold" text-anchor="start">CLG HT</text>
+<text x="208.0" y="858.0" font-size="17" font-weight="normal" text-anchor="start">101</text>
+<text x="298.0" y="858.0" font-size="17" font-weight="normal" text-anchor="start">LOBBY</text>
+<text x="538.0" y="858.0" font-size="17" font-weight="normal" text-anchor="start">LVT</text>
+<text x="758.0" y="858.0" font-size="17" font-weight="normal" text-anchor="start">RUBBER 4"</text>
+<text x="938.0" y="858.0" font-size="17" font-weight="normal" text-anchor="start">PAINT</text>
+<text x="1238.0" y="858.0" font-size="17" font-weight="normal" text-anchor="start">ACT 2x2</text>
+<text x="1458.0" y="858.0" font-size="17" font-weight="normal" text-anchor="start">10'-0"</text>
+<text x="208.0" y="892.0" font-size="17" font-weight="normal" text-anchor="start">102</text>
+<text x="298.0" y="892.0" font-size="17" font-weight="normal" text-anchor="start">CONFERENCE</text>
+<text x="538.0" y="892.0" font-size="17" font-weight="normal" text-anchor="start">CARPET TILE</text>
+<text x="758.0" y="892.0" font-size="17" font-weight="normal" text-anchor="start">RUBBER 4"</text>
+<text x="938.0" y="892.0" font-size="17" font-weight="normal" text-anchor="start">PAINT</text>
+<text x="1238.0" y="892.0" font-size="17" font-weight="normal" text-anchor="start">ACT 2x2</text>
+<text x="1458.0" y="892.0" font-size="17" font-weight="normal" text-anchor="start">9'-0"</text>
+<text x="208.0" y="926.0" font-size="17" font-weight="normal" text-anchor="start">103</text>
+<text x="298.0" y="926.0" font-size="17" font-weight="normal" text-anchor="start">OFFICE</text>
+<text x="538.0" y="926.0" font-size="17" font-weight="normal" text-anchor="start">CARPET TILE</text>
+<text x="758.0" y="926.0" font-size="17" font-weight="normal" text-anchor="start">RUBBER 4"</text>
+<text x="938.0" y="926.0" font-size="17" font-weight="normal" text-anchor="start">PAINT</text>
+<text x="1238.0" y="926.0" font-size="17" font-weight="normal" text-anchor="start">ACT 2x2</text>
+<text x="1458.0" y="926.0" font-size="17" font-weight="normal" text-anchor="start">9'-0"</text>
+<text x="208.0" y="960.0" font-size="17" font-weight="normal" text-anchor="start">104</text>
+<text x="298.0" y="960.0" font-size="17" font-weight="normal" text-anchor="start">OFFICE</text>
+<text x="538.0" y="960.0" font-size="17" font-weight="normal" text-anchor="start">CARPET TILE</text>
+<text x="758.0" y="960.0" font-size="17" font-weight="normal" text-anchor="start">RUBBER 4"</text>
+<text x="938.0" y="960.0" font-size="17" font-weight="normal" text-anchor="start">PAINT</text>
+<text x="1238.0" y="960.0" font-size="17" font-weight="normal" text-anchor="start">ACT 2x2</text>
+<text x="1458.0" y="960.0" font-size="17" font-weight="normal" text-anchor="start">9'-0"</text>
+<text x="208.0" y="994.0" font-size="17" font-weight="normal" text-anchor="start">105</text>
+<text x="298.0" y="994.0" font-size="17" font-weight="normal" text-anchor="start">BREAK ROOM</text>
+<text x="538.0" y="994.0" font-size="17" font-weight="normal" text-anchor="start">CARPET TILE</text>
+<text x="758.0" y="994.0" font-size="17" font-weight="normal" text-anchor="start">RUBBER 4"</text>
+<text x="938.0" y="994.0" font-size="17" font-weight="normal" text-anchor="start">PAINT</text>
+<text x="1238.0" y="994.0" font-size="17" font-weight="normal" text-anchor="start">ACT 2x2</text>
+<text x="1458.0" y="994.0" font-size="17" font-weight="normal" text-anchor="start">9'-0"</text>
+<text x="208.0" y="1028.0" font-size="17" font-weight="normal" text-anchor="start">108</text>
+<text x="298.0" y="1028.0" font-size="17" font-weight="normal" text-anchor="start">OFFICE</text>
+<text x="538.0" y="1028.0" font-size="17" font-weight="normal" text-anchor="start">CARPET TILE</text>
+<text x="758.0" y="1028.0" font-size="17" font-weight="normal" text-anchor="start">RUBBER 4"</text>
+<text x="938.0" y="1028.0" font-size="17" font-weight="normal" text-anchor="start">PAINT</text>
+<text x="1238.0" y="1028.0" font-size="17" font-weight="normal" text-anchor="start">ACT 2x2</text>
+<text x="1458.0" y="1028.0" font-size="17" font-weight="normal" text-anchor="start">9'-0"</text>
+<text x="208.0" y="1062.0" font-size="17" font-weight="normal" text-anchor="start">106</text>
+<text x="298.0" y="1062.0" font-size="17" font-weight="normal" text-anchor="start">RESTROOM M</text>
+<text x="538.0" y="1062.0" font-size="17" font-weight="normal" text-anchor="start">PORC. TILE</text>
+<text x="758.0" y="1062.0" font-size="17" font-weight="normal" text-anchor="start">TILE 6"</text>
+<text x="938.0" y="1062.0" font-size="17" font-weight="normal" text-anchor="start">TILE WAINSCOT/PAINT</text>
+<text x="1238.0" y="1062.0" font-size="17" font-weight="normal" text-anchor="start">GWB PAINTED</text>
+<text x="1458.0" y="1062.0" font-size="17" font-weight="normal" text-anchor="start">9'-0"</text>
+<text x="208.0" y="1096.0" font-size="17" font-weight="normal" text-anchor="start">107</text>
+<text x="298.0" y="1096.0" font-size="17" font-weight="normal" text-anchor="start">RESTROOM W</text>
+<text x="538.0" y="1096.0" font-size="17" font-weight="normal" text-anchor="start">PORC. TILE</text>
+<text x="758.0" y="1096.0" font-size="17" font-weight="normal" text-anchor="start">TILE 6"</text>
+<text x="938.0" y="1096.0" font-size="17" font-weight="normal" text-anchor="start">TILE WAINSCOT/PAINT</text>
+<text x="1238.0" y="1096.0" font-size="17" font-weight="normal" text-anchor="start">GWB PAINTED</text>
+<text x="1458.0" y="1096.0" font-size="17" font-weight="normal" text-anchor="start">9'-0"</text>
+<text x="208.0" y="1130.0" font-size="17" font-weight="normal" text-anchor="start">109</text>
+<text x="298.0" y="1130.0" font-size="17" font-weight="normal" text-anchor="start">IT / STORAGE</text>
+<text x="538.0" y="1130.0" font-size="17" font-weight="normal" text-anchor="start">CARPET TILE</text>
+<text x="758.0" y="1130.0" font-size="17" font-weight="normal" text-anchor="start">RUBBER 4"</text>
+<text x="938.0" y="1130.0" font-size="17" font-weight="normal" text-anchor="start">PAINT</text>
+<text x="1238.0" y="1130.0" font-size="17" font-weight="normal" text-anchor="start">ACT 2x2</text>
+<text x="1458.0" y="1130.0" font-size="17" font-weight="normal" text-anchor="start">9'-0"</text>
+<text x="208.0" y="1164.0" font-size="17" font-weight="normal" text-anchor="start">200</text>
+<text x="298.0" y="1164.0" font-size="17" font-weight="normal" text-anchor="start">WAREHOUSE</text>
+<text x="538.0" y="1164.0" font-size="17" font-weight="normal" text-anchor="start">SEALED CONC.</text>
+<text x="758.0" y="1164.0" font-size="17" font-weight="normal" text-anchor="start">NONE</text>
+<text x="938.0" y="1164.0" font-size="17" font-weight="normal" text-anchor="start">PAINTED CMU</text>
+<text x="1238.0" y="1164.0" font-size="17" font-weight="normal" text-anchor="start">EXPOSED</text>
+<text x="1458.0" y="1164.0" font-size="17" font-weight="normal" text-anchor="start">24'-0"</text>
+<text x="1650.0" y="788.0" font-size="24" font-weight="bold" text-anchor="start">PARTITION TYPES</text>
+<rect x="1650" y="800" width="1020" height="136" fill="none" stroke="black" stroke-width="2"/>
+<line x1="1650.0" y1="834.0" x2="2670.0" y2="834.0" stroke="black" stroke-width="1"/>
+<line x1="1650.0" y1="868.0" x2="2670.0" y2="868.0" stroke="black" stroke-width="1"/>
+<line x1="1650.0" y1="902.0" x2="2670.0" y2="902.0" stroke="black" stroke-width="1"/>
+<line x1="1770.0" y1="800.0" x2="1770.0" y2="936.0" stroke="black" stroke-width="1"/>
+<text x="1658.0" y="824.0" font-size="16" font-weight="bold" text-anchor="start">TYPE</text>
+<text x="1778.0" y="824.0" font-size="16" font-weight="bold" text-anchor="start">DESCRIPTION</text>
+<text x="1658.0" y="858.0" font-size="16" font-weight="normal" text-anchor="start">P1</text>
+<text x="1778.0" y="858.0" font-size="16" font-weight="normal" text-anchor="start">3-5/8" MTL STUD 16" OC, 5/8" GWB EA SIDE, TO DECK, BATT INSUL.</text>
+<text x="1658.0" y="892.0" font-size="16" font-weight="normal" text-anchor="start">P2</text>
+<text x="1778.0" y="892.0" font-size="16" font-weight="normal" text-anchor="start">P1 WITH 5/8" TYPE X GWB EA SIDE, 1-HR (RESTROOMS)</text>
+<text x="1658.0" y="926.0" font-size="16" font-weight="normal" text-anchor="start">CMU-8</text>
+<text x="1778.0" y="926.0" font-size="16" font-weight="normal" text-anchor="start">8" CMU GROUTED SOLID, EXTERIOR / DEMISING</text>
+<text x="1650.0" y="1088.0" font-size="24" font-weight="bold" text-anchor="start">HARDWARE SETS (SEE 08 71 00)</text>
+<rect x="1650" y="1100" width="1020" height="170" fill="none" stroke="black" stroke-width="2"/>
+<line x1="1650.0" y1="1134.0" x2="2670.0" y2="1134.0" stroke="black" stroke-width="1"/>
+<line x1="1650.0" y1="1168.0" x2="2670.0" y2="1168.0" stroke="black" stroke-width="1"/>
+<line x1="1650.0" y1="1202.0" x2="2670.0" y2="1202.0" stroke="black" stroke-width="1"/>
+<line x1="1650.0" y1="1236.0" x2="2670.0" y2="1236.0" stroke="black" stroke-width="1"/>
+<line x1="1770.0" y1="1100.0" x2="1770.0" y2="1270.0" stroke="black" stroke-width="1"/>
+<text x="1658.0" y="1124.0" font-size="15" font-weight="bold" text-anchor="start">SET</text>
+<text x="1778.0" y="1124.0" font-size="15" font-weight="bold" text-anchor="start">CONTENTS</text>
+<text x="1658.0" y="1158.0" font-size="15" font-weight="normal" text-anchor="start">HW-1</text>
+<text x="1778.0" y="1158.0" font-size="15" font-weight="normal" text-anchor="start">PAIR: CONTINUOUS HINGES, PANIC EXIT DEVICES, CLOSERS, CYLINDERS, WEATHERSTRIP</text>
+<text x="1658.0" y="1192.0" font-size="15" font-weight="normal" text-anchor="start">HW-2</text>
+<text x="1778.0" y="1192.0" font-size="15" font-weight="normal" text-anchor="start">SINGLE: 3 HINGES, OFFICE LOCKSET, WALL STOP</text>
+<text x="1658.0" y="1226.0" font-size="15" font-weight="normal" text-anchor="start">HW-3</text>
+<text x="1778.0" y="1226.0" font-size="15" font-weight="normal" text-anchor="start">SINGLE RATED: 3 HINGES, STOREROOM LOCK, CLOSER, SMOKE SEAL</text>
+<text x="1658.0" y="1260.0" font-size="15" font-weight="normal" text-anchor="start">HW-4</text>
+<text x="1778.0" y="1260.0" font-size="15" font-weight="normal" text-anchor="start">EXTERIOR: 3 HINGES, STOREROOM LOCK, CLOSER, THRESHOLD, WEATHERSTRIP</text>
+<g id="titleblock" font-size="22">
+<rect x="2960" y="1980" width="600" height="380" fill="none" stroke="black" stroke-width="3"/>
+<line x1="2960" y1="2080" x2="3560" y2="2080" stroke="black" stroke-width="2"/>
+<line x1="2960" y1="2180" x2="3560" y2="2180" stroke="black" stroke-width="2"/>
+<line x1="2960" y1="2270" x2="3560" y2="2270" stroke="black" stroke-width="2"/>
+<text x="2980" y="2015" font-size="24" font-weight="bold">BLACKLAND COMMERCIAL BUILDERS (SYNTHETIC DEMO)</text>
+<text x="2980" y="2050" font-size="20">PRAIRIE CREEK OFFICE/WAREHOUSE — BUILDING 2</text>
+<text x="2980" y="2110" font-size="18">SHEET TITLE</text>
+<text x="2980" y="2150" font-size="28" font-weight="bold">DOOR, WINDOW & FINISH SCHEDULES</text>
+<text x="2980" y="2210" font-size="20">SCALE: NONE</text>
+<text x="3300" y="2210" font-size="20">DATE: 09/12/2026</text>
+<text x="2980" y="2250" font-size="20">REV: 2   ADDENDUM 1: 09/19/2026</text>
+<text x="2980" y="2305" font-size="18">SHEET NUMBER</text>
+<text x="3300" y="2330" font-size="44" font-weight="bold">A-601</text>
+</g>
+</svg>

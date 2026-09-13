@@ -3,6 +3,8 @@ type: brain
 section: budget
 aliases: ["Budget", "Annual Budget"]
 last_updated: MM/DD/YYYY
+label: internal
+trust_tier: brain
 ---
 # Budget
 

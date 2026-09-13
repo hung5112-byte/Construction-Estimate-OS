@@ -3,6 +3,8 @@ type: brain
 section: strategy
 aliases: ["Strategy", "Business Strategy", "Vision"]
 last_updated: MM/DD/YYYY
+label: internal
+trust_tier: brain
 ---
 # Business Strategy
 

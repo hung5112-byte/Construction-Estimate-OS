@@ -101,7 +101,7 @@ class TestToolRouterJSONParse:
 class TestBrainContextFilter:
     def _make_agent(self, refs):
         return BaseAgent(
-            name_vn="X", role="X", system_prompt="X",
+            name_local="X", role="X", system_prompt="X",
             llm=_MockLLM(""), required_refs=refs,
         )
 

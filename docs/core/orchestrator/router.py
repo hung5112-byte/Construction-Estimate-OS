@@ -23,20 +23,20 @@ class TaskClassification:
     confidence: float = 0.8
 
 
-ROUTER_PROMPT = """You are the router that classifies a task for a hardware engineering & supply chain division.
+ROUTER_PROMPT = """You are the router that classifies a task for the preconstruction / estimating department of a commercial general contractor.
 
 ## Classification
-- SIMPLE: 1-2 departments, no meeting needed. E.g. draft an SOP, an ECO form, an RMA disposition letter.
-- COMPLEX: 3-5 departments debate. E.g. an NPI launch plan, a supplier change, an inventory/capacity plan.
-- STRATEGIC: all-department debate, with the division manager's sign-off mid-way. E.g. a new ODM, a factory transfer, a major certification program (PCI/EMVCo), a product-line EOL.
+- SIMPLE: 1-2 departments, no meeting needed. E.g. draft a scope letter, an RFI log, a bid/no-bid scorecard.
+- COMPLEX: 3-5 departments debate. E.g. a bid strategy for a large package, a self-perform vs subcontract decision, a value-engineering plan.
+- STRATEGIC: all-department debate, with the Chief Estimator's sign-off mid-way. E.g. a > $20M bid, a new building type or market, a GMP negotiation, a change to the markup policy.
 
 ## Departments (canonical codes)
-01-hardware-engineering (ME/EE/firmware/system architecture),
-02-npi-program-management (programs, certification, BOM/ECO/PLM, launch, sourcing, ODM schedules),
-03-quality-reliability (QMS, inspection, validation, firmware QA, field quality/RMA FA),
-04-mfg-supplier-quality (ODM quality, supplier quality, manufacturing engineering, test/yield),
-05-service-operations (repair, fulfillment, inventory, deployment, logistics),
-+ pack-specific (06-XX) when packs are installed
+01-bid-coordination (intake, sheet register, spec analysis, RFIs, final report),
+02-civil-structural (sitework, concrete, masonry, structural steel takeoff),
+03-architectural (envelope, interiors, openings, specialties takeoff),
+04-mep (mechanical, plumbing, fire protection, electrical, low voltage takeoff),
+05-cost-engineering (pricing, general conditions, risk/markups, sub-bid leveling),
+06-estimate-review (chief estimator review, scope-gap audit, constructability, benchmarks)
 
 ## REQUIRED JSON output
 ```json
@@ -51,9 +51,9 @@ ROUTER_PROMPT = """You are the router that classifies a task for a hardware engi
 - Infer from keywords in the brief
 - Reference the Brain to know which departments are active
 - Be strict: only choose departments that are genuinely needed
-- Cross-department issues usually need both sides of the handoff (e.g. a field-failure
-  spike needs 03-quality-reliability AND 01-hardware-engineering; a supplier defect
-  needs 04-mfg-supplier-quality AND 02-npi-program-management)
+- Cross-department issues usually need both sides of the handoff (e.g. a pricing question
+  needs 05-cost-engineering AND the discipline that took off the quantity; any bid decision
+  needs 06-estimate-review as the standing skeptic)
 """
 
 

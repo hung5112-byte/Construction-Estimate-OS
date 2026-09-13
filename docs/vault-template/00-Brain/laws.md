@@ -3,6 +3,8 @@ type: brain
 section: laws
 aliases: ["Law", "Legal", "Regulations", "Compliance"]
 last_updated: MM/DD/YYYY
+label: internal
+trust_tier: brain
 ---
 # Laws & Regulations relevant to the business
 

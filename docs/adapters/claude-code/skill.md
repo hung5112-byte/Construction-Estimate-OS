@@ -171,6 +171,6 @@ Total: ~8-15 minutes for a COMPLEX task. The manager spends ~5 minutes (answerin
 ## Credits
 
 - Author: **Brian H. Doan** — all agents, the division architecture, and the division templates
-- 192 US business templates in `templates-us/` adapted from `business-builder.plugin`
+- 192 US business templates in `templates-us/` (upstream attribution in NOTICE)
 - Engine debate pattern adapted from [TradingAgents](https://github.com/TauricResearch/TradingAgents)
 - Role definitions reference from [agency-agents](https://github.com/msitarzewski/agency-agents)

@@ -1,0 +1,55 @@
+code: 06-estimate-review
+name_local: Estimate Review
+tier: 1
+description: 'The chief estimator''s review — the standing skeptic. Runs the bid-day gate: every sheet accounted for, every quantity traced, no omissions against the spec index, no double counts, arithmetic ties, general conditions match the duration, markups per policy, $/SF and ratios inside the benchmark bands, constructability and schedule realism. Verdict APPROVE or REVISE with issues routed to the owning estimator. The chief estimator speaks for the department.'
+agents:
+- chief-estimator
+- scope-gap-auditor
+- constructability-reviewer
+- benchmark-analyst
+default_speaker: chief-estimator
+refs_folder: refs/
+depends_on:
+- 01-bid-coordination
+- 02-civil-structural
+- 03-architectural
+- 04-mep
+- 05-cost-engineering
+debate_role:
+  default: con
+routing_rules:
+- keywords:
+  - scope gap
+  - omission
+  - double count
+  - missed
+  - conflict
+  - coverage
+  - traceab
+  agent: scope-gap-auditor
+- keywords:
+  - constructab
+  - sequence
+  - logistics
+  - crane
+  - site access
+  - schedule realism
+  - means and methods
+  - phasing
+  agent: constructability-reviewer
+- keywords:
+  - benchmark
+  - $/sf
+  - per square foot
+  - sanity
+  - ratio
+  - outlier
+  - historical
+  agent: benchmark-analyst
+aliases_local:
+- Estimate Review
+- Estimate Review
+- Chief Estimator Review
+- Bid Review
+- Red Team
+author: Brian H. Doan

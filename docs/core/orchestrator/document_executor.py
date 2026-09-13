@@ -24,13 +24,12 @@ the list of TEMPLATES to create.
 
 Return a JSON array (JSON only, nothing else):
 [
-  {{"name": "engineering-change-order", "dept_code": "02-npi-program-management"}},
-  {{"name": "rma-process-sop", "dept_code": "05-service-operations"}}
+  {{"name": "pre-bid-rfi-log", "dept_code": "01-bid-coordination"}},
+  {{"name": "estimate-summary", "dept_code": "05-cost-engineering"}}
 ]
 
-Suggest only 1-5 practical templates. Use the department codes (01-hardware-engineering,
-02-npi-program-management, 03-quality-reliability, 04-mfg-supplier-quality,
-05-service-operations).
+Suggest only 1-5 practical templates. Use the department codes (01-bid-coordination,
+02-civil-structural, 03-architectural, 04-mep, 05-cost-engineering, 06-estimate-review).
 
 EXECUTION PLAN:
 {plan_text}
@@ -58,6 +57,61 @@ def _llm_extract_templates(plan_text: str, llm) -> list[dict]:
     except Exception as exc:
         log.warning("LLM template extraction failed: %s", exc)
     return []
+
+
+def _read(p: Path) -> str:
+    try:
+        return p.read_text(encoding="utf-8")
+    except OSError:
+        return ""
+
+
+_DOC_GEN_PROMPT = """You are producing a FINISHED, ready-to-file {doc_label} for a hardware
+engineering & supply chain division. Follow the TEMPLATE's structure, but do NOT copy its meta
+sections ("Description", "Information to collect", "Suggested template", "File-generation prompt").
+Output ONLY the finished document in clean markdown — a clear title (#), section headings (##),
+real markdown tables where the structure calls for them, and specific content drawn from the
+decision and plan below. Fill in concrete part numbers, costs, owners, dates, decisions, KPI
+targets, dispositions and approvals from the context. No placeholders, no brackets, no "[TBD]" —
+write it as if it is being filed today.
+
+TEMPLATE (structure to follow):
+{template}
+
+DECISION REPORT (the approved solution to document):
+{decision}
+
+EXECUTION PLAN (tasks, owners, gates):
+{plan}
+
+TASK BRIEF:
+{brief}
+"""
+
+
+def _generate_filled(template_text: str, task_folder: Path, doc_label: str, llm) -> str | None:
+    """LLM-generate the filled document from the template structure + this task's decision + plan."""
+    if llm is None:
+        return None
+    prompt = _DOC_GEN_PROMPT.format(
+        doc_label=doc_label,
+        template=template_text[:3500],
+        decision=_read(task_folder / "07-decision-report.md")[:7000],
+        plan=_read(task_folder / "08-execution-plan.md")[:4000],
+        brief=_read(task_folder / "00-brief.md")[:800],
+    )
+    try:
+        import re
+        out = llm.complete([
+            {"role": "system", "content": prompt},
+            {"role": "user", "content": "Produce the finished document now — markdown only, no commentary."},
+        ]).strip()
+        out = re.sub(r"^```(?:markdown)?\s*", "", out)
+        out = re.sub(r"\s*```$", "", out).strip()
+        return out if len(out) > 200 else None
+    except Exception as exc:  # noqa: BLE001
+        log.warning("Doc generation failed for %s: %s", doc_label, exc)
+        return None
 
 
 def execute_documents(
@@ -148,12 +202,21 @@ def execute_documents(
                     output_rel=out_rel,
                     rows=[substitutions],
                 )
-            else:
-                # .md or .docx → write_docx handles both
+            elif ext == ".docx":
                 out_path = writer.write_docx(
                     template_path=resolved,
-                    output_rel=out_rel if ext == ".docx" else out_rel.replace(ext, ".docx"),
+                    output_rel=out_rel,
                     substitutions=substitutions,
+                )
+            else:
+                # .md template → LLM-generate the FILLED document from the template
+                # structure + this task's decision report + execution plan, then render.
+                template_text = _read(resolved)
+                filled = _generate_filled(template_text, task_folder, tname.replace("-", " "), llm)
+                out_path = writer.write_docx_text(
+                    filled or template_text,
+                    out_rel.replace(ext, ".docx"),
+                    substitutions,
                 )
             rel = out_path.relative_to(vault_root)
             generated.append(str(rel))

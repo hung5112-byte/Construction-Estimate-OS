@@ -1,4 +1,4 @@
-"""Load config from .vncoderc or vncode-config.yaml."""
+"""Load config from .bd-os.yaml or bd-os-config.yaml."""
 from __future__ import annotations
 from pathlib import Path
 from typing import Literal, Optional
@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field
 class MeetingConfig(BaseModel):
     # Defaults tuned for MCP sampling latency: each LLM call ~10-30s via Claude Desktop.
     # Lite defaults (0/1/3) run ~1-2 minutes, enough for most operational decisions.
-    # The manager opts into a deeper debate via .vncoderc when needed (old 2/3/5 → strategic decisions).
+    # The manager opts into a deeper debate via .bd-os.yaml when needed (old 2/3/5 → strategic decisions).
     max_perspective_rounds: int = 0
     max_debate_rounds: int = 1
     max_perspective_debate_rounds: int = 1
@@ -20,7 +20,7 @@ class MeetingConfig(BaseModel):
     # department manager synthesizes them into the department perspective.
     # Cost: ~1 extra LLM call per team agent per participating department
     # (a 5-department meeting goes from ~5 to ~29 round-1 calls). Turn off via
-    # .vncoderc (`meeting: {intra_department_round: false}`) for quick tasks.
+    # .bd-os.yaml (`meeting: {intra_department_round: false}`) for quick tasks.
     intra_department_round: bool = True
 
 
@@ -30,6 +30,39 @@ class LLMConfig(BaseModel):
     max_retries: int = 3
     max_tokens_per_task: int = 100_000
     max_cost_usd_per_task: float = 2.0
+    # Per-call timeout for the claude-cli provider (pass 6). None → env
+    # BD_OS_LLM_TIMEOUT_SECONDS → provider default (900s). Heavy full-context
+    # calls on the subscription run 60-85s+ and can queue under Max-plan
+    # rate limits shared across concurrent sessions.
+    timeout_seconds: Optional[float] = None
+
+
+class PlanPassConfig(BaseModel):
+    """Critic Pass B — report↔plan consistency before Stop 2 (lightweight)."""
+    enabled: bool = True
+    max_rounds: int = 1  # lightweight by design (critic-draft §2 R6)
+
+
+class CriticConfig(BaseModel):
+    """Critic loop knobs — defaults per critic-draft §7 (C4/C10 constants).
+
+    Tier awareness (ADR-003 Addendum B): the critic is company law at T2+
+    (COMPLEX/STRATEGIC), skippable at T0/T1 (SIMPLE). `apply_to_classes` reads
+    the task classification from 01-routing.md — policy data, never hardcoded.
+    """
+    enabled: bool = True
+    threshold: float = 0.6           # judged-aggregate floor (OpenHands)
+    max_rounds: int = 1              # Pass A cap — Brian's 2026-07-06 ruling: score once, no revision loop by default; failures reach Stop 1 bannered w/ scorecard (raise per-vault in .bd-os.yaml if needed)
+    judge_samples: int = 5           # ADK majority-vote default
+    confidence_floor: float = 0.80   # ECC — per-issue self-report minimum
+    issue_vote_floor: int = 3        # of judge_samples must corroborate an issue
+    blocking_vote_floor: int = 4     # ≥4/5 FAIL agreement blocks (2026-07-05 ruling Q4)
+    judge_model: str = "quick"       # cheap tier (C10); "deep"/explicit id accepted
+    max_assumptions: int = 5         # >5 ASSUMPTION lines trip R1 (ruling Q2)
+    apply_to_classes: list[str] = Field(
+        default_factory=lambda: ["COMPLEX", "STRATEGIC"]
+    )
+    plan_pass: PlanPassConfig = Field(default_factory=PlanPassConfig)
 
 
 # translator_mode controls how far the TranslatorPipeline is applied:
@@ -43,6 +76,7 @@ class Config(BaseModel):
     vault_path: Optional[str] = None
     meeting: MeetingConfig = Field(default_factory=MeetingConfig)
     llm: LLMConfig = Field(default_factory=LLMConfig)
+    critic: CriticConfig = Field(default_factory=CriticConfig)
     # P1.6: translator scope — default "final_only" preserves old behavior
     translator_mode: TranslatorMode = "final_only"
 
@@ -50,7 +84,6 @@ class Config(BaseModel):
 KNOWN_API_KEYS = [
     "TAVILY_API_KEY",
     "ANTHROPIC_API_KEY",
-    "DEEPSEEK_API_KEY",
     "GOOGLE_API_KEY",
     "OPENAI_API_KEY",
     "BRAVE_API_KEY",
@@ -58,8 +91,8 @@ KNOWN_API_KEYS = [
 
 
 def load_config(path: Optional[Path] = None) -> Config:
-    """Load config from path, ~/.vncoderc, or return defaults."""
-    candidates = ([path] if path else []) + [Path.home() / ".vncoderc"]
+    """Load config from path, ~/.bd-os.yaml, or return defaults."""
+    candidates = ([path] if path else []) + [Path.home() / ".bd-os.yaml"]
     for p in candidates:
         if p and p.exists():
             try:
@@ -99,7 +132,7 @@ def save_vault_env(vault_path: Path, keys: dict[str, str]) -> Path:
     existing = load_vault_env(vault) if env_path.exists() else {}
     existing.update({k: v for k, v in keys.items() if v})
 
-    lines = ["# VN Business OS — API keys (do NOT commit this file)"]
+    lines = ["# Construction Estimate OS — API keys (do NOT commit this file)"]
     for k in KNOWN_API_KEYS:
         if k in existing:
             lines.append(f"{k}={existing[k]}")

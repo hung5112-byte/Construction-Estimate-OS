@@ -1,6 +1,6 @@
 """LangGraph routing logic - quyet dinh node ke tiep dua state.
 
-Adapted from TradingAgents/graph/conditional_logic.py voi neutral naming.
+Adapted from TradingAgents/graph/conditional_logic.py with neutral naming.
 """
 from __future__ import annotations
 from core.meeting.debate_state import MeetingState

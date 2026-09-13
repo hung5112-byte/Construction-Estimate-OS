@@ -32,11 +32,11 @@ def test_mcp_server_imports():
         bd_onboard,
         bd_upgrade,
     )
-    assert mcp.name == "bd-business-os"
+    assert mcp.name == "construction-estimate-os"
 
 
-def test_mcp_server_has_9_tools():
-    """FastMCP.list_tools() returns the 9 registered tools."""
+def test_mcp_server_has_11_tools():
+    """FastMCP.list_tools() returns the 11 registered tools."""
     from core.mcp_server import mcp
 
     tools = asyncio.run(mcp.list_tools())
@@ -47,6 +47,8 @@ def test_mcp_server_has_9_tools():
         "bd_meeting",
         "bd_approve",
         "bd_execute",
+        "bd_outcome",
+        "bd_ingest",
         "bd_draft",
         "bd_status",
         "bd_onboard",
@@ -62,12 +64,12 @@ def test_mcp_tool_schemas_exclude_context_param():
     by_name = {t.name: t for t in tools}
 
     # bd_run: brief + vault, NO ctx
-    vn_run_props = set(by_name["bd_run"].inputSchema.get("properties", {}).keys())
-    assert vn_run_props == {"brief", "vault"}
+    run_props = set(by_name["bd_run"].inputSchema.get("properties", {}).keys())
+    assert run_props == {"brief", "vault"}
 
     # bd_status: only vault (no ctx — it's pure)
-    vn_status_props = set(by_name["bd_status"].inputSchema.get("properties", {}).keys())
-    assert vn_status_props == {"vault"}
+    status_props = set(by_name["bd_status"].inputSchema.get("properties", {}).keys())
+    assert status_props == {"vault"}
 
 
 def test_vn_status_returns_brain_summary(tmp_path):
