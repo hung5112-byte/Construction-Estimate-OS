@@ -144,3 +144,64 @@ def test_pricing_basis_and_three_point_ranges(tmp_path):
     bad = Ledger()
     bad.add("08", "x", "x", 1, "EA", "A-1", "manual", "03-architectural", pricing_basis="guess")
     assert any("unknown pricing_basis" in p for p in bad.validate())
+
+
+def _led():
+    from core.estimating.takeoff_ledger import Ledger
+    return Ledger()
+
+
+def test_reconcile_identity_matches_across_tag_keys_and_sheets():
+    led = _led()
+    led.add("08", "08-hm-door-single", "HM door 102", 1, "EA", "A-601", "schedule", "03", tags={"mark": "102", "type": "HM"})
+    led.add("08", "08-hm-door-single", "HM door 102 seen on plan", 1, "EA", "A-101", "vision", "03", tags={"mark": "102", "room": "102"}, confidence=0.8)
+    led.add("23", "23-rtu-7-5-ton", "RTU-1", 1, "EA", "M-101", "schedule", "04", tags={"tag": "RTU-1"})
+    led.add("23", "23-rtu-7-5-ton", "RTU-1 on roof plan", 1, "EA", "M-101 rev 2", "vision", "04", tags={"mark": "rtu-1"})
+    disc = led.reconcile()
+    assert disc == []
+    assert [(i.item_code, i.method, i.qty) for i in led.items] == [("08-hm-door-single", "schedule", 1.0), ("23-rtu-7-5-ton", "schedule", 1.0)]
+    assert "confirmed by vision" in led.items[0].notes and led.items[0].confidence > 0.8
+
+
+def test_reconcile_untagged_totals_collapse_and_disagreements_are_logged():
+    led = _led()
+    led.add("03", "03-sog-4in", "4in slab on grade", 4000, "SF", "S-101", "derived", "02", confidence=0.6)
+    led.add("03", "03-sog-4in", "4in SOG office bay", 4000, "SF", "S-101", "vision", "02", confidence=0.8)          # agrees → vision governs over derived
+    led.add("05", "05-metal-deck", "Metal deck (from schedule)", 12000, "SF", "S-201", "schedule", "02")
+    led.add("05", "05-metal-deck", "Deck — warehouse", 8000, "SF", "S-201", "vision", "02", confidence=0.8)
+    led.add("05", "05-metal-deck", "Deck — office", 4000, "SF", "S-201", "vision", "02", confidence=0.8)               # 8000+4000 = 12000 agrees → schedule kept, both vision lines dropped
+    led.add("09", "09-partition-p1", "Partitions from room perimeters", 4000, "SF", "A-101", "derived", "03", confidence=0.5)
+    led.add("09", "09-partition-p1", "Partitions measured on tiles", 4900, "SF", "A-101", "vision", "03", confidence=0.6)  # 22% apart → vision governs, discrepancy logged
+    led.add("05", "05-misc-metals", "Lintels", 1, "LS", "S-201", "vision", "02")
+    led.add("05", "05-misc-metals", "Bollards", 1, "LS", "S-201", "vision", "02")                                        # same method twice: never merged
+    disc = led.reconcile()
+    got = {(i.item_code, i.method): i.qty for i in led.items}
+    assert got[("03-sog-4in", "vision")] == 4000 and ("03-sog-4in", "derived") not in got
+    assert got[("05-metal-deck", "schedule")] == 12000 and ("05-metal-deck", "vision") not in got
+    assert got[("09-partition-p1", "vision")] == 4900 and ("09-partition-p1", "derived") not in got
+    assert sum(1 for i in led.items if i.item_code == "05-misc-metals") == 2
+    assert [(d.item_code, d.a_method, d.b_method, d.delta_pct) for d in disc] == [("09-partition-p1", "vision", "derived", 18.4)]   # delta relative to the governing quantity
+    assert sum(i.qty for i in led.items if i.item_code == "05-metal-deck") == 12000      # no double count
+
+
+def test_reconcile_pass_b_spans_sheets_and_identity_mismatches():
+    led = _led()
+    led.add("26", "26-troffer-led-2x4", "2x4 troffer type A", 40, "EA", "E-101", "schedule", "04", tags={"type": "A"})
+    led.add("26", "26-troffer-led-2x4", "2x4 troffer (type A) on plan", 40, "EA", "E-101", "vision", "04", tags={"mark": "A"}, confidence=0.7)
+    led.add("08", "08-hm-door-single", "HM door 102", 1, "EA", "A-601", "schedule", "03", tags={"mark": "102"})
+    led.add("08", "08-hm-door-single", "HM door 103", 1, "EA", "A-601", "schedule", "03", tags={"mark": "103"})
+    led.add("08", "08-hm-door-single", "HM single doors counted on the plan", 3, "EA", "A-101", "vision", "03", confidence=0.7)   # 3 vs 2 → 50% apart → logged, schedule kept
+    disc = led.reconcile()
+    got = [(i.item_code, i.method, i.qty) for i in led.items]
+    assert got == [("26-troffer-led-2x4", "schedule", 40.0), ("08-hm-door-single", "schedule", 1.0), ("08-hm-door-single", "schedule", 1.0)]
+    assert [(d.item_code, d.a_qty, d.b_qty, d.delta_pct) for d in disc] == [("08-hm-door-single", 2.0, 3.0, 50.0)]
+
+
+def test_normalize_sheet_ids():
+    from core.estimating.pipeline import normalize_sheet
+    ids = ["E-101", "A-101", "A-601", "S-101"]
+    assert normalize_sheet("E-101 rev 2", ids) == ("E-101", "2")
+    assert normalize_sheet("A-101 (tile r0c1)", ids) == ("A-101", None)
+    assert normalize_sheet("a-601", ids) == ("A-601", None)
+    assert normalize_sheet("A-1011", ids) == ("A-1011", None)          # not a prefix match on a different sheet
+    assert normalize_sheet("Project-Manual", ids) == ("Project-Manual", None)

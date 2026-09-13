@@ -47,6 +47,7 @@ A **commercial general contractor's preconstruction team** — 2–4 estimators 
 ce-os estimate intake <package>   S0  sheet register · spec index · shadow cards · tiles · project profile
 ce-os estimate takeoff <folder>   S1  deterministic seed takeoff (schedules + vector geometry + derived lines)
         /estimate (Claude Code)   S1' discipline reader agents in parallel confirm, correct, add — with tiles
+ce-os estimate read <folder>      S2  the same three leads headless via `claude -p` on the Max subscription (needs --render at intake)
 ce-os estimate rfi <folder>       S3  05-clarification.md   ⏸ PAUSE — you answer (or --auto-assume for an unattended run)
 ce-os estimate resume <folder>
 ce-os estimate price <folder>     S4  cost library (yours first, seed second) · GCs by duration · markups per policy · benchmark
@@ -76,7 +77,7 @@ python3.12 -m venv .venv && .venv/bin/pip install -e ".[dev]"
     --name "Prairie Creek Office/Warehouse Bldg 2" --type office-warehouse --city Plano --vault .
 ```
 
-That produces `02-Estimates/<slug>/` with the register, spec index, ledger, questions, estimate, scorecard and report, and `03-Outputs/<slug>/` with the workbook and the Basis of Estimate. With the agents, run `/estimate <package-dir>` inside Claude Code in this repo instead (see `.claude/commands/estimate.md`). For a same-day ROM with the trade agents reading your notes and photos, run `/rom --type restaurant-ti --name 'Pho 88' --sf 3200 --city Plano` (see `.claude/commands/rom.md`).
+That produces `02-Estimates/<slug>/` with the register, spec index, ledger, questions, estimate, scorecard and report, and `03-Outputs/<slug>/` with the workbook and the Basis of Estimate. With the agents, run `/estimate <package-dir>` inside Claude Code in this repo instead (see `.claude/commands/estimate.md`), or stay headless with `ce-os estimate run … --vision` / `ce-os estimate read <folder>`, which runs the three discipline leads through `claude -p` on the Max subscription (set `BD_OS_LLM_PROVIDER=claude-cli` and `BD_OS_CLAUDE_BIN=<path to a logged-in claude binary>`; the child process is scrubbed of API keys). For a same-day ROM with the trade agents reading your notes and photos, run `/rom --type restaurant-ti --name 'Pho 88' --sf 3200 --city Plano` (see `.claude/commands/rom.md`).
 
 Regenerate the sample package (needs Chrome): `.venv/bin/python scripts/make_sample_set.py`.
 
@@ -98,7 +99,8 @@ Regenerate the sample package (needs Chrome): `.venv/bin/python scripts/make_sam
 - **Engine** — the fleet engine (`docs/core/`: Brain, clarifier, critic, memory, retrieval, ingest, handoff, signals, MCP server) plus `docs/core/estimating/` (register, text, tables, geometry, render, spec index, ledger, cost engine, RFI, gates, workbook, report, pipeline) and 8 tool wrappers (`sheet_register`, `sheet_geometry`, `sheet_text`, `sheet_tables`, `spec_index`, `cost_engine`, `benchmark_check`, `review_gates`).
 - **Brain** — `00-Brain/`: strategy, services, budget, headcount, laws (Texas retainage/bonds/sales tax, Davis-Bacon, codes), state, glossary, **markup-policy**, **benchmarks** (RLB Q2 2026 Dallas, Turner BCI), **bid-policy**, **cost-library** policy.
 - **Fixture** — `docs/tests/fixtures/sample-set-prairie-creek/`: a 12,000 SF office/warehouse, 9 ARCH-D vector sheets (G/A/S/M/P/E with real schedules) + Project Manual, with `ground_truth.json`. The seed takeoff matches it: 12 doors, 10 windows, 440 LF perimeter, 12,000 SF, 16.66 tons of steel, 82 sprinkler heads.
-- **Harness** — `/estimate` command, `estimate-takeoff` workflow (readers in parallel → spec analyst → RFI coordinator), `drawing-reading` skill, 26 subagents.
+- **Harness** — `/estimate` command, `estimate-takeoff` workflow (readers in parallel → spec analyst → RFI coordinator), `/rom` + `rom-trades` workflow, `drawing-reading` skill, 27 subagents.
+- **Headless readers** — `docs/core/estimating/headless_readers.py`: the three leads run via `claude -p --tools Read --json-schema …` inside the estimate folder; same `{lines, questions, tiles_read}` contract as the harness readers; lines merge with identity-based reconcile and questions fold into the RFI stage. MCP stage `read`.
 - **Playbooks** — `docs/core/tools/data/estimating/playbooks/*.yaml`: eight project types, 101 seed assemblies (placeholders marked `[to load]`), quantity rules, common RFIs, exclusions, risk checklists with mitigations, benchmark bands.
 - **Service contract v1** — `docs/contracts/estimate-service.v1.md` + ten JSON schemas; a contract test validates real outputs; `ce-os estimate serve` (Starlette, loopback, optional `CE_SERVICE_TOKEN`) and MCP tools `bd_estimate_rom / intake / stage / run / status`.
 - **Evals** — `ce-os estimate eval`: coverage × precision@25% composite on ground-truth sets (the seed takeoff scores 1.000 on the synthetic set), ROM band hit-rate on `<case>/intake.json + actual.json` sets, N runs with spread.

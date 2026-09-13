@@ -420,6 +420,26 @@ def estimate_takeoff(folder, reader_json):
     console.print(f"   next: [cyan]ce-os estimate rfi {folder}[/]")
 
 
+@estimate.command("read")
+@click.argument("folder", type=click.Path(exists=True, file_okay=False))
+@click.option("--reader", "readers", multiple=True, help="civil-structural-lead | architectural-lead | mep-lead (default: every lead with sheets)")
+@click.option("--model", default=None, help="Override the CLI's default model for the readers")
+@click.option("--timeout", type=float, default=1800, show_default=True, help="Seconds per reader")
+@click.option("--sequential", is_flag=True, help="Run the readers one after another instead of in parallel")
+@click.option("--dry-run", is_flag=True, help="Build the prompts and print their sizes; no LLM call")
+@click.option("--vault", type=click.Path(), default=".", help="Repo/vault root that holds 01-Departments/ (the agent prompts)")
+def estimate_read(folder, readers, model, timeout, sequential, dry_run, vault):
+    """S2 headless — the discipline leads read the rendered sheets via `claude -p` (Max subscription) and merge their lines."""
+    from pathlib import Path
+    from core.estimating import pipeline
+    results = pipeline.read(Path(folder), _vault(vault), list(readers) or None, model=model, timeout=timeout, parallel=not sequential, dry_run=dry_run)
+    for r in results:
+        if dry_run:
+            console.print(f"[cyan]dry-run[/] {r['reader']}: {r['sheets']} sheets, {r['tiles']} tiles, {r['seed_lines']} seed lines, prompt {r['prompt_chars']:,} chars")
+        else:
+            console.print(f"[green]✓ {r['reader']}[/] {r['lines']} lines, {r['questions']} questions, {r['tiles_read']} tiles read, {r['wall_seconds']}s / {r['num_turns']} turns → ledger {r.get('ledger_lines')} lines")
+
+
 @estimate.command("rfi")
 @click.argument("folder", type=click.Path(exists=True, file_okay=False))
 def estimate_rfi(folder):
@@ -569,11 +589,12 @@ def estimate_serve(host, port, vault):
 @click.option("--city", default="Dallas", show_default=True)
 @click.option("--class", "aace_class", type=int, default=2, show_default=True)
 @click.option("--render/--no-render", default=False)
+@click.option("--vision", is_flag=True, help="Add the headless vision readers (claude -p on the Max subscription); implies --render")
 @click.option("--vault", type=click.Path(), default=".")
-def estimate_run(package_dir, name, building_type, city, aace_class, render, vault):
-    """Unattended end-to-end run (--no-llm path): every open question is auto-assumed and stated."""
+def estimate_run(package_dir, name, building_type, city, aace_class, render, vision, vault):
+    """Unattended end-to-end run: every open question is auto-assumed and stated (--vision adds the headless readers)."""
     from core.estimating import pipeline
-    folder = pipeline.run_all(_vault(vault), package_dir, name, building_type, city, aace_class, render=render)
+    folder = pipeline.run_all(_vault(vault), package_dir, name, building_type, city, aace_class, render=render, vision=vision)
     console.print(f"[green]✓ estimate complete[/] {folder}")
     console.print(f"   report: {folder / '08-estimate-report.md'}\n   outputs: {_vault(vault) / '03-Outputs' / folder.name}")
 

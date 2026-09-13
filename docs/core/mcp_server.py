@@ -561,7 +561,8 @@ def bd_estimate_intake(package_dir: str, name: str, building_type: str, city: st
 
 @mcp.tool()
 def bd_estimate_stage(folder: str, stage: str, vault: str = "", auto_assume: bool = False) -> dict:
-    """Run one stage on an estimate folder: takeoff | rfi | resume | price | review | report | approve.
+    """Run one stage on an estimate folder: takeoff | read | rfi | resume | price | review | report | approve.
+    read = the headless vision readers (claude -p on the Max subscription; needs renders from intake).
     resume needs the answers ticked in 05-clarification.md (or auto_assume=True for an unattended run)."""
     from core.estimating import pipeline
 
@@ -570,6 +571,8 @@ def bd_estimate_stage(folder: str, stage: str, vault: str = "", auto_assume: boo
     if stage == "takeoff":
         led, checks = pipeline.seed_takeoff(f)
         return _est_status(f) | {"lines": len(led.items), "checks": checks}
+    if stage == "read":
+        return _est_status(f) | {"readers": pipeline.read(f, v)}
     if stage == "rfi":
         qs = pipeline.rfi(f)
         return _est_status(f) | {"questions": len(qs)}
@@ -588,7 +591,7 @@ def bd_estimate_stage(folder: str, stage: str, vault: str = "", auto_assume: boo
     if stage == "approve":
         outs = pipeline.approve(f, v)
         return _est_status(f) | {"outputs": [str(o) for o in outs]}
-    return {"error": f"unknown stage {stage!r}; use takeoff|rfi|resume|price|review|report|approve"}
+    return {"error": f"unknown stage {stage!r}; use takeoff|read|rfi|resume|price|review|report|approve"}
 
 
 @mcp.tool()

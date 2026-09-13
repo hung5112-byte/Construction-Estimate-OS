@@ -582,12 +582,33 @@ def seed_takeoff(folder: Path, waste: dict[str, float] | None = None) -> tuple[L
     return led, checks
 
 
+def normalize_sheet(raw: str, sheet_ids: list[str]) -> tuple[str, str | None]:
+    """Readers write things like 'E-101 rev 2' or 'A-101 (tile r0c1)'; the ledger keys on the register's sheet_id.
+    Returns (sheet_id, revision) — the revision only when the suffix says so; unknown sheets pass through untouched."""
+    raw = raw.strip()
+    if not raw:
+        return raw, None
+    up = raw.upper()
+    for sid in sheet_ids:
+        if up == sid.upper():
+            return sid, None
+        if up.startswith(sid.upper()) and (len(up) == len(sid) or not up[len(sid)].isalnum()):
+            rest = raw[len(sid):].strip(" ,;:-–—()")
+            m = re.search(r"(?i)\brev(?:ision)?\.?\s*([A-Z0-9]+)", rest)
+            return sid, (m.group(1) if m else None)
+    return raw, None
+
+
 def merge_reader_lines(folder: Path, reader_json: Path) -> Ledger:
     """Harness path: merge lines written by a reader agent (same schema) into the ledger and re-reconcile."""
     led = Ledger.from_json((folder / "04-takeoff-ledger.json").read_text(encoding="utf-8"))
-    for d in _load(reader_json):
-        led.add(d["division"], d["item_code"], d["description"], d["qty"], d["unit"], d["sheet"], d.get("method", "vision"), d.get("discipline", ""),
-                revision=d.get("revision"), section=d.get("section"), confidence=float(d.get("confidence", 0.7)), waste_pct=float(d.get("waste_pct", 0)), notes=d.get("notes", ""), tags=d.get("tags", {}),
+    data = _load(reader_json)
+    register = _load(folder / "01-sheet-register.json") if (folder / "01-sheet-register.json").exists() else []
+    sheet_ids = sorted({s["sheet_id"] for s in register}, key=len, reverse=True)
+    for d in (data.get("lines", []) if isinstance(data, dict) else data):
+        sheet, revision = normalize_sheet(str(d.get("sheet", "")), sheet_ids)
+        led.add(d["division"], d["item_code"], d["description"], d["qty"], d["unit"], sheet, d.get("method", "vision"), d.get("discipline", ""),
+                revision=d.get("revision") or revision, section=d.get("section"), confidence=float(d.get("confidence", 0.7)), waste_pct=float(d.get("waste_pct", 0)), notes=d.get("notes", ""), tags=d.get("tags", {}),
                 pricing_basis=d.get("pricing_basis", ""))
     disc = [x.to_dict() for x in led.reconcile()]
     _write(folder / "04-takeoff-ledger.json", led.to_json())
@@ -610,8 +631,38 @@ def rfi(folder: Path) -> list:
             disc.append({"item_code": c["check"], "description": c["check"], "a_method": "schedule", "a_qty": c["schedule"], "b_method": "vector", "b_qty": c["vector"],
                          "delta_pct": round(abs(c["vector"] - c["schedule"]) / (c["schedule"] or 1) * 100, 1), "sheet": c["sheet"]})
     qs = build_questions(register, sheets, disc, spec, div01, items)
+    qs += reader_questions(folder, {q.text for q in qs})
     write_questions(folder, qs)
     return qs
+
+
+def reader_questions(folder: Path, seen: set[str] | None = None) -> list:
+    """Questions the reader agents (harness or headless) wrote to readers/*.json, de-duplicated by text."""
+    from core.estimating.rfi import EstimateQuestion
+
+    seen = set(seen or ())
+    out = []
+    for f in sorted((Path(folder) / "readers").glob("*.json")) if (Path(folder) / "readers").exists() else []:
+        data = _load(f)
+        if not isinstance(data, dict):
+            continue
+        for q in data.get("questions", []) or data.get("open", []):
+            text = str(q.get("text", "")).strip()
+            if not text or text in seen:
+                continue
+            seen.add(text)
+            sev = str(q.get("severity", "WARN")).upper()
+            out.append(EstimateQuestion(text, str(q.get("citation") or f.stem), sev if sev in ("CRITICAL", "WARN", "INFO") else "WARN",
+                                        str(q.get("exposure") or "n/a"), ["reader", f.stem]))
+    return out
+
+
+def read(folder: Path, agents_root: Path, readers: list[str] | None = None, model: str | None = None, timeout: float = 1800,
+         parallel: bool = True, dry_run: bool = False) -> list[dict]:
+    """S2 headless — the discipline leads read the rendered sheets through `claude -p` and their lines are merged."""
+    from core.estimating.headless_readers import read_folder
+
+    return read_folder(Path(folder), Path(agents_root), readers, model=model, timeout=timeout, parallel=parallel, dry_run=dry_run)
 
 
 def resume(folder: Path, auto_assume: bool = False) -> list:
@@ -952,10 +1003,14 @@ def _reprice_rom(folder: Path, vault_root: Path | None, profile: Profile, led: L
     return _load(folder / "06-estimate.json")
 
 
-def run_all(vault_root: Path, package_dir: Path, name: str, building_type: str, city: str, aace_class: int = 2, render: bool = False) -> Path:
-    """Unattended demo path (--no-llm): every open question is auto-assumed and stated."""
-    folder = intake(vault_root, package_dir, name, building_type, city, aace_class, render=render)
+def run_all(vault_root: Path, package_dir: Path, name: str, building_type: str, city: str, aace_class: int = 2, render: bool = False,
+            vision: bool = False, agents_root: Path | None = None) -> Path:
+    """Unattended path: every open question is auto-assumed and stated. vision=True adds the headless readers
+    (claude -p on the Max subscription) between the seed takeoff and the RFI stage."""
+    folder = intake(vault_root, package_dir, name, building_type, city, aace_class, render=render or vision)
     seed_takeoff(folder)
+    if vision:
+        read(folder, agents_root or vault_root)
     rfi(folder)
     resume(folder, auto_assume=True)
     price(folder, vault_root)

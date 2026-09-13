@@ -129,34 +129,91 @@ class Ledger:
             problems.extend(it.validate())
         return problems
 
+    #: which method governs when two methods counted the same thing (a human's manual count beats the schedule,
+    #: the schedule beats what the vision pass or the vector pass saw on the plan, and a derived rule is last)
+    METHOD_RANK = {m: i for i, m in enumerate(("manual", "schedule", "vector", "vision", "derived", "spec", "allowance"))}
+    IDENTITY_KEYS = ("assembly", "mark", "tag", "room")
+
+    @classmethod
+    def identity(cls, item: TakeoffItem) -> str:
+        """One normalized identity value regardless of which tag key carried it — a door mark, an equipment tag,
+        a room number or a playbook assembly code. `tag: RTU-1` and `mark: RTU-1` are the same unit."""
+        for k in cls.IDENTITY_KEYS:
+            v = item.tags.get(k)
+            if v not in (None, ""):
+                return str(v).strip().upper()
+        return ""
+
     def reconcile(self, tolerance_pct: float = 10.0) -> list[Discrepancy]:
-        """Same item_code counted by two methods on the same sheet → keep the most authoritative
-        (schedule > vector > vision > manual > derived) and record the disagreement."""
-        rank = {m: i for i, m in enumerate(("schedule", "manual", "vector", "vision", "derived", "spec", "allowance"))}
-        groups: dict[tuple, list[TakeoffItem]] = {}
-        for it in self.items:
-            ident = tuple(sorted((k, str(v)) for k, v in it.tags.items() if k in ("room", "mark", "tag", "assembly")))
-            # the same physical thing (a door mark, a room, an equipment tag, a playbook assembly) counted by two
-            # methods — on any sheet, note or photo — is one line; lines without an identity stay per sheet
-            key = (it.item_code, ident) if ident else (it.item_code, it.sheet, it.description)
-            groups.setdefault(key, []).append(it)
-        keep: list[TakeoffItem] = []
+        """Collapse every quantity counted by more than one method into ONE line (the governing method's) and log
+        the disagreement. Two passes: (A) lines with an identity (mark/tag/room/assembly) match across sheets —
+        the schedule's door 102 and the plan's door 102 are one door; (B) lines without an identity match per
+        item_code + sheet by comparing each method's total — the derived 4,000 SF slab and the vision pass's
+        4,000 SF slab are one slab. Lines of the governing method all survive; the others are dropped with a
+        note on the survivor. Same-method lines are never merged (two vision deck lines stay two lines)."""
         disc: list[Discrepancy] = []
-        for key, its in groups.items():
-            code, sheet = key[0], (its[0].sheet if len(key) == 2 else key[1])
-            if len(its) == 1 or len({i.method for i in its}) == 1:
-                keep.extend(its)      # one line, or several lines of the same kind (not a disagreement)
+        rank = self.METHOD_RANK
+        keep: list[TakeoffItem] = []
+        # ---- pass A: identity across sheets
+        groups: dict[tuple, list[TakeoffItem]] = {}
+        untagged: list[TakeoffItem] = []
+        for it in self.items:
+            ident = self.identity(it)
+            if ident:
+                groups.setdefault((it.item_code, ident), []).append(it)
+            else:
+                untagged.append(it)
+        for (code, ident), its in groups.items():
+            its = sorted(its, key=lambda i: (rank.get(i.method, 99), i.id))
+            gov = its[0]
+            if len({i.method for i in its}) > 1:
+                for other in its[1:]:
+                    if other.method == gov.method:
+                        keep.append(other)      # same method twice under one identity: not ours to merge
+                        continue
+                    self._note_confirmation(gov, other, tolerance_pct, disc)
+            keep.append(gov)
+        # ---- pass B: per item_code across the whole set, compare each method's total of what survived pass A.
+        # Two methods measuring the same line item are two measurements of one scope: the schedule's 40 type-A
+        # troffers and the plan's 40 marked-A troffers, the derived 12,000 SF of deck and the plan's 8,000 + 4,000.
+        # The governing method's lines all survive; the other method's lines are dropped (agreement) or dropped
+        # and logged (disagreement) — never silently added. Same-method lines are never merged.
+        pending = keep + untagged
+        by_code: dict[str, list[TakeoffItem]] = {}
+        for it in pending:
+            by_code.setdefault(it.item_code, []).append(it)
+        keep = []
+        for code, its in by_code.items():
+            methods = sorted({i.method for i in its}, key=lambda m: rank.get(m, 99))
+            if len(methods) == 1:
+                keep.extend(its)
                 continue
-            its = sorted(its, key=lambda i: rank.get(i.method, 99))
-            best = its[0]
-            for other in its[1:]:
-                base = best.qty if best.qty else 1.0
-                delta = abs(other.qty - best.qty) / base * 100.0
+            gov_m = methods[0]
+            gov_lines = sorted((i for i in its if i.method == gov_m), key=lambda i: i.id)
+            gov_total = sum(i.qty for i in gov_lines)
+            for m in methods[1:]:
+                other = [i for i in its if i.method == m]
+                other_total = sum(i.qty for i in other)
+                delta = abs(gov_total - other_total) / gov_total * 100 if gov_total else (0.0 if other_total == 0 else 100.0)
+                where = ", ".join(sorted({i.sheet for i in other}))
                 if delta > tolerance_pct:
-                    disc.append(Discrepancy(code, best.description, best.method, best.qty, other.method, other.qty, round(delta, 1), sheet))
-            keep.append(best)
-        self.items = sorted(keep, key=lambda i: (i.division, i.id))
+                    disc.append(Discrepancy(code, gov_lines[0].description, gov_m, round(gov_total, 3), m, round(other_total, 3), round(delta, 1), gov_lines[0].sheet))
+                    gov_lines[0].notes = (gov_lines[0].notes + " | " if gov_lines[0].notes else "") + f"{m} counted {other_total:g} {gov_lines[0].unit} on {where} ({delta:.0f}% apart) — see RFI"
+                else:
+                    gov_lines[0].notes = (gov_lines[0].notes + " | " if gov_lines[0].notes else "") + f"confirmed by {m} ({other_total:g} {gov_lines[0].unit} on {where})"
+                    gov_lines[0].confidence = max(gov_lines[0].confidence, min(0.95, gov_lines[0].confidence + 0.1))
+            keep.extend(gov_lines)
+        self.items = sorted(keep, key=lambda i: i.id)
         return disc
+
+    def _note_confirmation(self, gov: TakeoffItem, other: TakeoffItem, tolerance_pct: float, disc: list) -> None:
+        delta = abs(gov.qty - other.qty) / gov.qty * 100 if gov.qty else (0.0 if other.qty == 0 else 100.0)
+        if delta > tolerance_pct:
+            disc.append(Discrepancy(gov.item_code, gov.description, gov.method, gov.qty, other.method, other.qty, round(delta, 1), gov.sheet))
+            gov.notes = (gov.notes + " | " if gov.notes else "") + f"{other.method} counted {other.qty:g} {gov.unit} on {other.sheet} ({delta:.0f}% apart) — see RFI"
+        else:
+            gov.notes = (gov.notes + " | " if gov.notes else "") + f"confirmed by {other.method} on {other.sheet}"
+            gov.confidence = max(gov.confidence, min(0.95, gov.confidence + 0.1))
 
     def to_json(self) -> str:
         return json.dumps([asdict(i) for i in self.items], indent=2)

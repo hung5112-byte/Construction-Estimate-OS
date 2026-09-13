@@ -12,6 +12,7 @@ python3.12 -m venv .venv
 ```bash
 F=$(.venv/bin/ce-os estimate intake ./my-bid-package --name "Cedar Springs MOB" --type "medical office" --city Dallas --class 2 --render --vault . | grep -o '02-Estimates/[^ ]*')
 .venv/bin/ce-os estimate takeoff $F           # seed ledger from schedules + vector geometry
+.venv/bin/ce-os estimate read $F --vault .    # optional: headless vision readers (claude -p, Max subscription; needs --render above)
 .venv/bin/ce-os estimate rfi $F               # ⏸ answer 05-clarification.md
 .venv/bin/ce-os estimate resume $F
 .venv/bin/ce-os estimate price $F --vault .   # 03-Cost-Library/*.csv first, seed library second (marked)
@@ -26,7 +27,7 @@ Unattended (every open question becomes a stated, stamped assumption):
 .venv/bin/ce-os estimate run ./my-bid-package --name "..." --type office-warehouse --city Plano --vault .
 ```
 
-Inside Claude Code in this repo: `/estimate ./my-bid-package --name "..." --type office-warehouse --city Plano` runs the same stages with the discipline reader agents on the rendered tiles.
+Inside Claude Code in this repo: `/estimate ./my-bid-package --name "..." --type office-warehouse --city Plano` runs the same stages with the discipline reader agents on the rendered tiles. Headless equivalent: `ce-os estimate run … --vision` with `BD_OS_LLM_PROVIDER=claude-cli BD_OS_CLAUDE_BIN=<logged-in claude binary>` exported.
 
 ## Same-day ROM (no drawings)
 
