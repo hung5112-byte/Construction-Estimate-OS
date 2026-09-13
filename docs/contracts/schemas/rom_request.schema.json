@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://construction-estimate-os/contracts/v1/rom_request.schema.json",
+  "type": "object",
+  "title": "ROM intake form",
+  "required": [
+    "project_type"
+  ],
+  "properties": {
+    "project_type": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "gross_sf": {
+      "type": "number"
+    },
+    "city": {
+      "type": "string"
+    },
+    "aace_class": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 5
+    },
+    "plans_available": {
+      "type": "boolean"
+    },
+    "fields": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "excluded_trades": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "allowances": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "amount"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "duration_days": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "stories": {
+      "type": "integer"
+    },
+    "delivery": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

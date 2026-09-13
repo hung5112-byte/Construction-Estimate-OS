@@ -204,7 +204,7 @@ def test_failed_conversion_does_not_stop_batch(vault: Path):
     assert not card_path_for(bad).exists()
 
 
-def test_mcp_tool_count_is_11():
+def test_mcp_tool_count_is_16():
     import asyncio
 
     from core.mcp_server import mcp

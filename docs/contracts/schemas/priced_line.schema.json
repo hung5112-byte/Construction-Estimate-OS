@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://construction-estimate-os/contracts/v1/priced_line.schema.json",
+  "type": "object",
+  "title": "Priced line",
+  "required": [
+    "item_id",
+    "division",
+    "item_code",
+    "description",
+    "qty",
+    "unit",
+    "labor",
+    "material",
+    "equipment",
+    "sub",
+    "total",
+    "source",
+    "sheet",
+    "method",
+    "confidence",
+    "flags",
+    "pricing_basis",
+    "low",
+    "high"
+  ],
+  "properties": {
+    "item_id": {
+      "type": "string"
+    },
+    "division": {
+      "type": "string"
+    },
+    "item_code": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "qty": {
+      "type": "number"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "unit_labor": {
+      "type": "number"
+    },
+    "unit_material": {
+      "type": "number"
+    },
+    "unit_equipment": {
+      "type": "number"
+    },
+    "unit_sub": {
+      "type": "number"
+    },
+    "labor": {
+      "type": "number"
+    },
+    "material": {
+      "type": "number"
+    },
+    "equipment": {
+      "type": "number"
+    },
+    "sub": {
+      "type": "number"
+    },
+    "total": {
+      "type": "number"
+    },
+    "source": {
+      "type": "string"
+    },
+    "sheet": {
+      "type": "string"
+    },
+    "method": {
+      "type": "string"
+    },
+    "confidence": {
+      "type": "number"
+    },
+    "flags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pricing_basis": {
+      "type": "string"
+    },
+    "unit_low": {
+      "type": "number"
+    },
+    "unit_high": {
+      "type": "number"
+    },
+    "low": {
+      "type": "number"
+    },
+    "high": {
+      "type": "number"
+    }
+  }
+}

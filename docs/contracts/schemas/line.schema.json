@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://construction-estimate-os/contracts/v1/line.schema.json",
+  "type": "object",
+  "title": "Takeoff ledger line",
+  "required": [
+    "id",
+    "division",
+    "item_code",
+    "description",
+    "qty",
+    "unit",
+    "sheet",
+    "method",
+    "discipline",
+    "confidence"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "division": {
+      "type": "string",
+      "pattern": "^[0-9]{2}$"
+    },
+    "item_code": {
+      "type": "string",
+      "pattern": "^[0-9]{2}-[a-z0-9\\-]+$"
+    },
+    "description": {
+      "type": "string"
+    },
+    "qty": {
+      "type": "number"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "sheet": {
+      "type": "string"
+    },
+    "revision": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "section": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "method": {
+      "enum": [
+        "schedule",
+        "vector",
+        "vision",
+        "manual",
+        "derived",
+        "spec",
+        "allowance"
+      ]
+    },
+    "discipline": {
+      "type": "string"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "waste_pct": {
+      "type": "number"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "object"
+    },
+    "pricing_basis": {
+      "enum": [
+        "",
+        "historical",
+        "assembly",
+        "manual",
+        "allowance",
+        "sub_bid",
+        "online_check",
+        "seed_placeholder"
+      ]
+    }
+  }
+}

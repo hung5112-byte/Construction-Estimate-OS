@@ -41,6 +41,9 @@ from core.estimating.cost_engine import (
     price_ledger,
     summary_by_division,
 )
+from core.estimating.cost_engine import three_point_totals
+from core.estimating.proposal import findings_markdown, proposal_markdown
+from core.estimating.rfi import build_rom_questions
 from core.estimating.pdfio import open_pdf
 from core.estimating.report import report_markdown, write_basis_of_estimate_docx
 from core.estimating.review_gates import run_gates, scorecard_markdown, verdict
@@ -49,6 +52,8 @@ from core.estimating.takeoff_ledger import Ledger, load_waste_factors
 from core.estimating.workbook import write_workbook
 
 ESTIMATES_DIR = "02-Estimates"
+# AACE 56R-08 (building/general construction) expected accuracy at 80% confidence, after contingency
+ACCURACY_BANDS = {5: "−30% / +50%", 4: "−20% / +30%", 3: "−15% / +20%", 2: "−10% / +15%", 1: "−5% / +10%"}
 
 
 def _slug(name: str) -> str:
@@ -72,6 +77,7 @@ class Profile:
     building_type: str
     city: str
     aace_class: int = 2
+    accuracy_band: str = ""
     gross_sf: float = 0.0
     stories: int = 1
     delivery: str = "hard-bid"
@@ -84,6 +90,8 @@ class Profile:
     specs: list[str] = field(default_factory=list)
     assumptions: list[str] = field(default_factory=list)
     exclusions: dict = field(default_factory=dict)   # division → reason (cited), e.g. {"31": "site work by separate contract (01 10 00 p5)"}
+    exclusion_texts: list[str] = field(default_factory=list)   # client-facing exclusions (playbook + risk mitigations)
+    playbook: dict = field(default_factory=dict)               # {project_type, version, status} when a ROM playbook drove the estimate
     notes: str = ""
 
     def to_dict(self) -> dict:
@@ -205,6 +213,7 @@ def intake(vault_root: Path, package_dir: Path, name: str, building_type: str, c
         _write(folder / "02-spec-index.json", json.dumps({"file": None, "pages": 0, "sections": []}))
         _write(folder / "02-division-01.json", "{}")
     _profile_from_code_summary(sheets, profile)
+    profile.accuracy_band = ACCURACY_BANDS.get(int(profile.aace_class), "")
     if not profile.gross_sf:
         profile.gross_sf = sum(t["area_sf"] or 0 for sh in sheets for t in sh["room_tags"])
     _write(folder / "00-project-profile.json", json.dumps(profile.to_dict(), indent=2))
@@ -223,7 +232,7 @@ def _profile_md(p: Profile, register, comp) -> str:
     out = ["---", "type: project_profile", f"aace_class: {p.aace_class}", f"building_type: {p.building_type}", "---",
            f"# Project profile — {p.name}", "",
            f"- Building type: {p.building_type} · {p.gross_sf:,.0f} SF · {p.stories} story · {p.city}",
-           f"- Delivery: {p.delivery} · AACE class {p.aace_class}",
+           f"- Delivery: {p.delivery} · AACE class {p.aace_class} (expected accuracy {p.accuracy_band or ACCURACY_BANDS.get(int(p.aace_class), '?')})",
            f"- Bid due: {p.bid_due or 'not found'} · RFI cutoff: {p.rfi_cutoff or 'not found'} · Duration: {p.duration_days or '?'} calendar days",
            f"- Areas from code summary: {p.areas}" if p.areas else "- Areas: from room tags",
            f"- Heights: {p.heights_ft} ft" if p.heights_ft else "",
@@ -654,7 +663,7 @@ def price(folder: Path, vault_root: Path | None = None) -> dict:
     for it in led.items:
         if it.method == "allowance" and it.tags.get("amount") and it.item_code not in lib:
             from core.estimating.cost_engine import CostRow
-            lib[it.item_code] = CostRow(it.item_code, it.description, "LS", 0, 0, 0, float(it.tags["amount"]), f"spec allowance p{it.tags.get('page', '?')}")
+            lib[it.item_code] = CostRow(it.item_code, it.description, "LS", 0, 0, 0, float(it.tags["amount"]), f"spec allowance p{it.tags.get('page', '?')}", pricing_basis="allowance")
     factor, f_src = load_location_factor(profile.city)
     lines = price_ledger(led, lib, location_factor=factor)
     direct = round(sum(p.total for p in lines), 2)
@@ -678,17 +687,18 @@ def price(folder: Path, vault_root: Path | None = None) -> dict:
     gc_total = round(sum(g.total for g in gcs), 2)
     policy = policy_from_brain(vault_root, profile.aace_class, profile.building_type, profile.duration_days)
     markups = markup_stack(direct, materials, gc_total, policy)
+    three_point = three_point_totals(lines, materials, gc_total, policy)
     summary = summary_by_division(lines, profile.gross_sf, spec_index.DIVISIONS)
     total = markups[-1].amount
     bench = benchmark_check(total, profile.gross_sf, profile.building_type, gc_total, direct, labor)
     meta = {"generated": datetime.now().isoformat(timespec="seconds"), "library_paths": [str(p) for p in paths], "location_factor": factor, "location_source": f_src,
-            "duration_months": months, "policy": asdict(policy), "disclaimer": SEED_DISCLAIMER if any(r.uncertain for r in lib.values()) else "", "benchmark": bench}
+            "duration_months": months, "policy": asdict(policy), "three_point": three_point, "aace_class": profile.aace_class, "accuracy_band": profile.accuracy_band, "disclaimer": SEED_DISCLAIMER if any(r.uncertain for r in lib.values()) else "", "benchmark": bench}
     _write(folder / "06-estimate.json", estimate_json(lines, gcs, markups, summary, meta))
     md = ["---", "type: estimate", f"total_bid: {total}", "---", f"# Estimate — {profile.name}", "", f"Direct ${direct:,.0f} · GCs ${gc_total:,.0f} ({gc_total / direct * 100 if direct else 0:.1f}%) · **Total bid ${total:,.0f}** · ${total / profile.gross_sf:,.2f}/SF" if profile.gross_sf else "", "",
           "| Division | Title | Total | $/SF | % |", "|---|---|---|---|---|"] + [f"| {r['division']} | {r['title']} | ${r['total']:,.0f} | {r['per_sf']} | {r['pct']}% |" for r in summary] + \
          ["", "| Markup | % | Amount | Basis |", "|---|---|---|---|"] + [f"| {m.name} | {m.pct} | ${m.amount:,.0f} | {m.basis} |" for m in markups] + \
          ["", "## Benchmark", ""] + [f"- {c['check']}: {c['value']} vs {c['band']} → **{c['status']}** ({c['source']})" for c in bench["checks"]] + \
-         ["", f"Flags: unpriced {sum('UNPRICED' in p.flags for p in lines)} · uncertain {sum('UNCERTAIN' in p.flags for p in lines)} · low-confidence {sum('LOW-CONFIDENCE' in p.flags for p in lines)}", "", meta["disclaimer"]]
+         ["", f"Three-point (same markups on low / target / high direct): **${three_point['low']['total']:,.0f} / ${three_point['target']['total']:,.0f} / ${three_point['high']['total']:,.0f}** (spread {three_point['spread_pct']}%) · class {profile.aace_class}, expected accuracy {profile.accuracy_band}", "", f"Flags: unpriced {sum('UNPRICED' in p.flags for p in lines)} · uncertain {sum('UNCERTAIN' in p.flags for p in lines)} · low-confidence {sum('LOW-CONFIDENCE' in p.flags for p in lines)}", "", meta["disclaimer"]]
     _write(folder / "06-estimate.md", "\n".join(md) + "\n")
     return _load(folder / "06-estimate.json")
 
@@ -702,8 +712,21 @@ def review(folder: Path, confidence_floor: float = 0.6) -> tuple[list[dict], str
     spec = _load(folder / "02-spec-index.json").get("sections", [])
     qs = _load(folder / "05-questions.json") if (folder / "05-questions.json").exists() else []
     profile = _load(folder / "00-project-profile.json")
+    risks = _load(folder / "06-risks.json") if (folder / "06-risks.json").exists() else None
+    playbook_trades = None
+    if profile.get("playbook"):
+        excl = {k[len("trade:"):]: v for k, v in (profile.get("exclusions") or {}).items() if k.startswith("trade:")}
+        playbook_trades = {t: excl.get(t) for t in profile["playbook"].get("typical_trades", [])}
+        if est.get("general_conditions") and "general-conditions" in playbook_trades and not playbook_trades["general-conditions"]:
+            playbook_trades["general-conditions"] = "priced in the general-conditions worksheet"
+    # client-facing proposal draft + client-safe scan (feeds G13); the writer agent may rephrase later, never remove findings
+    proposal_text, findings = proposal_markdown(profile, est, items, qs, exclusions_extra=profile.get("exclusion_texts") or [])
+    _write(folder / "09-proposal-draft.md", proposal_text)
+    _write(folder / "09-client-safe-findings.md", findings_markdown(findings))
+    _write(folder / "09-client-safe-findings.json", json.dumps([f.to_dict() for f in findings], indent=2))
     gates = run_gates(register, items, est["lines"], est["summary_by_division"], spec, qs, est["meta"]["benchmark"], profile["gross_sf"], confidence_floor,
-                      excluded_divisions=profile.get("exclusions", {}))
+                      excluded_divisions=profile.get("exclusions", {}), playbook_trades=playbook_trades, risks=risks,
+                      client_findings=[f.to_dict() for f in findings])
     judged = _load(folder / "07-judged-review.json") if (folder / "07-judged-review.json").exists() else None
     gd = [g.to_dict() for g in gates]
     _write(folder / "07-review-scorecard.json", json.dumps({"verdict": verdict(gates), "gates": gd, "judged": judged}, indent=2))
@@ -737,9 +760,152 @@ def approve(folder: Path, vault_root: Path) -> list[Path]:
     profile = _load(folder / "00-project-profile.json")
     xlsx = write_workbook(out_dir / "estimate-workbook.xlsx", est, _load(folder / "04-takeoff-ledger.json"), sc["gates"], qs, _load(folder / "01-sheet-register.json"), profile)
     docx = write_basis_of_estimate_docx(out_dir / "basis-of-estimate.docx", (folder / "08-estimate-report.md").read_text(encoding="utf-8"), f"Basis of Estimate — {profile['name']}")
-    _write(out_dir / "README.md", f"# Outputs — {profile['name']}\n\n- estimate-workbook.xlsx\n- basis-of-estimate.docx\n- source estimate folder: `{folder.name}`\n")
-    return [xlsx, docx]
+    outs = [xlsx, docx]
+    if (folder / "09-proposal-draft.md").exists():
+        outs.append(write_basis_of_estimate_docx(out_dir / "proposal-draft.docx", (folder / "09-proposal-draft.md").read_text(encoding="utf-8"), f"Proposal — {profile['name']}"))
+    _write(out_dir / "README.md", f"# Outputs — {profile['name']}\n\n" + "\n".join(f"- {o.name}" for o in outs) + f"\n- source estimate folder: `{folder.name}`\n")
+    return outs
 
+
+
+# ------------------------------------------------------------------------------------------ ROM (Class 5 / 4)
+def _gc_lines(lib: dict, months: float, gross_sf: float, perimeter_lf: float, concrete_cy: float, cfg: dict | None = None) -> list:
+    """General conditions from a staffing/temp-facilities config (playbook or default) and library rates."""
+    cfg = cfg or {"superintendent_fte": 1.0, "pm_fte": 0.5, "pe_fte": 0.5, "safety_fte": 1.0, "trailer": True, "toilets": 2, "dumpsters_per_month": 2, "fence": True}
+
+    def rate(code: str, default: float) -> float:
+        return lib[code].unit_total if code in lib else default
+
+    staff = [("Superintendent", float(cfg.get("superintendent_fte", 1.0)), rate("01-superintendent", 15500)),
+             ("Project manager", float(cfg.get("pm_fte", 0.5)), rate("01-project-manager", 14500)),
+             ("Project engineer", float(cfg.get("pe_fte", 0.5)), rate("01-project-engineer", 9200)),
+             ("Safety manager (shared)", float(cfg.get("safety_fte", 1.0)), rate("01-safety-share", 2800))]
+    temp = []
+    if cfg.get("trailer", True):
+        temp.append(("Job trailer", 1, "MO", rate("01-job-trailer", 1250)))
+    temp += [("Portable toilets", float(cfg.get("toilets", 2)), "MO", rate("01-temp-toilets", 210)),
+             ("Temporary power and water", 1, "MO", rate("01-temp-power-water", 1400)),
+             ("Dumpster pulls", float(cfg.get("dumpsters_per_month", 2)) * months, "EA", rate("01-dumpsters", 650)),
+             ("Progress and final cleaning", gross_sf, "SF", rate("01-cleaning", 0.45)),
+             ("Concrete testing sets (CY/100 + 1)", int(concrete_cy // 100) + 1 if concrete_cy else 0, "EA", rate("01-concrete-testing", 180))]
+    if cfg.get("fence", True) and perimeter_lf:
+        temp.append(("Temporary fence (1.5 × building perimeter, derived)", 1.5 * perimeter_lf, "LF", rate("01-temp-fence", 9.5)))
+    return general_conditions(months, staff=[(n, f, r) for n, f, r in staff if f > 0], temp_items=[t for t in temp if t[1] > 0],
+                              other=[("Surveying and layout", rate("01-surveying-layout", 9500), "lump sum [UNCERTAIN]")])
+
+
+def rom(vault_root: Path, intake: dict) -> Path:
+    """Same-day ROM: an intake form + a project-type playbook → assemblies × quantity rules → three-point
+    estimate with class and band, risk register, questions (defaults become stated assumptions), gates,
+    report and a client-safe proposal draft. No drawings required; no model involved."""
+    from core.estimating.playbooks import TRADE_DEPARTMENT, quantity_for, resolve_basis, resolve_playbook
+
+    vault_root = Path(vault_root)
+    pb = resolve_playbook(str(intake["project_type"]))
+    problems = pb.validate()
+    if problems:
+        raise ValueError(f"playbook {pb.project_type} invalid: {problems}")
+    name = str(intake.get("name") or f"{pb.project_type} ROM")
+    folder = create_folder(vault_root, name)
+    cls = int(intake.get("aace_class") or (4 if intake.get("plans_available") else pb.default_class))
+    basis = resolve_basis(pb, intake)
+    duration = int(intake.get("duration_days") or pb.schedule_range_days.get("target") or 90)
+    profile = Profile(name=name, slug=folder.name, building_type=pb.building_type_band, city=str(intake.get("city") or "Dallas"), aace_class=cls,
+                      gross_sf=float(basis.values.get("gross_sf") or 0), stories=int(intake.get("stories") or 1), delivery=str(intake.get("delivery") or "negotiated ROM"),
+                      duration_days=duration, assumptions=list(basis.assumptions), notes=str(intake.get("notes") or ""),
+                      playbook={"project_type": pb.project_type, "version": pb.version, "status": pb.status, "typical_trades": list(pb.typical_trades)})
+    profile.accuracy_band = ACCURACY_BANDS.get(cls, "")
+    excluded = {str(t).strip().lower() for t in (intake.get("excluded_trades") or [])}
+    for t in sorted(excluded):
+        profile.exclusions[f"trade:{t}"] = "excluded at intake"
+    # ledger from assemblies
+    led = Ledger()
+    skipped: list[str] = []
+    for a in pb.assemblies:
+        if a.trade in excluded:
+            continue
+        qty, how = quantity_for(a, basis)
+        if qty <= 0:
+            skipped.append(f"{a.code}: {how}")
+            continue
+        led.add(a.division, a.code, a.description, qty, a.unit, "intake", "derived", TRADE_DEPARTMENT.get(a.trade, "05-cost-engineering"),
+                confidence=a.confidence, notes=f"qty = {how}", tags={"trade": a.trade, "assembly": a.code}, pricing_basis="assembly")
+    for al in intake.get("allowances") or []:
+        led.add("01", f"01-allowance-{_slug(str(al['name']))[:30]}", f"Allowance — {al['name']}", 1, "LS", "intake", "allowance", "01-bid-coordination",
+                confidence=1.0, tags={"amount": float(al["amount"]), "source": "intake", "trade": "general-conditions"}, pricing_basis="allowance")
+    _write(folder / "00-intake.json", json.dumps(intake, indent=2))
+    _write(folder / "00-playbook.json", json.dumps(profile.playbook | {"skipped_assemblies": skipped, "basis": basis.values}, indent=2))
+    # risk register with playbook mitigations
+    risks = []
+    for r in pb.risk_checklist:
+        if r.trade and r.trade in excluded:
+            continue
+        if r.mitigation_exclusion:
+            mit = {"type": "exclusion", "ref": r.mitigation_exclusion}
+        elif r.rfi:
+            mit = {"type": "rfi", "ref": r.rfi}
+        else:
+            mit = {"type": "none", "ref": ""}
+        risks.append({"risk": r.risk, "severity": r.severity, "trade": r.trade, "mitigation": mit})
+    profile.exclusion_texts = list(pb.common_exclusions) + [r.mitigation_exclusion for r in pb.risk_checklist if r.mitigation_exclusion and not (r.trade and r.trade in excluded)]
+    _write(folder / "06-risks.json", json.dumps(risks, indent=2))
+    _write(folder / "00-project-profile.json", json.dumps(profile.to_dict(), indent=2))
+    _write(folder / "00-project-profile.md", _profile_md(profile, [], None) + "\n## Playbook\n" + f"- {pb.project_type} v{pb.version} ({pb.status})\n" +
+           "\n## Assumptions (defaults used)\n" + "\n".join(f"- {a}" for a in basis.assumptions) + "\n")
+    _write(folder / "01-sheet-register.json", "[]")
+    _write(folder / "01-sheet-register.md", "---\ntype: sheet_register\nsheets: 0\n---\n# Sheet register\n\nNo drawings — ROM from intake and playbook.\n")
+    _write(folder / "02-spec-index.json", json.dumps({"file": None, "pages": 0, "sections": []}))
+    _write(folder / "02-division-01.json", "{}")
+    _write(folder / "03-sheets.json", "[]")
+    _write(folder / "04-takeoff-ledger.json", led.to_json())
+    _write(folder / "04-takeoff-ledger.md", led.to_markdown(f"ROM ledger — {pb.project_type} playbook v{pb.version}"))
+    _write(folder / "04-discrepancies.json", "[]")
+    # questions: missing required → CRITICAL open; defaults → WARN carried as assumption; high risks → CRITICAL carried as exclusion or open
+    qs = build_rom_questions(pb, basis, risks, intake)
+    write_questions(folder, qs)
+    # price: assemblies first, then BYO / seed for anything else (allowances price at their amount)
+    lib = pb.cost_rows()
+    for k, v in load_library(library_paths(vault_root)).items():
+        lib.setdefault(k, v)
+    for it in led.items:
+        if it.method == "allowance" and it.tags.get("amount"):
+            from core.estimating.cost_engine import CostRow
+            lib[it.item_code] = CostRow(it.item_code, it.description, "LS", 0, 0, 0, float(it.tags["amount"]), "intake allowance", pricing_basis="allowance")
+    factor, f_src = load_location_factor(profile.city)
+    lines = price_ledger(led, lib, location_factor=factor)
+    direct = round(sum(p.total for p in lines), 2)
+    materials = round(sum(p.material for p in lines), 2)
+    labor = round(sum(p.labor for p in lines), 2)
+    months = round(duration / 30.4, 1)
+    concrete_cy = sum(it.qty for it in led.items if it.unit == "CY")
+    gcs = _gc_lines(lib, months, profile.gross_sf, float(basis.values.get("perimeter_lf") or 0), concrete_cy, pb.general_conditions)
+    gc_total = round(sum(g.total for g in gcs), 2)
+    policy = policy_from_brain(vault_root, cls, profile.building_type, duration)
+    markups = markup_stack(direct, materials, gc_total, policy)
+    three_point = three_point_totals(lines, materials, gc_total, policy)
+    summary = summary_by_division(lines, profile.gross_sf, spec_index.DIVISIONS)
+    total = markups[-1].amount
+    bench = benchmark_check(total, profile.gross_sf, profile.building_type, gc_total, direct, labor)
+    meta = {"generated": datetime.now().isoformat(timespec="seconds"), "mode": "rom", "playbook": profile.playbook, "basis": basis.values,
+            "library_paths": [pb.path] + [str(p) for p in library_paths(vault_root)], "location_factor": factor, "location_source": f_src,
+            "duration_months": months, "policy": asdict(policy), "three_point": three_point, "aace_class": cls, "accuracy_band": profile.accuracy_band,
+            "disclaimer": SEED_DISCLAIMER if pb.status != "approved" else "", "benchmark": bench}
+    _write(folder / "06-estimate.json", estimate_json(lines, gcs, markups, summary, meta))
+    md = ["---", "type: estimate", "mode: rom", f"total_bid: {total}", "---", f"# ROM estimate — {name}", "",
+          f"Playbook {pb.project_type} v{pb.version} ({pb.status}) · class {cls}, expected accuracy {profile.accuracy_band} · {profile.gross_sf:,.0f} SF · {profile.city}", "",
+          f"**Low ${three_point['low']['total']:,.0f} · Target ${three_point['target']['total']:,.0f} · High ${three_point['high']['total']:,.0f}** (spread {three_point['spread_pct']}%) · "
+          f"target ${total / profile.gross_sf:,.2f}/SF" if profile.gross_sf else "", "",
+          f"Direct ${direct:,.0f} · GCs ${gc_total:,.0f} ({gc_total / direct * 100 if direct else 0:.1f}%)", "",
+          "| Division | Title | Low | Target | High | % |", "|---|---|---|---|---|---|"] + \
+         [f"| {r['division']} | {r['title']} | ${r['low']:,.0f} | ${r['total']:,.0f} | ${r['high']:,.0f} | {r['pct']}% |" for r in summary] + \
+         ["", "| Markup | % | Amount | Basis |", "|---|---|---|---|"] + [f"| {m.name} | {m.pct} | ${m.amount:,.0f} | {m.basis} |" for m in markups] + \
+         ["", "## Benchmark", ""] + [f"- {c['check']}: {c['value']} vs {c['band']} → **{c['status']}** ({c['source']})" for c in bench["checks"]] + \
+         ["", "## Assumptions (defaults used)", ""] + [f"- {a}" for a in basis.assumptions] + \
+         ["", "## Skipped assemblies", ""] + ([f"- {x}" for x in skipped] or ["- none"]) + ["", meta["disclaimer"]]
+    _write(folder / "06-estimate.md", "\n".join(md) + "\n")
+    review(folder)
+    report(folder)
+    return folder
 
 def run_all(vault_root: Path, package_dir: Path, name: str, building_type: str, city: str, aace_class: int = 2, render: bool = False) -> Path:
     """Unattended demo path (--no-llm): every open question is auto-assumed and stated."""

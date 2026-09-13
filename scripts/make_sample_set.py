@@ -698,8 +698,30 @@ def project_manual_html() -> str:
 def ground_truth() -> dict:
     rooms = [{"number": n, "name": nm, "area_sf": int((x1 - x0) * (y1 - y0))} for n, nm, x0, y0, x1, y1 in ROOMS]
     steel_lb = {m: q * L * plf for m, s, L, q, plf in STEEL}
+    act_sf = sum(a for n, nm, x0, y0, x1, y1 in ROOMS for a in [int((x1 - x0) * (y1 - y0))] if n not in ("106", "107", "200"))
+    steel_frame = sum(q * L * plf for m, s, L, q, plf in STEEL if "K" not in s) / 2000
+    steel_joist = sum(q * L * plf for m, s, L, q, plf in STEEL if "K" in s) / 2000
+    expected_lines = [
+        {"item_code": "08-hm-door-single", "qty": 8, "unit": "EA"}, {"item_code": "08-hm-door-single-rated", "qty": 1, "unit": "EA"},
+        {"item_code": "08-hm-door-single-exterior", "qty": 2, "unit": "EA"}, {"item_code": "08-storefront-entrance-pair", "qty": 1, "unit": "EA"},
+        {"item_code": "08-overhead-door-12x14", "qty": len(OVERHEAD_DOORS), "unit": "EA"}, {"item_code": "08-window-fixed-aluminum", "qty": len(WINDOWS), "unit": "EA"},
+        {"item_code": "03-footing-spread", "qty": round(9 * 4 * 4 * 1.5 / 27, 3), "unit": "CY"}, {"item_code": "03-footing-continuous", "qty": round(440 * 2 * 1 / 27, 3), "unit": "CY"},
+        {"item_code": "03-sog-4in", "qty": 4000, "unit": "SF"}, {"item_code": "03-sog-6in", "qty": 8000, "unit": "SF"},
+        {"item_code": "05-structural-steel", "qty": round(steel_frame, 2), "unit": "TON"}, {"item_code": "05-steel-joists", "qty": round(steel_joist, 2), "unit": "TON"},
+        {"item_code": "05-metal-deck", "qty": sum(sf for _, _, sf in DECK), "unit": "SF"}, {"item_code": "21-sprinkler-design-build", "qty": 82, "unit": "EA"},
+        {"item_code": "22-water-closet", "qty": 4, "unit": "EA"}, {"item_code": "22-lavatory", "qty": 4, "unit": "EA"}, {"item_code": "22-hose-bibb", "qty": 4, "unit": "EA"},
+        {"item_code": "23-rtu-7-5-ton", "qty": 2, "unit": "EA"}, {"item_code": "23-unit-heater-gas", "qty": 2, "unit": "EA"}, {"item_code": "23-exhaust-fan", "qty": 2, "unit": "EA"},
+        {"item_code": "23-diffuser-grille", "qty": DIFFUSERS + 6, "unit": "EA"}, {"item_code": "26-troffer-led-2x4", "qty": 40, "unit": "EA"}, {"item_code": "26-high-bay-led", "qty": 24, "unit": "EA"},
+        {"item_code": "26-wall-pack-led", "qty": 8, "unit": "EA"}, {"item_code": "26-exit-sign", "qty": 6, "unit": "EA"}, {"item_code": "26-receptacle-duplex", "qty": ELECTRICAL["receptacles"], "unit": "EA"},
+        {"item_code": "27-data-outlet-raceway", "qty": ELECTRICAL["data_outlets"], "unit": "EA"}, {"item_code": "28-facp", "qty": 1, "unit": "EA"}, {"item_code": "28-fa-device", "qty": 20, "unit": "EA"},
+        {"item_code": "09-act-ceiling-2x2", "qty": act_sf, "unit": "SF"}, {"item_code": "09-gwb-ceiling", "qty": 500, "unit": "SF"}, {"item_code": "09-carpet-tile", "qty": 3000, "unit": "SF"},
+        {"item_code": "09-lvt-flooring", "qty": 500, "unit": "SF"}, {"item_code": "09-porcelain-tile-floor", "qty": 500, "unit": "SF"}, {"item_code": "03-concrete-sealer", "qty": 8000, "unit": "SF"},
+        {"item_code": "07-tpo-roof-system", "qty": 120, "unit": "SQ"}, {"item_code": "07-coping-aluminum", "qty": 440, "unit": "LF"}, {"item_code": "07-roof-drain", "qty": 8, "unit": "EA"},
+        {"item_code": "04-brick-veneer", "qty": 140 * 14, "unit": "SF"}, {"item_code": "10-signage-allowance", "qty": 1, "unit": "LS"},
+    ]
     return {
-        "project": PROJECT, "gross_sf": 12000, "office_sf": 4000, "warehouse_sf": 8000, "stories": 1,
+        "project": PROJECT, "building_type": "office-warehouse", "city": "Plano", "expected_lines": expected_lines,
+        "gross_sf": 12000, "office_sf": 4000, "warehouse_sf": 8000, "stories": 1,
         "scale": "1/8\" = 1'-0\"", "sheet_size_in": [36, 24],
         "sheets": [s for s, _ in SHEETS],
         "rooms": rooms,

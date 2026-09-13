@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://construction-estimate-os/contracts/v1/client_finding.schema.json",
+  "type": "object",
+  "required": [
+    "category",
+    "severity",
+    "term",
+    "line_no",
+    "suggestion"
+  ],
+  "properties": {
+    "category": {
+      "type": "string"
+    },
+    "severity": {
+      "enum": [
+        "blocking",
+        "warn"
+      ]
+    },
+    "term": {
+      "type": "string"
+    },
+    "line_no": {
+      "type": "integer"
+    },
+    "line": {
+      "type": "string"
+    },
+    "suggestion": {
+      "type": "string"
+    }
+  }
+}

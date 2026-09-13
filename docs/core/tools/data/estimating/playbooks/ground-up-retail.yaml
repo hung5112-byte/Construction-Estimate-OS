@@ -1,0 +1,325 @@
+# Project-type playbook — SEED (status: seed). Every low/target/high is a national-average PLACEHOLDER
+# marked [to load]; replace with the company's buyout history and set status: approved (approved_by, date).
+project_type: ground-up-retail
+aliases:
+- ground up retail
+- ground-up
+- retail ground-up
+- new retail building
+- pad building
+- strip center
+version: '1.0'
+status: seed
+building_type_band: retail strip
+default_class: 5
+schedule_range_days:
+  low: 180
+  target: 270
+  high: 400
+typical_trades:
+- site-civil
+- concrete-slab
+- structural
+- masonry
+- roofing-envelope
+- storefront-openings
+- plumbing
+- hvac
+- electrical
+- fire-sprinkler
+- fire-alarm
+- framing-drywall
+- ceiling
+- paint-finish
+- general-conditions
+intake_fields:
+  gross_sf:
+    required: true
+  lot_sf:
+    default_ratio_of_gross: 4.0
+    note: site area assumed 4 × building area
+  storefront_lf:
+    default_ratio_of_gross: 0.02
+    note: storefront length assumed 2% of gross SF in LF
+  restroom_count:
+    default: 2
+    note: two restrooms assumed
+general_conditions:
+  superintendent_fte: 1.0
+  pm_fte: 0.5
+  pe_fte: 0.5
+  safety_fte: 0.5
+  trailer: true
+  toilets: 2
+  dumpsters_per_month: 3
+  fence: true
+assemblies:
+- code: 31-site-earthwork-pad
+  trade: site-civil
+  description: Building pad cut/fill, grading and erosion control (per SF of lot)
+  unit: SF
+  qty:
+    basis: lot_sf
+    factor: 1.0
+  low: 1.5
+  target: 2.5
+  high: 4.5
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.4
+  labor_share: 0.0
+  notes: ''
+- code: 32-paving-parking
+  trade: site-civil
+  description: Asphalt parking, curbs, striping and walks (per SF of lot outside building)
+  unit: SF
+  qty:
+    basis: lot_sf
+    factor: 0.6
+  low: 5.5
+  target: 8.0
+  high: 12.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.4
+  labor_share: 0.0
+  notes: ''
+- code: 33-site-utilities-ls
+  trade: site-civil
+  description: Site utilities to 5 ft outside building (water, sanitary, storm) — allowance-type
+  unit: LS
+  qty:
+    basis: each
+    factor: 1.0
+  low: 60000.0
+  target: 110000.0
+  high: 190000.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.3
+  labor_share: 0.0
+  notes: ''
+- code: 03-foundation-sog-retail
+  trade: concrete-slab
+  description: Spread and continuous footings, 5in slab on grade with vapor barrier (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 11.0
+  target: 16.0
+  high: 24.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.35
+  notes: ''
+- code: 05-steel-joist-deck-retail
+  trade: structural
+  description: Steel columns, beams, joists and deck (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 16.0
+  target: 24.0
+  high: 36.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 04-cmu-brick-exterior
+  trade: masonry
+  description: 8in CMU exterior walls with brick veneer at front (per LF of perimeter, 20 ft high)
+  unit: LF
+  qty:
+    basis: perimeter_lf
+    factor: 1.0
+  low: 520.0
+  target: 760.0
+  high: 1100.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 07-tpo-roof-retail
+  trade: roofing-envelope
+  description: TPO roof over polyiso with coping and drains (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 11.0
+  target: 15.0
+  high: 22.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 08-storefront-per-lf
+  trade: storefront-openings
+  description: Aluminum storefront with entrances (per LF, 10 ft high)
+  unit: LF
+  qty:
+    basis: storefront_lf
+    factor: 1.0
+  low: 750.0
+  target: 1100.0
+  high: 1600.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 22-plumbing-retail-shell
+  trade: plumbing
+  description: Domestic water, sanitary, restroom sets and roof drains (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 7.0
+  target: 11.0
+  high: 16.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 23-hvac-rtu-shell
+  trade: hvac
+  description: Packaged RTUs with distribution (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 14.0
+  target: 20.0
+  high: 30.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 26-electrical-retail-shell
+  trade: electrical
+  description: Service, gear, lighting and power (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 16.0
+  target: 24.0
+  high: 36.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 21-sprinkler-new-per-sf
+  trade: fire-sprinkler
+  description: Wet-pipe sprinkler system design-build (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 3.5
+  target: 5.0
+  high: 7.5
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 28-fire-alarm-new
+  trade: fire-alarm
+  description: Addressable fire alarm system
+  unit: LS
+  qty:
+    basis: each
+    factor: 1.0
+  low: 12000.0
+  target: 20000.0
+  high: 35000.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.4
+  labor_share: 0.0
+  notes: ''
+- code: 09-interior-finish-shell
+  trade: framing-drywall
+  description: Interior furring, drywall at exterior walls and restrooms (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 4.0
+  target: 6.5
+  high: 10.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 09-ceiling-act-ti
+  trade: ceiling
+  description: ACT ceiling and grid in finished areas (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 0.5
+  low: 4.0
+  target: 6.0
+  high: 9.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 09-paint-ti
+  trade: paint-finish
+  description: Interior and exterior paint (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 2.0
+  target: 3.0
+  high: 4.5
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+common_rfis:
+- Are civil plans and the geotechnical report available?
+- Are utilities (water, sanitary, storm, power, gas) confirmed at the property line?
+- Are fire lane and hydrant requirements confirmed?
+- Is the structural system (steel, PEMB, tilt) decided?
+- Are landscape and irrigation included?
+- Are utility company fees included or excluded?
+- Are offsite improvements required?
+common_exclusions:
+- offsite improvements and utility company fees
+- landscape and irrigation unless shown
+- unsuitable soils and rock
+- tenant finish-out beyond shell
+- impact fees
+risk_checklist:
+- risk: Utility availability and capacity
+  severity: high
+  trade: site-civil
+  mitigation_exclusion: offsite improvements and utility company fees
+  rfi: Are utilities confirmed at the property line?
+- risk: Unsuitable soils / geotech
+  severity: high
+  trade: concrete-slab
+  mitigation_exclusion: unsuitable soils and rock
+  rfi: Is the geotechnical report available?
+- risk: Fire lane and hydrant requirements
+  severity: high
+  trade: site-civil
+  mitigation_exclusion: ''
+  rfi: Are fire lane and hydrant requirements confirmed?
+- risk: Long-lead steel / PEMB
+  severity: medium
+  trade: structural
+  mitigation_exclusion: ''
+  rfi: Is the structural system decided?
+- risk: Drainage and detention
+  severity: medium
+  trade: site-civil
+  mitigation_exclusion: ''
+  rfi: Is detention required?
+- risk: Permit and platting delays
+  severity: medium
+  trade: general-conditions
+  mitigation_exclusion: ''
+  rfi: ''

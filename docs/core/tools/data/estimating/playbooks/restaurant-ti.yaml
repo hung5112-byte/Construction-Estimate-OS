@@ -1,0 +1,344 @@
+# Project-type playbook — SEED (status: seed). Every low/target/high is a national-average PLACEHOLDER
+# marked [to load]; replace with the company's buyout history and set status: approved (approved_by, date).
+project_type: restaurant-ti
+aliases:
+- restaurant
+- restaurant remodel
+- restaurant build-out
+- qsr
+- cafe
+- bar
+- kitchen
+version: '1.0'
+status: seed
+building_type_band: restaurant ti
+default_class: 5
+schedule_range_days:
+  low: 60
+  target: 100
+  high: 160
+typical_trades:
+- demo
+- framing-drywall
+- paint-finish
+- flooring
+- ceiling
+- plumbing
+- hvac
+- electrical
+- hood-kitchen
+- fire-suppression
+- fire-alarm
+- fire-sprinkler
+- millwork
+- general-conditions
+intake_fields:
+  gross_sf:
+    required: true
+  kitchen_sf:
+    default_ratio_of_gross: 0.3
+    note: kitchen assumed 30% of gross when not given
+  hood_lf:
+    default: 12
+    note: one 12 LF Type I hood assumed
+  fixture_count:
+    default: 8
+    note: 8 plumbing fixtures assumed (restrooms + kitchen sinks)
+  restroom_count:
+    default: 2
+    note: two restrooms assumed
+  existing_sprinklered:
+    default: 1
+    note: building assumed sprinklered (1 = yes)
+general_conditions:
+  superintendent_fte: 1.0
+  pm_fte: 0.25
+  pe_fte: 0.0
+  safety_fte: 0.25
+  trailer: false
+  toilets: 1
+  dumpsters_per_month: 2
+  fence: false
+assemblies:
+- code: 02-selective-demo-ti
+  trade: demo
+  description: Selective demolition of walls, ceilings and finishes with haul-off and protection
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 3.5
+  target: 5.5
+  high: 9.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 09-partitions-ti
+  trade: framing-drywall
+  description: Metal stud partitions with 5/8 GWB both sides, taped and finished (per SF of floor area)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 0.9
+  low: 9.0
+  target: 13.0
+  high: 19.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.45
+  labor_share: 0.0
+  notes: ''
+- code: 09-paint-ti
+  trade: paint-finish
+  description: Interior paint, doors and frames, patch-to-match (per SF of floor area)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 2.2
+  target: 3.2
+  high: 4.8
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 09-flooring-dining
+  trade: flooring
+  description: Dining/front-of-house flooring with prep, base and transitions
+  unit: SF
+  qty:
+    basis: dining_sf
+    factor: 1.0
+  low: 6.0
+  target: 9.5
+  high: 15.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 09-flooring-kitchen-quarry
+  trade: flooring
+  description: Kitchen quarry tile or epoxy with cove base
+  unit: SF
+  qty:
+    basis: kitchen_sf
+    factor: 1.0
+  low: 12.0
+  target: 17.0
+  high: 25.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 09-ceiling-act-ti
+  trade: ceiling
+  description: ACT ceiling and grid, washable tile in kitchen
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 0.85
+  low: 4.5
+  target: 6.5
+  high: 9.5
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 22-plumbing-fixture-ti
+  trade: plumbing
+  description: Plumbing fixture set with rough-in, relocation and reconnection
+  unit: EA
+  qty:
+    basis: fixture_count
+    factor: 1.0
+  low: 2400.0
+  target: 3600.0
+  high: 5500.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 22-grease-waste-ti
+  trade: plumbing
+  description: Grease waste routing, floor sinks and interceptor tie-in (existing interceptor)
+  unit: LS
+  qty:
+    basis: each
+    factor: 1.0
+  low: 7000.0
+  target: 14000.0
+  high: 24000.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.4
+  labor_share: 0.0
+  notes: ''
+- code: 23-hood-type1-per-lf
+  trade: hood-kitchen
+  description: Type I hood, grease duct, exhaust fan, roof curb and fire-suppression coordination (per LF of hood)
+  unit: LF
+  qty:
+    basis: hood_lf
+    factor: 1.0
+  low: 1450.0
+  target: 1800.0
+  high: 2400.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 23-mua-unit
+  trade: hood-kitchen
+  description: Make-up air unit with curb, duct and controls
+  unit: EA
+  qty:
+    basis: each
+    factor: 1.0
+  low: 14000.0
+  target: 22000.0
+  high: 34000.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.4
+  labor_share: 0.0
+  notes: ''
+- code: 23-hvac-ti
+  trade: hvac
+  description: Ductwork modifications, diffusers, controls and TAB using existing RTUs (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 7.0
+  target: 11.0
+  high: 18.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 26-electrical-restaurant
+  trade: electrical
+  description: Panels, circuits, kitchen equipment connections, lighting and devices (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 16.0
+  target: 24.0
+  high: 36.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 21-fire-suppression-hood
+  trade: fire-suppression
+  description: Wet-chemical hood suppression system with tie-ins
+  unit: EA
+  qty:
+    basis: each
+    factor: 1.0
+  low: 5500.0
+  target: 8500.0
+  high: 12500.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 28-fire-alarm-ti
+  trade: fire-alarm
+  description: Fire alarm device changes, hood interlock and monitoring coordination
+  unit: LS
+  qty:
+    basis: each
+    factor: 1.0
+  low: 3500.0
+  target: 6500.0
+  high: 11000.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.4
+  labor_share: 0.0
+  notes: ''
+- code: 21-sprinkler-relocate-ti
+  trade: fire-sprinkler
+  description: Sprinkler head relocations and additions (per SF, existing system)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 1.5
+  target: 2.5
+  high: 4.5
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.4
+  labor_share: 0.0
+  notes: ''
+- code: 12-millwork-restaurant
+  trade: millwork
+  description: Counters, service stations and casework install (per LF assumed = perimeter × 0.15)
+  unit: LF
+  qty:
+    basis: perimeter_lf
+    factor: 0.15
+  low: 350.0
+  target: 550.0
+  high: 900.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.4
+  labor_share: 0.0
+  notes: ''
+common_rfis:
+- Is the final kitchen equipment schedule with cut sheets available?
+- Are hood and fire-suppression drawings available, and is make-up air existing or new?
+- Is the grease interceptor existing, approved and adequately sized?
+- Are gas service and electrical service capacities confirmed?
+- Are the existing RTUs adequate for the kitchen heat load?
+- Are health department comments available?
+- Which items are owner-furnished, and who installs them?
+common_exclusions:
+- kitchen equipment purchase
+- grease interceptor replacement
+- RTU replacement and make-up air unless shown
+- electrical service upgrade
+- gas meter upgrade
+- permit and impact fees unless stated
+- hazardous materials abatement
+- after-hours or weekend work unless stated
+- hidden conditions behind existing finishes or below slab
+- landlord-required work not shown
+- low-voltage cabling, AV, security beyond raceway
+- furniture, fixtures and equipment purchase (owner-furnished)
+- utility company fees and service upgrades
+risk_checklist:
+- risk: Hood / make-up air
+  severity: high
+  trade: hood-kitchen
+  mitigation_exclusion: make-up air unit unless shown on drawings
+  rfi: Is make-up air existing or new?
+- risk: Grease interceptor capacity and routing
+  severity: high
+  trade: plumbing
+  mitigation_exclusion: grease interceptor replacement
+  rfi: Is the grease interceptor existing, approved and adequately sized?
+- risk: Gas and electrical service capacity
+  severity: high
+  trade: electrical
+  mitigation_exclusion: electrical service and gas meter upgrades
+  rfi: Are gas and electrical service capacities confirmed?
+- risk: RTU capacity for kitchen heat load
+  severity: high
+  trade: hvac
+  mitigation_exclusion: RTU replacement
+  rfi: Are the existing RTUs adequate for the kitchen heat load?
+- risk: Health department and Fire Marshal review
+  severity: medium
+  trade: general-conditions
+  mitigation_exclusion: ''
+  rfi: Are health department comments available?
+- risk: Slab trenching for plumbing relocations
+  severity: medium
+  trade: plumbing
+  mitigation_exclusion: ''
+  rfi: Are existing under-slab line locations known?
+- risk: Owner-furnished equipment timing
+  severity: medium
+  trade: hood-kitchen
+  mitigation_exclusion: ''
+  rfi: Which items are owner-furnished?

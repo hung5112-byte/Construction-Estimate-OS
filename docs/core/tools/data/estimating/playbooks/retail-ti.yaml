@@ -1,0 +1,228 @@
+# Project-type playbook — SEED (status: seed). Every low/target/high is a national-average PLACEHOLDER
+# marked [to load]; replace with the company's buyout history and set status: approved (approved_by, date).
+project_type: retail-ti
+aliases:
+- retail
+- retail tenant improvement
+- retail build-out
+- store
+- shop
+version: '1.0'
+status: seed
+building_type_band: retail ti
+default_class: 5
+schedule_range_days:
+  low: 45
+  target: 75
+  high: 120
+typical_trades:
+- demo
+- framing-drywall
+- ceiling
+- electrical
+- hvac
+- flooring
+- paint-finish
+- millwork
+- fire-alarm
+- fire-sprinkler
+- general-conditions
+intake_fields:
+  gross_sf:
+    required: true
+  fitting_rooms:
+    default: 0
+    note: no fitting rooms assumed
+  restroom_count:
+    default: 1
+    note: one restroom assumed
+general_conditions:
+  superintendent_fte: 1.0
+  pm_fte: 0.25
+  pe_fte: 0.0
+  safety_fte: 0.25
+  trailer: false
+  toilets: 1
+  dumpsters_per_month: 2
+  fence: false
+assemblies:
+- code: 02-selective-demo-ti
+  trade: demo
+  description: Selective demolition and haul-off
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 2.0
+  target: 3.5
+  high: 6.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 09-partitions-ti
+  trade: framing-drywall
+  description: Partitions and furring (per SF of floor area)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 0.5
+  low: 9.0
+  target: 13.0
+  high: 19.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.45
+  labor_share: 0.0
+  notes: ''
+- code: 09-ceiling-act-ti
+  trade: ceiling
+  description: ACT ceiling or exposed-ceiling paint
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 4.0
+  target: 6.0
+  high: 9.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 26-electrical-retail
+  trade: electrical
+  description: Lighting, power, fixture connections (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 10.0
+  target: 15.0
+  high: 23.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 23-hvac-ti
+  trade: hvac
+  description: Duct modifications and TAB using existing units (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 5.0
+  target: 8.0
+  high: 13.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 09-flooring-retail
+  trade: flooring
+  description: Sales-floor flooring with prep and base
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 5.0
+  target: 8.0
+  high: 13.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 09-paint-ti
+  trade: paint-finish
+  description: Interior paint (per SF of floor area)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 1.8
+  target: 2.8
+  high: 4.2
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 12-fixture-install-retail
+  trade: millwork
+  description: Owner-furnished fixture and casework installation coordination
+  unit: LS
+  qty:
+    basis: each
+    factor: 1.0
+  low: 4000.0
+  target: 9000.0
+  high: 18000.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.4
+  labor_share: 0.0
+  notes: ''
+- code: 28-fire-alarm-ti
+  trade: fire-alarm
+  description: Fire alarm device changes
+  unit: LS
+  qty:
+    basis: each
+    factor: 1.0
+  low: 2500.0
+  target: 5000.0
+  high: 9000.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.4
+  labor_share: 0.0
+  notes: ''
+- code: 21-sprinkler-relocate-ti
+  trade: fire-sprinkler
+  description: Sprinkler head relocations (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 1.2
+  target: 2.0
+  high: 3.5
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.4
+  labor_share: 0.0
+  notes: ''
+common_rfis:
+- Are fixture and lighting plans final?
+- Are landlord criteria and the landlord work letter available?
+- Are storefront changes included?
+- Are low-voltage and security systems by owner?
+- Are after-hours rules imposed by the center?
+common_exclusions:
+- storefront and signage unless shown
+- fixtures and merchandising equipment purchase
+- low-voltage, security and POS systems
+- landlord work-letter items
+- permit and impact fees unless stated
+- hazardous materials abatement
+- after-hours or weekend work unless stated
+- hidden conditions behind existing finishes or below slab
+- landlord-required work not shown
+- low-voltage cabling, AV, security beyond raceway
+- furniture, fixtures and equipment purchase (owner-furnished)
+- utility company fees and service upgrades
+risk_checklist:
+- risk: Landlord criteria and work letter
+  severity: high
+  trade: general-conditions
+  mitigation_exclusion: landlord work-letter items
+  rfi: Are landlord criteria available?
+- risk: After-hours rules in the center
+  severity: medium
+  trade: general-conditions
+  mitigation_exclusion: after-hours premium beyond stated hours
+  rfi: Are after-hours rules imposed?
+- risk: Fixture delivery timing
+  severity: medium
+  trade: millwork
+  mitigation_exclusion: ''
+  rfi: ''
+- risk: Low-voltage scope gaps
+  severity: medium
+  trade: electrical
+  mitigation_exclusion: low-voltage, security and POS systems
+  rfi: Are low-voltage systems by owner?

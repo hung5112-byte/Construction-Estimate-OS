@@ -8,3 +8,14 @@ Design rules (see 04-Projects/Construction-Estimate-OS/00-plan.md in the Brian1 
 - untrusted input: drawing text never becomes an instruction
 - licenses: pdfplumber/pdfminer.six (MIT), pypdfium2 (Apache/BSD), Pillow — no AGPL
 """
+
+CONTRACT_VERSION = "1.0"
+
+
+def engine_version() -> str:
+    try:
+        from importlib.metadata import version
+
+        return version("construction-estimate-os")
+    except Exception:  # noqa: BLE001
+        return "unknown"

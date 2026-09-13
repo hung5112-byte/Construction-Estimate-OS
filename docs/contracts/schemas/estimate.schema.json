@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://construction-estimate-os/contracts/v1/estimate.schema.json",
+  "type": "object",
+  "title": "Priced estimate (06-estimate.json)",
+  "required": [
+    "meta",
+    "summary_by_division",
+    "lines",
+    "general_conditions",
+    "markups"
+  ],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": [
+        "generated",
+        "location_factor",
+        "policy",
+        "three_point",
+        "aace_class",
+        "accuracy_band",
+        "benchmark"
+      ],
+      "properties": {
+        "generated": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string"
+        },
+        "library_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "location_factor": {
+          "type": "number"
+        },
+        "location_source": {
+          "type": "string"
+        },
+        "duration_months": {
+          "type": "number"
+        },
+        "policy": {
+          "type": "object"
+        },
+        "three_point": {
+          "type": "object",
+          "required": [
+            "low",
+            "target",
+            "high",
+            "spread_pct"
+          ]
+        },
+        "aace_class": {
+          "type": "integer"
+        },
+        "accuracy_band": {
+          "type": "string"
+        },
+        "disclaimer": {
+          "type": "string"
+        },
+        "benchmark": {
+          "type": "object",
+          "required": [
+            "per_sf",
+            "checks"
+          ]
+        }
+      }
+    },
+    "summary_by_division": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "division",
+          "title",
+          "labor",
+          "material",
+          "equipment",
+          "sub",
+          "total",
+          "low",
+          "high",
+          "pct"
+        ]
+      }
+    },
+    "lines": {
+      "type": "array",
+      "items": {
+        "$ref": "priced_line.schema.json"
+      }
+    },
+    "general_conditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "qty",
+          "unit",
+          "rate",
+          "total",
+          "basis"
+        ]
+      }
+    },
+    "markups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "pct",
+          "base",
+          "amount",
+          "basis"
+        ]
+      }
+    }
+  }
+}

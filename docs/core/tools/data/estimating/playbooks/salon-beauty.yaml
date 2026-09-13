@@ -1,0 +1,263 @@
+# Project-type playbook — SEED (status: seed). Every low/target/high is a national-average PLACEHOLDER
+# marked [to load]; replace with the company's buyout history and set status: approved (approved_by, date).
+project_type: salon-beauty
+aliases:
+- salon
+- beauty
+- spa
+- nail salon
+- barber
+version: '1.0'
+status: seed
+building_type_band: salon ti
+default_class: 5
+schedule_range_days:
+  low: 45
+  target: 75
+  high: 120
+typical_trades:
+- demo
+- framing-drywall
+- plumbing
+- electrical
+- hvac
+- flooring
+- paint-finish
+- ceiling
+- millwork
+- general-conditions
+intake_fields:
+  gross_sf:
+    required: true
+  station_count:
+    default: 8
+    note: 8 styling stations assumed
+  shampoo_bowls:
+    default: 3
+    note: 3 shampoo bowls assumed
+  restroom_count:
+    default: 1
+    note: one restroom assumed
+general_conditions:
+  superintendent_fte: 1.0
+  pm_fte: 0.25
+  pe_fte: 0.0
+  safety_fte: 0.25
+  trailer: false
+  toilets: 1
+  dumpsters_per_month: 2
+  fence: false
+assemblies:
+- code: 02-selective-demo-ti
+  trade: demo
+  description: Selective demolition and haul-off
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 2.5
+  target: 4.0
+  high: 7.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 09-partitions-ti
+  trade: framing-drywall
+  description: Metal stud partitions with GWB both sides (per SF of floor area)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 0.7
+  low: 9.0
+  target: 13.0
+  high: 19.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.45
+  labor_share: 0.0
+  notes: ''
+- code: 22-shampoo-bowl-set
+  trade: plumbing
+  description: Shampoo bowl with rough-in, drain and hot/cold supply
+  unit: EA
+  qty:
+    basis: shampoo_bowls
+    factor: 1.0
+  low: 2800.0
+  target: 4200.0
+  high: 6500.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 22-water-heater-salon
+  trade: plumbing
+  description: Commercial water heater sized for bowls with recirculation
+  unit: EA
+  qty:
+    basis: each
+    factor: 1.0
+  low: 4500.0
+  target: 7500.0
+  high: 12000.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.4
+  labor_share: 0.0
+  notes: ''
+- code: 22-restroom-set
+  trade: plumbing
+  description: ADA restroom fixture set with rough-in
+  unit: EA
+  qty:
+    basis: restroom_count
+    factor: 1.0
+  low: 7500.0
+  target: 11000.0
+  high: 16000.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 26-station-electrical
+  trade: electrical
+  description: Dedicated circuits, outlets and lighting per styling station
+  unit: EA
+  qty:
+    basis: station_count
+    factor: 1.0
+  low: 900.0
+  target: 1400.0
+  high: 2200.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 26-electrical-base-ti
+  trade: electrical
+  description: Panel work, lighting and general devices (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 8.0
+  target: 12.0
+  high: 18.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 23-hvac-ti
+  trade: hvac
+  description: Ductwork modifications, exhaust and TAB using existing units (per SF)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 5.0
+  target: 8.0
+  high: 13.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 09-flooring-lvp
+  trade: flooring
+  description: LVP or tile flooring with prep and base
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 5.5
+  target: 8.0
+  high: 12.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 09-paint-ti
+  trade: paint-finish
+  description: Interior paint and finish touch-up (per SF of floor area)
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 1.0
+  low: 2.0
+  target: 3.0
+  high: 4.5
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 09-ceiling-act-ti
+  trade: ceiling
+  description: ACT ceiling and grid
+  unit: SF
+  qty:
+    basis: gross_sf
+    factor: 0.9
+  low: 4.0
+  target: 6.0
+  high: 9.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.5
+  labor_share: 0.0
+  notes: ''
+- code: 12-millwork-salon
+  trade: millwork
+  description: Reception desk, station mirrors/backing and cabinetry install (owner-furnished stations)
+  unit: LS
+  qty:
+    basis: each
+    factor: 1.0
+  low: 6000.0
+  target: 12000.0
+  high: 22000.0
+  source: 'seed-placeholder-2026 [to load: company buyout history]'
+  confidence: 0.4
+  labor_share: 0.0
+  notes: ''
+common_rfis:
+- How many shampoo bowls and styling stations?
+- Are chairs and stations owner-furnished, and who installs them?
+- Is water heater capacity adequate?
+- Are floor penetrations for drains allowed by the landlord?
+- Is existing HVAC capacity adequate?
+- Are electrical loads for dryers confirmed?
+common_exclusions:
+- styling stations, chairs and equipment purchase
+- water heater upgrade beyond capacity shown
+- landlord-required corridor or storefront work
+- permit and impact fees unless stated
+- hazardous materials abatement
+- after-hours or weekend work unless stated
+- hidden conditions behind existing finishes or below slab
+- landlord-required work not shown
+- low-voltage cabling, AV, security beyond raceway
+- furniture, fixtures and equipment purchase (owner-furnished)
+- utility company fees and service upgrades
+risk_checklist:
+- risk: Under-slab trenching for bowl drains
+  severity: high
+  trade: plumbing
+  mitigation_exclusion: slab trenching beyond 40 LF
+  rfi: Are floor penetrations and drain routes confirmed?
+- risk: Water heater capacity
+  severity: high
+  trade: plumbing
+  mitigation_exclusion: water heater upgrade beyond capacity shown
+  rfi: Is water heater capacity adequate for the bowl count?
+- risk: Electrical load for dryers and stations
+  severity: medium
+  trade: electrical
+  mitigation_exclusion: ''
+  rfi: Are electrical loads confirmed?
+- risk: Venting limitations
+  severity: medium
+  trade: plumbing
+  mitigation_exclusion: ''
+  rfi: Are vent routes available?
+- risk: Finish expectations vs budget
+  severity: low
+  trade: paint-finish
+  mitigation_exclusion: ''
+  rfi: ''

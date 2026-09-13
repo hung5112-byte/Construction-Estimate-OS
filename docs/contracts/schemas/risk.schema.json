@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://construction-estimate-os/contracts/v1/risk.schema.json",
+  "type": "object",
+  "title": "Risk register row",
+  "required": [
+    "risk",
+    "severity",
+    "mitigation"
+  ],
+  "properties": {
+    "risk": {
+      "type": "string"
+    },
+    "severity": {
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    "trade": {
+      "type": "string"
+    },
+    "mitigation": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "exclusion",
+            "rfi",
+            "allowance",
+            "none"
+          ]
+        },
+        "ref": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

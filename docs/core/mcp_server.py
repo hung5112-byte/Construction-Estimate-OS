@@ -195,7 +195,8 @@ def bd_ingest(path: str, vault: str, label: str = "internal") -> dict:
     Creates a citable shadow card (.md) next to each binary — provenance,
     extraction confidence, anti-poisoning screening — then refreshes the vault
     search index so agents can find and cite the content immediately.
-    ⏱️ seconds per document; first embedding run may add ~1-2s model init.
+    ⏱️ seconds per document
+    first embedding run may add ~1-2s model init.
     """
     from core.ingest.pipeline import ingest_paths
     from core.retrieval.indexer import VaultIndexer
@@ -235,7 +236,8 @@ def bd_outcome(
     task folder. quality ∈ [0,1] (1 = the decision worked exactly as intended).
     reflection: 2-4 sentences — was the call right (cite the outcome), which part
     of the thesis held/failed, one concrete lesson. Compose it from the Department
-    Head's words; leave empty rather than inventing one.
+    Head's words
+    leave empty rather than inventing one.
     """
     from core.brain.ledger import DecisionLedger, ledger_path, write_outcome_note
 
@@ -512,6 +514,99 @@ def bd_upgrade(
         regenerate_hubs=regenerate_hubs,
     )
 
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Estimating pipeline tools (Construction-Estimate-OS) — deterministic, no LLM inside
+# ─────────────────────────────────────────────────────────────────────────────
+def _est_status(folder: Path) -> dict:
+    import json as _json
+
+    out: dict = {"folder": folder.name, "files": sorted(p.name for p in folder.iterdir() if p.is_file())}
+    if (folder / "06-estimate.json").exists():
+        est = _json.loads((folder / "06-estimate.json").read_text(encoding="utf-8"))
+        out["total_bid"] = est["markups"][-1]["amount"]
+        out["three_point"] = est["meta"].get("three_point")
+        out["aace_class"] = est["meta"].get("aace_class")
+        out["accuracy_band"] = est["meta"].get("accuracy_band")
+    if (folder / "07-review-scorecard.json").exists():
+        sc = _json.loads((folder / "07-review-scorecard.json").read_text(encoding="utf-8"))
+        out["verdict"] = sc["verdict"]
+        out["failing_gates"] = [g["id"] for g in sc["gates"] if not g["passed"]]
+    if (folder / "05-questions.json").exists():
+        qs = _json.loads((folder / "05-questions.json").read_text(encoding="utf-8"))
+        out["open_critical"] = sum(1 for q in qs if q["severity"] == "CRITICAL" and not q.get("answer") and not q.get("assumption"))
+    return out
+
+
+@mcp.tool()
+def bd_estimate_rom(intake: dict, vault: str) -> dict:
+    """Same-day ROM from an intake form and a project-type playbook (no drawings). intake keys: project_type (playbook or alias),
+    name, gross_sf, city, aace_class?, plans_available?, fields{}, excluded_trades[], allowances[{name, amount}], duration_days?, notes.
+    Returns folder, class/band, low/target/high, verdict, open CRITICAL questions."""
+    from core.estimating import pipeline
+
+    folder = pipeline.rom(Path(vault), intake)
+    return _est_status(folder) | {"report": str(folder / "08-estimate-report.md"), "proposal": str(folder / "09-proposal-draft.md")}
+
+
+@mcp.tool()
+def bd_estimate_intake(package_dir: str, name: str, building_type: str, city: str, vault: str, aace_class: int = 2, render: bool = False) -> dict:
+    """S0 — copy a bid package (PDF drawings + Project Manual), build the sheet register, spec index, shadow cards and profile."""
+    from core.estimating import pipeline
+
+    folder = pipeline.intake(Path(vault), Path(package_dir), name, building_type, city, aace_class, render=render)
+    return _est_status(folder) | {"next": f"bd_estimate_stage(folder='{folder}', stage='takeoff')"}
+
+
+@mcp.tool()
+def bd_estimate_stage(folder: str, stage: str, vault: str = "", auto_assume: bool = False) -> dict:
+    """Run one stage on an estimate folder: takeoff | rfi | resume | price | review | report | approve.
+    resume needs the answers ticked in 05-clarification.md (or auto_assume=True for an unattended run)."""
+    from core.estimating import pipeline
+
+    f = Path(folder)
+    v = Path(vault) if vault else f.parent.parent
+    if stage == "takeoff":
+        led, checks = pipeline.seed_takeoff(f)
+        return _est_status(f) | {"lines": len(led.items), "checks": checks}
+    if stage == "rfi":
+        qs = pipeline.rfi(f)
+        return _est_status(f) | {"questions": len(qs)}
+    if stage == "resume":
+        pipeline.resume(f, auto_assume=auto_assume)
+        return _est_status(f)
+    if stage == "price":
+        pipeline.price(f, v)
+        return _est_status(f)
+    if stage == "review":
+        gates, verdict = pipeline.review(f)
+        return _est_status(f) | {"gates": gates}
+    if stage == "report":
+        out = pipeline.report(f)
+        return _est_status(f) | {"report": str(out)}
+    if stage == "approve":
+        outs = pipeline.approve(f, v)
+        return _est_status(f) | {"outputs": [str(o) for o in outs]}
+    return {"error": f"unknown stage {stage!r}; use takeoff|rfi|resume|price|review|report|approve"}
+
+
+@mcp.tool()
+def bd_estimate_run(package_dir: str, name: str, building_type: str, city: str, vault: str, aace_class: int = 2) -> dict:
+    """Unattended end-to-end run on a bid package (every open question becomes a stated, stamped assumption)."""
+    from core.estimating import pipeline
+
+    folder = pipeline.run_all(Path(vault), Path(package_dir), name, building_type, city, aace_class)
+    return _est_status(folder)
+
+
+@mcp.tool()
+def bd_estimate_status(folder: str) -> dict:
+    """What an estimate folder contains: files, totals, three-point, class/band, verdict, failing gates, open CRITICAL questions."""
+    f = Path(folder)
+    if not f.is_dir():
+        return {"error": f"not a folder: {folder}"}
+    return _est_status(f)
 
 def main() -> None:
     """Entry point — run MCP server over stdio."""

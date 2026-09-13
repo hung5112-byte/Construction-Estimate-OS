@@ -58,6 +58,8 @@ intake → takeoff (seed) → [reader agents] → rfi ⏸ → resume → price �
 
 `docs/core/estimating/pipeline.py` owns the stages and the files in `02-Estimates/<slug>/`; `rfi.py` writes the clarification file in the engine's checkbox format; `review_gates.py` is the deterministic floor (G1–G10); `cost_engine.py` never guesses a price; `workbook.py`/`report.py` render the outputs. The harness path is `/estimate` (`.claude/commands/estimate.md`) → `.claude/workflows/estimate-takeoff.js` → `.claude/agents/ce-*.md` (generated from `01-Departments/` by `docs/scripts/dev/sync_harness_agents.py`). Fixture + ground truth: `docs/tests/fixtures/sample-set-prairie-creek/` (regenerate with `scripts/make_sample_set.py`, needs Chrome).
 
+**ROM mode** (`pipeline.rom`, `ce-os estimate rom`): intake form × project-type playbook (`docs/core/tools/data/estimating/playbooks/*.yaml`, loader `playbooks.py`) → assemblies × quantity rules → three-point estimate with class/band, risk register, questions (defaults carried as assumptions), gates incl. G3b/G11/G12/G13, report, client-safe proposal (`proposal.py`, `client_safe.py`). **Contract v1**: `docs/contracts/` (schemas validated by `test_estimating_contract.py`); HTTP service `service.py` (`ce-os estimate serve`); MCP tools `bd_estimate_*` in `mcp_server.py`; accuracy harness `evals.py` (`ce-os estimate eval`). Playbooks are the place to add trade knowledge — not new agents.
+
 ### 5-Stage Flow (engine tasks — drafts, briefs, optional debates)
 
 ```

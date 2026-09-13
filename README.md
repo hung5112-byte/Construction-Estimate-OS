@@ -5,7 +5,7 @@
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://python.org)
-[![Tests](https://img.shields.io/badge/tests-750+-brightgreen.svg)](#tests)
+[![Tests](https://img.shields.io/badge/tests-790+-brightgreen.svg)](#tests)
 [![LLM arithmetic](https://img.shields.io/badge/LLM_arithmetic-0-brightgreen.svg)](#design-rules)
 
 > ⚠️ Every price in the shipped seed library is a national-average **placeholder marked [UNCERTAIN]**. Load your buyout history into `03-Cost-Library/` before trusting a dollar figure. The Brain ships with a **fictional** DFW general contractor (Blackland Commercial Builders) — replace it with yours.
@@ -52,10 +52,16 @@ ce-os estimate resume <folder>
 ce-os estimate price <folder>     S4  cost library (yours first, seed second) · GCs by duration · markups per policy · benchmark
 ce-os estimate review <folder>    S5  hard gates G1–G10 (+ the chief-estimator agent's judged review)
 ce-os estimate report <folder>    S6  08-estimate-report.md   ⏹ STOP 1 — you approve
-ce-os estimate approve <folder>       03-Outputs/: estimate-workbook.xlsx · basis-of-estimate.docx
+ce-os estimate approve <folder>       03-Outputs/: estimate-workbook.xlsx · basis-of-estimate.docx · proposal-draft.docx
+
+ce-os estimate rom --type restaurant-ti --name "Pho 88" --sf 3200 --city Plano --field hood_lf=14   # same-day ROM (Class 5/4): playbook assemblies × intake facts → low / target / high
+ce-os estimate eval --set docs/tests/fixtures/sample-set-prairie-creek --runs 3               # accuracy: coverage × precision@25% (or ROM band hit-rate)
+ce-os estimate serve --port 8801                                                              # HTTP Estimate Service, contract v1 (docs/contracts/)
 ```
 
-**Hard gates (deterministic, zero LLM):** every measured sheet claimed · provenance on every line · every spec division covered or excluded with a citation · arithmetic ties · units valid · $/SF inside the building-type band · every CRITICAL question answered or carried as a written assumption · scale gate · confidence floor · unpriced lines under the threshold. A failed blocking gate is a `REVISE`, whatever the narrative says.
+**Three ways to price, one rule.** ROM (Class 5/4) prices from project-type **playbooks** — assemblies with low / target / high per unit and quantity rules — so a restaurant, salon, medical, retail, office, white-box, ground-up retail or warehouse ROM has a stated band, a risk register, questions whose defaults are written down, and a client-safe proposal draft. Detailed (Class 3/2) prices the takeoff from the cost library. Final (Class 2/1) swaps in leveled sub bids. In every mode an agent may only *select* a row or an assembly; the engine multiplies, and a missing price is `[UNPRICED]`.
+
+**Hard gates (deterministic, zero LLM):** every measured sheet claimed · provenance on every line · every spec division (or playbook trade) covered or excluded with a citation · arithmetic ties · units valid · $/SF inside the building-type band · every CRITICAL question answered or carried as a written assumption · scale gate · confidence floor · unpriced lines under the threshold · every allowance sourced · every high risk mitigated · client-facing text passes the client-safe scan. A failed blocking gate is a `REVISE`, whatever the narrative says.
 
 ---
 
@@ -93,6 +99,9 @@ Regenerate the sample package (needs Chrome): `.venv/bin/python scripts/make_sam
 - **Brain** — `00-Brain/`: strategy, services, budget, headcount, laws (Texas retainage/bonds/sales tax, Davis-Bacon, codes), state, glossary, **markup-policy**, **benchmarks** (RLB Q2 2026 Dallas, Turner BCI), **bid-policy**, **cost-library** policy.
 - **Fixture** — `docs/tests/fixtures/sample-set-prairie-creek/`: a 12,000 SF office/warehouse, 9 ARCH-D vector sheets (G/A/S/M/P/E with real schedules) + Project Manual, with `ground_truth.json`. The seed takeoff matches it: 12 doors, 10 windows, 440 LF perimeter, 12,000 SF, 16.66 tons of steel, 82 sprinkler heads.
 - **Harness** — `/estimate` command, `estimate-takeoff` workflow (readers in parallel → spec analyst → RFI coordinator), `drawing-reading` skill, 26 subagents.
+- **Playbooks** — `docs/core/tools/data/estimating/playbooks/*.yaml`: eight project types, 101 seed assemblies (placeholders marked `[to load]`), quantity rules, common RFIs, exclusions, risk checklists with mitigations, benchmark bands.
+- **Service contract v1** — `docs/contracts/estimate-service.v1.md` + ten JSON schemas; a contract test validates real outputs; `ce-os estimate serve` (Starlette, loopback, optional `CE_SERVICE_TOKEN`) and MCP tools `bd_estimate_rom / intake / stage / run / status`.
+- **Evals** — `ce-os estimate eval`: coverage × precision@25% composite on ground-truth sets (the seed takeoff scores 1.000 on the synthetic set), ROM band hit-rate on `<case>/intake.json + actual.json` sets, N runs with spread.
 - **Templates** — 16 estimating templates (bid/no-bid scorecard, sheet register, RFI log, scope letter, Basis of Estimate, takeoff sheets, estimate summary, GC worksheet, leveling matrix, risk register, bid-day checklist, turnover package) + the generic library.
 
 ## Tests

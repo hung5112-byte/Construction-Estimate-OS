@@ -5,6 +5,8 @@ G3 spec divisions covered              G4 arithmetic ties ledger→lines→summa
 G5 units valid for the division        G6 $/SF inside the building-type band (or overridden)
 G7 CRITICAL RFIs answered/assumed      G8 scale gate passed on measured sheets
 G9 confidence floor                    G10 no unpriced lines above the materiality threshold
+G11 every allowance sourced            G12 every high risk mitigated (exclusion / RFI / allowance)
+G13 client-facing text passes the client-safe scan     G3b (ROM) every playbook trade covered or excluded
 A failed blocking gate makes the verdict REVISE regardless of the judged review — same philosophy
 as the critic loop: the model may add issues, never remove a gate failure.
 """
@@ -31,7 +33,10 @@ class GateResult:
 def run_gates(register: list[dict], ledger_items: list[dict], priced_lines: list[dict], summary: list[dict],
               spec_sections: list[dict], rfi_questions: list[dict], benchmark: dict, gross_sf: float,
               confidence_floor: float = 0.6, materiality_pct: float = 1.0, per_sf_override: bool = False,
-              excluded_divisions: dict | None = None) -> list[GateResult]:
+              excluded_divisions: dict | None = None, playbook_trades: dict | None = None, risks: list[dict] | None = None,
+              client_findings: list[dict] | None = None) -> list[GateResult]:
+    """`playbook_trades`: {trade: excluded_reason|None} for ROM runs (G3b). `risks`: risk register rows with
+    `severity` and `mitigation` (G12). `client_findings`: client-safe scan findings on client-facing text (G13)."""
     gates: list[GateResult] = []
     excluded_divisions = excluded_divisions or {}
     measured_types = {"plans", "elevations", "sections", "large-scale views"}
@@ -56,6 +61,12 @@ def run_gates(register: list[dict], ledger_items: list[dict], priced_lines: list
     gates.append(GateResult("G3", "Every technical spec division has takeoff lines or a cited exclusion", not missing, True,
                             f"{len(spec_divs) - len(missing)}/{len(spec_divs)} spec divisions covered"
                             + (f"; excluded with citation: {', '.join(sorted(excluded))}" if excluded else ""), missing))
+    if playbook_trades is not None:
+        # G3b — every playbook trade has lines or a stated exclusion (ROM runs have no spec index)
+        covered = {(it.get("tags") or {}).get("trade") for it in ledger_items}
+        missing_trades = sorted(t for t, why in playbook_trades.items() if not why and t not in covered)
+        gates.append(GateResult("G3b", "Every playbook trade has takeoff lines or a stated exclusion", not missing_trades, True,
+                                f"{len(playbook_trades) - len(missing_trades)}/{len(playbook_trades)} trades covered", missing_trades))
 
     # G4 — arithmetic ties: sum of priced lines == sum of summary totals
     lines_total = round(sum(p["total"] for p in priced_lines), 2)
@@ -67,7 +78,8 @@ def run_gates(register: list[dict], ledger_items: list[dict], priced_lines: list
 
     # G5 — units valid for division
     bad_units = [f"{it['id']} {it['unit']} in div {it['division']}" for it in ledger_items
-                 if DIVISION_UNITS.get(it["division"]) and it["unit"] not in DIVISION_UNITS[it["division"]] and it["unit"] != "LS"]
+                 if DIVISION_UNITS.get(it["division"]) and it["unit"] not in DIVISION_UNITS[it["division"]] and it["unit"] != "LS"
+                 and it.get("pricing_basis") != "assembly"]
     gates.append(GateResult("G5", "Units are valid for their division", not bad_units, True,
                             f"{len(bad_units)} unit problems", bad_units))
 
@@ -99,6 +111,31 @@ def run_gates(register: list[dict], ledger_items: list[dict], priced_lines: list
     share = (len(unpriced) / len(priced_lines) * 100) if priced_lines else 0
     gates.append(GateResult("G10", "Unpriced lines stay below the materiality threshold", share <= materiality_pct * 5, True,
                             f"{len(unpriced)} unpriced of {len(priced_lines)} ({share:.1f}% of lines; threshold {materiality_pct * 5:.0f}%)", unpriced))
+
+    # G11 — every allowance carries an amount and a source (spec page or intake)
+    bad_allow = [it["id"] for it in ledger_items if it.get("method") == "allowance"
+                 and not (float((it.get("tags") or {}).get("amount") or 0) > 0 and ((it.get("tags") or {}).get("page") or (it.get("tags") or {}).get("source")))]
+    n_allow = sum(1 for it in ledger_items if it.get("method") == "allowance")
+    gates.append(GateResult("G11", "Every allowance has an amount and a source", not bad_allow, True,
+                            f"{n_allow - len(bad_allow)}/{n_allow} allowances sourced", bad_allow))
+
+    # G12 — every high-severity risk has a mitigation (exclusion, RFI or allowance)
+    if risks is not None:
+        unmitigated = [r["risk"] for r in risks if r.get("severity") == "high" and not (r.get("mitigation") or {}).get("type") or
+                       (r.get("severity") == "high" and (r.get("mitigation") or {}).get("type") == "none")]
+        n_high = sum(1 for r in risks if r.get("severity") == "high")
+        gates.append(GateResult("G12", "Every high-severity risk has an exclusion, an RFI or an allowance", not unmitigated, True,
+                                f"{n_high - len(unmitigated)}/{n_high} high risks mitigated", unmitigated))
+    else:
+        gates.append(GateResult("G12", "Every high-severity risk has an exclusion, an RFI or an allowance", True, False, "no risk register on this run"))
+
+    # G13 — client-facing text passed the client-safe scan (no blocking findings)
+    if client_findings is not None:
+        blockers = [f"{f['category']}: {f['term']} (line {f['line_no']})" for f in client_findings if f.get("severity") == "blocking"]
+        gates.append(GateResult("G13", "Client-facing text has no internal cost, blame, legal admission or raw language", not blockers, True,
+                                f"{len(blockers)} blocking finding(s), {sum(1 for f in client_findings if f.get('severity') != 'blocking')} warning(s)", blockers))
+    else:
+        gates.append(GateResult("G13", "Client-facing text has no internal cost, blame, legal admission or raw language", True, False, "no client-facing text on this run"))
     return gates
 
 

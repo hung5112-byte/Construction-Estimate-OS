@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://construction-estimate-os/contracts/v1/question.schema.json",
+  "type": "object",
+  "title": "Clarification / RFI question",
+  "required": [
+    "text",
+    "citation",
+    "severity"
+  ],
+  "properties": {
+    "text": {
+      "type": "string"
+    },
+    "citation": {
+      "type": "string"
+    },
+    "severity": {
+      "enum": [
+        "CRITICAL",
+        "WARN",
+        "INFO"
+      ]
+    },
+    "exposure": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "answer": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "assumption": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

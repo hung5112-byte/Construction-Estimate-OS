@@ -1,6 +1,7 @@
 """Deterministic clarification questions (the RFI gate) in the engine's checkbox format.
 
-The readers and pricers add their own questions on top; these are the ones the package itself
+The readers and pricers add their own questions on top
+these are the ones the package itself
 proves: unscaled/scanned sheets, schedule-vs-plan disagreements, divisions with no takeoff, and
 Division 00/01 items an estimator always confirms. Every question carries a citation and a cost
 exposure so the Chief Estimator can rank them in 30 seconds.
@@ -120,4 +121,38 @@ def auto_assume_all(folder: Path) -> list[EstimateQuestion]:
         if not q.answer and not q.assumption:
             q.assumption = "AUTO-ASSUMED for the unattended run — must be confirmed before bid"
     js.write_text(json.dumps([q.to_dict() for q in qs], indent=2), encoding="utf-8")
+    return qs
+
+
+def build_rom_questions(pb, basis, risks: list[dict], intake: dict) -> list[EstimateQuestion]:
+    """ROM questions: missing required facts are open CRITICAL; every default used is a WARN that already
+    carries its assumption (stated, never silent)
+    high risks with a playbook exclusion are carried as that
+    exclusion, high risks without one stay open CRITICAL; the playbook's standard RFIs are INFO."""
+    qs: list[EstimateQuestion] = []
+    for f in basis.missing:
+        qs.append(EstimateQuestion(f"Required intake fact missing: {f}. The ROM cannot size the related assemblies without it.",
+                                   f"intake form ({pb.project_type} playbook v{pb.version})", "CRITICAL", "assemblies keyed on this basis", ["intake"]))
+    for a in basis.assumptions:
+        qs.append(EstimateQuestion(f"Default used: {a}. Confirm or provide the actual value.", f"{pb.project_type} playbook v{pb.version} intake_fields",
+                                   "WARN", "quantities derived from this basis", ["assumption"], assumption=a))
+    for r in risks:
+        if r.get("severity") != "high":
+            continue
+        mit = r.get("mitigation") or {}
+        text = f"Risk — {r['risk']}. " + (mit.get("ref") if mit.get("type") == "rfi" else "How is this handled on this project?")
+        if mit.get("type") == "exclusion":
+            qs.append(EstimateQuestion(text, f"{pb.project_type} playbook risk checklist", "CRITICAL", r.get("trade", ""), ["risk"],
+                                       assumption=f"excluded from the ROM: {mit['ref']}"))
+        else:
+            qs.append(EstimateQuestion(text, f"{pb.project_type} playbook risk checklist", "CRITICAL", r.get("trade", ""), ["risk"]))
+    for r in risks:
+        if r.get("severity") == "medium" and (r.get("mitigation") or {}).get("type") == "rfi":
+            qs.append(EstimateQuestion(f"Risk — {r['risk']}. {r['mitigation']['ref']}", f"{pb.project_type} playbook risk checklist", "WARN", r.get("trade", ""), ["risk"]))
+    asked = {q.text for q in qs}
+    for rfi_text in pb.common_rfis:
+        if not any(rfi_text.lower()[:40] in t.lower() for t in asked):
+            qs.append(EstimateQuestion(rfi_text, f"{pb.project_type} playbook common RFIs", "INFO", "n/a", ["playbook"]))
+    order = {"CRITICAL": 0, "WARN": 1, "INFO": 2}
+    qs.sort(key=lambda q: order[q.severity])
     return qs

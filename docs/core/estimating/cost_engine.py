@@ -35,6 +35,9 @@ class CostRow:
     valid_until: str = ""
     location: str = "national"
     notes: str = ""
+    pricing_basis: str = "historical"   # historical | assembly | manual | allowance | sub_bid | online_check | seed_placeholder
+    unit_low: float | None = None        # optional three-point range on the unit total (ROM assemblies, quotes with spread)
+    unit_high: float | None = None
 
     @property
     def unit_total(self) -> float:
@@ -42,7 +45,15 @@ class CostRow:
 
     @property
     def uncertain(self) -> bool:
-        return "seed" in self.source.lower() or "[UNCERTAIN]" in self.notes
+        return "seed" in self.source.lower() or "[UNCERTAIN]" in self.notes or self.pricing_basis == "seed_placeholder"
+
+    @property
+    def unit_low_eff(self) -> float:
+        return self.unit_low if self.unit_low is not None else self.unit_total
+
+    @property
+    def unit_high_eff(self) -> float:
+        return self.unit_high if self.unit_high is not None else self.unit_total
 
 
 def _f(v: str) -> float:
@@ -69,6 +80,8 @@ def load_library(paths: list[Path]) -> dict[str, CostRow]:
                     sub=_f(row.get("sub", 0)), source=(row.get("source") or Path(p).name).strip(),
                     quote_date=(row.get("quote_date") or "").strip(), valid_until=(row.get("valid_until") or "").strip(),
                     location=(row.get("location") or "national").strip(), notes=(row.get("notes") or "").strip(),
+                    pricing_basis=(row.get("pricing_basis") or ("seed_placeholder" if Path(p).resolve() == SEED_LIBRARY.resolve() else "historical")).strip(),
+                    unit_low=(_f(row["unit_low"]) if row.get("unit_low") else None), unit_high=(_f(row["unit_high"]) if row.get("unit_high") else None),
                 )
     return lib
 
@@ -105,6 +118,11 @@ class PricedLine:
     method: str
     confidence: float
     flags: list[str] = field(default_factory=list)
+    pricing_basis: str = ""
+    unit_low: float = 0.0
+    unit_high: float = 0.0
+    low: float = 0.0
+    high: float = 0.0
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -118,8 +136,10 @@ def price_ledger(ledger: Ledger, library: dict[str, CostRow], location_factor: f
         row = library.get(it.item_code)
         flags: list[str] = []
         if row is None:
-            lines.append(PricedLine(it.id, it.division, it.item_code, it.description, it.qty_with_waste, it.unit,
-                                    0, 0, 0, 0, 0, 0, 0, 0, 0, "", it.sheet, it.method, it.confidence, ["UNPRICED"]))
+            pl = PricedLine(it.id, it.division, it.item_code, it.description, it.qty_with_waste, it.unit,
+                            0, 0, 0, 0, 0, 0, 0, 0, 0, "", it.sheet, it.method, it.confidence, ["UNPRICED"])
+            pl.pricing_basis = it.pricing_basis
+            lines.append(pl)
             continue
         if row.unit != it.unit:
             flags.append(f"UNIT-MISMATCH library {row.unit} vs takeoff {it.unit}")
@@ -138,8 +158,15 @@ def price_ledger(ledger: Ledger, library: dict[str, CostRow], location_factor: f
         # location factor applies to labor and material; subcontract quotes are already local
         ul, um, ue, us = row.labor * location_factor, row.material * location_factor, row.equipment * location_factor, row.sub
         L, M, Eq, S = round(q * ul, 2), round(q * um, 2), round(q * ue, 2), round(q * us, 2)
-        lines.append(PricedLine(it.id, it.division, it.item_code, it.description, q, it.unit, ul, um, ue, us,
-                                L, M, Eq, S, round(L + M + Eq + S, 2), row.source, it.sheet, it.method, it.confidence, flags))
+        pl = PricedLine(it.id, it.division, it.item_code, it.description, q, it.unit, ul, um, ue, us,
+                        L, M, Eq, S, round(L + M + Eq + S, 2), row.source, it.sheet, it.method, it.confidence, flags)
+        pl.pricing_basis = it.pricing_basis or row.pricing_basis
+        # three-point: scale the target extension by the row's unit range (ranges live on the unit total)
+        ut = row.unit_total
+        pl.unit_low, pl.unit_high = row.unit_low_eff, row.unit_high_eff
+        pl.low = round(pl.total * (row.unit_low_eff / ut), 2) if ut else pl.total
+        pl.high = round(pl.total * (row.unit_high_eff / ut), 2) if ut else pl.total
+        lines.append(pl)
     return lines
 
 
@@ -226,12 +253,14 @@ def summary_by_division(priced: list[PricedLine], gross_sf: float, divisions_tit
     rows: dict[str, dict] = {}
     for ln in priced:
         r = rows.setdefault(ln.division, {"division": ln.division, "title": divisions_titles.get(ln.division, ""), "labor": 0.0, "material": 0.0,
-                                          "equipment": 0.0, "sub": 0.0, "total": 0.0, "lines": 0, "unpriced": 0})
+                                          "equipment": 0.0, "sub": 0.0, "total": 0.0, "low": 0.0, "high": 0.0, "lines": 0, "unpriced": 0})
         r["labor"] += ln.labor
         r["material"] += ln.material
         r["equipment"] += ln.equipment
         r["sub"] += ln.sub
         r["total"] += ln.total
+        r["low"] += ln.low
+        r["high"] += ln.high
         r["lines"] += 1
         r["unpriced"] += 1 if "UNPRICED" in ln.flags else 0
     grand = sum(r["total"] for r in rows.values()) or 1.0
@@ -240,7 +269,7 @@ def summary_by_division(priced: list[PricedLine], gross_sf: float, divisions_tit
         r = rows[div]
         r["per_sf"] = round(r["total"] / gross_sf, 2) if gross_sf else None
         r["pct"] = round(r["total"] / grand * 100, 1)
-        for k in ("labor", "material", "equipment", "sub", "total"):
+        for k in ("labor", "material", "equipment", "sub", "total", "low", "high"):
             r[k] = round(r[k], 2)
         out.append(r)
     return out
@@ -284,3 +313,14 @@ def load_location_factor(city: str, path: Path | None = None) -> tuple[float, st
 def estimate_json(priced: list[PricedLine], gcs: list[GCLine], markups: list[MarkupLine], summary: list[dict], meta: dict) -> str:
     return json.dumps({"meta": meta, "summary_by_division": summary, "lines": [p.to_dict() for p in priced],
                        "general_conditions": [asdict(g) for g in gcs], "markups": [asdict(m) for m in markups]}, indent=2)
+
+
+def three_point_totals(priced: list[PricedLine], materials_total: float, gc_total: float, policy: MarkupPolicy) -> dict:
+    """Low / target / high total bid: the same markup stack applied to the low, target and high direct
+    totals of the priced lines. Single-point libraries collapse to one number; ROM assemblies spread."""
+    out = {}
+    for key, direct in (("low", sum(p.low for p in priced)), ("target", sum(p.total for p in priced)), ("high", sum(p.high for p in priced))):
+        stack = markup_stack(round(direct, 2), materials_total, gc_total, policy)
+        out[key] = {"direct": round(direct, 2), "total": stack[-1].amount}
+    out["spread_pct"] = round((out["high"]["total"] - out["low"]["total"]) / out["target"]["total"] * 100, 1) if out["target"]["total"] else 0.0
+    return out

@@ -113,3 +113,34 @@ def test_summary_benchmark_and_gates_end_to_end():
     assert not by["G3"].passed and by["G3"].evidence == ["26"]             # spec division 26 has no lines
     assert by["G4"].passed and by["G5"].passed and not by["G7"].passed
     assert verdict(gates) == "REVISE"
+
+
+def test_pricing_basis_and_three_point_ranges(tmp_path):
+    from core.estimating.cost_engine import three_point_totals
+
+    byo = tmp_path / "buyouts.csv"
+    byo.write_text(
+        "item_code,description,unit,labor,material,equipment,sub,source,quote_date,valid_until,location,notes,pricing_basis,unit_low,unit_high\n"
+        "08-hm-door-single,HM door (our buyouts),EA,0,0,0,1500,buyouts-2025.csv#row-41,2026-05-02,2027-05-01,Dallas,,historical,1350,1800\n"
+        "23-hood-type1-per-lf,Type I hood per LF,LF,0,0,0,1800,playbook restaurant-ti v1.0,2026-09-01,,national,[UNCERTAIN],assembly,1450,2400\n",
+        encoding="utf-8",
+    )
+    lib = load_library([byo, SEED_LIBRARY])
+    assert lib["08-hm-door-single"].pricing_basis == "historical" and lib["08-hm-door-single"].source.startswith("buyouts")   # BYO wins over seed
+    assert lib["03-sog-6in"].pricing_basis == "seed_placeholder" and lib["03-sog-6in"].uncertain
+    led = Ledger()
+    led.add("08", "08-hm-door-single", "HM door", 10, "EA", "A-601", "schedule", "03-architectural")
+    led.add("23", "23-hood-type1-per-lf", "Hood", 12, "LF", "intake", "derived", "04-mep", confidence=0.5)
+    led.add("10", "10-x-allowance", "Signage allowance", 1, "LS", "Project Manual", "allowance", "01-bid-coordination", pricing_basis="allowance")
+    lines = {ln.item_code: ln for ln in price_ledger(led, lib, location_factor=0.88, as_of=date(2026, 9, 12))}
+    door = lines["08-hm-door-single"]
+    assert door.pricing_basis == "historical" and door.total == 15_000 and door.low == 13_500 and door.high == 18_000
+    hood = lines["23-hood-type1-per-lf"]
+    assert hood.pricing_basis == "assembly" and "UNCERTAIN" in hood.flags and hood.low == pytest.approx(12 * 1450) and hood.high == pytest.approx(12 * 2400)
+    assert lines["10-x-allowance"].pricing_basis == "allowance" and "UNPRICED" in lines["10-x-allowance"].flags   # no row, no amount → honest
+    tp = three_point_totals(list(lines.values()), 0, 0, MarkupPolicy(0, 0, 0, 0, 0, tax_pct=0))
+    assert tp["low"]["total"] < tp["target"]["total"] < tp["high"]["total"] and tp["spread_pct"] > 0
+    assert any("unknown pricing_basis" in p for p in Ledger().__class__().items) is False
+    bad = Ledger()
+    bad.add("08", "x", "x", 1, "EA", "A-1", "manual", "03-architectural", pricing_basis="guess")
+    assert any("unknown pricing_basis" in p for p in bad.validate())

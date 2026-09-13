@@ -1,5 +1,209 @@
 {
   "project": "PRAIRIE CREEK OFFICE/WAREHOUSE \u2014 BUILDING 2",
+  "building_type": "office-warehouse",
+  "city": "Plano",
+  "expected_lines": [
+    {
+      "item_code": "08-hm-door-single",
+      "qty": 8,
+      "unit": "EA"
+    },
+    {
+      "item_code": "08-hm-door-single-rated",
+      "qty": 1,
+      "unit": "EA"
+    },
+    {
+      "item_code": "08-hm-door-single-exterior",
+      "qty": 2,
+      "unit": "EA"
+    },
+    {
+      "item_code": "08-storefront-entrance-pair",
+      "qty": 1,
+      "unit": "EA"
+    },
+    {
+      "item_code": "08-overhead-door-12x14",
+      "qty": 2,
+      "unit": "EA"
+    },
+    {
+      "item_code": "08-window-fixed-aluminum",
+      "qty": 10,
+      "unit": "EA"
+    },
+    {
+      "item_code": "03-footing-spread",
+      "qty": 8.0,
+      "unit": "CY"
+    },
+    {
+      "item_code": "03-footing-continuous",
+      "qty": 32.593,
+      "unit": "CY"
+    },
+    {
+      "item_code": "03-sog-4in",
+      "qty": 4000,
+      "unit": "SF"
+    },
+    {
+      "item_code": "03-sog-6in",
+      "qty": 8000,
+      "unit": "SF"
+    },
+    {
+      "item_code": "05-structural-steel",
+      "qty": 7.17,
+      "unit": "TON"
+    },
+    {
+      "item_code": "05-steel-joists",
+      "qty": 9.49,
+      "unit": "TON"
+    },
+    {
+      "item_code": "05-metal-deck",
+      "qty": 12000,
+      "unit": "SF"
+    },
+    {
+      "item_code": "21-sprinkler-design-build",
+      "qty": 82,
+      "unit": "EA"
+    },
+    {
+      "item_code": "22-water-closet",
+      "qty": 4,
+      "unit": "EA"
+    },
+    {
+      "item_code": "22-lavatory",
+      "qty": 4,
+      "unit": "EA"
+    },
+    {
+      "item_code": "22-hose-bibb",
+      "qty": 4,
+      "unit": "EA"
+    },
+    {
+      "item_code": "23-rtu-7-5-ton",
+      "qty": 2,
+      "unit": "EA"
+    },
+    {
+      "item_code": "23-unit-heater-gas",
+      "qty": 2,
+      "unit": "EA"
+    },
+    {
+      "item_code": "23-exhaust-fan",
+      "qty": 2,
+      "unit": "EA"
+    },
+    {
+      "item_code": "23-diffuser-grille",
+      "qty": 18,
+      "unit": "EA"
+    },
+    {
+      "item_code": "26-troffer-led-2x4",
+      "qty": 40,
+      "unit": "EA"
+    },
+    {
+      "item_code": "26-high-bay-led",
+      "qty": 24,
+      "unit": "EA"
+    },
+    {
+      "item_code": "26-wall-pack-led",
+      "qty": 8,
+      "unit": "EA"
+    },
+    {
+      "item_code": "26-exit-sign",
+      "qty": 6,
+      "unit": "EA"
+    },
+    {
+      "item_code": "26-receptacle-duplex",
+      "qty": 48,
+      "unit": "EA"
+    },
+    {
+      "item_code": "27-data-outlet-raceway",
+      "qty": 24,
+      "unit": "EA"
+    },
+    {
+      "item_code": "28-facp",
+      "qty": 1,
+      "unit": "EA"
+    },
+    {
+      "item_code": "28-fa-device",
+      "qty": 20,
+      "unit": "EA"
+    },
+    {
+      "item_code": "09-act-ceiling-2x2",
+      "qty": 3500,
+      "unit": "SF"
+    },
+    {
+      "item_code": "09-gwb-ceiling",
+      "qty": 500,
+      "unit": "SF"
+    },
+    {
+      "item_code": "09-carpet-tile",
+      "qty": 3000,
+      "unit": "SF"
+    },
+    {
+      "item_code": "09-lvt-flooring",
+      "qty": 500,
+      "unit": "SF"
+    },
+    {
+      "item_code": "09-porcelain-tile-floor",
+      "qty": 500,
+      "unit": "SF"
+    },
+    {
+      "item_code": "03-concrete-sealer",
+      "qty": 8000,
+      "unit": "SF"
+    },
+    {
+      "item_code": "07-tpo-roof-system",
+      "qty": 120,
+      "unit": "SQ"
+    },
+    {
+      "item_code": "07-coping-aluminum",
+      "qty": 440,
+      "unit": "LF"
+    },
+    {
+      "item_code": "07-roof-drain",
+      "qty": 8,
+      "unit": "EA"
+    },
+    {
+      "item_code": "04-brick-veneer",
+      "qty": 1960,
+      "unit": "SF"
+    },
+    {
+      "item_code": "10-signage-allowance",
+      "qty": 1,
+      "unit": "LS"
+    }
+  ],
   "gross_sf": 12000,
   "office_sf": 4000,
   "warehouse_sf": 8000,

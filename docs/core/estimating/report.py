@@ -13,9 +13,10 @@ def report_markdown(profile: dict, estimate: dict, gates: list[dict], questions:
     direct = markups.get("Direct cost", {}).get("amount", 0.0)
     gsf = float(profile.get("gross_sf") or 0)
     per_sf = total / gsf if gsf else None
+    per_sf_txt = f"(${per_sf:,.2f}/SF)" if per_sf else "(area not stated)"
     v = "REVISE" if any(g["blocking"] and not g["passed"] for g in gates) else "APPROVE"
     cls = profile.get("aace_class", 2)
-    band = {5: "−30% / +50%", 4: "−20% / +30%", 3: "−15% / +20%", 2: "−10% / +15%", 1: "−5% / +10%"}.get(int(cls), "")
+    band = profile.get("accuracy_band") or {5: "−30% / +50%", 4: "−20% / +30%", 3: "−15% / +20%", 2: "−10% / +15%", 1: "−5% / +10%"}.get(int(cls), "")
     open_q = [q for q in questions if not q.get("answer") and not q.get("assumption")]
     crit = [q for q in open_q if q.get("severity") == "CRITICAL"]
     low = [it for it in ledger_items if it["confidence"] < 0.6]
@@ -25,7 +26,7 @@ def report_markdown(profile: dict, estimate: dict, gates: list[dict], questions:
            f"# Estimate report — {profile.get('name', '')}", "",
            "## TL;DR", narrative.get("tldr") or (
                f"{profile.get('building_type', 'building')} of {gsf:,.0f} SF in {profile.get('city', '')}: **${total:,.0f}** total bid "
-               f"(${per_sf:,.2f}/SF)" + (", inside the benchmark band" if benchmark.get('checks') and benchmark['checks'][0]['status'] == 'inside' else "") +
+               f"{per_sf_txt}" + (", inside the benchmark band" if benchmark.get('checks') and benchmark['checks'][0]['status'] == 'inside' else "") +
                f". Class {cls} estimate, expected accuracy {band}. Review verdict **{v}**; {len(crit)} open CRITICAL question(s); "
                f"{len(unpriced)} unpriced line(s); {uncertain} line(s) priced from placeholder data."), "",
            "## Verdict", f"**{v}** — " + (narrative.get("verdict") or ("all blocking gates passed" if v == "APPROVE" else "one or more blocking gates failed — see scorecard")), "",
@@ -36,6 +37,9 @@ def report_markdown(profile: dict, estimate: dict, gates: list[dict], questions:
     for m in estimate["markups"]:
         out.append(f"| {m['name']} | {m['pct'] if m['pct'] else ''} | ${m['amount']:,.0f} |")
     out += ["", f"**Direct cost ${direct:,.0f} · Total bid ${total:,.0f} · ${per_sf:,.2f}/SF**" if per_sf else f"**Total bid ${total:,.0f}**", ""]
+    tp = estimate["meta"].get("three_point")
+    if tp:
+        out += [f"Three-point (class {cls}, {band}): **low ${tp['low']['total']:,.0f} · target ${tp['target']['total']:,.0f} · high ${tp['high']['total']:,.0f}** (spread {tp['spread_pct']}%)", ""]
     out += ["## Benchmark position", ""]
     for c in benchmark.get("checks", []):
         out.append(f"- {c['check']}: **{c['value']}** vs {c['band']} → {c['status']} _(source: {c['source']})_")

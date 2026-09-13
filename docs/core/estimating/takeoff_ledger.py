@@ -12,6 +12,8 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 METHODS = ("schedule", "vector", "vision", "manual", "derived", "spec", "allowance")
+# How a PRICE was obtained (GrandVista-compatible enum + our honest placeholder value)
+PRICING_BASES = ("historical", "assembly", "manual", "allowance", "sub_bid", "online_check", "seed_placeholder")
 UNITS = {
     "EA": "each", "LF": "linear feet", "SF": "square feet", "SY": "square yards", "CY": "cubic yards",
     "SQ": "roofing squares (100 SF)", "TON": "tons (2,000 lb)", "LB": "pounds", "LS": "lump sum",
@@ -57,6 +59,7 @@ class TakeoffItem:
     waste_pct: float = 0.0
     notes: str = ""
     tags: dict = field(default_factory=dict)
+    pricing_basis: str = ""      # set at pricing time unless the line dictates it (allowance, manual, sub_bid)
 
     @property
     def qty_with_waste(self) -> float:
@@ -74,8 +77,10 @@ class TakeoffItem:
             problems.append(f"{self.id}: negative quantity")
         if not (0.0 <= self.confidence <= 1.0):
             problems.append(f"{self.id}: confidence out of range")
+        if self.pricing_basis and self.pricing_basis not in PRICING_BASES:
+            problems.append(f"{self.id}: unknown pricing_basis {self.pricing_basis!r}")
         allowed = DIVISION_UNITS.get(self.division)
-        if allowed and self.unit not in allowed and self.unit != "LS":   # a lump-sum/allowance line is valid anywhere
+        if allowed and self.unit not in allowed and self.unit != "LS" and self.pricing_basis != "assembly":   # LS and assembly lines are valid anywhere
             problems.append(f"{self.id}: unit {self.unit} unusual for division {self.division}")
         return problems
 

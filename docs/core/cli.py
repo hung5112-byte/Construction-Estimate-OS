@@ -240,7 +240,8 @@ def ingest(paths, vault, label, no_reindex):
     """Ingest documents (docx/pptx/pdf/xlsx/csv/txt) → citable shadow cards.
 
     Each binary gets a companion .md card (provenance + extracted text) that
-    agents can search and cite; the original stays untouched as an attachment.
+    agents can search and cite
+    the original stays untouched as an attachment.
     """
     from pathlib import Path
     from core.ingest.pipeline import ingest_paths
@@ -490,6 +491,75 @@ def estimate_approve(folder, vault):
     outs = pipeline.approve(Path(folder), _vault(vault))
     for o in outs:
         console.print(f"[green]✓[/] {o}")
+
+
+@estimate.command("rom")
+@click.option("--type", "project_type", required=True, help="Playbook: restaurant-ti, salon-beauty, medical-dental, retail-ti, office-buildout, white-box, ground-up-retail, industrial-warehouse (aliases accepted)")
+@click.option("--name", required=True)
+@click.option("--sf", "gross_sf", type=float, required=True, help="Gross square feet")
+@click.option("--city", default="Dallas", show_default=True)
+@click.option("--class", "aace_class", type=int, default=None, help="AACE class (default: playbook, 4 if --plans)")
+@click.option("--plans", "plans_available", is_flag=True, help="Partial plans available (Class 4 instead of 5)")
+@click.option("--field", "fields", multiple=True, help="Intake fact key=value, e.g. --field hood_lf=14 --field fixture_count=8")
+@click.option("--exclude", "excluded", multiple=True, help="Trade to exclude, e.g. --exclude fire-sprinkler")
+@click.option("--allowance", "allowances", multiple=True, help="name=amount, e.g. --allowance signage=15000")
+@click.option("--duration-days", type=int, default=None)
+@click.option("--notes", default="")
+@click.option("--intake", "intake_json", type=click.Path(exists=True, dir_okay=False), default=None, help="Intake form JSON (overrides the options)")
+@click.option("--vault", type=click.Path(), default=".")
+def estimate_rom(project_type, name, gross_sf, city, aace_class, plans_available, fields, excluded, allowances, duration_days, notes, intake_json, vault):
+    """Same-day ROM from an intake form and a project-type playbook (Class 5/4, no drawings needed)."""
+    import json as _json
+    from pathlib import Path
+    from core.estimating import pipeline
+    if intake_json:
+        intake = _json.loads(Path(intake_json).read_text(encoding="utf-8"))
+    else:
+        fdict = {}
+        for kv in fields:
+            k, _, v = kv.partition("=")
+            fdict[k.strip()] = float(v)
+        intake = {"project_type": project_type, "name": name, "gross_sf": gross_sf, "city": city, "aace_class": aace_class, "plans_available": plans_available,
+                  "fields": fdict, "excluded_trades": list(excluded), "duration_days": duration_days, "notes": notes,
+                  "allowances": [{"name": a.partition("=")[0].strip(), "amount": float(a.partition("=")[2])} for a in allowances]}
+    folder = pipeline.rom(_vault(vault), intake)
+    est = _json.loads((folder / "06-estimate.json").read_text(encoding="utf-8"))
+    tp = est["meta"]["three_point"]
+    sc = _json.loads((folder / "07-review-scorecard.json").read_text(encoding="utf-8"))
+    qs = _json.loads((folder / "05-questions.json").read_text(encoding="utf-8"))
+    open_crit = sum(1 for q in qs if q["severity"] == "CRITICAL" and not q.get("answer") and not q.get("assumption"))
+    color = "green" if sc["verdict"] == "APPROVE" else "red"
+    console.print(f"[green]✓ ROM[/] {folder.name} · class {est['meta']['aace_class']} ({est['meta']['accuracy_band']})")
+    console.print(f"   low ${tp['low']['total']:,.0f} · target ${tp['target']['total']:,.0f} · high ${tp['high']['total']:,.0f} · [{color}]verdict {sc['verdict']}[/] · {open_crit} open CRITICAL question(s)")
+    console.print(f"   report: {folder / '08-estimate-report.md'} · proposal: {folder / '09-proposal-draft.md'}")
+
+
+@estimate.command("eval")
+@click.option("--set", "set_dir", type=click.Path(exists=True, file_okay=False), required=True, help="Detailed set (package + ground_truth.json with expected_lines) or ROM set (<case>/intake.json + actual.json)")
+@click.option("--runs", type=int, default=1, show_default=True)
+@click.option("--tol", type=float, default=0.25, show_default=True, help="Quantity tolerance for precision@tol")
+@click.option("--vault", type=click.Path(), default=".")
+def estimate_eval(set_dir, runs, tol, vault):
+    """Accuracy harness: coverage × precision@tol (detailed) or band hit-rate (ROM), N runs, report in 03-Outputs/evals/."""
+    from pathlib import Path
+    from core.estimating.evals import run_eval
+    res, md = run_eval(_vault(vault), Path(set_dir), runs=runs, tol=tol)
+    if res["kind"] == "detailed":
+        console.print(f"[green]composite {res['composite_mean']:.3f}[/] (spread {res['composite_spread']:.3f}) · coverage {res['coverage_mean']:.3f} · precision@{int(tol * 100)}% {res['precision_mean']:.3f}")
+    else:
+        console.print(f"[green]band hit-rate {res['band_hit_rate']:.0%}[/] · mean |target error| {res['target_error_mean_pct']}% over {res['cases']} case(s) × {runs}")
+    console.print(f"   report: {md}")
+
+
+@estimate.command("serve")
+@click.option("--host", default="127.0.0.1", show_default=True)
+@click.option("--port", type=int, default=8801, show_default=True)
+@click.option("--vault", type=click.Path(), default=".")
+def estimate_serve(host, port, vault):
+    """Run the Estimate Service (HTTP, contract v1) over this vault. Loopback by default; CE_SERVICE_TOKEN enables X-Api-Key."""
+    from core.estimating.service import serve
+    console.print(f"[green]estimate-service[/] http://{host}:{port}  vault={_vault(vault)}  (contract v1; Ctrl-C to stop)")
+    serve(_vault(vault), host=host, port=port)
 
 
 @estimate.command("run")

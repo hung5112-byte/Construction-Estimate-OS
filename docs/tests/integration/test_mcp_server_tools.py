@@ -35,23 +35,28 @@ def test_mcp_server_imports():
     assert mcp.name == "construction-estimate-os"
 
 
-def test_mcp_server_has_11_tools():
-    """FastMCP.list_tools() returns the 11 registered tools."""
+def test_mcp_server_has_16_tools():
+    """FastMCP.list_tools() returns the 16 registered tools."""
     from core.mcp_server import mcp
 
     tools = asyncio.run(mcp.list_tools())
     names = sorted(t.name for t in tools)
     assert names == sorted([
-        "bd_run",
-        "bd_resume",
-        "bd_meeting",
         "bd_approve",
-        "bd_execute",
-        "bd_outcome",
-        "bd_ingest",
         "bd_draft",
-        "bd_status",
+        "bd_estimate_intake",
+        "bd_estimate_rom",
+        "bd_estimate_run",
+        "bd_estimate_stage",
+        "bd_estimate_status",
+        "bd_execute",
+        "bd_ingest",
+        "bd_meeting",
         "bd_onboard",
+        "bd_outcome",
+        "bd_resume",
+        "bd_run",
+        "bd_status",
         "bd_upgrade",
     ])
 

@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://construction-estimate-os/contracts/v1/profile.schema.json",
+  "type": "object",
+  "title": "Project profile",
+  "required": [
+    "name",
+    "slug",
+    "building_type",
+    "city",
+    "aace_class",
+    "accuracy_band",
+    "gross_sf"
+  ],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "building_type": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "aace_class": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "accuracy_band": {
+      "type": "string"
+    },
+    "gross_sf": {
+      "type": "number"
+    },
+    "stories": {
+      "type": "integer"
+    },
+    "delivery": {
+      "type": "string"
+    },
+    "bid_due": {
+      "type": "string"
+    },
+    "rfi_cutoff": {
+      "type": "string"
+    },
+    "duration_days": {
+      "type": "integer"
+    },
+    "heights_ft": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "areas": {
+      "type": "object"
+    },
+    "drawings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "specs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "exclusions": {
+      "type": "object"
+    },
+    "exclusion_texts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "playbook": {
+      "type": "object"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

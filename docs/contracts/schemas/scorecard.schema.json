@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://construction-estimate-os/contracts/v1/scorecard.schema.json",
+  "type": "object",
+  "title": "Review scorecard (07-review-scorecard.json)",
+  "required": [
+    "verdict",
+    "gates"
+  ],
+  "properties": {
+    "verdict": {
+      "enum": [
+        "APPROVE",
+        "REVISE"
+      ]
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "$ref": "gate.schema.json"
+      }
+    },
+    "judged": {
+      "type": [
+        "array",
+        "null"
+      ]
+    }
+  }
+}

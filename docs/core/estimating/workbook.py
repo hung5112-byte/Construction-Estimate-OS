@@ -71,10 +71,10 @@ def write_workbook(out_path: Path, estimate: dict, ledger_items: list[dict], gat
     _autosize(ws)
     # ---- Lines
     ws = wb.create_sheet("Priced lines")
-    _header(ws, 1, ["ID", "Div", "Item code", "Description", "Qty", "Unit", "Unit L", "Unit M", "Unit E", "Unit Sub", "Labor", "Material", "Equipment", "Sub", "Total", "Source", "Sheet", "Method", "Conf", "Flags"])
+    _header(ws, 1, ["ID", "Div", "Item code", "Description", "Qty", "Unit", "Unit L", "Unit M", "Unit E", "Unit Sub", "Labor", "Material", "Equipment", "Sub", "Total", "Source", "Sheet", "Method", "Conf", "Flags", "Basis", "Low", "High"])
     for i, p in enumerate(estimate["lines"], 2):
         vals = [p["item_id"], p["division"], p["item_code"], p["description"], p["qty"], p["unit"], p["unit_labor"], p["unit_material"], p["unit_equipment"], p["unit_sub"],
-                p["labor"], p["material"], p["equipment"], p["sub"], p["total"], p["source"], p["sheet"], p["method"], p["confidence"], ", ".join(p["flags"])]
+                p["labor"], p["material"], p["equipment"], p["sub"], p["total"], p["source"], p["sheet"], p["method"], p["confidence"], ", ".join(p["flags"]), p.get("pricing_basis", ""), p.get("low", 0), p.get("high", 0)]
         for c, v in enumerate(vals, 1):
             cell = ws.cell(i, c, v)
             if 7 <= c <= 15:
