@@ -31,7 +31,7 @@ def test_6_core_depts_have_agents():
         "02-civil-structural": 4,
         "03-architectural": 5,
         "04-mep": 4,
-        "05-cost-engineering": 4,
+        "05-cost-engineering": 5,
         "06-estimate-review": 4,
     }
     for code, n in expected.items():

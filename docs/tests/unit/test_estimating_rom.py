@@ -124,3 +124,27 @@ def test_rom_warehouse_class4_with_plans(tmp_path):
     assert sc["verdict"] == "APPROVE", [g for g in sc["gates"] if not g["passed"]]
     docks = next(it for it in _j(folder, "04-takeoff-ledger.json") if it["item_code"] == "08-dock-position")
     assert docks["qty"] == 8 and docks["tags"]["trade"] == "doors-hardware"
+
+
+def test_trade_agent_merge_then_reprice_keeps_playbook_pricing(rom_run, tmp_path):
+    vault, folder = rom_run
+    reader = tmp_path / "rom-hood-kitchen.json"
+    reader.write_text(json.dumps([
+        {"division": "23", "item_code": "23-hood-type1-per-lf", "description": "Type I hood per LF (16 LF per equipment plan photo)", "qty": 16, "unit": "LF", "sheet": "photo-3.jpg",
+         "method": "manual", "discipline": "04-mep", "confidence": 0.8, "tags": {"trade": "hood-kitchen", "assembly": "23-hood-type1-per-lf"}, "pricing_basis": "assembly"},
+        {"division": "23", "item_code": "23-walk-in-cooler-relocation", "description": "Relocate walk-in cooler (notes)", "qty": 1, "unit": "LS", "sheet": "intake",
+         "method": "manual", "discipline": "04-mep", "confidence": 0.5, "tags": {"trade": "hood-kitchen"}, "pricing_basis": "assembly"},
+    ]), encoding="utf-8")
+    before = _j(folder, "06-estimate.json")["meta"]["three_point"]["target"]["total"]
+    led = pipeline.merge_reader_lines(folder, reader)
+    hood = [i for i in led.items if i.item_code == "23-hood-type1-per-lf"]
+    assert len(hood) == 1 and hood[0].qty == 16 and hood[0].method == "manual"        # manual fact from a photo outranks the derived default
+    est = pipeline.price(folder, vault)
+    assert est["meta"]["mode"] == "rom" and est["meta"].get("repriced") is True
+    assert est["meta"]["three_point"]["target"]["total"] != before
+    cooler = next(p for p in est["lines"] if p["item_code"] == "23-walk-in-cooler-relocation")
+    assert "UNPRICED" in cooler["flags"]                                                # no assembly → honest, never a guess
+    hood_line = next(p for p in est["lines"] if p["item_code"] == "23-hood-type1-per-lf")
+    assert hood_line["pricing_basis"] == "assembly" and hood_line["qty"] == 16 and hood_line["low"] < hood_line["total"] < hood_line["high"]
+    gates, verdict = pipeline.review(folder)
+    assert verdict in ("APPROVE", "REVISE")

@@ -7,6 +7,7 @@ agents:
 - general-conditions-estimator
 - risk-markup-analyst
 - sub-bid-leveler
+- rom-trade-estimator
 default_speaker: pricing-lead
 refs_folder: refs/
 depends_on:
@@ -48,6 +49,13 @@ routing_rules:
   - subcontractor proposal
   - exclusions
   agent: sub-bid-leveler
+- keywords:
+  - rom
+  - trade agent
+  - assembly
+  - playbook
+  - budget range
+  agent: rom-trade-estimator
 aliases_local:
 - Cost Engineering & General Conditions
 - Cost Engineering

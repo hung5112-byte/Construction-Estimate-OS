@@ -10,7 +10,7 @@ EXPECTED = {
     "02-civil-structural": ("Civil & Structural Estimating", 1, 4),
     "03-architectural": ("Architectural Estimating", 1, 5),
     "04-mep": ("MEP Estimating", 1, 4),
-    "05-cost-engineering": ("Cost Engineering & General Conditions", 1, 4),
+    "05-cost-engineering": ("Cost Engineering & General Conditions", 1, 5),
     "06-estimate-review": ("Estimate Review", 1, 4),
 }
 

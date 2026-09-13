@@ -13,6 +13,7 @@ _Department code: `05-cost-engineering`_
 - [[01-Departments/05-cost-engineering/agents/general-conditions-estimator]]
 - [[01-Departments/05-cost-engineering/agents/risk-markup-analyst]]
 - [[01-Departments/05-cost-engineering/agents/sub-bid-leveler]]
+- [[01-Departments/05-cost-engineering/agents/rom-trade-estimator]]
 
 ## Brain References
 

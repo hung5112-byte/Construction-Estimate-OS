@@ -37,7 +37,7 @@ A **commercial general contractor's preconstruction team** — 2–4 estimators 
 | Cost engineer, GC estimator, risk | `05-cost-engineering` 💵 | pricing-lead ⭐ · general-conditions · risk-markup · sub-bid-leveler |
 | Chief estimator's review + ops | `06-estimate-review` 🔍 (standing skeptic) | chief-estimator ⭐ · scope-gap-auditor · constructability-reviewer · benchmark-analyst |
 
-26 agents in `01-Departments/` (the source of truth for every prompt), mirrored as Claude Code subagents in `.claude/agents/`.
+27 agents in `01-Departments/` (26 department agents plus one parameterized ROM trade estimator driven by the playbooks), mirrored as Claude Code subagents in `.claude/agents/`.
 
 ---
 
@@ -76,7 +76,7 @@ python3.12 -m venv .venv && .venv/bin/pip install -e ".[dev]"
     --name "Prairie Creek Office/Warehouse Bldg 2" --type office-warehouse --city Plano --vault .
 ```
 
-That produces `02-Estimates/<slug>/` with the register, spec index, ledger, questions, estimate, scorecard and report, and `03-Outputs/<slug>/` with the workbook and the Basis of Estimate. With the agents, run `/estimate <package-dir>` inside Claude Code in this repo instead (see `.claude/commands/estimate.md`).
+That produces `02-Estimates/<slug>/` with the register, spec index, ledger, questions, estimate, scorecard and report, and `03-Outputs/<slug>/` with the workbook and the Basis of Estimate. With the agents, run `/estimate <package-dir>` inside Claude Code in this repo instead (see `.claude/commands/estimate.md`). For a same-day ROM with the trade agents reading your notes and photos, run `/rom --type restaurant-ti --name 'Pho 88' --sf 3200 --city Plano` (see `.claude/commands/rom.md`).
 
 Regenerate the sample package (needs Chrome): `.venv/bin/python scripts/make_sample_set.py`.
 

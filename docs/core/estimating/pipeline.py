@@ -587,7 +587,8 @@ def merge_reader_lines(folder: Path, reader_json: Path) -> Ledger:
     led = Ledger.from_json((folder / "04-takeoff-ledger.json").read_text(encoding="utf-8"))
     for d in _load(reader_json):
         led.add(d["division"], d["item_code"], d["description"], d["qty"], d["unit"], d["sheet"], d.get("method", "vision"), d.get("discipline", ""),
-                revision=d.get("revision"), section=d.get("section"), confidence=float(d.get("confidence", 0.7)), waste_pct=float(d.get("waste_pct", 0)), notes=d.get("notes", ""), tags=d.get("tags", {}))
+                revision=d.get("revision"), section=d.get("section"), confidence=float(d.get("confidence", 0.7)), waste_pct=float(d.get("waste_pct", 0)), notes=d.get("notes", ""), tags=d.get("tags", {}),
+                pricing_basis=d.get("pricing_basis", ""))
     disc = [x.to_dict() for x in led.reconcile()]
     _write(folder / "04-takeoff-ledger.json", led.to_json())
     _write(folder / "04-takeoff-ledger.md", led.to_markdown("Takeoff ledger (merged)"))
@@ -657,6 +658,8 @@ def price(folder: Path, vault_root: Path | None = None) -> dict:
     folder = Path(folder)
     profile = Profile(**_load(folder / "00-project-profile.json"))
     led = Ledger.from_json((folder / "04-takeoff-ledger.json").read_text(encoding="utf-8"))
+    if profile.playbook:
+        return _reprice_rom(folder, vault_root, profile, led)
     paths = library_paths(vault_root)
     lib = load_library(paths)
     # allowance lines price at their spec amount
@@ -906,6 +909,48 @@ def rom(vault_root: Path, intake: dict) -> Path:
     review(folder)
     report(folder)
     return folder
+
+def _reprice_rom(folder: Path, vault_root: Path | None, profile: Profile, led: Ledger) -> dict:
+    """Re-price a ROM folder after reader/trade-agent lines were merged: playbook assemblies first, BYO / seed
+    for anything else, the playbook's general-conditions config, markups by class, three-point totals."""
+    from core.estimating.cost_engine import CostRow
+    from core.estimating.playbooks import resolve_playbook
+
+    pb = resolve_playbook(profile.playbook["project_type"])
+    lib = pb.cost_rows()
+    for k, v in load_library(library_paths(vault_root)).items():
+        lib.setdefault(k, v)
+    for it in led.items:
+        if it.method == "allowance" and it.tags.get("amount"):
+            lib[it.item_code] = CostRow(it.item_code, it.description, "LS", 0, 0, 0, float(it.tags["amount"]), "intake allowance", pricing_basis="allowance")
+    factor, f_src = load_location_factor(profile.city)
+    lines = price_ledger(led, lib, location_factor=factor)
+    direct = round(sum(p.total for p in lines), 2)
+    materials = round(sum(p.material for p in lines), 2)
+    labor = round(sum(p.labor for p in lines), 2)
+    months = round((profile.duration_days or 90) / 30.4, 1)
+    basis = (_load(folder / "00-playbook.json") or {}).get("basis", {}) if (folder / "00-playbook.json").exists() else {}
+    gcs = _gc_lines(lib, months, profile.gross_sf, float(basis.get("perimeter_lf") or 0), sum(it.qty for it in led.items if it.unit == "CY"), pb.general_conditions)
+    gc_total = round(sum(g.total for g in gcs), 2)
+    policy = policy_from_brain(vault_root, profile.aace_class, profile.building_type, profile.duration_days)
+    markups = markup_stack(direct, materials, gc_total, policy)
+    three_point = three_point_totals(lines, materials, gc_total, policy)
+    summary = summary_by_division(lines, profile.gross_sf, spec_index.DIVISIONS)
+    total = markups[-1].amount
+    bench = benchmark_check(total, profile.gross_sf, profile.building_type, gc_total, direct, labor)
+    meta = {"generated": datetime.now().isoformat(timespec="seconds"), "mode": "rom", "repriced": True, "playbook": profile.playbook, "basis": basis,
+            "library_paths": [pb.path] + [str(p) for p in library_paths(vault_root)], "location_factor": factor, "location_source": f_src,
+            "duration_months": months, "policy": asdict(policy), "three_point": three_point, "aace_class": profile.aace_class, "accuracy_band": profile.accuracy_band,
+            "disclaimer": SEED_DISCLAIMER if pb.status != "approved" else "", "benchmark": bench}
+    _write(folder / "06-estimate.json", estimate_json(lines, gcs, markups, summary, meta))
+    md = ["---", "type: estimate", "mode: rom", "repriced: true", f"total_bid: {total}", "---", f"# ROM estimate (re-priced after trade review) — {profile.name}", "",
+          f"**Low ${three_point['low']['total']:,.0f} · Target ${three_point['target']['total']:,.0f} · High ${three_point['high']['total']:,.0f}** (spread {three_point['spread_pct']}%)", "",
+          "| Division | Title | Low | Target | High | % |", "|---|---|---|---|---|---|"] + \
+         [f"| {r['division']} | {r['title']} | ${r['low']:,.0f} | ${r['total']:,.0f} | ${r['high']:,.0f} | {r['pct']}% |" for r in summary] + \
+         ["", f"Flags: unpriced {sum('UNPRICED' in p.flags for p in lines)} · uncertain {sum('UNCERTAIN' in p.flags for p in lines)}", "", meta["disclaimer"]]
+    _write(folder / "06-estimate.md", "\n".join(md) + "\n")
+    return _load(folder / "06-estimate.json")
+
 
 def run_all(vault_root: Path, package_dir: Path, name: str, building_type: str, city: str, aace_class: int = 2, render: bool = False) -> Path:
     """Unattended demo path (--no-llm): every open question is auto-assumed and stated."""

@@ -135,11 +135,15 @@ class Ledger:
         rank = {m: i for i, m in enumerate(("schedule", "manual", "vector", "vision", "derived", "spec", "allowance"))}
         groups: dict[tuple, list[TakeoffItem]] = {}
         for it in self.items:
-            ident = tuple(sorted((k, str(v)) for k, v in it.tags.items() if k in ("room", "mark", "tag")))
-            groups.setdefault((it.item_code, it.sheet, it.description if not ident else "", ident), []).append(it)
+            ident = tuple(sorted((k, str(v)) for k, v in it.tags.items() if k in ("room", "mark", "tag", "assembly")))
+            # the same physical thing (a door mark, a room, an equipment tag, a playbook assembly) counted by two
+            # methods — on any sheet, note or photo — is one line; lines without an identity stay per sheet
+            key = (it.item_code, ident) if ident else (it.item_code, it.sheet, it.description)
+            groups.setdefault(key, []).append(it)
         keep: list[TakeoffItem] = []
         disc: list[Discrepancy] = []
-        for (code, sheet, _desc, _ident), its in groups.items():
+        for key, its in groups.items():
+            code, sheet = key[0], (its[0].sheet if len(key) == 2 else key[1])
             if len(its) == 1 or len({i.method for i in its}) == 1:
                 keep.extend(its)      # one line, or several lines of the same kind (not a disagreement)
                 continue
