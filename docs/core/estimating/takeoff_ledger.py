@@ -201,7 +201,7 @@ class Ledger:
                     gov_lines[0].notes = (gov_lines[0].notes + " | " if gov_lines[0].notes else "") + f"{m} counted {other_total:g} {gov_lines[0].unit} on {where} ({delta:.0f}% apart) — see RFI"
                 else:
                     gov_lines[0].notes = (gov_lines[0].notes + " | " if gov_lines[0].notes else "") + f"confirmed by {m} ({other_total:g} {gov_lines[0].unit} on {where})"
-                    gov_lines[0].confidence = max(gov_lines[0].confidence, min(0.95, gov_lines[0].confidence + 0.1))
+                    gov_lines[0].confidence = round(max(gov_lines[0].confidence, min(0.95, gov_lines[0].confidence + 0.1)), 2)
             keep.extend(gov_lines)
         self.items = sorted(keep, key=lambda i: i.id)
         return disc
@@ -213,7 +213,7 @@ class Ledger:
             gov.notes = (gov.notes + " | " if gov.notes else "") + f"{other.method} counted {other.qty:g} {gov.unit} on {other.sheet} ({delta:.0f}% apart) — see RFI"
         else:
             gov.notes = (gov.notes + " | " if gov.notes else "") + f"confirmed by {other.method} on {other.sheet}"
-            gov.confidence = max(gov.confidence, min(0.95, gov.confidence + 0.1))
+            gov.confidence = round(max(gov.confidence, min(0.95, gov.confidence + 0.1)), 2)
 
     def to_json(self) -> str:
         return json.dumps([asdict(i) for i in self.items], indent=2)
