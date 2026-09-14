@@ -6,7 +6,7 @@ It is **a pipeline with two human gates, not a debate**: the RFI gate pauses for
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://python.org)
-[![Tests](https://img.shields.io/badge/tests-780_passing-brightgreen.svg)](#development)
+[![CI](https://github.com/hung5112-byte/Construction-Estimate-OS/actions/workflows/ci.yml/badge.svg)](https://github.com/hung5112-byte/Construction-Estimate-OS/actions/workflows/ci.yml)
 [![LLM arithmetic](https://img.shields.io/badge/LLM_arithmetic-0-brightgreen.svg)](#design-rules)
 
 > **Read this before trusting a dollar figure.** Every price in the shipped seed library is a national-average **placeholder marked `[UNCERTAIN]`**, the Brain describes a **fictional** DFW general contractor (Blackland Commercial Builders), and the only drawing set the system has been validated on is the **synthetic** sample package in this repository. Load your buyout history, replace the Brain, and run a real package before using an output for a bid.
