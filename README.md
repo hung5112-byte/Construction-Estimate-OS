@@ -83,6 +83,83 @@ ce-os estimate approve <folder>        03-Outputs/<slug>/: estimate-workbook.xls
 
 Every stage writes ordinary files into `02-Estimates/<slug>/`, so any stage can be re-run, inspected or driven from another tool.
 
+### The workflow, as a graph
+
+Solid arrows are the engine; dashed arrows are the two places a human decides. The ROM path (bottom left) joins the same merge, RFI, pricing and review stages.
+
+```mermaid
+flowchart TB
+  P["Bid package<br/>PDF drawing set + Project Manual"] --> S0
+  subgraph S0["S0 · intake — deterministic"]
+    direction LR
+    R["Sheet register<br/>discipline · type · scale · revision"]
+    X["Spec index + Division 01<br/>separate contracts · allowances"]
+    C["Shadow cards + renders<br/>text · schedules · geometry · tiles"]
+  end
+  S0 --> S1["S1 · seed takeoff<br/>schedules govern → vector confirms → derived rules fill in"]
+  S1 --> S2
+  subgraph S2["S2 · readers — LLM agents, in parallel"]
+    direction LR
+    A1["Civil / structural lead"]
+    A2["Architectural lead"]
+    A3["MEP lead"]
+  end
+  I["Intake form<br/>type · SF · city · facts · notes · photos"] --> PB["Playbook<br/>assemblies × quantity rules<br/>risks · exclusions · common RFIs"]
+  PB --> ROM["ROM · low / target / high<br/>every default written down"]
+  ROM --> TR["ROM trade estimators — LLM<br/>one per trade, read the notes and photos"]
+  S2 --> M
+  TR --> M["Merge + reconcile<br/>identity across sheets · method totals per item<br/>governing method survives · disagreements logged"]
+  M --> S3["S3 · RFI gate<br/>05-clarification.md: questions with citation + cost exposure"]
+  S3 -. "⏸ you answer (or --auto-assume, stamped)" .-> S3b["resume"]
+  S3b --> S4["S4 · price<br/>your library → seed (marked) → UNPRICED<br/>GCs by duration · markups by class · benchmark band"]
+  S4 --> S5{"S5 · gates G1–G13<br/>deterministic"}
+  S5 -- REVISE --> FIX["fix scope, answers or prices"] --> S4
+  S5 -- APPROVE --> S6["S6 · report<br/>08-estimate-report.md · proposal draft (client-safe scan)"]
+  S6 -. "⏹ Stop 1: you approve" .-> OUT["03-Outputs/slug/<br/>estimate-workbook.xlsx · basis-of-estimate.docx · proposal-draft.docx"]
+```
+
+### How the engine works
+
+Two layers, one contract. The deterministic engine owns every number; the agents read, select and ask. What crosses the boundary is JSON in the contract's line and question schemas, never prose with figures in it.
+
+```mermaid
+flowchart LR
+  subgraph IF["Interfaces"]
+    direction TB
+    CLI["ce-os CLI"]
+    HTTP["HTTP service<br/>contract v1"]
+    MCP["MCP tools<br/>bd_estimate_*"]
+    CC["Claude Code<br/>/estimate · /rom"]
+  end
+  subgraph ENG["Deterministic engine — Python, unit-tested, zero LLM arithmetic"]
+    direction TB
+    EX["Extraction<br/>pdfplumber · pypdfium2<br/>register · text · tables · geometry · render"]
+    LED["Takeoff ledger<br/>sheet · revision · method · confidence<br/>reconcile"]
+    COST["Cost engine<br/>agent selects a row, engine multiplies<br/>three-point · GCs · markups"]
+    GATES["Review gates G1–G13<br/>REVISE beats any narrative"]
+    WR["Writers<br/>report · workbook · Basis of Estimate · proposal"]
+    EX --> LED --> COST --> GATES --> WR
+  end
+  subgraph LLM["Agents — Claude, subscription-billed, API keys scrubbed"]
+    direction TB
+    RD["Discipline readers<br/>confirm · correct · add · ask"]
+    SA["Spec analyst · RFI coordinator"]
+    TRD["ROM trade estimators"]
+    CE["Chief estimator<br/>judged review on top of the gates"]
+  end
+  subgraph DATA["Your data"]
+    direction TB
+    BR["00-Brain<br/>markup policy · benchmarks · laws · bid policy"]
+    LIB["03-Cost-Library<br/>buyout history, quotes"]
+    PBK["Playbooks<br/>assemblies per project type"]
+  end
+  IF --> ENG
+  ENG -- "cards · tiles · seed lines" --> LLM
+  LLM -- "lines · questions — JSON schema" --> ENG
+  DATA --> ENG
+  ENG --> FS["02-Estimates/slug/<br/>every stage is a file: re-run, inspect, drive from any tool"]
+```
+
 ## Install
 
 Prerequisites:
