@@ -83,5 +83,9 @@ TODO.private.md
 
 # ─── Estimating fixtures (synthetic bid package, committed on purpose) ──
 !docs/tests/fixtures/**/*.pdf
-02-Estimates/**/renders/
-02-Estimates/**/*.png
+# estimate folders and rendered outputs are working data, never committed
+02-Estimates/*
+!02-Estimates/.gitkeep
+03-Outputs/*
+!03-Outputs/.gitkeep
+03-Cost-Library/
